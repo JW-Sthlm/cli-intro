@@ -1,6 +1,6 @@
 # What Is This Repo? (And What Is a Repo?)
 
-> If you've never used GitHub before, start here. This page explains everything in plain language.
+> If you're new to or need a refresher to GitHub, start here. This page explains everything in plain language.
 
 ---
 
