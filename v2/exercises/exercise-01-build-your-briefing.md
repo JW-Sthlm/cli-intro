@@ -4,11 +4,15 @@
 > **Format:** Guided start → self-paced exploration  
 > **Goal:** Everyone builds a real partner briefing using their own data
 
+💡 **Remember:** The prompts below are starting points. You can rephrase, simplify, or ask follow-ups in your own words. Copilot CLI understands natural language — just talk to it like a colleague.
+
 ---
 
 ## Before You Start
 
 Make sure Copilot CLI is running and your MCP servers are connected. If unsure, type `/env` and check for PMX, GitHub, and M365 tools.
+
+> **Not sure what to type?** Just ask: `Am I connected to PMX?` or `What tools do I have available?`
 
 ---
 
@@ -75,3 +79,13 @@ If I wanted to reuse this briefing pattern every week for different partners, ho
 - ✅ Built something you could actually send to your team
 
 **This is the delta:** M365 Copilot can summarize one email or one meeting. CLI pulled from three systems and synthesized a structured briefing. That's the operational difference.
+
+---
+
+## What's next?
+
+➡️ Continue to [Exercise 2: Pick Your Scenario](exercise-02-pick-your-scenario.md) when the facilitator moves on
+
+📋 Need a command reference? Open the [Cheat Sheet](../reference/cheat-sheet.md)
+
+🔧 Something broken? Check [Troubleshooting](../reference/troubleshooting.md)

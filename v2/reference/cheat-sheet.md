@@ -4,6 +4,19 @@
 
 ---
 
+## The #1 Rule
+
+**Just talk to it.** You don't need to memorize commands or syntax. Type what you want in plain English:
+
+- `Help me prepare for my meeting with Contoso`
+- `What went wrong with that last command?`
+- `How do I add a new MCP server?`
+- `Explain what you just did`
+
+The prompts and commands below are useful shortcuts — but natural language always works. If you're stuck, ask: `/ask How do I...`
+
+---
+
 ## The Copilot Ladder
 
 | Layer | What it does | When to use it |
@@ -123,3 +136,11 @@ open questions, risks, and next steps.
 | `Ctrl+C` × 2 | Exit |
 | `Ctrl+L` | Clear screen |
 | `P` | Open presenter view (in slide deck) |
+
+---
+
+## See also
+
+- 📖 [Getting Started](../GETTING-STARTED.md) — what is this repo, what is Git, jargon decoder
+- 📚 [After-Session Resources](after-session-resources.md) — beginner course, docs, internal links
+- 🔧 [Troubleshooting](troubleshooting.md) — common issues and fixes
