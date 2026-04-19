@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Storyboard — Copilot CLI for Partner Work</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f5f5f5; color: #333; line-height: 1.6; }
+  
+  .header { background: #2D6E6D; color: white; padding: 1.5rem 2rem; }
+  .header h1 { font-size: 1.5rem; }
+  .header p { opacity: 0.85; font-size: 0.85rem; }
+  
+  /* Nav bar */
+  .nav-bar { background: white; border-bottom: 1px solid #ddd; padding: 0.6rem 2rem; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: 0.5rem; }
+  .nav-bar .count { font-size: 0.7rem; color: #999; margin-left: auto; }
+  .nav-bar a { font-size: 0.75rem; margin-left: 1rem; color: #2D6E6D; text-decoration: none; }
+  
+  .container { max-width: 1300px; margin: 0 auto; padding: 0 2rem 3rem; }
+  
+  /* Sorter view */
+  #sorter { padding: 1.5rem 0; }
+  .sorter-act { margin-bottom: 1.5rem; }
+  .sorter-act h4 { font-size: 0.75rem; color: #2D6E6D; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .sorter-grid { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+  .sorter-thumb { width: 260px; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
+  .sorter-thumb:hover { transform: scale(1.03); box-shadow: 0 3px 12px rgba(0,0,0,0.15); }
+  .sorter-slide { background: #F8F8F7; color: #21211F; padding: 0.7rem; min-height: 150px; display: flex; flex-direction: column; font-size: 0.5rem; overflow: hidden; }
+  .sorter-slide h5 { font-size: 0.65rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.3rem; color: #21211F; }
+  .sorter-slide .num { font-size: 0.5rem; opacity: 0.4; margin-bottom: 0.2rem; }
+  .sorter-slide .thumb-body { font-size: 0.48rem; opacity: 0.7; line-height: 1.4; overflow: hidden; color: #4A4A46; }
+  .sorter-slide .thumb-body ul { list-style: none; padding: 0; }
+  .sorter-slide .thumb-body li { padding-left: 0.8em; position: relative; margin-bottom: 0.1em; }
+  .sorter-slide .thumb-body li::before { content: '→'; position: absolute; left: 0; color: #2D6E6D; }
+  .sorter-slide .thumb-body blockquote { border-left: 2px solid #2D6E6D; padding-left: 0.4em; font-style: italic; opacity: 0.6; margin: 0.2em 0; }
+  .sorter-slide .thumb-body p { margin: 0.1em 0; }
+  .sorter-tags { display: flex; gap: 0.15rem; padding: 0.2rem 0.3rem; background: white; }
+  .sorter-tags .st { font-size: 0.45rem; padding: 0.05rem 0.2rem; border-radius: 2px; }
+  .tag-time { background: #EEF4F4; color: #2D6E6D; }
+  .tag-demo { background: #FCE4EC; color: #C62828; }
+  .tag-exercise { background: #FFF3E0; color: #E65100; }
+  
+  /* Full slides */
+  #slides { }
+  .act-divider { margin: 2rem 0 0.5rem; }
+  .act-divider h3 { font-size: 0.85rem; color: #2D6E6D; border-bottom: 2px solid #2D6E6D; display: inline-block; padding-bottom: 0.2rem; }
+  .act-divider .time { font-size: 0.7rem; color: #999; margin-left: 0.5rem; }
+  
+  .slide-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-bottom: 2rem; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+  .slide-panel { background: #F8F8F7; color: #21211F; padding: 1.5rem; min-height: 260px; display: flex; flex-direction: column; position: relative; font-size: 0.8rem; overflow: hidden; }
+  .slide-panel .sn { position: absolute; top: 0.5rem; right: 0.7rem; font-size: 0.6rem; opacity: 0.3; color: #797971; }
+  .slide-panel h2 { font-size: 1.2rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.2rem; color: #21211F; }
+  .slide-panel h4 { font-size: 0.7rem; opacity: 0.6; margin-bottom: 0.5rem; color: #4A4A46; }
+  .slide-panel ul { list-style: none; padding: 0; font-size: 0.7rem; }
+  .slide-panel li { padding: 0.15rem 0 0.15rem 1rem; position: relative; }
+  .slide-panel li::before { content: '→'; position: absolute; left: 0; color: #2D6E6D; font-size: 0.7rem; }
+  .slide-panel blockquote { border-left: 3px solid #2D6E6D; padding: 0.3rem 0.6rem; font-style: italic; opacity: 0.85; font-size: 0.7rem; margin: 0.4rem 0; background: rgba(45,110,109,0.06); }
+  .slide-panel p { font-size: 0.7rem; }
+  .slide-panel .accent { color: #2D6E6D; }
+  .slide-panel .small { font-size: 0.55rem; opacity: 0.4; }
+  .slide-panel .highlight-line { font-weight: 700; color: #2D6E6D; }
+  .slide-panel .stat-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.4em; margin: 0.5em 0; }
+  .slide-panel .stat { text-align: center; }
+  .slide-panel .stat .num { font-size: 1.4em; font-weight: 700; color: #2D6E6D; line-height: 1; }
+  .slide-panel .stat .label { font-size: 0.5em; opacity: 0.8; }
+  .slide-panel .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5em; }
+  .slide-panel .card { background: rgba(255,255,255,0.5); padding: 0.4em 0.5em; border-radius: 5px; border: 1px solid rgba(0,0,0,0.06); }
+  .slide-panel .card-title { font-weight: 700; font-size: 0.6rem; margin-bottom: 0.15em; }
+  .slide-panel .card p { font-size: 0.55rem; }
+  .slide-panel .block-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.4em; margin: 0.5em 0; }
+  .slide-panel .block-card { background: rgba(255,255,255,0.5); padding: 0.4em 0.5em; border-radius: 5px; border: 1px solid rgba(0,0,0,0.06); text-align: center; }
+  .slide-panel .block-icon { font-size: 1.2em; margin-bottom: 0.15em; }
+  .slide-panel .block-title { font-weight: 700; font-size: 0.6rem; }
+  .slide-panel .block-desc { font-size: 0.5rem; opacity: 0.7; }
+  .slide-panel .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4em; margin: 0.5em 0; }
+  .slide-panel .skill-card { background: rgba(255,255,255,0.5); padding: 0.4em 0.5em; border-radius: 5px; border: 1px solid rgba(0,0,0,0.06); }
+  .slide-panel .skill-cmd { font-family: 'Cascadia Code','Consolas',monospace; font-size: 0.5rem; color: #2D6E6D; margin-bottom: 0.1em; }
+  .slide-panel .skill-name { font-weight: 700; font-size: 0.55rem; }
+  .slide-panel .skill-desc { font-size: 0.48rem; opacity: 0.7; }
+  .slide-panel .process-flow { display: flex; align-items: center; gap: 0.3em; margin: 0.5em 0; font-size: 0.55rem; }
+  .slide-panel .process-step { background: rgba(255,255,255,0.5); padding: 0.2em 0.5em; border-radius: 4px; border: 1px solid rgba(0,0,0,0.06); }
+  .slide-panel .process-arrow { color: #2D6E6D; font-weight: 700; }
+  .slide-panel .trust-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.3em; margin: 0.4em 0; }
+  .slide-panel .trust-card { background: rgba(255,255,255,0.5); padding: 0.3em; border-radius: 5px; border: 1px solid rgba(0,0,0,0.06); text-align: center; font-size: 0.5rem; }
+  .slide-panel .trust-card.highlight { border-top: 2px solid #2D6E6D; }
+  .slide-panel .trust-card .icon { font-size: 1em; }
+  .slide-panel .trust-card .card-title { font-weight: 700; font-size: 0.55rem; }
+  .slide-panel .trust-card .card-sub { font-size: 0.45rem; opacity: 0.7; }
+  .slide-panel .info-card { background: rgba(255,255,255,0.5); padding: 0.3em 0.5em; border-radius: 5px; border: 1px solid rgba(0,0,0,0.06); display: flex; align-items: center; gap: 0.4em; font-size: 0.55rem; margin-bottom: 0.2em; }
+  .slide-panel .info-card .icon { font-size: 0.8em; flex-shrink: 0; }
+  
+  .script-panel { background: white; padding: 1.5rem; font-size: 0.85rem; }
+  .script-panel .meta { display: flex; gap: 0.5rem; margin-bottom: 0.8rem; align-items: center; flex-wrap: wrap; }
+  .script-panel .meta .timing { background: #2D6E6D; color: white; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.65rem; }
+  .script-panel .meta .energy { padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.65rem; color: white; }
+  .script-panel .meta .energy-high { background: #ff6b35; }
+  .script-panel .meta .energy-calm { background: #2ecc71; }
+  .script-panel .meta .energy-med { background: #f39c12; }
+  .script-panel .meta .tag { font-size: 0.55rem; padding: 0.1rem 0.3rem; border-radius: 3px; }
+  .script-panel p { margin-bottom: 0.5rem; line-height: 1.5; }
+  .script-panel .do-action { color: #e74c3c; font-weight: 700; }
+  .script-panel .say-text { }
+  
+  /* Demo card */
+  .demo-card { margin-bottom: 2rem; background: white; border: 2px solid #e74c3c; border-radius: 10px; padding: 1.5rem; }
+  .demo-card h3 { color: #e74c3c; font-size: 1rem; margin-bottom: 0.6rem; }
+  .demo-card .demo-meta { font-size: 0.78rem; color: #666; margin-bottom: 0.8rem; }
+  .demo-step { display: flex; gap: 0.6rem; margin-bottom: 0.4rem; font-size: 0.8rem; }
+  .demo-num { background: #e74c3c; color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 700; flex-shrink: 0; }
+  .demo-card .section-title { font-size: 0.85rem; font-weight: 700; margin: 1rem 0 0.4rem; }
+  .demo-card .prompt-box { background: #EEF4F4; border-left: 4px solid #2D6E6D; padding: 0.6rem 1rem; margin: 0.3rem 0 0.3rem 1.6rem; border-radius: 0 6px 6px 0; font-size: 0.85rem; }
+  .demo-card .prompt-box code { font-family: 'Cascadia Code','Consolas',monospace; font-size: 0.85rem; }
+  .demo-card .talking-point { font-size: 0.78rem; color: #555; margin: 0.2rem 0 0.6rem 1.6rem; font-style: italic; }
+  .demo-card .key-messages { background: #f9f9f9; border-radius: 6px; padding: 0.8rem 1rem; margin-top: 1rem; }
+  .demo-card .key-messages h4 { font-size: 0.8rem; color: #2D6E6D; margin-bottom: 0.3rem; }
+  .demo-card .key-messages li { font-size: 0.78rem; margin-bottom: 0.2rem; }
+  
+  @media (max-width: 900px) { .slide-row { grid-template-columns: 1fr; } .sorter-thumb { width: 110px; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🎤 Storyboard — Copilot CLI for Partner Work</h1>
+  <p>Speaker script · demo plans · exercise notes · 60-min hands-on workshop</p>
+</div>
+
+<div class="nav-bar">
+  <span class="count" id="slide-count">12 slides · 5 acts · ~55 min</span>
+  <a href="#sorter">↑ Sorter</a>
+  <a href="#slides">↓ Full script</a>
+</div>
+
+<div class="container">
+<div id='sorter'>
+
+<!-- Act 1 — Setup & Hook -->
+<div class='sorter-act'><h4>Act 1 — Setup & Hook · 10 min</h4><div class='sorter-grid'>
+  <div class="sorter-thumb" onclick="document.getElementById('slide-1').scrollIntoView({behavior:'smooth'})">
+    <div class="sorter-slide" style="background: #FFFFFF"><span class="num">1</span><h5>Copilot CLI for Partner Work</h5><div class="thumb-body"><p>60 min · Hands-On Workshop</p><p>Your AI colleague in the terminal</p><p style="opacity:0.4">Johan Wallquist · PSA · Microsoft</p></div></div>
+    <div class="sorter-tags"><span class='st tag-time'>1 min</span></div>
+  </div>
+  <div class="sorter-thumb" onclick="document.getElementById('slide-2').scrollIntoView({behavior:'smooth'})">
+    <div class="sorter-slide" style="background: #F8F8F7"><span class="num">2</span><h5>Not Another Chat Window</h5><div class="thumb-body"><ul><li>ChatGPT: copy-paste answers</li><li>M365 Copilot: lives in Office</li><li>Copilot CLI: connects to YOUR systems</li></ul></div></div>
+    <div class="sorter-tags"><span class='st tag-time'>4 min</span></div>
+  </div>
+  <div class="sorter-thumb" onclick="document.getElementById('slide-3').scrollIntoView({behavior:'smooth'})">
+    <div class="sorter-slide" style="background: #F8F8F7"><span class="num">3</span><h5>Talk to It Like a Colleague</h5><div class="thumb-body"><ul><li>📅 Calendar</li><li>📧 Email</li><li>📊 PMX data</li><li>📸 Screenshots</li></ul></div></div>
+    <div class="sorter-tags"><span class='st tag-time'>5 min</span></div>
+  </div>
+</div></div>
+
+<!-- Act 2 — First Hands-On -->
+<div class='sorter-act'><h4>Act 2 — First Hands-On · 10 min</h4><div class='sorter-grid'>
+  <div class="sorter-thumb" onclick="document.getElementById('slide-4').scrollIntoView({behavior:'smooth'})">
+    <div class="sorter-slide" style="background: #FFF5F5"><span class="num">4</span><h5>🔴 Demo — The Basics Live</h5><div class="thumb-body"><p>Calendar · Email · PMX · Screenshots</p><p style="opacity:0.5">Follow along or watch</p></div></div>
+    <div class="sorter-tags"><span class='st tag-demo'>Demo</span><span class='st tag-time'>5 min</span></div>
+  </div>
+  <div class="sorter-thumb" onclick="document.getElementById('slide-5').scrollIntoView({behavior:'smooth'})">
+    <div class="sorter-slide" style="background: #F8F8F7"><span class="num">5</span><h5>Exercise 1: First Conversation</h5><div class="thumb-body"><p>📅 Check calendar → 📧 Search email → 📊 Query PMX</p><p style="opacity:0.5">Copy prompts from exercise sheet</p></div></div>
+    <div class="sorter-tags"><span class='st tag-exercise'>Exercise</span><span class='st tag-time'>5 min</span></div>
+  </div>
+</div></div>
+
+<!-- Act 3 — MCP & Partner Work -->
+<div class='sorter-act'><h4>Act 3 — MCP & Partner Work · 18 min</h4><div class='sorter-grid'>
+  <div class="sorter-thumb" onclick="document.getElementById('slide-6').scrollIntoView({behavior:'smooth'})">
+    <div class="sorter-slide" style="background: #F8F8F7"><span class="num">6</span><h5>MCP: Your Superpowers</h5><div class="thumb-body"><ul><li>📊 PMX — partner data</li><li>🐙 GitHub — code &amp; collab</li><li>📬 M365 — email, cal, Teams</li></ul></div></div>
+    <div class="sorter-tags"><span class='st tag-time'>5 min</span></div>
+  </div>
+  <div class="sorter-thumb" onclick="document.getElementById('slide-7').scrollIntoView({behavior:'smooth'})">
+    <div class="sorter-slide" style="background: #FFF5F5"><span class="num">7</span><h5>🔴 Demo — Connect Prep</h5><div class="thumb-body"><p>Projects → Outcomes → MSX → Talking points</p><p style="opacity:0.5">Full PMX workflow</p></div></div>
+    <div class="sorter-tags"><span class='st tag-demo'>Demo</span><span class='st tag-time'>10 min</span></div>
+  </div>
+  <div class="sorter-thumb" onclick="document.getElementById('slide-8').scrollIntoView({behavior:'smooth'})">
+    <div class="sorter-slide" style="background: #F8F8F7"><span class="num">8</span><h5>Exercise 2: PMX Analysis</h5><div class="thumb-body"><p>Guided: find outcome gaps</p><p>Self-paced: explore partner data</p></div></div>
+    <div class="sorter-tags"><span class='st tag-exercise'>Exercise</span><span class='st tag-time'>8 min</span></div>
+  </div>
+</div></div>
+
+<!-- Act 4 — Power Moves -->
+<div class='sorter-act'><h4>Act 4 — Power Moves · 14 min</h4><div class='sorter-grid'>
+  <div class="sorter-thumb" onclick="document.getElementById('slide-9').scrollIntoView({behavior:'smooth'})">
+    <div class="sorter-slide" style="background: #F8F8F7"><span class="num">9</span><h5>Power Moves</h5><div class="thumb-body"><ul><li>/research — deep investigation</li><li>/plan — think before acting</li><li>/skills — domain expertise</li><li>Custom Agents</li></ul></div></div>
+    <div class="sorter-tags"><span class='st tag-time'>3 min</span></div>
+  </div>
+  <div class="sorter-thumb" onclick="document.getElementById('slide-10').scrollIntoView({behavior:'smooth'})">
+    <div class="sorter-slide" style="background: #FFF5F5"><span class="num">10</span><h5>🔴 Demo — /research + PMX</h5><div class="thumb-body"><p>Research → MSX cross-ref → Partner roadmap</p><p style="opacity:0.5">The killer combo</p></div></div>
+    <div class="sorter-tags"><span class='st tag-demo'>Demo</span><span class='st tag-time'>7 min</span></div>
+  </div>
+  <div class="sorter-thumb" onclick="document.getElementById('slide-11').scrollIntoView({behavior:'smooth'})">
+    <div class="sorter-slide" style="background: #F8F8F7"><span class="num">11</span><h5>Exercise 3: Choose Your Adventure</h5><div class="thumb-body"><ul><li>Fix outcome gaps</li><li>Connect prep</li><li>Draft email</li><li>Research + roadmap</li></ul></div></div>
+    <div class="sorter-tags"><span class='st tag-exercise'>Exercise</span><span class='st tag-time'>7 min</span></div>
+  </div>
+</div></div>
+
+<!-- Act 5 — Close -->
+<div class='sorter-act'><h4>Act 5 — Close · 3 min</h4><div class='sorter-grid'>
+  <div class="sorter-thumb" onclick="document.getElementById('slide-12').scrollIntoView({behavior:'smooth'})">
+    <div class="sorter-slide" style="background: #FFFFFF"><span class="num">12</span><h5>Your Toolbox</h5><div class="thumb-body"><p>1 AI colleague · 3 MCP connectors · ∞ scenarios</p><p style="opacity:0.5">Start with something small tomorrow</p></div></div>
+    <div class="sorter-tags"><span class='st tag-time'>3 min</span></div>
+  </div>
+</div></div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- FULL SLIDES                                                 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<div id='slides'>
+
+<!-- ═══ ACT 1 — SETUP & HOOK ═══ -->
+<div class='act-divider'><h3>Act 1 — Setup & Hook</h3><span class='time'>10 min</span></div>
+
+<!-- Slide 1: Title -->
+<div class="slide-row" id="slide-1">
+  <div class="slide-panel" style="background: #FFFFFF">
+    <span class="sn">1/12</span>
+    <h2>Copilot CLI for <span class="accent">Partner Work</span></h2>
+    <h4>Your AI colleague in the terminal — no coding required</h4>
+    <p style="margin-top: 0.5em; font-size: 0.55rem; opacity: 0.5;">60 min · Hands-On Workshop</p>
+    <p style="margin-top: 1.5em; opacity: 0.4; font-size: 0.5em;">Johan Wallquist · Partner Solution Architect · Microsoft</p>
+  </div>
+  <div class="script-panel">
+    <div class="meta">
+      <span class="timing">1 min</span>
+      <span class="energy energy-high">⚡ HIGH</span>
+    </div>
+    <p><span class="do-action">DO:</span> Welcome everyone. Quick check — who has it installed and working? Show of hands.</p>
+    <p><span class="say-text"><strong>SAY:</strong></span> Today we are going to set up your own AI assistant in the terminal. Not a chatbot. Not VS Code. An actual colleague that connects to your partner data, your email, your calendar — and works with you.</p>
+    <p>By the end of this hour, you will have a working setup and real experience using it.</p>
+  </div>
+</div>
+
+<!-- Slide 2: Hook -->
+<div class="slide-row" id="slide-2">
+  <div class="slide-panel" style="background: #F8F8F7">
+    <span class="sn">2/12</span>
+    <h2>Not Another Chat Window</h2>
+    <h4>This is NOT another AI chatbot</h4>
+    <div class="trust-grid">
+      <div class="trust-card">
+        <div class="icon">💬</div>
+        <div class="card-title">ChatGPT</div>
+        <div class="card-sub">Ask questions, copy-paste answers. Disconnected from your work.</div>
+      </div>
+      <div class="trust-card">
+        <div class="icon">📝</div>
+        <div class="card-title">M365 Copilot</div>
+        <div class="card-sub">Great at drafts, lives inside Office. Can't cross tool boundaries.</div>
+      </div>
+      <div class="trust-card highlight">
+        <div class="icon">⚡</div>
+        <div class="card-title">Copilot CLI</div>
+        <div class="card-sub">Connects to YOUR systems. Plans. Executes. Learns your workflow.</div>
+      </div>
+    </div>
+  </div>
+  <div class="script-panel">
+    <div class="meta">
+      <span class="timing">4 min</span>
+      <span class="energy energy-high">⚡ HIGH</span>
+    </div>
+    <p><span class="do-action">DO:</span> Point at each card. Pause on the third.</p>
+    <p><span class="say-text"><strong>SAY:</strong></span> You probably use ChatGPT. Maybe M365 Copilot too. Both are useful. But they live in their own world.</p>
+    <p>Copilot CLI is different. It connects to your actual tools — PMX, MSX, your email, your calendar, GitHub. It doesn't just answer questions. It takes action. And it remembers what you taught it.</p>
+  </div>
+</div>
+
+<!-- Slide 3: The Basics -->
+<div class="slide-row" id="slide-3">
+  <div class="slide-panel" style="background: #F8F8F7">
+    <span class="sn">3/12</span>
+    <h2>Talk to It Like a <span class="accent">Colleague</span></h2>
+    <h4>Let me show you</h4>
+    <div style="margin: 0.4em 0;">
+      <div class="info-card"><span class="icon">📅</span><div><strong>Your calendar</strong> — "What meetings do I have today?"</div></div>
+      <div class="info-card"><span class="icon">📧</span><div><strong>Your email</strong> — "Find emails from the partner about the workshop"</div></div>
+      <div class="info-card"><span class="icon">📊</span><div><strong>Your PMX data</strong> — "Show me my active projects and their status"</div></div>
+      <div class="info-card"><span class="icon">📸</span><div><strong>Your screen</strong> — "Look at my screenshot and summarize it"</div></div>
+    </div>
+    <blockquote>No syntax to learn. No query language. Just describe what you need.</blockquote>
+  </div>
+  <div class="script-panel">
+    <div class="meta">
+      <span class="timing">5 min</span>
+      <span class="energy energy-med">🎯 SETUP</span>
+    </div>
+    <p><span class="do-action">DO:</span> Transition to live demo — basics.</p>
+    <p><span class="say-text"><strong>SAY:</strong></span> Four things you can do right now, without learning anything new. Check your calendar. Search your email. Pull your partner data. Show it your screen. All in plain English.</p>
+    <p>Let me demonstrate.</p>
+  </div>
+</div>
+
+<!-- ═══ ACT 2 — FIRST HANDS-ON ═══ -->
+<div class='act-divider'><h3>Act 2 — First Hands-On</h3><span class='time'>10 min</span></div>
+
+<!-- Slide 4: Demo Basics -->
+<div class="slide-row" id="slide-4">
+  <div class="slide-panel" style="background: #FFF5F5">
+    <span class="sn">4/12</span>
+    <h2>🔴 The Basics — <span class="accent">Live</span></h2>
+    <h4>Demo</h4>
+    <p style="margin-top: 0.5em;">Calendar · Email · PMX · Screenshots</p>
+    <blockquote>Follow along if your setup is working — or watch and we'll do it together next.</blockquote>
+  </div>
+  <div class="script-panel">
+    <div class="meta">
+      <span class="timing">5 min</span>
+      <span class="energy energy-high">🔴 LIVE DEMO</span>
+    </div>
+    <p><span class="do-action">DO:</span> Run demo-01-basics. Show calendar query, email search, PMX projects, screenshot analysis. Keep it snappy — 5 minutes max.</p>
+    <p><span class="say-text"><strong>SAY:</strong></span> Let me show you. I will check my calendar, search an email, pull my PMX projects, and analyze a screenshot. All from this terminal.</p>
+    <p>See demo card below for full script.</p>
+  </div>
+</div>
+
+<!-- Demo Card — Demo 01: The Basics -->
+<div class="demo-card">
+  <h3>🔴 DEMO 01 — The Basics</h3>
+  <div class="demo-meta">~5 min · Show Copilot CLI understands natural language, has slash commands, and can work with your screen</div>
+
+  <div class="section-title">Setup</div>
+  <div class="demo-step"><div class="demo-num">✓</div><div>Copilot CLI running in PowerShell</div></div>
+  <div class="demo-step"><div class="demo-num">✓</div><div>Calendar and email accessible (M365 MCP configured)</div></div>
+
+  <div class="section-title">1. Natural language — just talk to it</div>
+  <div class="prompt-box"><code>What meetings do I have today?</code></div>
+  <div class="talking-point">No special syntax. No query language. Just ask in plain English. It uses your M365 connection to check your actual calendar.</div>
+
+  <div class="section-title">2. Slash commands — quick actions</div>
+  <div class="prompt-box"><code>/help</code></div>
+  <div class="talking-point">Slash commands are shortcuts for common actions. Point out: /model (switch AI models), /env (see what's connected), /plan (think before doing), /research (deep investigation mode).</div>
+  <div class="prompt-box"><code>/model</code></div>
+  <div class="talking-point">You can pick different AI models depending on the task. Like choosing the right tool from a toolbox.</div>
+
+  <div class="section-title">3. @ mentions — point it at files</div>
+  <div class="prompt-box"><code>@README.md summarize this file</code></div>
+  <div class="talking-point">The @ symbol lets you point Copilot at specific files. It reads them and works with the content. Navigate to a folder with a README first.</div>
+
+  <div class="section-title">4. # references — GitHub issues and PRs</div>
+  <div class="prompt-box"><code>#1 what is this issue about?</code></div>
+  <div class="talking-point"># connects to GitHub. You can reference issues, pull requests — anything in your repos.</div>
+
+  <div class="section-title">5. Screenshot — what's on your screen</div>
+  <div class="demo-step"><div class="demo-num">1</div><div>Show something on screen (a PMX dashboard, an email, a webpage)</div></div>
+  <div class="demo-step"><div class="demo-num">2</div><div>Take a screenshot (Win+Shift+S or PrtSc)</div></div>
+  <div class="prompt-box"><code>Look at my last screenshot and tell me what you see</code></div>
+  <div class="talking-point">Copilot can analyze screenshots. Useful for: "What does this error mean?", "Summarize this dashboard", "Draft a response to this email I'm looking at."</div>
+
+  <div class="key-messages">
+    <h4>Key Messages</h4>
+    <ul>
+      <li>You don't need to learn a programming language — it speaks yours</li>
+      <li>Slash commands = shortcuts, not requirements</li>
+      <li>It connects to your actual tools (calendar, email, files, GitHub)</li>
+      <li>Screenshots make it visual — show it what you see</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Slide 5: Exercise 1 -->
+<div class="slide-row" id="slide-5">
+  <div class="slide-panel" style="background: #F8F8F7">
+    <span class="sn">5/12</span>
+    <h2>Exercise 1: First Conversation</h2>
+    <h4>Your turn</h4>
+    <div class="process-flow">
+      <div class="process-step">📅 Check calendar</div>
+      <div class="process-arrow">→</div>
+      <div class="process-step">📧 Search email</div>
+      <div class="process-arrow">→</div>
+      <div class="process-step">📊 Query PMX</div>
+    </div>
+    <blockquote>Copy the prompts from your exercise sheet. No need to improvise.</blockquote>
+  </div>
+  <div class="script-panel">
+    <div class="meta">
+      <span class="timing">5 min</span>
+      <span class="energy energy-calm">🟢 EXERCISE</span>
+    </div>
+    <p><span class="do-action">DO:</span> Give them 5 minutes. Walk around, help troubleshoot.</p>
+    <p><span class="say-text"><strong>SAY:</strong></span> Your turn. Open exercise one. Three tasks — calendar, email, PMX. The prompts are written for you, just copy and paste. Raise your hand if something is not working.</p>
+  </div>
+</div>
+
+<!-- ═══ ACT 3 — MCP & PARTNER WORK ═══ -->
+<div class='act-divider'><h3>Act 3 — MCP & Partner Work</h3><span class='time'>18 min</span></div>
+
+<!-- Slide 6: MCP -->
+<div class="slide-row" id="slide-6">
+  <div class="slide-panel" style="background: #F8F8F7">
+    <span class="sn">6/12</span>
+    <h2>MCP: Connectors That Give Copilot <span class="accent">Superpowers</span></h2>
+    <h4>Under the hood</h4>
+    <p style="margin-bottom: 0.4em;">MCP servers are how Copilot talks to external systems. Think of them as plugins — each one adds new capabilities.</p>
+    <div class="block-grid">
+      <div class="block-card">
+        <div class="block-icon">📊</div>
+        <div class="block-title">PMX</div>
+        <div class="block-desc">Partner projects, deliverables, tasks, outcomes — your D365 data</div>
+      </div>
+      <div class="block-card">
+        <div class="block-icon">🐙</div>
+        <div class="block-title">GitHub</div>
+        <div class="block-desc">Repos, issues, PRs, code search — your dev workflow</div>
+      </div>
+      <div class="block-card">
+        <div class="block-icon">📬</div>
+        <div class="block-title">M365</div>
+        <div class="block-desc">Email, calendar, Teams, SharePoint — your daily tools</div>
+      </div>
+    </div>
+  </div>
+  <div class="script-panel">
+    <div class="meta">
+      <span class="timing">5 min</span>
+      <span class="energy energy-med">🎯 EXPLAIN</span>
+    </div>
+    <p><span class="say-text"><strong>SAY:</strong></span> So how does Copilot know about your calendar, your PMX data, your email? MCP servers. Think of them as connectors. Each one teaches Copilot how to talk to a system.</p>
+    <p>You have three configured: PMX for partner management, GitHub for code and repos, and M365 for email, calendar, and Teams. You can add more. But these three cover most of what you need for partner work.</p>
+  </div>
+</div>
+
+<!-- Slide 7: Demo PMX Connect Prep -->
+<div class="slide-row" id="slide-7">
+  <div class="slide-panel" style="background: #FFF5F5">
+    <span class="sn">7/12</span>
+    <h2>🔴 Preparing for a <span class="accent">Partner Connect</span></h2>
+    <h4>Demo — Real Scenario</h4>
+    <p>Projects → Outcomes → Opportunities → Talking Points — all from one conversation</p>
+  </div>
+  <div class="script-panel">
+    <div class="meta">
+      <span class="timing">10 min</span>
+      <span class="energy energy-high">🔴 LIVE DEMO</span>
+    </div>
+    <p><span class="do-action">DO:</span> Run demo-02-pmx-connect-prep. Full flow: pull projects, check outcomes, search MSX, screenshot context, draft talking points.</p>
+    <p><span class="say-text"><strong>SAY:</strong></span> This is the demo I am most excited about. A real scenario. You have a Connect meeting tomorrow. Let me show you how to prepare in five minutes, without opening a single browser tab.</p>
+    <p>See demo card below for full script.</p>
+  </div>
+</div>
+
+<!-- Demo Card — Demo 02: Connect Prep with PMX -->
+<div class="demo-card">
+  <h3>🔴 DEMO 02 — Partner Connect Prep with PMX</h3>
+  <div class="demo-meta">~10 min · Walk through a realistic Connect preparation using PMX, MSX, M365, and screenshot tools</div>
+
+  <div class="section-title">Scenario</div>
+  <p style="font-size:0.85rem;margin-bottom:0.8rem;font-style:italic;color:#555;">"You have a partner Connect meeting tomorrow. You need to prepare: review your projects, check outcomes, look at opportunities, and draft talking points."</p>
+
+  <div class="section-title">Setup</div>
+  <div class="demo-step"><div class="demo-num">✓</div><div>Copilot CLI running with PMX, M365, and GitHub MCP servers loaded</div></div>
+  <div class="demo-step"><div class="demo-num">✓</div><div>Pick a real partner you have projects with (or use a well-known one for demo purposes)</div></div>
+  <div class="demo-step"><div class="demo-num">✓</div><div>Have an email or Teams chat related to that partner visible</div></div>
+
+  <div class="section-title">1. Pull your active projects</div>
+  <div class="prompt-box"><code>Show me my active PMX projects</code></div>
+  <div class="talking-point">This hits Dynamics 365 live. No need to open a browser, navigate to PMX, filter views. Just ask.</div>
+
+  <div class="section-title">2. Check outcome coverage</div>
+  <div class="prompt-box"><code>Which of my projects are missing outcomes?</code></div>
+  <div class="talking-point">This is one of the most common PMX hygiene issues. Instead of clicking through each project, Copilot checks them all at once. Point out: MSX Opportunity, Solution ID, Referral — the three outcome types.</div>
+
+  <div class="section-title">3. Dive into a specific partner</div>
+  <div class="prompt-box"><code>Show me the team for [Partner Name] — who is PDM, PTS, PSAM?</code></div>
+  <div class="talking-point">Before a Connect, you want to know who's in what role. This pulls the partner team directly.</div>
+
+  <div class="section-title">4. Search for related opportunities</div>
+  <div class="prompt-box"><code>Search MSX opportunities for [Partner Name] — show me open ones in EMEA</code></div>
+  <div class="talking-point">Now we're crossing from PMX into MSX. Copilot connects the dots between your project work and the sales pipeline. Look for gaps — opportunities without projects, or projects without linked opportunities.</div>
+
+  <div class="section-title">5. Screenshot context</div>
+  <div class="demo-step"><div class="demo-num">1</div><div>Open a partner email or Teams chat on screen. Take a screenshot.</div></div>
+  <div class="prompt-box"><code>Look at my last screenshot. What is the key ask or topic in this message?</code></div>
+  <div class="talking-point">Sometimes the context you need is visual — an email you received, a dashboard, a chat thread. Screenshot it, ask Copilot to summarize.</div>
+
+  <div class="section-title">6. Draft talking points</div>
+  <div class="prompt-box"><code>Based on the PMX projects, MSX opportunities, and partner team you just showed me — draft 3-4 talking points for my Connect meeting with [Partner Name] tomorrow. Focus on: outcome gaps, active opportunities, and any projects that need attention.</code></div>
+  <div class="talking-point">This is the payoff. Everything we just looked at — Copilot synthesizes into actionable talking points. You could paste this into your meeting notes or email it to the partner team.</div>
+
+  <div class="section-title">7. (Optional) Draft a prep email</div>
+  <div class="prompt-box"><code>Draft a short email to the PDM for [Partner Name] with the talking points we just created. Use a professional but informal tone.</code></div>
+  <div class="talking-point">You can go from data → analysis → action in one session. No tab-switching, no copy-pasting between apps.</div>
+
+  <div class="key-messages">
+    <h4>Key Messages</h4>
+    <ul>
+      <li>PMX + MSX + M365 = a complete Connect prep workflow</li>
+      <li>Copilot connects data sources that you'd normally have to jump between manually</li>
+      <li>The screenshot tool adds visual context that's hard to get otherwise</li>
+      <li>The draft output is a starting point, not a final product — you're the curator</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Slide 8: Exercise 2 -->
+<div class="slide-row" id="slide-8">
+  <div class="slide-panel" style="background: #F8F8F7">
+    <span class="sn">8/12</span>
+    <h2>Exercise 2: Analyze Your PMX Data</h2>
+    <h4>Your turn</h4>
+    <p style="margin-bottom: 0.3em;"><strong>Guided (3 min):</strong> Find your outcome gaps</p>
+    <p><strong>Self-paced (5 min):</strong> Explore partner data, cross-reference with MSX</p>
+    <blockquote>Find something interesting? Share it with the group.</blockquote>
+  </div>
+  <div class="script-panel">
+    <div class="meta">
+      <span class="timing">8 min</span>
+      <span class="energy energy-calm">🟢 EXERCISE</span>
+    </div>
+    <p><span class="do-action">DO:</span> Give them 8 minutes. The first part is guided — everyone finds outcome gaps. Then they pick challenges.</p>
+    <p><span class="say-text"><strong>SAY:</strong></span> Exercise two. Start with the guided part — find your projects that are missing outcomes. Then pick a challenge from the list. Compare notes with your neighbor if you find something interesting.</p>
+  </div>
+</div>
+
+<!-- ═══ ACT 4 — POWER MOVES ═══ -->
+<div class='act-divider'><h3>Act 4 — Power Moves</h3><span class='time'>14 min</span></div>
+
+<!-- Slide 9: Power Moves -->
+<div class="slide-row" id="slide-9">
+  <div class="slide-panel" style="background: #F8F8F7">
+    <span class="sn">9/12</span>
+    <h2>Power Moves</h2>
+    <h4>Beyond Q&A — strategic tools for partner work</h4>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-cmd">/research</div>
+        <div class="skill-name">Deep Investigation</div>
+        <div class="skill-desc">Web search + citations. Market research, competitive analysis.</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-cmd">/plan</div>
+        <div class="skill-name">Think Before Acting</div>
+        <div class="skill-desc">Structured plan you review before Copilot executes.</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-cmd">/skills</div>
+        <div class="skill-name">Domain Expertise</div>
+        <div class="skill-desc">Azure VM sizing, compliance, cost optimization on demand.</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-cmd">Custom Agents</div>
+        <div class="skill-name">Your Assistants</div>
+        <div class="skill-desc">Partner briefing, meeting prep, content — your workflow.</div>
+      </div>
+    </div>
+  </div>
+  <div class="script-panel">
+    <div class="meta">
+      <span class="timing">3 min</span>
+      <span class="energy energy-high">⚡ HIGH</span>
+    </div>
+    <p><span class="say-text"><strong>SAY:</strong></span> Four power moves. Research gives you an analyst that searches the web and cites sources. Plan makes Copilot think before acting. Skills add specialist knowledge — like Azure pricing or compliance rules. Custom agents let you create assistants tailored to your workflow.</p>
+    <p>Let me show you the killer combo.</p>
+  </div>
+</div>
+
+<!-- Slide 10: Demo Research + PMX -->
+<div class="slide-row" id="slide-10">
+  <div class="slide-panel" style="background: #FFF5F5">
+    <span class="sn">10/12</span>
+    <h2>🔴 /research + PMX + MSX → <span class="accent">Partner Roadmap</span></h2>
+    <h4>Demo — The Killer Combo</h4>
+    <p>External intelligence meets internal data</p>
+  </div>
+  <div class="script-panel">
+    <div class="meta">
+      <span class="timing">7 min</span>
+      <span class="energy energy-high">🔴 LIVE DEMO</span>
+    </div>
+    <p><span class="do-action">DO:</span> Run the /research command about AI workloads for ISVs. Then cross-reference with MSX opportunities. Generate a roadmap.</p>
+    <p><span class="say-text"><strong>SAY:</strong></span> Watch this. I will ask Copilot to research what ISV partners are building on Azure. Then cross-reference that with our actual MSX pipeline. Then generate a suggested roadmap for a partner. Market intelligence plus your own data — synthesized in one conversation.</p>
+    <p>See demo card below for full script.</p>
+  </div>
+</div>
+
+<!-- Demo Card — Demo 03: Power Moves -->
+<div class="demo-card">
+  <h3>🔴 DEMO 03 — Power Moves</h3>
+  <div class="demo-meta">~7 min · /research for deep investigation, skills for domain expertise, combined with PMX/MSX data for strategic output</div>
+
+  <div class="section-title">Setup</div>
+  <div class="demo-step"><div class="demo-num">✓</div><div>Copilot CLI running with all MCP servers</div></div>
+  <div class="demo-step"><div class="demo-num">✓</div><div>Pick a topic relevant to your audience (e.g., a partner's technology area, a market trend)</div></div>
+
+  <div class="section-title">1. /research — deep investigation mode</div>
+  <div class="prompt-box"><code>/research What is the current state of AI agent adoption among ISVs in the Nordic market? Include trends, challenges, and opportunities for Microsoft partners.</code></div>
+  <div class="talking-point">/research is different from a regular question. It runs a deep search — web sources, GitHub, structured data — and produces a report with citations. Think of it as having a research analyst on your team.</div>
+  <div class="demo-step"><div class="demo-num">⏳</div><div>Wait for research to complete (usually 30-60 seconds). Point out citations, structure, depth.</div></div>
+
+  <div class="section-title">2. Combine research with PMX data</div>
+  <div class="prompt-box"><code>Now look at the MSX opportunities in EMEA related to AI agents or autonomous systems. Cross-reference with what you just found — are there gaps we should be pursuing?</code></div>
+  <div class="talking-point">This is where it gets powerful. You take external intelligence (market research) and overlay it with internal data (your MSX pipeline). Copilot can spot patterns you'd miss manually.</div>
+
+  <div class="section-title">3. Generate a partner roadmap</div>
+  <div class="prompt-box"><code>Based on the research and MSX opportunity data, draft a suggested technical roadmap for a partner looking to build AI agent solutions on Azure. Include: which Azure services to start with, what skills they need, and 2-3 concrete project ideas with estimated complexity.</code></div>
+  <div class="talking-point">This is the kind of output you'd normally spend hours assembling. Market context + pipeline data + Azure expertise = a roadmap you can actually bring to a partner conversation.</div>
+
+  <div class="section-title">4. Skills — domain expertise on demand</div>
+  <div class="prompt-box"><code>/skills</code></div>
+  <div class="talking-point">Skills are pre-packaged expertise. Show the list — highlight Azure skills (deploy, diagnostics, compliance), PMX tools, and content creation.</div>
+  <div class="prompt-box"><code>Use the azure-compute skill to recommend a VM size for a partner running a mid-size SQL Server workload with 32GB RAM and 8 cores.</code></div>
+  <div class="talking-point">You don't need to memorize Azure VM SKUs. Skills give Copilot access to pricing APIs, best practices, configuration guides.</div>
+
+  <div class="section-title">5. Custom agents and extensions</div>
+  <div class="prompt-box"><code>/env</code></div>
+  <div class="talking-point">Show the extensions and agents section. Explain: custom agents = specialized personas, extensions = new tools, instructions files = team conventions. This is how you go from "useful tool" to "customized assistant."</div>
+
+  <div class="section-title">6. /plan — think before you act</div>
+  <div class="prompt-box"><code>/plan Create a one-page partner brief for [Partner Name] that includes their project portfolio, outcome coverage, open opportunities, and a recommended next step.</code></div>
+  <div class="talking-point">/plan creates a structured plan before doing anything. You review it, adjust it, then tell Copilot to execute. Like giving a brief to a colleague.</div>
+
+  <div class="key-messages">
+    <h4>Key Messages</h4>
+    <ul>
+      <li>/research = deep investigation with citations, not just a quick answer</li>
+      <li>Combining research + internal data (PMX/MSX) = strategic insights</li>
+      <li>Skills give Copilot domain expertise you don't have to carry in your head</li>
+      <li>Custom agents and instructions make it YOUR assistant, not a generic one</li>
+      <li>/plan gives you control — review before execution</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Slide 11: Exercise 3 -->
+<div class="slide-row" id="slide-11">
+  <div class="slide-panel" style="background: #F8F8F7">
+    <span class="sn">11/12</span>
+    <h2>Exercise 3: Choose Your Adventure</h2>
+    <h4>Your turn — pick a scenario</h4>
+    <div style="margin: 0.4em 0;">
+      <div class="info-card"><span class="icon">🔧</span><div><strong>Fix outcome gaps</strong> — find and link missing MSX opportunities</div></div>
+      <div class="info-card"><span class="icon">📋</span><div><strong>Connect prep</strong> — draft talking points for a real partner</div></div>
+      <div class="info-card"><span class="icon">📧</span><div><strong>Draft an email</strong> — using PMX + M365 context</div></div>
+      <div class="info-card"><span class="icon">📸</span><div><strong>Screenshot analysis</strong> — show Copilot what's on your screen</div></div>
+      <div class="info-card"><span class="icon">🗺</span><div><strong>Research + roadmap</strong> — combine /research with pipeline data</div></div>
+    </div>
+  </div>
+  <div class="script-panel">
+    <div class="meta">
+      <span class="timing">7 min</span>
+      <span class="energy energy-calm">🟢 EXERCISE</span>
+    </div>
+    <p><span class="do-action">DO:</span> Give them 7 minutes. Let them self-select. Walk around, help, point out interesting finds.</p>
+    <p><span class="say-text"><strong>SAY:</strong></span> Last exercise. Pick the scenario closest to your actual work right now. The exercise sheet has step-by-step prompts for each one. Try one. If you finish early, try another.</p>
+  </div>
+</div>
+
+<!-- ═══ ACT 5 — CLOSE ═══ -->
+<div class='act-divider'><h3>Act 5 — Close</h3><span class='time'>3 min</span></div>
+
+<!-- Slide 12: Your Toolbox -->
+<div class="slide-row" id="slide-12">
+  <div class="slide-panel" style="background: #FFFFFF">
+    <span class="sn">12/12</span>
+    <h2>You Now Have</h2>
+    <div class="stat-grid">
+      <div class="stat"><div class="num">1</div><div class="label">AI colleague in your terminal</div></div>
+      <div class="stat"><div class="num">3</div><div class="label">MCP connectors (PMX · GitHub · M365)</div></div>
+      <div class="stat"><div class="num">∞</div><div class="label">scenarios to explore</div></div>
+    </div>
+    <blockquote>The only way to learn this is to use it. <strong>Start with something small tomorrow.</strong></blockquote>
+    <ul style="margin-top: 0.5em;">
+      <li><strong>Cheat sheet</strong> — print it, keep it open, reference it</li>
+      <li><strong>Try one real task tomorrow</strong> — a Connect prep, an email draft, an outcome check</li>
+      <li><strong>Ask in the Teams channel</strong> when you get stuck — we're all learning</li>
+    </ul>
+  </div>
+  <div class="script-panel">
+    <div class="meta">
+      <span class="timing">3 min</span>
+      <span class="energy energy-med">🎯 CLOSE</span>
+    </div>
+    <p><span class="say-text"><strong>SAY:</strong></span> Here is what you walk away with today. A working Copilot CLI. Three MCP servers connecting you to your actual work tools. And experience using it on real scenarios.</p>
+    <p>The cheat sheet has everything you need. My one ask — try one real thing tomorrow. Not a test. A real task. Prepare for a meeting. Draft an email. Check your outcome gaps. That is how it sticks.</p>
+    <p>Questions?</p>
+  </div>
+</div>
+
+</div><!-- end #slides -->
+</div><!-- end .container -->
+
+</body>
+</html>

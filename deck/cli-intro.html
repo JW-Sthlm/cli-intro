@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Copilot CLI for Partner Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F8F8F7;
+  --bg-white:#FFFFFF;
+  --bg-card:#FFFFFF;
+  --bg-elevated:#F1F1EF;
+  --bg-code:#F1F1EF;
+  --fg:#21211F;
+  --fg-secondary:#4A4A46;
+  --fg-muted:#797971;
+  --fg-weak:#A9A9A3;
+  --border:#E2E2DF;
+  --border-light:#ECECEA;
+  --teal:#2D6E6D;
+  --teal-hover:#388988;
+  --teal-active:#204F4E;
+  --teal-bg:#2D6E6D0C;
+  --teal-bg-strong:#2D6E6D18;
+  --coral:#FF5858;
+  --coral-soft:#FF585818;
+  --burgundy:#791A3F;
+  --burgundy-soft:#791A3F12;
+  --green:#43A584;
+  --blue:#4790FF;
+  --purple:#7B61FF;
+  --shadow-sm:0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
+  --shadow-lg:0 4px 12px rgba(0,0,0,0.08),0 1px 3px rgba(0,0,0,0.04);
+  --shadow-xl:0 8px 32px rgba(0,0,0,0.1),0 2px 8px rgba(0,0,0,0.05);
+  --radius-sm:4px;
+  --radius-md:6px;
+  --radius-lg:12px;
+  --radius-pill:100em;
+  --font-display:'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --ease-in-out:cubic-bezier(0.4,0,0.2,1);
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--fg);
+  font-family:var(--font-body);font-size:16px;
+  line-height:1.6;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── Progress bar ── */
+#progress{
+  position:fixed;top:0;left:0;height:3px;
+  background:var(--teal);width:0;z-index:100;
+  transition:width .5s var(--ease-out);
+}
+
+/* ── Nav dots ── */
+#nav{
+  position:fixed;right:24px;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:12px;z-index:100;
+}
+.nav-dot{
+  width:8px;height:8px;border-radius:50%;
+  border:1.5px solid var(--fg-weak);background:transparent;
+  cursor:pointer;transition:all .3s var(--ease-out);
+  position:relative;
+}
+.nav-dot::after{
+  content:attr(data-label);
+  position:absolute;right:18px;top:50%;transform:translateY(-50%);
+  font-size:11px;letter-spacing:.02em;color:var(--fg-muted);
+  white-space:nowrap;opacity:0;pointer-events:none;
+  transition:opacity .2s;font-family:var(--font-body);font-weight:500;
+}
+.nav-dot:hover::after{opacity:1}
+.nav-dot.active{
+  background:var(--teal);border-color:var(--teal);
+  transform:scale(1.4);
+}
+
+/* ── Counter ── */
+#counter{
+  position:fixed;bottom:28px;left:36px;z-index:100;
+  font-family:var(--font-body);font-size:12px;
+  letter-spacing:.04em;color:var(--fg-weak);font-weight:500;
+}
+#counter span{color:var(--teal);font-weight:600}
+
+/* ── Keyboard hint ── */
+#keys{
+  position:fixed;bottom:28px;right:36px;z-index:100;
+  font-size:11px;color:var(--fg-weak);display:flex;gap:5px;align-items:center;
+  font-family:var(--font-body);
+}
+.key{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:22px;height:22px;border:1px solid var(--border);
+  border-radius:var(--radius-sm);font-size:9px;
+  background:var(--bg-white);box-shadow:var(--shadow-sm);
+}
+
+/* ── Deck ── */
+#deck{
+  scroll-snap-type:y mandatory;overflow-y:scroll;height:100vh;
+  scroll-behavior:smooth;
+}
+#deck::-webkit-scrollbar{display:none}
+.slide{
+  min-height:100vh;scroll-snap-align:start;
+  display:flex;align-items:center;justify-content:center;
+  padding:60px 80px;position:relative;overflow:hidden;
+}
+
+/* ── Content ── */
+.slide-inner{max-width:1060px;width:100%;position:relative;z-index:1}
+
+/* ── Typography ── */
+.part-label{
+  font-family:var(--font-body);font-size:12px;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--teal);font-weight:600;
+  margin-bottom:12px;display:inline-block;
+}
+h1{
+  font-family:var(--font-display);font-size:clamp(40px,5vw,64px);
+  line-height:1.1;font-weight:800;margin-bottom:24px;
+  letter-spacing:-.02em;color:var(--fg);
+}
+h1 .accent{color:var(--teal)}
+h1 .coral{color:var(--coral)}
+h2{
+  font-family:var(--font-display);font-size:clamp(30px,3.2vw,44px);
+  line-height:1.15;font-weight:700;margin-bottom:20px;
+  letter-spacing:-.015em;
+}
+h2 .accent{color:var(--teal)}
+h2 .coral{color:var(--coral)}
+.lead{
+  font-size:19px;line-height:1.65;color:var(--fg-secondary);
+  max-width:600px;margin-bottom:36px;
+}
+.lead strong{color:var(--fg);font-weight:600}
+.quote{
+  border-left:3px solid var(--teal);padding:12px 0 12px 20px;
+  color:var(--fg-secondary);font-size:17px;line-height:1.6;
+  margin-top:32px;max-width:640px;
+}
+.quote strong{color:var(--fg);font-weight:600}
+
+/* ── Reveal animations ── */
+.reveal{
+  opacity:0;transform:translateY(20px);
+  transition:opacity .7s var(--ease-out),transform .7s var(--ease-out);
+}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal.d1{transition-delay:.08s}
+.reveal.d2{transition-delay:.16s}
+.reveal.d3{transition-delay:.24s}
+.reveal.d4{transition-delay:.32s}
+.reveal.d5{transition-delay:.4s}
+
+/* ── Title slide ── */
+.slide-title{text-align:center}
+.slide-title .slide-inner{display:flex;flex-direction:column;align-items:center}
+.slide-title h1{margin-bottom:16px}
+.slide-title .lead{text-align:center;max-width:520px}
+.start-hint{
+  margin-top:44px;display:flex;align-items:center;gap:8px;
+  font-size:13px;color:var(--fg-weak);
+  animation:pulse 2.5s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+/* ── Slide backgrounds ── */
+.slide-hero{background:var(--bg-white)}
+.slide-hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 50% 50% at 80% 20%,var(--teal-bg),transparent),
+             radial-gradient(ellipse 40% 40% at 10% 80%,var(--coral-soft),transparent);
+  pointer-events:none;
+}
+.slide-alt{background:var(--bg)}
+
+/* ── Card grid ── */
+.card-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:24px 0;
+}
+.info-card{
+  background:var(--bg-white);border:1px solid var(--border-light);
+  border-radius:var(--radius-lg);padding:18px 20px;
+  box-shadow:var(--shadow-sm);transition:all .3s var(--ease-out);
+}
+.info-card:hover{border-color:var(--teal);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.info-card .icon{font-size:22px;margin-bottom:6px}
+.info-card .card-text{font-size:15px;color:var(--fg-secondary);line-height:1.5}
+.info-card .card-text strong{color:var(--fg);font-weight:600}
+
+/* ── Trust cards (used for hook comparison) ── */
+.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0}
+.trust-card{
+  background:var(--bg-white);border:1px solid var(--border-light);
+  border-radius:var(--radius-lg);padding:20px;text-align:center;
+  box-shadow:var(--shadow-sm);transition:all .3s var(--ease-out);
+}
+.trust-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.trust-card.highlight{border-top:3px solid var(--teal)}
+.trust-card .icon{font-size:24px;margin-bottom:8px}
+.trust-card .card-title{font-family:var(--font-display);font-weight:700;font-size:14px;margin-bottom:4px}
+.trust-card .card-sub{font-size:12px;color:var(--fg-muted)}
+
+/* ── Block grid ── */
+.block-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:28px 0}
+.block-card{
+  background:var(--bg-white);border:1px solid var(--border-light);
+  border-radius:var(--radius-lg);padding:24px 20px;
+  box-shadow:var(--shadow-sm);transition:all .3s var(--ease-out);
+}
+.block-card:hover{border-color:var(--teal);box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.block-icon{font-size:28px;margin-bottom:10px}
+.block-title{font-family:var(--font-display);font-weight:700;font-size:16px;margin-bottom:6px}
+.block-desc{font-size:15px;color:var(--fg-secondary);line-height:1.5;margin-bottom:10px}
+.block-level{font-size:11px;color:var(--teal);font-weight:600;letter-spacing:.04em}
+
+/* ── Stat grid ── */
+.stat-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:28px 0;
+}
+.stat-card{
+  background:var(--bg-white);border:1px solid var(--border-light);
+  border-radius:var(--radius-lg);padding:24px 20px;text-align:center;
+  box-shadow:var(--shadow-sm);transition:all .3s var(--ease-out);
+}
+.stat-card:hover{border-color:var(--teal);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.stat-number{
+  font-family:var(--font-display);font-size:40px;font-weight:800;
+  color:var(--teal);line-height:1;margin-bottom:6px;
+}
+.stat-label{font-size:13px;color:var(--fg-secondary);font-weight:500}
+
+/* ── Skill cards ── */
+.skills-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  gap:12px;margin:28px 0;
+}
+.skill-card{
+  background:var(--bg-white);border:1px solid var(--border-light);
+  border-radius:var(--radius-lg);padding:18px;
+  box-shadow:var(--shadow-sm);
+  transition:all .3s var(--ease-out);cursor:default;
+}
+.skill-card:hover{
+  border-color:var(--teal);box-shadow:var(--shadow-lg);
+  transform:translateY(-2px);
+}
+.skill-cmd{
+  font-family:'JetBrains Mono','Fira Code',monospace;font-size:12px;
+  color:var(--teal);margin-bottom:6px;font-weight:500;
+}
+.skill-name{font-weight:700;font-size:14px;margin-bottom:4px;font-family:var(--font-display)}
+.skill-desc{font-size:12px;color:var(--fg-muted);line-height:1.45}
+
+/* ── Process flow ── */
+.process-flow{
+  display:flex;align-items:center;gap:0;margin:24px 0;flex-wrap:wrap;
+  justify-content:center;
+}
+.process-step{
+  background:var(--bg-white);border:1px solid var(--border-light);
+  border-radius:var(--radius-md);padding:10px 16px;
+  font-size:14px;font-weight:500;box-shadow:var(--shadow-sm);
+}
+.process-arrow{color:var(--fg-weak);font-size:16px;padding:0 6px}
+
+/* ── Feature list ── */
+.feature-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.feature-list li{color:var(--fg-secondary);font-size:15px;align-items:baseline;gap:8px}
+.feature-list .dot{
+  width:6px;height:6px;border-radius:50%;background:var(--teal);
+  flex-shrink:0;position:relative;top:1px;
+}
+.feature-list strong{color:var(--fg);font-weight:600}
+
+/* ── Two cols ── */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+
+/* ── Responsive ── */
+@media(max-width:900px){
+  .slide{padding:40px 28px}
+  .cols{grid-template-columns:1fr;gap:24px}
+  .stat-grid{grid-template-columns:repeat(2,1fr)}
+  .card-grid{grid-template-columns:1fr}
+  .trust-grid{grid-template-columns:1fr}
+  .block-grid{grid-template-columns:1fr}
+  .skills-grid{grid-template-columns:1fr}
+  #nav{display:none}
+}
+#header-link{
+  position:fixed;top:16px;right:70px;z-index:99;
+  font-family:var(--font-body);font-size:11px;
+  color:var(--fg-weak);letter-spacing:.02em;
+  opacity:0;transition:opacity .5s;
+  pointer-events:none;
+}
+#header-link.visible{opacity:1;pointer-events:auto}
+#header-link a{color:var(--teal);text-decoration:none;font-weight:500}
+#header-link a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<div id="header-link">Johan Wallquist&ensp;|&ensp;Microsoft</div>
+<div id="progress"></div>
+<nav id="nav"></nav>
+<div id="counter"><span>1</span> / 12</div>
+<div id="keys"><span class="key">&uarr;</span><span class="key">&darr;</span> navigate &nbsp;<span class="key">P</span> presenter</div>
+
+<div id="deck">
+
+<!-- ═══════ SLIDE 1: TITLE ═══════ -->
+<section class="slide slide-title slide-hero" data-label="Title" data-notes="DO: Welcome everyone. Quick check — who has it installed and working? SAY: Today we are going to set up your own AI assistant in the terminal. Not a chatbot. Not VS Code. An actual colleague that connects to your partner data, your email, your calendar — and works with you. By the end of this hour, you will have a working setup and real experience using it.">
+  <div class="slide-inner">
+    <div class="reveal" style="font-family:var(--font-display);font-size:15px;letter-spacing:.15em;text-transform:uppercase;color:var(--fg-weak);opacity:0.55;margin-bottom:20px;">60 min &middot; Hands-On Workshop</div>
+    <h1 class="reveal">Copilot CLI for <span class="accent">Partner Work</span></h1>
+    <p class="lead reveal d1">Your AI colleague in the terminal &mdash; no coding required</p>
+    <p class="reveal d2" style="font-size:14px;color:var(--fg-muted);margin-top:-16px">Johan Wallquist &middot; Partner Solution Architect &middot; Microsoft</p>
+    <div class="start-hint reveal d4">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      Scroll or press &darr; to begin
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 2: HOOK ═══════ -->
+<section class="slide slide-alt" data-label="Hook" data-notes="DO: Point at each card. Pause on the third. SAY: You probably use ChatGPT. Maybe M365 Copilot too. Both are useful. But they live in their own world. Copilot CLI is different. It connects to your actual tools — PMX, MSX, your email, your calendar, GitHub. It doesn't just answer questions. It takes action. And it remembers what you taught it.">
+  <div class="slide-inner">
+    <span class="part-label reveal">This is NOT another AI chatbot</span>
+    <h2 class="reveal d1">Not Another Chat Window</h2>
+    <div class="trust-grid reveal d2">
+      <div class="trust-card">
+        <div class="icon">&#128172;</div>
+        <div class="card-title">ChatGPT</div>
+        <div class="card-sub">You ask questions, copy-paste answers. Disconnected from your work.</div>
+      </div>
+      <div class="trust-card">
+        <div class="icon">&#128221;</div>
+        <div class="card-title">M365 Copilot</div>
+        <div class="card-sub">Great at drafts, lives inside Office. Can&rsquo;t cross tool boundaries.</div>
+      </div>
+      <div class="trust-card highlight">
+        <div class="icon">&#9889;</div>
+        <div class="card-title">Copilot CLI</div>
+        <div class="card-sub">Connects to YOUR systems. Plans. Executes. Learns your workflow.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 3: BASICS ═══════ -->
+<section class="slide" data-label="Basics" data-notes="DO: Transition to live demo — basics. SAY: Four things you can do right now, without learning anything new. Check your calendar. Search your email. Pull your partner data. Show it your screen. All in plain English. Let me demonstrate.">
+  <div class="slide-inner">
+    <span class="part-label reveal">Let me show you</span>
+    <h2 class="reveal d1">Talk to It Like a Colleague</h2>
+    <div class="card-grid reveal d2">
+      <div class="info-card">
+        <div class="icon">&#128197;</div>
+        <div class="card-text"><strong>Your calendar</strong> &mdash; &ldquo;What meetings do I have today?&rdquo;</div>
+      </div>
+      <div class="info-card">
+        <div class="icon">&#128231;</div>
+        <div class="card-text"><strong>Your email</strong> &mdash; &ldquo;Find emails from the partner about the workshop&rdquo;</div>
+      </div>
+      <div class="info-card">
+        <div class="icon">&#128202;</div>
+        <div class="card-text"><strong>Your PMX data</strong> &mdash; &ldquo;Show me my active projects and their status&rdquo;</div>
+      </div>
+      <div class="info-card">
+        <div class="icon">&#128248;</div>
+        <div class="card-text"><strong>Your screen</strong> &mdash; &ldquo;Look at my screenshot and summarize it&rdquo;</div>
+      </div>
+    </div>
+    <div class="quote reveal d3">No syntax to learn. No query language. Just describe what you need.</div>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 4: DEMO BASICS ═══════ -->
+<section class="slide slide-hero" data-label="Demo 1" data-notes="DO: Run demo-01-basics. Show calendar query, email search, PMX projects, screenshot analysis. Keep it snappy — 5 minutes max. SAY: Let me show you. I will check my calendar, search an email, pull my PMX projects, and analyze a screenshot. All from this terminal.">
+  <div class="slide-inner">
+    <span class="part-label reveal">Demo</span>
+    <h2 class="reveal d1">The Basics &mdash; <span class="accent">Live</span></h2>
+    <p class="lead reveal d2">Calendar &middot; Email &middot; PMX &middot; Screenshots</p>
+    <div class="quote reveal d3">Follow along if your setup is working &mdash; or watch and we&rsquo;ll do it together next.</div>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 5: EXERCISE 1 ═══════ -->
+<section class="slide slide-alt" data-label="Exercise 1" data-notes="DO: Give them 5 minutes. Walk around, help troubleshoot. SAY: Your turn. Open exercise one. Three tasks — calendar, email, PMX. The prompts are written for you, just copy and paste. Raise your hand if something is not working.">
+  <div class="slide-inner">
+    <span class="part-label reveal">Your turn</span>
+    <h2 class="reveal d1">Exercise 1: First Conversation</h2>
+    <div class="process-flow reveal d2">
+      <div class="process-step">&#128197; Check calendar</div>
+      <div class="process-arrow">&rarr;</div>
+      <div class="process-step">&#128231; Search email</div>
+      <div class="process-arrow">&rarr;</div>
+      <div class="process-step">&#128202; Query PMX</div>
+    </div>
+    <div class="quote reveal d3">Copy the prompts from your exercise sheet. No need to improvise.</div>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 6: MCP ═══════ -->
+<section class="slide" data-label="MCP" data-notes="SAY: So how does Copilot know about your calendar, your PMX data, your email? MCP servers. Think of them as connectors. Each one teaches Copilot how to talk to a system. You have three configured: PMX for partner management, GitHub for code and repos, and M365 for email, calendar, and Teams. You can add more. But these three cover most of what you need for partner work.">
+  <div class="slide-inner">
+    <span class="part-label reveal">Under the hood</span>
+    <h2 class="reveal d1">MCP: Connectors That Give Copilot <span class="accent">Superpowers</span></h2>
+    <p class="lead reveal d2">MCP servers are how Copilot talks to external systems. Think of them as plugins &mdash; each one adds new capabilities.</p>
+    <div class="block-grid reveal d3">
+      <div class="block-card">
+        <div class="block-icon">&#128202;</div>
+        <div class="block-title">PMX</div>
+        <div class="block-desc">Partner projects, deliverables, tasks, outcomes &mdash; your D365 data</div>
+        <div class="block-level">Partner Management</div>
+      </div>
+      <div class="block-card">
+        <div class="block-icon">&#128025;</div>
+        <div class="block-title">GitHub</div>
+        <div class="block-desc">Repos, issues, PRs, code search &mdash; your development workflow</div>
+        <div class="block-level">Code &amp; Collaboration</div>
+      </div>
+      <div class="block-card">
+        <div class="block-icon">&#128236;</div>
+        <div class="block-title">M365</div>
+        <div class="block-desc">Email, calendar, Teams, SharePoint &mdash; your daily tools</div>
+        <div class="block-level">Communication</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 7: DEMO PMX ═══════ -->
+<section class="slide slide-hero" data-label="Demo 2" data-notes="DO: Run demo-02-pmx-connect-prep. Full flow: pull projects, check outcomes, search MSX, screenshot context, draft talking points. SAY: This is the demo I am most excited about. A real scenario. You have a Connect meeting tomorrow. Let me show you how to prepare in five minutes, without opening a single browser tab.">
+  <div class="slide-inner">
+    <span class="part-label reveal">Demo &mdash; Real Scenario</span>
+    <h2 class="reveal d1">Preparing for a <span class="accent">Partner Connect</span></h2>
+    <p class="lead reveal d2">Projects &rarr; Outcomes &rarr; Opportunities &rarr; Talking Points &mdash; all from one conversation</p>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 8: EXERCISE 2 ═══════ -->
+<section class="slide slide-alt" data-label="Exercise 2" data-notes="DO: Give them 8 minutes. The first part is guided — everyone finds outcome gaps. Then they pick challenges. SAY: Exercise two. Start with the guided part — find your projects that are missing outcomes. Then pick a challenge from the list. Compare notes with your neighbor if you find something interesting.">
+  <div class="slide-inner">
+    <span class="part-label reveal">Your turn</span>
+    <h2 class="reveal d1">Exercise 2: Analyze Your PMX Data</h2>
+    <p class="lead reveal d2"><strong>Guided:</strong> find your outcome gaps<br><strong>Self-paced:</strong> explore partner data, cross-reference with MSX</p>
+    <div class="quote reveal d3">Find something interesting? Share it with the group.</div>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 9: POWER MOVES ═══════ -->
+<section class="slide" data-label="Power Moves" data-notes="DO: Run demo-03-power-moves. Focus on /research + PMX combo → partner roadmap. SAY: Four power moves. Research gives you an analyst that searches the web and cites sources. Plan makes Copilot think before acting. Skills add specialist knowledge — like Azure pricing or compliance rules. Custom agents let you create assistants tailored to your workflow. Let me show you the killer combo.">
+  <div class="slide-inner">
+    <span class="part-label reveal">Level up</span>
+    <h2 class="reveal d1">Power Moves</h2>
+    <p class="lead reveal d2">Beyond Q&amp;A &mdash; strategic tools for partner work</p>
+    <div class="skills-grid reveal d3">
+      <div class="skill-card">
+        <div class="skill-cmd">/research</div>
+        <div class="skill-name">Deep Investigation</div>
+        <div class="skill-desc">Web search + citations. Market research, competitive analysis, technology landscape.</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-cmd">/plan</div>
+        <div class="skill-name">Think Before Acting</div>
+        <div class="skill-desc">Structured plan you review before Copilot executes. Like briefing a colleague.</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-cmd">/skills</div>
+        <div class="skill-name">Domain Expertise</div>
+        <div class="skill-desc">Azure VM sizing, compliance checks, cost optimization &mdash; specialist knowledge on demand.</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-cmd">Custom Agents</div>
+        <div class="skill-name">Your Assistants</div>
+        <div class="skill-desc">Partner briefing agent, meeting prep, content creation &mdash; teach it your workflow.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 10: DEMO RESEARCH ═══════ -->
+<section class="slide slide-hero" data-label="Demo 3" data-notes="DO: Run the /research command about AI workloads for ISVs. Then cross-reference with MSX opportunities. Generate a roadmap. SAY: Watch this. I will ask Copilot to research what ISV partners are building on Azure. Then cross-reference that with our actual MSX pipeline. Then generate a suggested roadmap for a partner. Market intelligence plus your own data — synthesized in one conversation.">
+  <div class="slide-inner">
+    <span class="part-label reveal">Demo &mdash; The Killer Combo</span>
+    <h2 class="reveal d1">/research + PMX + MSX &rarr; <span class="accent">Partner Roadmap</span></h2>
+    <p class="lead reveal d2">External intelligence meets internal data</p>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 11: EXERCISE 3 ═══════ -->
+<section class="slide slide-alt" data-label="Exercise 3" data-notes="DO: Give them 7 minutes. Let them self-select. Walk around, help, point out interesting finds. SAY: Last exercise. Pick the scenario closest to your actual work right now. The exercise sheet has step-by-step prompts for each one. Try one. If you finish early, try another.">
+  <div class="slide-inner">
+    <span class="part-label reveal">Your turn &mdash; pick a scenario</span>
+    <h2 class="reveal d1">Exercise 3: Choose Your Adventure</h2>
+    <div style="display:flex;flex-direction:column;gap:10px;margin:24px 0;" class="reveal d2">
+      <div class="info-card" style="display:flex;align-items:center;gap:12px;">
+        <div class="icon" style="margin-bottom:0">&#128295;</div>
+        <div class="card-text"><strong>Fix outcome gaps</strong> &mdash; find and link missing MSX opportunities</div>
+      </div>
+      <div class="info-card" style="display:flex;align-items:center;gap:12px;">
+        <div class="icon" style="margin-bottom:0">&#128203;</div>
+        <div class="card-text"><strong>Connect prep</strong> &mdash; draft talking points for a real partner</div>
+      </div>
+      <div class="info-card" style="display:flex;align-items:center;gap:12px;">
+        <div class="icon" style="margin-bottom:0">&#128231;</div>
+        <div class="card-text"><strong>Draft an email</strong> &mdash; using PMX + M365 context</div>
+      </div>
+      <div class="info-card" style="display:flex;align-items:center;gap:12px;">
+        <div class="icon" style="margin-bottom:0">&#128248;</div>
+        <div class="card-text"><strong>Screenshot analysis</strong> &mdash; show Copilot what&rsquo;s on your screen</div>
+      </div>
+      <div class="info-card" style="display:flex;align-items:center;gap:12px;">
+        <div class="icon" style="margin-bottom:0">&#128506;</div>
+        <div class="card-text"><strong>Research + roadmap</strong> &mdash; combine /research with pipeline data</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SLIDE 12: CLOSE ═══════ -->
+<section class="slide slide-hero" data-label="Close" data-notes="SAY: Here is what you walk away with today. A working Copilot CLI. Three MCP servers connecting you to your actual work tools. And experience using it on real scenarios. The cheat sheet has everything you need. My one ask — try one real thing tomorrow. Not a test. A real task. Prepare for a meeting. Draft an email. Check your outcome gaps. That is how it sticks. Questions?">
+  <div class="slide-inner">
+    <h2 class="reveal">You Now Have</h2>
+    <div class="stat-grid reveal d1">
+      <div class="stat-card">
+        <div class="stat-number">1</div>
+        <div class="stat-label">AI colleague in your terminal</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">3</div>
+        <div class="stat-label">MCP connectors (PMX &middot; GitHub &middot; M365)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">&infin;</div>
+        <div class="stat-label">scenarios to explore</div>
+      </div>
+    </div>
+    <div class="quote reveal d2" style="font-size:18px;">The only way to learn this is to use it. <strong>Start with something small tomorrow.</strong></div>
+    <ul class="feature-list reveal d3" style="margin-top:28px;">
+      <li><span class="dot"></span> <strong>Cheat sheet</strong> &mdash; print it, keep it open, reference it</li>
+      <li><span class="dot"></span> <strong>Try one real task tomorrow</strong> &mdash; a Connect prep, an email draft, an outcome check</li>
+      <li><span class="dot"></span> <strong>Ask in the Teams channel</strong> when you get stuck &mdash; we&rsquo;re all learning</li>
+    </ul>
+  </div>
+</section>
+
+</div><!-- end #deck -->
+
+<script>
+const deck=document.getElementById('deck'),slides=[...document.querySelectorAll('.slide')],progress=document.getElementById('progress'),counter=document.getElementById('counter'),nav=document.getElementById('nav'),total=slides.length;
+
+slides.forEach((s,i)=>{
+  const d=document.createElement('button');
+  d.className='nav-dot'+(i===0?' active':'');
+  d.dataset.label=s.dataset.label||`Slide ${i+1}`;
+  d.addEventListener('click',()=>slides[i].scrollIntoView({behavior:'smooth'}));
+  nav.appendChild(d);
+});
+const dots=[...document.querySelectorAll('.nav-dot')];
+
+const revealObs=new IntersectionObserver(e=>{
+  e.forEach(el=>{
+    if(el.isIntersecting) el.target.classList.add('visible');
+  });
+},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+
+let activeIndex=0;
+let broadcastSlide=function(){};
+const slideObs=new IntersectionObserver(e=>{
+  e.forEach(el=>{
+    if(el.isIntersecting&&el.intersectionRatio>.5){
+      const idx=slides.indexOf(el.target);
+      if(idx!==-1){
+        activeIndex=idx;
+        broadcastSlide(idx);
+        dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+        counter.innerHTML=`<span>${idx+1}</span> / ${total}`;
+        progress.style.width=`${((idx+1)/total)*100}%`;
+        const headerLink=document.getElementById('header-link');
+        if(headerLink) headerLink.classList.toggle('visible',idx>0);
+      }
+    }
+  });
+},{threshold:.5});
+slides.forEach(s=>slideObs.observe(s));
+
+// Keyboard navigation
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' '){
+    e.preventDefault();
+    slides[Math.min(activeIndex+1,total-1)].scrollIntoView({behavior:'smooth'});
+  }else if(e.key==='ArrowUp'||e.key==='PageUp'){
+    e.preventDefault();
+    slides[Math.max(activeIndex-1,0)].scrollIntoView({behavior:'smooth'});
+  }else if(e.key==='Home'){e.preventDefault();slides[0].scrollIntoView({behavior:'smooth'});}
+  else if(e.key==='End'){e.preventDefault();slides[total-1].scrollIntoView({behavior:'smooth'});}
+});
+
+// ── Presenter view sync ──
+if(!new URLSearchParams(window.location.search).has('presenter')) {
+const presenterChannel = new BroadcastChannel('presenter-sync');
+
+broadcastSlide = function(idx) {
+  const slide = slides[idx];
+  const notes = slide ? slide.getAttribute('data-notes') || '' : '';
+  const label = slide ? slide.getAttribute('data-label') || ('Slide '+(idx+1)) : '';
+  presenterChannel.postMessage({
+    type: 'slide-change',
+    index: idx,
+    total: total,
+    label: label,
+    notes: notes
+  });
+};
+
+document.addEventListener('keydown', e => {
+  if ((e.key === 'p' || e.key === 'P') && !e.ctrlKey && !e.metaKey) {
+    window.open('cli-intro-presenter.html', 'presenter', 'width=600,height=800');
+    setTimeout(() => broadcastSlide(activeIndex), 500);
+  }
+});
+
+presenterChannel.onmessage = (e) => {
+  if (e.data.type === 'request-current') broadcastSlide(activeIndex);
+};
+} else {
+// Loaded as thumbnail in presenter view — listen for scroll commands
+window.addEventListener('message', (e) => {
+  if (e.data && e.data.type === 'scroll-to-slide' && typeof e.data.index === 'number') {
+    if (slides[e.data.index]) slides[e.data.index].scrollIntoView({ behavior: 'instant' });
+  }
+});
+}
+</script>
+</body>
+</html>
