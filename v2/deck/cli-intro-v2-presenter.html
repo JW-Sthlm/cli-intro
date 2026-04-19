@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Presenter Notes — CLI Intro v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #111; color: #e8e8e8;
+    display: grid; grid-template-rows: auto 1fr auto;
+    height: 100vh; overflow: hidden;
+  }
+  .header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 24px;
+    border-bottom: 1px solid #2a2a2a;
+    background: #161616;
+  }
+  .slide-label {
+    font-family: 'Plus Jakarta Sans', system-ui; font-size: 13px;
+    font-weight: 700; color: #2D6E6D; letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+  .slide-counter {
+    font-size: 13px; color: #555; font-weight: 500;
+  }
+  .slide-counter span { color: #2D6E6D; font-weight: 700; }
+  .main {
+    display: grid; grid-template-columns: 420px 1fr; gap: 0;
+    overflow: hidden;
+  }
+  .thumb-panel {
+    background: #0a0a0a; border-right: 1px solid #2a2a2a;
+    display: flex; align-items: center; justify-content: center;
+    padding: 16px; overflow: hidden;
+  }
+  .thumb-frame {
+    width: 390px; height: 220px; border-radius: 6px;
+    border: 1px solid #333; overflow: hidden;
+    background: #F8F8F7; position: relative;
+  }
+  .thumb-frame iframe {
+    width: 1280px; height: 720px;
+    transform: scale(0.305); transform-origin: 0 0;
+    border: none; pointer-events: none;
+  }
+  .notes-panel {
+    padding: 32px 40px; overflow-y: auto;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .notes-do {
+    font-size: 14px; color: #2D6E6D; font-weight: 600;
+    margin-bottom: 16px; line-height: 1.5;
+    font-family: 'Plus Jakarta Sans', system-ui;
+  }
+  .notes-say {
+    font-size: 26px; line-height: 1.65; font-weight: 300;
+    color: #d4d4d4;
+  }
+  .waiting {
+    color: #444; font-style: italic; font-size: 18px; line-height: 1.6;
+  }
+  .footer {
+    padding: 8px 24px; border-top: 1px solid #2a2a2a;
+    font-size: 11px; color: #444; background: #161616;
+    display: flex; justify-content: space-between;
+  }
+  kbd {
+    background: #222; border: 1px solid #3a3a3a; border-radius: 3px;
+    padding: 1px 5px; font-size: 10px;
+  }
+</style>
+</head>
+<body>
+  <div class="header">
+    <div class="slide-label" id="slideLabel">Waiting for presentation...</div>
+    <div class="slide-counter"><span id="slideNum">-</span> / <span id="slideTotal">-</span></div>
+  </div>
+  <div class="main">
+    <div class="thumb-panel">
+      <div class="thumb-frame">
+        <iframe id="slideThumb" src="cli-intro-v2.html?presenter=1"></iframe>
+      </div>
+    </div>
+    <div class="notes-panel">
+      <div id="notesDo" class="notes-do" style="display:none;"></div>
+      <div id="notesSay" class="notes-say">
+        <span class="waiting">Open the presentation and press <kbd>P</kbd> to connect.<br>This window syncs automatically.</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <span><kbd>P</kbd> in presentation to open this view</span>
+    <span>Notes sync as you navigate</span>
+  </div>
+
+  <script>
+    const channel = new BroadcastChannel('presenter-sync');
+    const labelEl = document.getElementById('slideLabel');
+    const numEl = document.getElementById('slideNum');
+    const totalEl = document.getElementById('slideTotal');
+    const doEl = document.getElementById('notesDo');
+    const sayEl = document.getElementById('notesSay');
+    const thumbIframe = document.getElementById('slideThumb');
+    let lastIndex = -1;
+    let thumbReady = false;
+
+    thumbIframe.onload = () => { thumbReady = true; };
+
+    function scrollThumbToSlide(idx) {
+      if (!thumbReady) return;
+      thumbIframe.contentWindow.postMessage({ type: 'scroll-to-slide', index: idx }, '*');
+    }
+
+    function parseNotes(raw) {
+      let doText = '';
+      let sayText = raw;
+      
+      const doMatch = raw.match(/^DO:\s*(.*?)\s*SAY:\s*/i);
+      if (doMatch) {
+        doText = doMatch[1].trim();
+        sayText = raw.substring(doMatch[0].length).trim();
+      } else {
+        const sayMatch = raw.match(/^SAY:\s*/i);
+        if (sayMatch) {
+          sayText = raw.substring(sayMatch[0].length).trim();
+        }
+      }
+      return { doText, sayText };
+    }
+
+    channel.onmessage = (e) => {
+      if (e.data.type === 'slide-change') {
+        const { index, total, label, notes } = e.data;
+        if (index === lastIndex) return;
+        lastIndex = index;
+
+        labelEl.textContent = label;
+        numEl.textContent = index + 1;
+        totalEl.textContent = total;
+
+        scrollThumbToSlide(index);
+
+        const { doText, sayText } = parseNotes(notes || '');
+        
+        sayEl.style.opacity = '0';
+        doEl.style.opacity = '0';
+        setTimeout(() => {
+          if (doText) {
+            doEl.textContent = doText;
+            doEl.style.display = 'block';
+            doEl.style.opacity = '1';
+          } else {
+            doEl.style.display = 'none';
+          }
+          sayEl.textContent = sayText || '(No notes for this slide)';
+          sayEl.style.opacity = '1';
+        }, 150);
+      }
+    };
+
+    channel.postMessage({ type: 'request-current' });
+  </script>
+</body>
+</html>

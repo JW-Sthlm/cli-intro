@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Storyboard — Your Operational Copilot · CLI Intro v2</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f5f5f5; color: #333; line-height: 1.6; }
+  
+  .header { background: #2D6E6D; color: white; padding: 1.5rem 2rem; }
+  .header h1 { font-size: 1.5rem; }
+  .header p { opacity: 0.85; font-size: 0.85rem; }
+  
+  .container { max-width: 1300px; margin: 0 auto; padding: 0 2rem 3rem; }
+  
+  /* Sorter view */
+  #sorter { padding: 1.5rem 0; }
+  .sorter-act { margin-bottom: 1.5rem; }
+  .sorter-act h4 { font-size: 0.75rem; color: #2D6E6D; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .sorter-grid { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+  .sorter-thumb { width: 260px; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.1); cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
+  .sorter-thumb:hover { transform: scale(1.03); box-shadow: 0 3px 12px rgba(0,0,0,0.15); }
+  .sorter-slide { background: #F8F8F7; color: #21211F; padding: 0.7rem; min-height: 150px; display: flex; flex-direction: column; font-size: 0.5rem; overflow: hidden; }
+  .sorter-slide h5 { font-size: 0.65rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.3rem; color: #21211F; }
+  .sorter-slide .num { font-size: 0.5rem; opacity: 0.4; margin-bottom: 0.2rem; }
+  .sorter-slide .thumb-body { font-size: 0.48rem; opacity: 0.7; line-height: 1.4; overflow: hidden; color: #4A4A46; }
+  .sorter-slide .thumb-body ul { list-style: none; padding: 0; }
+  .sorter-slide .thumb-body li { padding-left: 0.8em; position: relative; margin-bottom: 0.1em; }
+  .sorter-slide .thumb-body li::before { content: '→'; position: absolute; left: 0; color: #2D6E6D; }
+  .sorter-slide .thumb-body blockquote { border-left: 2px solid #2D6E6D; padding-left: 0.4em; font-style: italic; opacity: 0.6; margin: 0.2em 0; }
+  .sorter-slide .thumb-body p { margin: 0.1em 0; }
+  .sorter-tags { display: flex; gap: 0.15rem; padding: 0.2rem 0.3rem; background: white; }
+  .sorter-tags .st { font-size: 0.45rem; padding: 0.05rem 0.2rem; border-radius: 2px; }
+  
+  /* Full slides */
+  #slides { }
+  .act-divider { margin: 2rem 0 0.5rem; }
+  .act-divider h3 { font-size: 0.85rem; color: #2D6E6D; border-bottom: 2px solid #2D6E6D; display: inline-block; padding-bottom: 0.2rem; }
+  .act-divider .time { font-size: 0.7rem; color: #999; margin-left: 0.5rem; }
+  
+  .slide-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-bottom: 2rem; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+  .slide-panel { background: #F8F8F7; color: #21211F; padding: 1.5rem; min-height: 260px; display: flex; flex-direction: column; position: relative; font-size: 0.8rem; overflow: hidden; }
+  .slide-panel .sn { position: absolute; top: 0.5rem; right: 0.7rem; font-size: 0.6rem; opacity: 0.3; color: #797971; }
+  .slide-panel h2 { font-size: 1.2rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.2rem; color: #21211F; }
+  .slide-panel h4 { font-size: 0.7rem; opacity: 0.6; margin-bottom: 0.5rem; color: #4A4A46; }
+  .slide-panel ul { list-style: none; padding: 0; font-size: 0.7rem; }
+  .slide-panel li { padding: 0.15rem 0 0.15rem 1rem; position: relative; }
+  .slide-panel li::before { content: '→'; position: absolute; left: 0; color: #2D6E6D; font-size: 0.7rem; }
+  .slide-panel blockquote { border-left: 3px solid #2D6E6D; padding: 0.3rem 0.6rem; font-style: italic; opacity: 0.85; font-size: 0.7rem; margin: 0.4rem 0; background: rgba(45,110,109,0.06); }
+  .slide-panel p { font-size: 0.7rem; }
+  .slide-panel .accent { color: #2D6E6D; }
+  .slide-panel .small { font-size: 0.55rem; opacity: 0.4; }
+  .slide-panel .highlight-line { font-weight: 700; color: #2D6E6D; }
+  .slide-panel .stat-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.4em; margin: 0.5em 0; }
+  .slide-panel .stat { text-align: center; }
+  .slide-panel .stat .num { font-size: 1.4em; font-weight: 700; color: #2D6E6D; line-height: 1; }
+  .slide-panel .stat .label { font-size: 0.5em; opacity: 0.8; }
+  .slide-panel .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5em; }
+  .slide-panel .card { background: rgba(255,255,255,0.06); padding: 0.4em 0.5em; border-radius: 5px; }
+  .slide-panel .card-title { font-weight: 700; font-size: 0.6rem; margin-bottom: 0.15em; }
+  .slide-panel .card p { font-size: 0.55rem; }
+  .slide-panel .internal-badge { background: rgba(231,76,60,0.3); color: #e74c3c; padding: 0.1em 0.4em; border-radius: 4px; font-size: 0.45rem; font-weight: 700; display: inline-block; margin-bottom: 0.3em; border: 2px solid #e74c3c; }
+  
+  .script-panel { background: white; padding: 1.5rem; font-size: 0.85rem; }
+  .script-panel .meta { display: flex; gap: 0.5rem; margin-bottom: 0.8rem; align-items: center; }
+  .script-panel .meta .timing { background: #2D6E6D; color: white; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.65rem; }
+  .script-panel .meta .energy { padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.65rem; color: white; }
+  .script-panel .meta .energy-high { background: #ff6b35; }
+  .script-panel .meta .energy-calm { background: #2ecc71; }
+  .script-panel .meta .tag { font-size: 0.55rem; padding: 0.1rem 0.3rem; border-radius: 3px; }
+  .tag-full { background: #EEF4F4; color: #2D6E6D; }
+  .script-panel p { margin-bottom: 0.5rem; line-height: 1.5; }
+  
+  /* Demo card */
+  .demo-card { margin-bottom: 2rem; background: white; border: 2px solid #e74c3c; border-radius: 10px; padding: 1.5rem; }
+  .demo-card h3 { color: #e74c3c; font-size: 1rem; margin-bottom: 0.6rem; }
+  .demo-card h4 { color: #333; font-size: 0.85rem; margin: 1rem 0 0.4rem; font-weight: 700; }
+  .demo-step { display: flex; gap: 0.6rem; margin-bottom: 0.4rem; font-size: 0.8rem; }
+  .demo-num { background: #e74c3c; color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 700; flex-shrink: 0; }
+  .demo-prompt { background: #EEF4F4; border-left: 4px solid #2D6E6D; padding: 0.8rem 1rem; margin: 0.5rem 0 0.5rem 2rem; border-radius: 0 6px 6px 0; font-size: 0.82rem; }
+  .demo-prompt p { font-style: italic; line-height: 1.6; margin: 0; }
+  .demo-prompt .prompt-label { font-weight: 700; font-style: normal; margin-bottom: 0.3rem; }
+  .demo-talk { background: #FFF8F0; border-left: 4px solid #ff6b35; padding: 0.6rem 1rem; margin: 0.5rem 0 0.5rem 2rem; border-radius: 0 6px 6px 0; font-size: 0.78rem; }
+  .demo-talk .talk-label { font-weight: 700; color: #ff6b35; font-size: 0.7rem; }
+  .demo-key-msg { background: #f9f9f9; border-radius: 6px; padding: 0.8rem 1rem; margin-top: 1rem; font-size: 0.78rem; }
+  .demo-key-msg table { width: 100%; border-collapse: collapse; }
+  .demo-key-msg th, .demo-key-msg td { padding: 0.25rem 0.5rem; text-align: left; border-bottom: 1px solid #eee; font-size: 0.75rem; }
+  .demo-key-msg th { font-weight: 700; color: #2D6E6D; }
+  
+  /* Nav links */
+  .nav-bar { background: white; border-bottom: 1px solid #ddd; padding: 0.6rem 2rem; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: 0.5rem; }
+  .nav-bar .count { font-size: 0.7rem; color: #999; margin-left: auto; }
+  .nav-bar a { font-size: 0.75rem; color: #2D6E6D; text-decoration: none; }
+  
+  @media (max-width: 900px) { .slide-row { grid-template-columns: 1fr; } .sorter-thumb { width: 110px; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🎤 Storyboard — "Your Operational Copilot" (CLI Intro v2)</h1>
+  <p>Speaker script · demo plans · exercise guides · 60 min hands-on workshop</p>
+</div>
+
+<div class="nav-bar">
+  <span class="count">10 slides · 5 acts · 57 min</span>
+  <a href="#sorter">↑ Sorter</a>
+  <a href="#slides">↓ Full script</a>
+</div>
+
+<div class="container">
+<div id='sorter'>
+
+<!-- Act 1 — Positioning -->
+<div class='sorter-act'><h4>Act 1 — Positioning · 12 min</h4><div class='sorter-grid'>
+  <div class="sorter-thumb" onclick="document.getElementById('slide-1').scrollIntoView({behavior:'smooth'})">
+    <div class="sorter-slide" style="background: #FFFFFF"><span class="num">1</span><h5>Your Operational Copilot</h5><div class="thumb-body"><p>From M365 help to repeatable, tool-connected workflows</p><p style="opacity:0.4;">Johan Wallquist · PSA · Microsoft</p></div></div>
+    <div class="sorter-tags"><span class='st tag-full'>60 min</span></div>
+  </div>
+  <div class="sorter-thumb" onclick="document.getElementById('slide-2').scrollIntoView({behavior:'smooth'})">
+    <div class="sorter-slide" style="background: #F8F8F7"><span class="num">2</span><h5>The Copilot Ladder</h5><div class="thumb-body"><ul><li>M365 Copilot — helps with work</li><li>CLI — operationalizes work</li><li>Agency — integration layer</li><li>Squad — multi-agent teams</li></ul></div></div>
+    <div class="sorter-tags"><span class='st tag-full'>60 min</span></div>
+  </div>
+  <div class="sorter-thumb" onclick="document.getElementById('slide-3').scrollIntoView({behavior:'smooth'})">
+    <div class="sorter-slide" style="background: #FFFFFF"><span class="num">3</span><h5>The Barrier Collapsed</h5><div class="thumb-body"><ul><li>🧠 Reasoning</li><li>🔧 Tool Use (MCP)</li><li>🔄 Self-Correction</li></ul></div></div>
+    <div class="sorter-tags"><span class='st tag-full'>60 min</span></div>
+  </div>
+  <div class="sorter-thumb" onclick="document.getElementById('slide-4').scrollIntoView({behavior:'smooth'})">
+    <div class="sorter-slide" style="background: #F8F8F7"><span class="num">4</span><h5>Not Another Chat Window</h5><div class="thumb-body"><ul><li>🔌 Tool-Connected</li><li>🔁 Repeatable</li><li>📋 Inspectable</li><li>🧠 Persistent</li></ul></div></div>
+    <div class="sorter-tags"><span class='st tag-full'>60 min</span></div>
+  </div>
+</div></div>
+
+<!-- Act 2 — The Briefing Factory -->
+<div class='sorter-act'><h4>Act 2 — The Briefing Factory · 20 min</h4><div class='sorter-grid'>
+  <div class="sorter-thumb" onclick="document.getElementById('slide-5').scrollIntoView({behavior:'smooth'})">
+    <div class="sorter-slide" style="background: #FFF5F5"><span class="num">5</span><h5>🔴 Demo — Briefing Factory</h5><div class="thumb-body"><p>Five Tabs → One Conversation</p><p>PMX + MSX + M365 → structured briefing</p></div></div>
+    <div class="sorter-tags"><span class='st tag-full'>60 min</span></div>
+  </div>
+  <div class="sorter-thumb" onclick="document.getElementById('slide-6').scrollIntoView({behavior:'smooth'})">
+    <div class="sorter-slide" style="background: #F8F8F7"><span class="num">6</span><h5>Exercise 1 — Your Briefing</h5><div class="thumb-body"><p>Pick a partner → Pull data → Get your briefing</p></div></div>
+    <div class="sorter-tags"><span class='st tag-full'>60 min</span></div>
+  </div>
+</div></div>
+
+<!-- Act 3 — Workshop to Action -->
+<div class='sorter-act'><h4>Act 3 — Workshop to Action · 18 min</h4><div class='sorter-grid'>
+  <div class="sorter-thumb" onclick="document.getElementById('slide-7').scrollIntoView({behavior:'smooth'})">
+    <div class="sorter-slide" style="background: #FFF5F5"><span class="num">7</span><h5>🔴 Demo — Workshop to Plan</h5><div class="thumb-body"><p>Great Workshop. Now What?</p><p>Notes → phased plan with tasks and owners</p></div></div>
+    <div class="sorter-tags"><span class='st tag-full'>60 min</span></div>
+  </div>
+  <div class="sorter-thumb" onclick="document.getElementById('slide-8').scrollIntoView({behavior:'smooth'})">
+    <div class="sorter-slide" style="background: #F8F8F7"><span class="num">8</span><h5>Exercise 2 — Pick Scenario</h5><div class="thumb-body"><ul><li>Workshop → Plan</li><li>Opportunity Gaps</li><li>Multi-Source Email</li><li>Research → Roadmap</li></ul></div></div>
+    <div class="sorter-tags"><span class='st tag-full'>60 min</span></div>
+  </div>
+</div></div>
+
+<!-- Act 4 — The Bigger Picture -->
+<div class='sorter-act'><h4>Act 4 — The Bigger Picture · 4 min</h4><div class='sorter-grid'>
+  <div class="sorter-thumb" onclick="document.getElementById('slide-9').scrollIntoView({behavior:'smooth'})">
+    <div class="sorter-slide" style="background: #F8F8F7"><span class="num">9</span><h5>Personal Tool → Team Capability</h5><div class="thumb-body"><ul><li>📝 Instructions &amp; Skills</li><li>🔌 Agency</li><li>👥 Squad</li></ul></div></div>
+    <div class="sorter-tags"><span class='st tag-full'>60 min</span></div>
+  </div>
+</div></div>
+
+<!-- Act 5 — Close -->
+<div class='sorter-act'><h4>Act 5 — Close · 3 min</h4><div class='sorter-grid'>
+  <div class="sorter-thumb" onclick="document.getElementById('slide-10').scrollIntoView({behavior:'smooth'})">
+    <div class="sorter-slide" style="background: #FFFFFF"><span class="num">10</span><h5>Your Toolbox</h5><div class="thumb-body"><p>1 operational Copilot · 3 connected tools · 2 workflow patterns</p><p style="opacity:0.5;">Try one real task this week.</p></div></div>
+    <div class="sorter-tags"><span class='st tag-full'>60 min</span></div>
+  </div>
+</div></div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- FULL SLIDES                                                 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+
+<div id='slides'>
+
+<!-- ═══ ACT 1 — POSITIONING ═══ -->
+<div class='act-divider'><h3>Act 1 — Positioning</h3><span class='time'>12 min</span></div>
+
+<!-- Slide 1: Title -->
+<div class="slide-row" id="slide-1">
+  <div class="slide-panel" style="background: #FFFFFF">
+    <span class="sn">1/10</span>
+    <h2 style="font-size:1.4rem;">Your Operational <span class="accent">Copilot</span></h2>
+    <h4>From M365 help to repeatable, tool-connected partner workflows</h4>
+    <p style="margin-top: 1em; font-size: 0.55rem; opacity: 0.4;">60 min · Hands-On Workshop</p>
+    <p style="margin-top: 2em; opacity: 0.4; font-size: 0.5em;">Johan Wallquist · Partner Solution Architect · Microsoft</p>
+  </div>
+  <div class="script-panel">
+    <div class="meta"><span class='tag tag-full'>60 min</span> <span style='font-size:0.7rem;color:#ff6b35;margin-left:0.5rem;'>⚡ HIGH · 1 min</span></div>
+    <p><strong>DO:</strong> Welcome. Quick show of hands — who has CLI installed? Who has used M365 Copilot this week?</p>
+    <p><strong>SAY:</strong> "Most of you use M365 Copilot. It helps you draft, summarize, find things. Today I want to show you the next step — where Copilot stops helping with individual tasks and starts operationalizing your work. Repeatable workflows. Connected tools. Persistent context. By the end of this hour, you will have tried it yourself."</p>
+  </div>
+</div>
+
+<!-- Slide 2: The Copilot Ladder -->
+<div class="slide-row" id="slide-2">
+  <div class="slide-panel" style="background: #F8F8F7">
+    <span class="sn">2/10</span>
+    <h2>The Copilot Ladder</h2>
+    <h4>Each layer adds capability. You're already on the first rung.</h4>
+    <div style="margin: 0.4em 0; font-size: 0.6rem;">
+      <div style="background: rgba(46,204,113,0.08); border-left: 3px solid #2ecc71; padding: 0.25em 0.5em; border-radius: 0 5px 5px 0; margin-bottom: 0.2em;">
+        <strong>M365 Copilot</strong> — Helps you with work. Draft, summarize, find. One task at a time.
+      </div>
+      <div style="background: rgba(45,110,109,0.1); border-left: 3px solid #2D6E6D; padding: 0.25em 0.5em; border-radius: 0 5px 5px 0; margin-bottom: 0.2em; margin-left: 0.5em; font-weight: 700;">
+        <span class="accent">GitHub Copilot CLI</span> — Operationalizes work. Multi-step, multi-source, repeatable, inspectable.
+      </div>
+      <div style="background: rgba(71,144,255,0.08); border-left: 3px solid #4790FF; padding: 0.25em 0.5em; border-radius: 0 5px 5px 0; margin-bottom: 0.2em; margin-left: 1em;">
+        <strong>Agency</strong> — Microsoft integration layer. Internal auth, shared plugins, telemetry, governance.
+      </div>
+      <div style="background: rgba(123,97,255,0.08); border-left: 3px solid #7B61FF; padding: 0.25em 0.5em; border-radius: 0 5px 5px 0; margin-left: 1.5em;">
+        <strong>Squad</strong> — Multi-agent coordination. Long-running, role-divided, memory-heavy work.
+      </div>
+    </div>
+    <blockquote>Today we focus on rung 2 — where your work becomes <strong>operational</strong>.</blockquote>
+  </div>
+  <div class="script-panel">
+    <div class="meta"><span class='tag tag-full'>60 min</span> <span style='font-size:0.7rem;color:#ff6b35;margin-left:0.5rem;'>🎯 FRAMEWORK · 5 min · Walk through ladder</span></div>
+    <p><strong>DO:</strong> Walk through the ladder bottom to top. Pause on CLI — this is where today lives.</p>
+    <p><strong>SAY:</strong> "You already know M365 Copilot. It helps with individual tasks — draft this email, summarize that meeting. CLI is the next step. It connects to your actual tools — PMX, MSX, email, calendar — and produces structured, repeatable workflows. Not chat answers. Artifacts."</p>
+    <p>"Agency is what makes CLI Microsoft-ready — internal authentication, shared plugins, telemetry and governance. Squad is for the bigger stuff — multi-agent coordination for long-running initiatives."</p>
+    <p>"Today we focus on CLI. The step from getting help to operationalizing your work."</p>
+  </div>
+</div>
+
+<!-- Slide 3: Why Now -->
+<div class="slide-row" id="slide-3">
+  <div class="slide-panel" style="background: #FFFFFF">
+    <span class="sn">3/10</span>
+    <h2>The Barrier <span class="accent">Collapsed</span></h2>
+    <h4>AI crossed a threshold. Three capabilities changed everything.</h4>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.4em; margin: 0.5em 0; font-size: 0.6rem;">
+      <div class="card"><div class="card-title">🧠 Reasoning</div><p>AI plans multi-step tasks. Decomposes, sequences, executes.</p></div>
+      <div class="card"><div class="card-title">🔧 Tool Use</div><p>MCP connects AI to your systems. PMX, MSX, email, calendar.</p></div>
+      <div class="card"><div class="card-title">🔄 Self-Correction</div><p>AI checks its own work. Iterate, improve, converge in loops.</p></div>
+    </div>
+    <p style="font-family: monospace; font-size: 0.5rem; opacity: 0.6; margin-top: 0.3em;">Understand → Plan → Act → Check → <strong>Iterate</strong></p>
+  </div>
+  <div class="script-panel">
+    <div class="meta"><span class='tag tag-full'>60 min</span> <span style='font-size:0.7rem;color:#ff6b35;margin-left:0.5rem;'>⚡ HIGH · 3 min · Build energy</span></div>
+    <p><strong>SAY:</strong> "Why is this possible now? AI crossed a threshold. Three things changed."</p>
+    <p>"First, reasoning — AI can plan complex, multi-step tasks. Not just autocomplete. It decomposes a problem, figures out the sequence, and executes."</p>
+    <p>"Second, tool use — through MCP, the Model Context Protocol, AI connects to your actual systems. PMX, MSX, your email, your calendar. Real data, real actions."</p>
+    <p>"Third, self-correction — it checks its own work and iterates."</p>
+    <p>"The result? The barrier between describing what you want and getting it done just collapsed. That is why CLI exists."</p>
+  </div>
+</div>
+
+<!-- Slide 4: What Makes CLI Different -->
+<div class="slide-row" id="slide-4">
+  <div class="slide-panel" style="background: #F8F8F7">
+    <span class="sn">4/10</span>
+    <h2>Not Another <span class="accent">Chat Window</span></h2>
+    <h4>Four things M365 Copilot doesn't do — and CLI does.</h4>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4em; margin: 0.5em 0; font-size: 0.6rem;">
+      <div class="card"><div class="card-title">🔌 Tool-Connected</div><p>Calls PMX, MSX, M365, GitHub. Real data from your actual systems.</p></div>
+      <div class="card"><div class="card-title">🔁 Repeatable</div><p>Same workflow, different partner. Build once, reuse, share with team.</p></div>
+      <div class="card"><div class="card-title">📋 Inspectable</div><p>Output is an artifact — a plan, a doc, a file. Not a chat bubble.</p></div>
+      <div class="card"><div class="card-title">🧠 Persistent</div><p>/resume continues where you left off. Context across days.</p></div>
+    </div>
+  </div>
+  <div class="script-panel">
+    <div class="meta"><span class='tag tag-full'>60 min</span> <span style='font-size:0.7rem;color:#2ecc71;margin-left:0.5rem;'>🟢 CALM · 3 min · Land the four properties</span></div>
+    <p><strong>SAY:</strong> "Four properties that make CLI different from M365 Copilot."</p>
+    <p>"Tool-connected — it calls your actual systems through MCP. PMX, MSX, email, calendar, GitHub. Real data."</p>
+    <p>"Repeatable — the same workflow works for any partner. Build the pattern once, reuse it, share it with your team."</p>
+    <p>"Inspectable — the output is an artifact. A structured document, a plan, a file. Not a chat answer that disappears when you close the tab."</p>
+    <p>"Persistent — /resume picks up where you left off. Across days, across sessions. For work that evolves over time, this is the game changer."</p>
+  </div>
+</div>
+
+<!-- ═══ ACT 2 — THE BRIEFING FACTORY ═══ -->
+<div class='act-divider'><h3>Act 2 — The Briefing Factory</h3><span class='time'>20 min</span></div>
+
+<!-- Slide 5: Demo — Partner Briefing -->
+<div class="slide-row" id="slide-5">
+  <div class="slide-panel" style="background: #FFF5F5">
+    <span class="sn">5/10</span>
+    <h2>🔴 Demo — The Briefing Factory</h2>
+    <h4>Five Tabs → <span class="accent">One Conversation</span></h4>
+    <p style="margin-top: 0.5em;">PMX + MSX + M365 → structured partner briefing. Repeatable for any partner.</p>
+    <blockquote>Watch: which tools it calls, what artifact it produces, and how the workflow becomes <strong>reusable</strong>.</blockquote>
+  </div>
+  <div class="script-panel">
+    <div class="meta"><span class='tag tag-full'>60 min</span> <span style='font-size:0.7rem;color:#ff6b35;margin-left:0.5rem;'>🔴 LIVE DEMO · 12 min · Five acts</span></div>
+    <p><strong>DO:</strong> Run demo-01-partner-briefing. Full flow: pull PMX projects + MSX opps + partner team + recent emails → synthesize into structured briefing → show repeatability → show persistence. See demo card below.</p>
+    <p><strong>SAY:</strong> "Let me show you what this looks like in practice. I have a partner Connect tomorrow. Instead of opening five tabs and assembling the picture myself, I will do it in one conversation. Watch which tools it calls and what comes out."</p>
+  </div>
+</div>
+
+<!-- Demo Card — Partner Briefing Factory -->
+<div class="demo-card">
+  <h3>🔴 DEMO 1 — The Partner Briefing Factory · Full Script</h3>
+
+  <p style="font-size:0.85rem;margin-bottom:0.4rem;font-weight:700;">What the audience will see</p>
+  <p style="font-size:0.78rem;margin-bottom:0.8rem;color:#666;">One conversation that pulls from PMX + MSX + M365 + your instructions → produces a structured briefing artifact. Repeatable for any partner. Inspectable. Persistent. The contrast with M365 Copilot's disconnected single-task answers is the key message.</p>
+
+  <p style="font-size:0.85rem;margin-bottom:0.4rem;font-weight:700;">Setup</p>
+  <div class="demo-step"><div class="demo-num">✓</div><div>Copilot CLI running with <strong>PMX, M365, and GitHub MCP servers</strong></div></div>
+  <div class="demo-step"><div class="demo-num">✓</div><div>Pick a <strong>real partner</strong> you have active projects with</div></div>
+  <div class="demo-step"><div class="demo-num">✓</div><div>Have at least one recent email or meeting related to that partner</div></div>
+
+  <h4>Act 1: Set the scene (1 min)</h4>
+  <div class="demo-step"><div class="demo-num">1</div><div><strong>SAY:</strong> "Imagine you have a partner Connect tomorrow. You need to know: where do our projects stand, are there outcome gaps, what's in the MSX pipeline, what did we last discuss, and who's on the team. Today, that means opening five tabs and assembling the picture yourself. Let me show you a different approach."</div></div>
+
+  <h4>Act 2: Pull the data — show the tools working (5 min)</h4>
+  <div class="demo-step"><div class="demo-num">2</div><div><strong>Type this prompt:</strong></div></div>
+  <div class="demo-prompt">
+    <p class="prompt-label">💬 Prompt:</p>
+    <p>"I'm preparing for a Connect meeting with [Partner Name] tomorrow. Help me build a structured briefing. Start by pulling:<br>
+    1. Our active PMX projects with this partner — status, outcomes, deliverables<br>
+    2. The partner team — who is PDM, PTS, PSAM<br>
+    3. Open MSX opportunities with this partner in EMEA<br>
+    4. My recent emails to or from people at this partner"</p>
+  </div>
+  <div class="demo-talk">
+    <p class="talk-label">🎤 TALKING POINT (while it works):</p>
+    <p>"Notice what's happening. It's not guessing — it's calling specific tools. PMX for project data. MSX for the pipeline. M365 for your email. Each tool returns real, current data from your actual systems. M365 Copilot can't do this — it lives inside Office. CLI connects across tools."</p>
+  </div>
+  <div class="demo-step"><div class="demo-num">3</div><div><strong>DO:</strong> Point out the tool calls as they happen. The audience should see PMX, MSX, M365 being invoked explicitly.</div></div>
+
+  <h4>Act 3: Synthesize — show the artifact (3 min)</h4>
+  <div class="demo-step"><div class="demo-num">4</div><div><strong>Type this prompt:</strong></div></div>
+  <div class="demo-prompt">
+    <p class="prompt-label">💬 Prompt:</p>
+    <p>"Now synthesize this into a structured partner briefing with these sections:<br>
+    1. Partner Overview — team, key contacts<br>
+    2. Project Portfolio — status, health, any at risk<br>
+    3. Outcome Coverage — what's linked, what's missing<br>
+    4. Pipeline — open opportunities, deal sizes, stages<br>
+    5. Recent Activity — last conversations, open threads<br>
+    6. Recommended Talking Points — based on everything above<br>
+    7. Suggested Next Steps — concrete actions with owners<br><br>
+    Format it as a clean document I could share with my team."</p>
+  </div>
+  <div class="demo-talk">
+    <p class="talk-label">🎤 TALKING POINT:</p>
+    <p>"This is the key difference. M365 Copilot gives you an answer in a chat bubble. CLI gives you an artifact — structured, sections, shareable. You could paste this into a prep doc, email it to the team, or build on it next week."</p>
+  </div>
+  <div class="demo-step"><div class="demo-num">5</div><div><strong>DO:</strong> Let the output render. Give the audience time to read the structure. Point out: talking points are derived from data, not generic.</div></div>
+
+  <h4>Act 4: Show repeatability (2 min)</h4>
+  <div class="demo-step"><div class="demo-num">6</div><div><strong>SAY:</strong> "Now here's why this is a factory, not just a one-off. This exact conversation? I can rerun it for any partner. Change the name, same workflow. And if I save these prompts as a skill or instruction file, my whole team can use the same pattern."</div></div>
+  <div class="demo-step"><div class="demo-num">7</div><div><strong>Type:</strong></div></div>
+  <div class="demo-prompt">
+    <p class="prompt-label">💬 Prompt:</p>
+    <p>"Save this conversation workflow. If I wanted to reuse this exact briefing pattern for a different partner next week, what would I need?"</p>
+  </div>
+  <div class="demo-talk">
+    <p class="talk-label">🎤 TALKING POINT:</p>
+    <p>"This is what takes CLI from 'useful tool' to 'operational capability.' Instructions files, skills, custom agents — these are how you standardize a workflow across a team. Not everyone needs to learn the prompts. You build the pattern once, everyone uses it."</p>
+  </div>
+
+  <h4>Act 5: Show persistence (1 min)</h4>
+  <div class="demo-step"><div class="demo-num">8</div><div><strong>SAY:</strong> "One more thing M365 Copilot can't do."</div></div>
+  <div class="demo-step"><div class="demo-num">9</div><div><strong>Type:</strong> <code>/compact</code></div></div>
+  <div class="demo-step"><div class="demo-num">10</div><div><strong>SAY:</strong> "This summarizes the conversation for later. If I close this and come back tomorrow with <code>/resume</code>, all the context is there. The decisions, the data, the briefing — nothing lost. For work that spans multiple days or sessions, this is the game changer."</div></div>
+
+  <div class="demo-key-msg">
+    <p style="font-weight:700;margin-bottom:0.4rem;">Key Messages to Land</p>
+    <table>
+      <tr><th>Message</th><th>How to land it</th></tr>
+      <tr><td><strong>Tool-connected</strong></td><td>Point at each MCP tool call as it happens</td></tr>
+      <tr><td><strong>Multi-source synthesis</strong></td><td>"Five tabs → one conversation"</td></tr>
+      <tr><td><strong>Artifact, not answer</strong></td><td>"A structured document, not a chat bubble"</td></tr>
+      <tr><td><strong>Repeatable</strong></td><td>"Change the partner name, same workflow"</td></tr>
+      <tr><td><strong>Team-standardizable</strong></td><td>"Instructions + skills = everyone uses the same pattern"</td></tr>
+      <tr><td><strong>Persistent</strong></td><td>/resume = context survives across sessions</td></tr>
+      <tr><td><strong>Delta vs M365 Copilot</strong></td><td>"M365 helps you with one thing at a time. CLI operationalizes the whole workflow."</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- Slide 6: Exercise 1 -->
+<div class="slide-row" id="slide-6">
+  <div class="slide-panel" style="background: #F8F8F7">
+    <span class="sn">6/10</span>
+    <h2>Build Your Own <span class="accent">Partner Briefing</span></h2>
+    <h4>Your turn</h4>
+    <div style="font-size: 0.55rem; margin: 0.5em 0;">
+      <div style="display: flex; gap: 0.5em; align-items: center; margin-bottom: 0.3em;">
+        <span style="background: #2D6E6D; color: white; padding: 0.15em 0.4em; border-radius: 3px; font-weight: 700;">1</span>
+        <span>Pick a partner you have real work with</span>
+      </div>
+      <div style="display: flex; gap: 0.5em; align-items: center; margin-bottom: 0.3em;">
+        <span style="background: #2D6E6D; color: white; padding: 0.15em 0.4em; border-radius: 3px; font-weight: 700;">2</span>
+        <span>Copy the prompt from your exercise sheet, replace the name</span>
+      </div>
+      <div style="display: flex; gap: 0.5em; align-items: center;">
+        <span style="background: #2D6E6D; color: white; padding: 0.15em 0.4em; border-radius: 3px; font-weight: 700;">3</span>
+        <span>See what comes back</span>
+      </div>
+    </div>
+    <blockquote>This is your data, your projects, your pipeline.</blockquote>
+  </div>
+  <div class="script-panel">
+    <div class="meta"><span class='tag tag-full'>60 min</span> <span style='font-size:0.7rem;color:#2ecc71;margin-left:0.5rem;'>🟢 FACILITATION · 8 min · Walk around, help</span></div>
+    <p><strong>DO:</strong> Give them 8 minutes. Guided start — everyone copies the briefing prompt. Then self-paced exploration. Walk around, troubleshoot.</p>
+    <p><strong>SAY:</strong> "Your turn. Pick a partner you have real work with. Copy the prompt from exercise one, replace the name, and see what comes back. This is your data, your projects, your pipeline. Raise your hand if you need help."</p>
+  </div>
+</div>
+
+<!-- ═══ ACT 3 — WORKSHOP TO ACTION ═══ -->
+<div class='act-divider'><h3>Act 3 — Workshop to Action</h3><span class='time'>18 min</span></div>
+
+<!-- Slide 7: Demo — Workshop to Action Plan -->
+<div class="slide-row" id="slide-7">
+  <div class="slide-panel" style="background: #FFF5F5">
+    <span class="sn">7/10</span>
+    <h2>🔴 Demo — Great Workshop. <span class="accent">Now What?</span></h2>
+    <h4>From Conversation to Structure</h4>
+    <p style="margin-top: 0.5em;">Raw notes → phased plan with tasks, owners, risks, and next steps.</p>
+    <blockquote>The gap between "we agreed" and "someone acts" — <strong>CLI bridges it</strong>.</blockquote>
+  </div>
+  <div class="script-panel">
+    <div class="meta"><span class='tag tag-full'>60 min</span> <span style='font-size:0.7rem;color:#ff6b35;margin-left:0.5rem;'>🔴 LIVE DEMO · 10 min · Five acts</span></div>
+    <p><strong>DO:</strong> Run demo-02-workshop-to-plan. Full flow: @workshop-notes.txt → analysis → structured plan → iteration (add TCO) → show /compact and /resume. See demo card below.</p>
+    <p><strong>SAY:</strong> "This is the universal pain point. You have a great discovery call, great workshop, good notes — and then nothing structured happens. The notes live in OneNote. The action items live in memory. Let me show you how CLI bridges that gap."</p>
+  </div>
+</div>
+
+<!-- Demo Card — Workshop to Action Plan -->
+<div class="demo-card">
+  <h3>🔴 DEMO 2 — From Workshop Notes to Action Plan · Full Script</h3>
+
+  <p style="font-size:0.85rem;margin-bottom:0.4rem;font-weight:700;">What the audience will see</p>
+  <p style="font-size:0.78rem;margin-bottom:0.8rem;color:#666;">Raw workshop notes go in → CLI analyzes (opportunities, risks, gaps) → produces a phased action plan with tasks, owners, risks, costs → the plan iterates (add TCO section) → /compact preserves everything for next session. The contrast with M365 Copilot's flat summary is the message.</p>
+
+  <p style="font-size:0.85rem;margin-bottom:0.4rem;font-weight:700;">Setup</p>
+  <div class="demo-step"><div class="demo-num">✓</div><div>Copilot CLI running</div></div>
+  <div class="demo-step"><div class="demo-num">✓</div><div>Create <code>workshop-notes.txt</code> in your working directory with the fabricated Contoso Nordic notes (see demo script)</div></div>
+  <div class="demo-step"><div class="demo-num">✓</div><div>Optionally: use real meeting notes from your own work for more authenticity</div></div>
+
+  <h4>Act 1: Set the scene (1 min)</h4>
+  <div class="demo-step"><div class="demo-num">1</div><div><strong>SAY:</strong> "Every partner-facing role has this experience. Great workshop, great energy, good notes — and then... nothing structured happens. The notes live in OneNote. The action items live in memory. Two weeks later, the partner follows up and you're reconstructing what you agreed. Let me show you how CLI changes this."</div></div>
+
+  <h4>Act 2: Feed the context — show @ file reference (2 min)</h4>
+  <div class="demo-step"><div class="demo-num">2</div><div><strong>Type this prompt:</strong></div></div>
+  <div class="demo-prompt">
+    <p class="prompt-label">💬 Prompt:</p>
+    <p>"@workshop-notes.txt<br><br>
+    These are raw notes from a discovery workshop with an ISV partner. I need to turn this into a structured action plan. But first — analyze the notes and tell me:<br>
+    1. What are the key opportunities here?<br>
+    2. What are the risks and blockers?<br>
+    3. What's missing — what questions should we have asked but didn't?"</p>
+  </div>
+  <div class="demo-talk">
+    <p class="talk-label">🎤 TALKING POINT:</p>
+    <p>"The @ tells CLI to read the file. It doesn't just summarize — it analyzes. Look at the 'what's missing' section. That's the kind of insight that usually takes a week to surface."</p>
+  </div>
+
+  <h4>Act 3: Generate the structured plan (4 min)</h4>
+  <div class="demo-step"><div class="demo-num">3</div><div><strong>Type this prompt:</strong></div></div>
+  <div class="demo-prompt">
+    <p class="prompt-label">💬 Prompt:</p>
+    <p>"Now create a structured action plan from this workshop. Include:<br>
+    1. Executive summary — 3 sentences max<br>
+    2. Phased roadmap — Phase 1 (MVP, 3 months) and Phase 2 (full, 6 months)<br>
+    3. For each phase: deliverables, Azure services needed, effort estimate, key assumptions<br>
+    4. Task breakdown — concrete tasks with suggested owners (PSA, PTS, Partner)<br>
+    5. Open questions — things we need to resolve before Phase 1 starts<br>
+    6. Risks with mitigations<br>
+    7. Next steps — what happens this week<br><br>
+    Make it actionable enough that someone who wasn't in the workshop could pick this up and run with it."</p>
+  </div>
+  <div class="demo-talk">
+    <p class="talk-label">🎤 TALKING POINT (while it generates):</p>
+    <p>"This is the bridge. The raw notes become a plan. Phased. With owners. With risks. With open questions. You could send this to the partner, share it with your team, or put it in PMX."</p>
+  </div>
+  <div class="demo-step"><div class="demo-num">4</div><div><strong>DO:</strong> Let the full output render. Give audience time to read the structure — especially the task breakdown and next steps.</div></div>
+
+  <h4>Act 4: Show iteration — the plan evolves (2 min)</h4>
+  <div class="demo-step"><div class="demo-num">5</div><div><strong>Type this prompt:</strong></div></div>
+  <div class="demo-prompt">
+    <p class="prompt-label">💬 Prompt:</p>
+    <p>"Good. Now add a TCO estimate section for Phase 1. Erik needs to see costs below 5k EUR/month. Use Azure Document Intelligence pricing and Azure OpenAI pricing for a mid-volume scenario (assume 10,000 documents/month, average 3 pages each)."</p>
+  </div>
+  <div class="demo-talk">
+    <p class="talk-label">🎤 TALKING POINT:</p>
+    <p>"The plan is a living document. I can add sections, refine estimates, adjust scope — all in the same session. And if I come back tomorrow..."</p>
+  </div>
+  <div class="demo-step"><div class="demo-num">6</div><div><strong>Type:</strong> <code>/compact</code></div></div>
+  <div class="demo-step"><div class="demo-num">7</div><div><strong>SAY:</strong> "...I <code>/resume</code> and keep going. The plan, the context, the decisions — all preserved."</div></div>
+
+  <h4>Act 5: Land the message (1 min)</h4>
+  <div class="demo-step"><div class="demo-num">8</div><div><strong>SAY:</strong> "What just happened? Raw workshop notes became a phased plan with tasks, owners, risks, and cost estimates — in about 5 minutes. I could refine it, share it, or hand it off. This is the gap CLI fills: between 'we had a great conversation' and 'here's what we're doing.'"</div></div>
+
+  <div class="demo-step"><div class="demo-num">9</div><div><strong>Optional — show /plan:</strong></div></div>
+  <div class="demo-prompt">
+    <p class="prompt-label">💬 Optional prompt:</p>
+    <p>"/plan Create a PMX project for Contoso Nordic based on this action plan, with the Phase 1 deliverables as project deliverables."</p>
+  </div>
+  <div class="demo-step"><div class="demo-num">10</div><div><strong>SAY:</strong> "And if you want CLI to think before acting — <code>/plan</code> creates a structured plan of what IT will do, so you can review before it executes."</div></div>
+
+  <div class="demo-key-msg">
+    <p style="font-weight:700;margin-bottom:0.4rem;">Key Messages to Land</p>
+    <table>
+      <tr><th>Message</th><th>How to land it</th></tr>
+      <tr><td><strong>From conversation to action</strong></td><td>"Notes → phased plan in 5 minutes"</td></tr>
+      <tr><td><strong>Inspectable</strong></td><td>"The plan is an artifact — visible, shareable, reviewable"</td></tr>
+      <tr><td><strong>Iterable</strong></td><td>"Add a TCO section? Sure. Refine scope? Keep going."</td></tr>
+      <tr><td><strong>Persistent</strong></td><td>/resume = continue the plan next week</td></tr>
+      <tr><td><strong>Decomposition</strong></td><td>"Not just summary — tasks, owners, risks, dependencies"</td></tr>
+      <tr><td><strong>Delta vs M365 Copilot</strong></td><td>"M365 summarizes the meeting. CLI turns it into a living plan."</td></tr>
+      <tr><td><strong>Handoff-ready</strong></td><td>"Someone who wasn't there can pick this up and run"</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- Slide 8: Exercise 2 -->
+<div class="slide-row" id="slide-8">
+  <div class="slide-panel" style="background: #F8F8F7">
+    <span class="sn">8/10</span>
+    <h2>Pick Your <span class="accent">Scenario</span></h2>
+    <h4>Your turn — pick the one closest to your real work</h4>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4em; margin: 0.5em 0; font-size: 0.6rem;">
+      <div class="card"><div class="card-title">📋 Workshop → Plan</div><p>Turn rough notes into a structured action plan</p></div>
+      <div class="card"><div class="card-title">🔍 Opportunity Gaps</div><p>Find and fix missing outcome links across projects</p></div>
+      <div class="card"><div class="card-title">📧 Multi-Source Email</div><p>Draft partner comms informed by PMX + M365 data</p></div>
+      <div class="card"><div class="card-title">🗺️ Research → Roadmap</div><p>Combine /research with pipeline data for strategy</p></div>
+    </div>
+  </div>
+  <div class="script-panel">
+    <div class="meta"><span class='tag tag-full'>60 min</span> <span style='font-size:0.7rem;color:#2ecc71;margin-left:0.5rem;'>🟢 FACILITATION · 8 min · Self-paced</span></div>
+    <p><strong>DO:</strong> Give them 8 minutes. Self-paced — they pick the scenario closest to their real work. Walk around, help, point out interesting results.</p>
+    <p><strong>SAY:</strong> "Last exercise. Pick the scenario that is closest to what you actually do. The exercise sheet has ready-to-paste prompts for each one. If you finish early, try a second one."</p>
+  </div>
+</div>
+
+<!-- ═══ ACT 4 — THE BIGGER PICTURE ═══ -->
+<div class='act-divider'><h3>Act 4 — The Bigger Picture</h3><span class='time'>4 min</span></div>
+
+<!-- Slide 9: From Personal Tool to Team Capability -->
+<div class="slide-row" id="slide-9">
+  <div class="slide-panel" style="background: #F8F8F7">
+    <span class="sn">9/10</span>
+    <h2>From Personal Tool to <span class="accent">Team Capability</span></h2>
+    <h4>CLI becomes powerful when workflows are standardized, shared, and governed.</h4>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.4em; margin: 0.5em 0; font-size: 0.6rem;">
+      <div class="card"><div class="card-title">📝 Instructions &amp; Skills</div><p>Teach CLI your team's patterns. Reusable prompts, custom skills, instruction files — shared via repo.</p></div>
+      <div class="card"><div class="card-title">🔌 Agency</div><p>Microsoft integration layer. Internal auth, telemetry, shared plugin marketplace, curated MCPs.</p></div>
+      <div class="card"><div class="card-title">👥 Squad</div><p>When work gets big: multi-agent teams with memory, roles, coordination. Long-running initiatives.</p></div>
+    </div>
+    <blockquote>The question is not "can I use this?" — it's "<strong>what workflow should my team standardize first?</strong>"</blockquote>
+  </div>
+  <div class="script-panel">
+    <div class="meta"><span class='tag tag-full'>60 min</span> <span style='font-size:0.7rem;color:#ff6b35;margin-left:0.5rem;'>⚡ HIGH · 4 min · Expand the vision</span></div>
+    <p><strong>SAY:</strong> "Everything I showed you today was individual. But the real power is when this becomes a team capability."</p>
+    <p>"Instructions and skills let you codify patterns — the partner briefing workflow, the workshop-to-plan workflow. Share them in a repo. Everyone uses the same pattern."</p>
+    <p>"Agency takes it further — internal authentication so MCP servers work out of the box, a shared plugin marketplace, telemetry so you can see what is being used and how."</p>
+    <p>"And Squad — for when the work gets bigger. Multi-agent teams with memory and roles. Long-running initiatives where you need coordination, not just a single conversation."</p>
+    <p>"The question for your team is not whether to use this. It is which workflow to standardize first."</p>
+  </div>
+</div>
+
+<!-- ═══ ACT 5 — CLOSE ═══ -->
+<div class='act-divider'><h3>Act 5 — Close</h3><span class='time'>3 min</span></div>
+
+<!-- Slide 10: Your Toolbox -->
+<div class="slide-row" id="slide-10">
+  <div class="slide-panel" style="background: #FFFFFF">
+    <span class="sn">10/10</span>
+    <h2>You Now Have</h2>
+    <div class="stat-grid">
+      <div class="stat"><div class="num">1</div><div class="label">operational Copilot</div></div>
+      <div class="stat"><div class="num">3</div><div class="label">connected tools</div></div>
+      <div class="stat"><div class="num">2</div><div class="label">workflow patterns</div></div>
+    </div>
+    <ul style="font-size: 0.6rem; list-style: none; padding: 0;">
+      <li style="padding: 0.15rem 0 0.15rem 1rem; position: relative;"><span style="position: absolute; left: 0; color: #2D6E6D;">→</span> <strong>Try one real task this week</strong> — a Connect prep, a workshop plan, an opportunity review</li>
+      <li style="padding: 0.15rem 0 0.15rem 1rem; position: relative;"><span style="position: absolute; left: 0; color: #2D6E6D;">→</span> <strong>Share the cheat sheet with a colleague</strong> — see if they find the same delta</li>
+      <li style="padding: 0.15rem 0 0.15rem 1rem; position: relative;"><span style="position: absolute; left: 0; color: #2D6E6D;">→</span> <strong>Take the beginner course</strong> — gh.io/copilot-cli-course</li>
+    </ul>
+  </div>
+  <div class="script-panel">
+    <div class="meta"><span class='tag tag-full'>60 min</span> <span style='font-size:0.7rem;color:#2ecc71;margin-left:0.5rem;'>🟢 WARM CLOSE · 3 min</span></div>
+    <p><strong>SAY:</strong> "Here is what you walk away with. A working Copilot CLI connected to your partner tools. Two workflow patterns you have now tested with your own data. And a cheat sheet with everything you need to keep going."</p>
+    <p>"My one ask: try one real task this week. Not a test. A real Connect prep, a real action plan from real workshop notes, a real opportunity review. That is how it sticks."</p>
+    <p>"The beginner course is linked in your materials — two hours, self-paced, goes much deeper."</p>
+    <p>"Questions?"</p>
+  </div>
+</div>
+
+</div><!-- end #slides -->
+</div><!-- end .container -->
+
+</body>
+</html>
