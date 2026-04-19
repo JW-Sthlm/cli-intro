@@ -7,21 +7,29 @@
 
 ## Before You Start: Understand Your GitHub Accounts
 
-You likely have **two** GitHub accounts. This matters for Copilot CLI.
+As a Microsoft employee, you have access to GitHub Copilot at no cost to you — Microsoft provides the entitlement. But you need to make sure your account is connected to that entitlement.
 
-| Account type | What it is | Username format | Copilot plan |
-|-------------|-----------|----------------|-------------|
-| **EMU** (Enterprise Managed User) | Your Microsoft corporate account on `github.com/ms-copilot` | `yourname_microsoft` | Enterprise — 1,000 premium requests/month |
-| **Personal** | Your own GitHub account | Whatever you chose | Pro/Pro+ — unlimited code completions, separate premium request quota |
+You likely have **two** GitHub accounts:
 
-**Which should you use for Copilot CLI?**
+| Account type | What it is | Username format |
+|-------------|-----------|----------------|
+| **EMU** (Enterprise Managed User) | Your Microsoft corporate account on `github.com/ms-copilot` | `yourname_microsoft` |
+| **Personal** | Your own GitHub account | Whatever you chose |
 
-- **Personal account is recommended for this session.** It has unlimited code completions and your own premium request quota. It works with any repo you have access to.
-- **EMU account** is required for Microsoft-internal repos (e.g., `ms-copilot` org). It has a higher premium request allocation (1,000/month) but is managed by your org admin.
+**The key step:** Connect your **personal** GitHub account to the Microsoft Copilot entitlement. This gives your personal account full Copilot access — paid for by Microsoft, not you. Verify and connect at:
+
+👉 **https://copilot.github.microsoft.com/**
+
+This portal shows your entitlement status and walks you through connecting your personal account if it's not already linked.
+
+**Which account to use for Copilot CLI?**
+
+- **Personal account is recommended for this session.** Once connected to the entitlement, it has full Copilot access. It works with any public repo and your own repos.
+- **EMU account** is required only for Microsoft-internal repos (e.g., the `ms-copilot` org). Use it when you need to access internal code.
 - You can switch between accounts: `gh auth switch --user <account>`
 
-**Internal resources for setup and verification:**
-- **Copilot portal:** https://copilot.github.microsoft.com/ — verify your entitlement, check setup status
+**Internal resources:**
+- **Copilot portal:** https://copilot.github.microsoft.com/ — verify entitlement, connect accounts, check setup
 - **Copilot guidelines:** https://eng.ms/docs/initiatives/ai-guidance-for-microsoft-developers/governance/github-copilot-guidelines
 - **Quick Start guide:** Search "GitHub Copilot QuickStart" on the R&I SharePoint site — it has a verification function that checks your setup automatically
 - **Agency / GitOps:** https://eng.ms/docs/coreai/devdiv/one-engineering-system-1es/1es-jacekcz/startrightgitops/agency
