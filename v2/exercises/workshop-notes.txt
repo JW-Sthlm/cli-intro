@@ -1,0 +1,29 @@
+# Workshop Notes — Contoso Nordic (ISV Partner)
+
+> **Use this file in Exercise 2, Scenario A.** Point Copilot CLI at it with `@workshop-notes.txt` and ask it to turn these notes into a structured action plan.
+
+---
+
+Discovery Workshop — Contoso Nordic (ISV Partner)
+Date: 2026-04-15
+Attendees: Johan (PSA), Maria (PTS), Erik (Contoso CTO), Anna (Contoso PM)
+
+Context: Contoso has a SaaS platform for logistics. They want to add AI capabilities.
+Current stack: .NET backend, Azure SQL, deployed on App Service.
+They explored Azure OpenAI briefly but hit rate limits and cost concerns.
+
+Key findings:
+- They have 200+ enterprise customers, mostly in Nordics
+- Their main ask: intelligent document processing for shipping docs (invoices, customs forms, bills of lading)
+- Secondary ask: predictive demand forecasting for their customers
+- They want a "Copilot-like" experience inside their app
+- Erik is skeptical about cost at scale — needs TCO model
+- Anna wants a phased approach — MVP in 3 months, full in 6
+- They have 4 developers, no ML/AI expertise
+- Currently no Azure AI services in use
+- They already have data in Azure SQL that could feed models
+- Maria flagged: this could be a great co-sell opportunity — fits the "AI Business Solutions" sales play
+- Need to check: is there an existing Azure doc intelligence sample we can start from?
+- Need to check: ISV benefits for Azure AI consumption
+- Risk: their App Service plan may be too small for AI workloads
+- Risk: Erik may push back if phase 1 cost exceeds 5k EUR/month
