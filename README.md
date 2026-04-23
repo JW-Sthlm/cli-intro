@@ -20,11 +20,13 @@ The **`v2/`** folder has the current session materials:
 | `v2/pre-work/` | Setup guide + checklist | Everyone (before session) |
 | `v2/deck/` | Slide deck + storyboard | Facilitator |
 | `v2/demos/` | Demo scripts with talking points | Facilitator |
+| `v2/extras/` | Optional add-ons (overview dashboard, etc.) | Anyone who wants more |
 
 ## Quick links for attendees
 
 - **[Exercise 1: Build Your Partner Briefing](v2/exercises/exercise-01-build-your-briefing.md)**
 - **[Exercise 2: Pick Your Scenario](v2/exercises/exercise-02-pick-your-scenario.md)**
+- **[Exercise 3: Your Copilot Passport](v2/exercises/exercise-03-your-copilot-passport.md)** — victory lap: generate a personal dashboard of your CLI setup
 - **[Cheat Sheet](v2/reference/cheat-sheet.md)**
 - **[After-Session Resources](v2/reference/after-session-resources.md)**
 - **[Troubleshooting](v2/reference/troubleshooting.md)**

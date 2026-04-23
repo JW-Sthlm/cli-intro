@@ -4,6 +4,18 @@
 
 ---
 
+## Your Copilot Passport
+
+Generate a personal HTML dashboard of everything in your Copilot CLI setup — agents, skills, plugins, MCP servers, projects.
+
+- **[Install + use guide](../extras/copilot-overview/README.md)** — 30-second install, one prompt to run
+- **[Exercise 3: Your Copilot Passport](../exercises/exercise-03-your-copilot-passport.md)** — guided walkthrough
+- **[Source on GitHub](https://github.com/JW-Sthlm/copilot-overview)** — public repo, read the code if you're curious
+
+Run it now and take a screenshot. Run it again in a month and watch it fill up.
+
+---
+
 ## Self-Paced Learning
 
 | Resource | What it is | Time |

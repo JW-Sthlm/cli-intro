@@ -94,13 +94,140 @@
   .nav-bar a { font-size: 0.75rem; color: #2D6E6D; text-decoration: none; }
   
   @media (max-width: 900px) { .slide-row { grid-template-columns: 1fr; } .sorter-thumb { width: 110px; } }
+
+  /* QA reviewer intro */
+  .qa-intro { max-width: 1300px; margin: 1.5rem auto 0; padding: 1.25rem 1.5rem; background: white; border-left: 4px solid #2D6E6D; border-radius: 6px; box-shadow: 0 1px 6px rgba(0,0,0,0.06); font-size: 0.85rem; }
+  .qa-intro .qa-tag { display: inline-block; background: #2D6E6D; color: white; font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.15rem 0.5rem; border-radius: 3px; margin-bottom: 0.6rem; }
+  .qa-intro h2 { font-size: 1rem; color: #21211F; margin-bottom: 0.15rem; }
+  .qa-intro .qa-sub { font-size: 0.75rem; color: #797971; margin-bottom: 0.9rem; }
+  .qa-intro h3 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: #2D6E6D; margin: 0.9rem 0 0.3rem; }
+  .qa-intro p { line-height: 1.55; margin-bottom: 0.4rem; }
+  .qa-intro ul { list-style: none; padding: 0; margin: 0; }
+  .qa-intro li { padding: 0.15rem 0 0.15rem 1rem; position: relative; line-height: 1.5; }
+  .qa-intro li::before { content: '→'; position: absolute; left: 0; color: #2D6E6D; }
+  .qa-intro .tldr { background: #EEF4F4; border-radius: 6px; padding: 0.9rem 1.1rem; margin-bottom: 0.8rem; font-size: 0.85rem; }
+  .qa-intro .tldr strong { color: #2D6E6D; }
+  .qa-intro details { border-top: 1px solid #e8e8e8; padding: 0.5rem 0 0.3rem; }
+  .qa-intro details[open] { padding-bottom: 0.6rem; }
+  .qa-intro details summary { cursor: pointer; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: #2D6E6D; font-weight: 700; padding: 0.25rem 0; list-style: none; display: flex; align-items: center; gap: 0.4rem; user-select: none; }
+  .qa-intro details summary::-webkit-details-marker { display: none; }
+  .qa-intro details summary::before { content: '▸'; font-size: 0.7rem; transition: transform 0.15s; color: #2D6E6D; }
+  .qa-intro details[open] summary::before { transform: rotate(90deg); }
+  .qa-intro details summary:hover { color: #1a4a49; }
+  .qa-intro details > *:not(summary) { margin-top: 0.4rem; }
+  .qa-intro details h3 { margin-top: 0.7rem; }
+  .qa-intro details h3:first-of-type { margin-top: 0.4rem; }
+  .qa-intro .qa-top { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem; }
+  .sorter-wrap { margin-top: 1.5rem; border-top: 1px solid #ddd; padding-top: 1rem; }
+  .sorter-wrap summary { cursor: pointer; font-size: 0.85rem; color: #2D6E6D; font-weight: 700; padding: 0.4rem 0; list-style: none; display: flex; align-items: center; gap: 0.5rem; user-select: none; }
+  .sorter-wrap summary::-webkit-details-marker { display: none; }
+  .sorter-wrap summary::before { content: '▸'; font-size: 0.8rem; transition: transform 0.15s; }
+  .sorter-wrap[open] summary::before { transform: rotate(90deg); }
+  .sorter-wrap summary .hint { font-size: 0.65rem; color: #999; font-weight: normal; margin-left: auto; }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <h1>🎤 Storyboard — "Your Operational Copilot" (CLI Intro v2)</h1>
-  <p>Speaker script · demo plans · exercise guides · 60 min hands-on workshop</p>
+  <h1>Your Operational Copilot</h1>
+  <p>CLI Intro for Partner-Facing Roles · 60 min hands-on workshop · v2</p>
+</div>
+
+<div class="qa-intro">
+  <span class="qa-tag">For reviewers</span>
+  <h2>Storyboard for the Copilot CLI intro session</h2>
+  <p class="qa-sub">This page is the script and slide-by-slide thumbnails — not the deck itself. The presenter HTML lives alongside it.</p>
+
+  <div class="tldr">
+    <p><strong>TL;DR — </strong>60-minute hands-on introduction to GitHub Copilot CLI for partner-facing roles (PSA, PTS, PDM, GTM, PSS, managers). Not a developer workshop. Not a tool walkthrough. The session positions CLI as the operational Copilot — the step beyond M365 Copilot for repeatable, tool-connected, inspectable, longer-running partner work. Five acts, 10 slides, two live demos, two hands-on exercises. Attendees leave with a working setup, two tested workflow patterns, and a cheat sheet.</p>
+    <p style="margin-top: 0.5rem; margin-bottom: 0;"><strong>Your job as a reviewer:</strong> skim the TL;DR, open the sections below that matter to you, then scroll to the full slide-by-slide script. Flag anything that feels too technical, too dev-centric, or unclear for non-coders.</p>
+  </div>
+
+  <details open>
+    <summary>Positioning &amp; audience</summary>
+    <h3>Core positioning</h3>
+    <p>If M365 Copilot is your everyday AI assistant, CLI is your operational Copilot — for repeatable, tool-connected, inspectable, longer-running work across the partner organization.</p>
+
+    <h3>The Copilot Ladder</h3>
+    <ul>
+      <li><strong>M365 Copilot</strong> — helps you with work (draft, summarize, find)</li>
+      <li><strong>GitHub Copilot CLI</strong> — operationalizes work (multi-step, multi-source, repeatable)</li>
+      <li><strong>Agency</strong> — Microsoft integration layer (internal auth, shared plugins, telemetry, governance)</li>
+      <li><strong>Squad</strong> — multi-agent coordination (long-running, role-divided, memory-heavy)</li>
+    </ul>
+
+    <h3>Audience</h3>
+    <ul>
+      <li><strong>Who:</strong> Partner-facing and partner-enablement roles — PSA, PTS, PDM, Partner GTM, PSS, partner solution leads, managers, community leads. Broad across partner-facing functions, not just one sub-role.</li>
+      <li><strong>Level:</strong> Non-coders or light-technical users. Many already use M365 Copilot daily.</li>
+      <li><strong>Size:</strong> 5–15 people. Hybrid delivery (Teams + in-room).</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>What attendees walk away with</summary>
+    <ul>
+      <li>A working Copilot CLI connected to PMX, MSX, and M365</li>
+      <li>Two tested workflow patterns: partner briefing factory + workshop-to-action-plan</li>
+      <li>A cheat sheet with reusable prompts and key commands</li>
+      <li>An understanding of the Copilot Ladder (M365 → CLI → Agency → Squad)</li>
+      <li>Links to the self-paced beginner course and internal resources</li>
+    </ul>
+
+    <h3>What this session is <em>not</em></h3>
+    <ul>
+      <li>Not a developer workshop or code-generation tutorial</li>
+      <li>Not a replacement for M365 Copilot — it is the next step</li>
+      <li>Not a deep dive on MCP internals, agent frameworks, or prompt engineering</li>
+      <li>Not a product pitch — it is a hands-on operational introduction</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Design decisions &amp; what NOT to lead with</summary>
+    <h3>Every use case tested against</h3>
+    <ul>
+      <li>What is the gain over M365 Copilot? If weak, it was cut.</li>
+      <li>Why should a partner-facing role care? If dev-centric, it was translated or dropped.</li>
+    </ul>
+
+    <h3>What the session emphasizes</h3>
+    <ul>
+      <li><strong>Explicit tool use</strong> — workflows use connected tools intentionally, not just summarization</li>
+      <li><strong>Repeatability</strong> — patterns that can be reused for any partner, any week</li>
+      <li><strong>Inspectability</strong> — output is an artifact (plan, doc, file), not a chat bubble</li>
+      <li><strong>Persistence</strong> — /resume continues across sessions, nothing gets lost</li>
+      <li><strong>Team standardization</strong> — instructions + skills + agents = shared operating model</li>
+    </ul>
+
+    <h3>What this session avoids</h3>
+    <ul>
+      <li>Toy coding demos or "build a game" examples</li>
+      <li>Generic code-generation walkthroughs</li>
+      <li>Tool-mechanics-first approach (slash commands before value)</li>
+      <li>Use cases that M365 Copilot already handles well enough</li>
+      <li>Hype about autonomy without governance and human review</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>How to read this page &amp; how to review</summary>
+    <h3>How to read this page</h3>
+    <ul>
+      <li><strong>Sorter</strong> (below, collapsible) — at-a-glance flow across five acts, 10 slides</li>
+      <li><strong>Full script</strong> (further below) — each slide on the left, DO / SAY speaker notes on the right</li>
+      <li><strong>Demo cards</strong> (red-bordered) — detailed step-by-step instructions after demo slides</li>
+    </ul>
+
+    <h3>How to review</h3>
+    <ul>
+      <li>Flag anything that feels too technical or developer-centric for this audience</li>
+      <li>Call out any slide where the DO / SAY notes feel off or could be clearer</li>
+      <li>Note claims that need evidence or a softer edge</li>
+      <li>Is the M365 Copilot delta clear enough? Does each demo show why CLI is different?</li>
+      <li>Timing feedback — 60 minutes with two exercises. Too tight? Too loose?</li>
+    </ul>
+  </details>
 </div>
 
 <div class="nav-bar">
@@ -110,6 +237,8 @@
 </div>
 
 <div class="container">
+<details class="sorter-wrap">
+<summary>Slide sorter overview · 10 slides across 5 acts <span class="hint">click to expand</span></summary>
 <div id='sorter'>
 
 <!-- Act 1 — Positioning -->
@@ -173,6 +302,7 @@
 </div></div>
 
 </div>
+</details><!-- end sorter-wrap -->
 
 <!-- ═══════════════════════════════════════════════════════════ -->
 <!-- FULL SLIDES                                                 -->
