@@ -46,13 +46,7 @@ Go to https://copilot.github.microsoft.com/ — it has a verification function t
 
 ### `copilot` command not found after install
 
-**Fix:** Close ALL PowerShell/terminal windows and reopen. The PATH needs to refresh. If still missing:
-
-```
-$env:PATH -split ';' | Select-String -Pattern 'copilot'
-```
-
-If no results, the install path wasn't added to PATH. Try reinstalling with `winget install GitHub.Copilot`.
+**Fix:** Close ALL PowerShell/terminal windows and reopen. If still missing, try reinstalling with `winget install GitHub.Copilot`. As a last resort, restart your computer.
 
 ---
 
@@ -78,23 +72,27 @@ If no results, the install path wasn't added to PATH. Try reinstalling with `win
 
 ## MCP Server Issues
 
-### MCP servers not showing in `/env`
+### MCP servers not showing
 
-**Check 1:** Is the config file in the right place?
+**First, try asking CLI:** Inside Copilot CLI, type:
 
 ```
-Get-Content "$HOME\.copilot\mcp-config.json"
+My MCP servers aren't showing up. Can you help me diagnose and fix this?
 ```
 
-Should output valid JSON. If file not found, you need to create it.
+CLI can often find the issue and walk you through fixing it.
 
-**Check 2:** Is the JSON valid? Common mistake: trailing commas or missing quotes.
-
-**Check 3:** Restart Copilot CLI after editing the config file. Changes aren't picked up automatically.
+**If that doesn't work:** Make sure you've restarted Copilot CLI after any config changes. If you set up MCP servers using the `/mcp` command or by asking CLI, they should be saved automatically.
 
 ### MCP server listed but tools not working
 
-**Fix:** Some MCP servers need separate authentication. For PMX, you need Azure CLI login:
+**Fix:** Some MCP servers need separate authentication. For PMX, ask CLI:
+
+```
+PMX is not working. Can you help me reconnect to Azure for the PMX MCP server?
+```
+
+Or re-authenticate manually in PowerShell:
 
 ```
 az login --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47
@@ -106,22 +104,21 @@ az login --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47
 
 ### "Failed to retrieve" or authentication errors
 
-**Fix:** Re-authenticate Azure:
+**Fix:** Your Azure login may have expired. Ask CLI:
 
 ```
-az login --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47
+Help me reconnect to Azure for PMX
 ```
 
-Then restart Copilot CLI.
+Or re-run `az login --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47` in PowerShell, then restart Copilot CLI.
 
 ### "No projects found"
 
 **Possible causes:**
 1. You're not assigned to any projects in D365
 2. The login token expired
-3. Wrong tenant
 
-**Fix:** Check `az account show` to verify you're on the right tenant. Try `az login` again.
+**Fix:** Ask CLI: `Am I connected to Azure? Which tenant am I on?` — it can verify for you.
 
 ### PMX returns partial or unexpected data
 
@@ -133,8 +130,8 @@ Then restart Copilot CLI.
 
 ### Calendar/email not working
 
-**Fix:** The M365 MCP server uses your GitHub authentication to connect. If calendar or email queries fail:
-1. Make sure the M365 MCP server is listed in `/env`
+**Fix:** Ask CLI: `Why can't I access my calendar?` — it can often diagnose the issue. If that doesn't help:
+1. Make sure the M365 MCP server is connected (ask: `What MCP servers do I have?`)
 2. Try a simple query first: `What time is it?`
 3. If that works but calendar doesn't, the M365 tools may need consent. Follow any prompts.
 
@@ -145,27 +142,27 @@ Then restart Copilot CLI.
 ### Copilot gives wrong or irrelevant answers
 
 **Tips:**
-- Be more specific in your prompt
-- Provide context: "In my PMX projects..." not just "Show me projects"
-- Use `/compact` if the conversation has been going long — context can get cluttered
+- Be more specific: "In my PMX projects with Contoso..." not just "Show me projects"
+- Ask it to try again: "That's not what I meant. I want..." — it understands corrections
+- If the conversation has been going long, ask: `Can you summarize what we've discussed so far?` or use `/compact`
 
 ### Copilot is slow
 
 **Possible causes:**
-- Complex queries that need multiple MCP calls
+- Complex queries that need multiple tool calls
 - Network latency
-- Large context window
 
-**Fix:** Try `/model` to switch to a faster model. Use `/compact` to trim conversation history.
+**Fix:** Ask CLI: `Can you use a faster model for this?` or use `/model` to switch manually.
 
 ### "Rate limit exceeded"
 
-**Fix:** Wait a minute and try again. Each prompt uses one premium request from your Copilot quota. Heavy use can hit limits.
+**Fix:** Wait a minute and try again. Each prompt uses one premium request from your quota.
 
 ---
 
 ## Still Stuck?
 
-1. Type `/feedback` in Copilot CLI to report an issue
-2. Ask the session facilitator
-3. Check the GitHub Copilot CLI docs: https://docs.github.com/copilot/concepts/agents/about-copilot-cli
+1. **Ask CLI first** — type `I'm having trouble with [describe the problem]` — it can often help
+2. Ask the session facilitator or post in the Teams channel
+3. Use `/feedback` in Copilot CLI to report a bug
+4. Check the docs: https://docs.github.com/copilot/concepts/agents/about-copilot-cli

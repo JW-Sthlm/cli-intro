@@ -104,33 +104,25 @@ A browser window will open. Sign in with your Microsoft account. Once it says "Y
 
 ---
 
-## Step 5: Configure MCP Servers
+## Step 5: Connect Your Tools (MCP Servers)
 
-MCP servers are what let Copilot CLI talk to external tools — think of them as connectors. We'll set up three:
+MCP servers are connectors that let Copilot CLI talk to external tools — think of them like Power Automate connectors. We need three:
 
 1. **PMX** — your partner management data in D365
 2. **GitHub** — repos, issues, pull requests
 3. **M365** — email, calendar, Teams
 
-### Option A: Copy the config file (easiest)
-
-Your session facilitator will share a pre-made config file. Save it to:
+The easiest way: ask Copilot CLI to do it for you. Launch `copilot` and type:
 
 ```
-C:\Users\<your-username>\.copilot\mcp-config.json
+I need to set up MCP servers for PMX, GitHub, and M365. Help me configure them.
 ```
 
-Replace `<your-username>` with your actual Windows username.
+Copilot will walk you through it step by step — finding the right servers, configuring them, and saving the setup. Just follow along and answer its questions.
 
-### Option B: Use the /mcp command
+You can also use the built-in command `/mcp` to browse and add servers from a menu.
 
-Launch `copilot` and use the built-in command:
-
-```
-/mcp
-```
-
-This opens an interactive menu where you can add MCP servers. Your facilitator will walk you through this if needed.
+> **Having trouble?** MCP setup depends on your environment and permissions. If it doesn't work, don't worry — we'll troubleshoot together at the start of the session. Just make sure Steps 0–4 are done.
 
 ---
 

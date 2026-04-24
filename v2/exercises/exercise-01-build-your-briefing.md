@@ -10,9 +10,11 @@
 
 ## Before You Start
 
-Make sure Copilot CLI is running and your MCP servers are connected. If unsure, type `/env` and check for PMX, GitHub, and M365 tools.
+Make sure Copilot CLI is running and your MCP servers are connected. If unsure, just ask:
 
-> **Not sure what to type?** Just ask: `Am I connected to PMX?` or `What tools do I have available?`
+```
+Am I connected to PMX? What tools do I have available?
+```
 
 ---
 

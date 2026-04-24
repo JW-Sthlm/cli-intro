@@ -2,6 +2,8 @@
 
 Run through these five checks before the session. If any fail, see the [Setup Guide](setup-guide.md) troubleshooting section.
 
+💡 **For most of these checks, you can just ask Copilot CLI.** If a check has a technical command, that's for verification — but plain English works too.
+
 ---
 
 ## ✅ Check 1: Copilot CLI is installed
@@ -22,7 +24,7 @@ copilot --version
 copilot
 ```
 
-Then type `/login` if prompted, or just ask it something:
+Then just ask it something:
 
 ```
 Hello, what model are you using?
@@ -34,29 +36,33 @@ Hello, what model are you using?
 
 ## ✅ Check 3: Azure CLI is logged in
 
+Inside Copilot CLI, ask:
+
 ```
-az account show --query "{name:name, user:user.name}" -o table
+Am I logged in to Azure? Which account am I using?
 ```
 
-**Pass:** Shows your Microsoft account name and subscription
+Or verify manually in PowerShell: `az account show`
+
+**Pass:** Shows your Microsoft account name
 
 ---
 
-## ✅ Check 4: MCP servers are configured
+## ✅ Check 4: MCP servers are connected
 
-Inside Copilot CLI, type:
+Inside Copilot CLI, ask:
 
 ```
-/env
+What tools and MCP servers do I have available?
 ```
 
-**Pass:** You see PMX, GitHub, and M365 listed under MCP servers
+**Pass:** You see PMX, GitHub, and M365 mentioned
 
 ---
 
 ## ✅ Check 5: PMX data is accessible
 
-Inside Copilot CLI, type:
+Inside Copilot CLI, ask:
 
 ```
 Show me my PMX projects
