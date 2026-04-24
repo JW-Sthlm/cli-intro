@@ -24,6 +24,16 @@ Run it now and take a screenshot. Run it again in a month and watch it fill up.
 | [Course repo (Codespaces-ready)](https://github.com/github/copilot-cli-for-beginners) | Code, exercises, and a sample app to practice with | Self-paced |
 | [Copilot CLI Deep Dive Workshop](https://github.com/copilot-dev-days/copilot-cli-deep-dive-workshop) | Dev Days workshop with slides and exercises | ~2 hours |
 
+## Recommended Next Steps
+
+Try these in your first week after the session:
+
+1. **Run `/init` in a project folder** — Copilot scans your project and generates instruction files (`AGENTS.md`, `.github/copilot-instructions.md`) tailored to it. This teaches CLI your project's conventions so every future conversation starts with context.
+
+2. **Try the beginner course** — Chapters 4 (agents) and 5 (skills) go deeper into custom agents and automated skills. Chapter 6 covers MCP servers in detail.
+
+3. **Create one custom agent** — Save a `.agent.md` file in `~/.copilot/agents/` for a task you repeat often (e.g., partner briefing, opportunity review). The beginner course chapter 4 walks through this step by step.
+
 ## Official Documentation
 
 | Resource | What it covers |

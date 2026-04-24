@@ -47,11 +47,17 @@ The prompts and commands below are useful shortcuts — but natural language alw
 
 ## Referencing Things
 
+The `@` symbol is how you point Copilot CLI at files. It reads the file and uses it as context for your conversation. You can reference files, folders, or even images.
+
 | Syntax | What it does | Example |
 |--------|-------------|---------|
-| `@file` | Point at a file | `@notes.txt analyze these workshop notes` |
-| `#number` | Reference GitHub issue/PR | `#42 what is this about?` |
+| `@file` | Point at a single file | `@notes.txt analyze these workshop notes` |
+| `@folder/` | Point at all files in a folder | `@project/ give me an overview` |
+| `@file1 @file2` | Point at multiple files | `@books.py @utils.py how do these work together?` |
+| `#number` | Reference a GitHub issue or PR | `#42 what is this about?` |
 | `!command` | Run a shell command | `!dir` |
+
+💡 **Tip:** You don't need to use `@` for everything. If you're just asking a question or working with data from MCP tools (like PMX), plain language works fine. Use `@` when you have a specific file you want Copilot to read.
 
 ---
 
