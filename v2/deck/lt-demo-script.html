@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LT Demo Script — Copilot CLI in Action</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --fg:#0b0b0d; --fg-muted:#5a5a66; --bg:#fafafa; --card:#fff; --accent:#2D6E6D; --accent-light:#EEF4F4; --border:#e5e7eb; --warn:#c4700a; --warn-bg:#FFF7ED; --code-bg:#1e1e2e; --code-fg:#cdd6f4; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6;}
+  .wrap{max-width:760px;margin:0 auto;padding:48px 24px 96px;}
+  .tag{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:16px;}
+  h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:32px;font-weight:800;letter-spacing:-.02em;margin:0 0 6px;}
+  .sub{color:var(--fg-muted);font-size:16px;margin:0 0 32px;}
+  h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700;margin:32px 0 8px;color:var(--accent);}
+  h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;margin:16px 0 4px;}
+
+  .beat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin-bottom:16px;position:relative;}
+  .beat-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+  .beat-time{font-size:12px;font-weight:600;color:var(--accent);background:var(--accent-light);padding:3px 10px;border-radius:999px;}
+  .beat-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:700;margin:0;}
+  .beat p{font-size:15px;margin:6px 0;}
+
+  .do{font-size:14px;color:var(--accent);font-weight:600;margin:12px 0 4px;}
+  .say{font-size:14px;color:var(--fg-muted);font-style:italic;margin:4px 0 8px;padding-left:12px;border-left:3px solid var(--border);}
+
+  pre{background:var(--code-bg);color:var(--code-fg);border-radius:10px;padding:14px 18px;overflow-x:auto;font-size:13px;line-height:1.5;margin:8px 0;font-family:'Cascadia Code','Fira Code','Consolas',monospace;}
+
+  .tip{background:var(--accent-light);border-left:4px solid var(--accent);border-radius:0 10px 10px 0;padding:12px 16px;margin:12px 0;font-size:14px;}
+  .tip strong{color:var(--accent);}
+
+  .warn{background:var(--warn-bg);border-left:4px solid var(--warn);border-radius:0 10px 10px 0;padding:12px 16px;margin:12px 0;font-size:14px;}
+  .warn strong{color:var(--warn);}
+
+  .key-msg{background:#f9f9f9;border-radius:10px;padding:16px 20px;margin:16px 0;font-size:14px;}
+  .key-msg strong{color:var(--accent);}
+
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .footer{text-align:center;padding-top:24px;margin-top:32px;border-top:1px solid var(--border);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="tag">LT Demo · Tuesday · 15 min</span>
+  <h1>Copilot CLI in Action</h1>
+  <p class="sub">Live demo script for leadership team. No slides. Terminal + browser + talking. Copyable prompts on the side.</p>
+
+  <div class="tip">
+    <strong>Format:</strong> You talk while you type. The CLI output IS the presentation. Keep the terminal large-font, dark theme. Have the browser ready with the live site and the repo open in separate tabs.
+  </div>
+
+  <div class="warn">
+    <strong>Pre-staging:</strong> Before the call, launch CLI inside the partner library repo: <code>cd ~/projects/agentic-ai-partner-library && copilot</code>. Have the <a href="https://aka.ms/agenticlibrary" target="_blank">live site</a> and <a href="https://github.com/JW-Sthlm/agentic-ai-partner-library" target="_blank">repo</a> open in Edge tabs. Test that PMX/GitHub MCP work. Do a fresh <code>az login</code>.
+  </div>
+
+  <!-- ═══ BEAT 1 ═══ -->
+  <div class="beat">
+    <div class="beat-header">
+      <span class="beat-title">Context — what you're looking at</span>
+      <span class="beat-time">0:00 – 1:30</span>
+    </div>
+    <p class="do">DO: Show the live site briefly in browser. Then switch to terminal.</p>
+    <p class="say">I run a curated content library for the Agentic AI partner community. 14 Microsoft sources scanned daily by agents. Domain experts review. Agents publish. I built and operate this in Copilot CLI — no code. Let me show you how a real cycle works.</p>
+
+    <div class="tip"><strong>Landing message:</strong> This is not a toy demo. This is a production system. Agents run overnight. Experts review in the morning. Content goes live by lunch.</div>
+  </div>
+
+  <!-- ═══ BEAT 2 ═══ -->
+  <div class="beat">
+    <div class="beat-header">
+      <span class="beat-title">The trigger — what agents found</span>
+      <span class="beat-time">1:30 – 4:00</span>
+    </div>
+    <p class="do">DO: In CLI, ask about recent activity.</p>
+<pre>What happened in this repo this week? Show me recent issues and PRs — who created them, what were they about?</pre>
+    <p class="say">Let Copilot answer. Point out: some issues were created by <code>github-actions</code> (the research agent), some PRs by <code>copilot-swe-agent</code>, some by team members like Gilles. The system has multiple actors — agents and humans — working together.</p>
+
+    <p class="do">DO: Drill into an agent-created issue.</p>
+<pre>Show me issue #50 — the one about the MAF evaluation suite. Who created it, what happened, and how was it resolved?</pre>
+    <p class="say">This is the flow: an agent scanned sources, found a relevant new repo, created an issue, tagged it for the right domain expert. The expert reviewed it, approved it, and assigned Copilot to publish. Copilot created PR #49, which added it to the site.</p>
+
+    <div class="key-msg"><strong>Message to land:</strong> Discovery, triage, and publishing — all automated. The human's job is judgment: is this relevant? Is it good enough? Three clicks from the expert. Everything else runs.</div>
+  </div>
+
+  <!-- ═══ BEAT 3 ═══ -->
+  <div class="beat">
+    <div class="beat-header">
+      <span class="beat-title">The team — who does what</span>
+      <span class="beat-time">4:00 – 6:00</span>
+    </div>
+    <p class="do">DO: Show the team structure.</p>
+<pre>Show me the team.yml file — who are the domain experts and what areas do they cover?</pre>
+    <p class="say">Six people. Each owns a solution area. The agent knows who to assign content to based on the topic. Kiko gets CAIP content. Lorette gets Copilot Studio. Peter gets Dynamics. The routing is defined here — in a YAML file, not in code.</p>
+
+    <p class="do">DO: Then show the sources.</p>
+<pre>How many sources do we scan? What types?</pre>
+    <p class="say">14 sources. RSS feeds, GitHub releases, What's-New pages. The research agent checks them daily. New content becomes issues, issues become reviews, reviews become published entries.</p>
+
+    <div class="key-msg"><strong>Message to land:</strong> This is not one person doing everything. It's a system with defined roles — some human, some agent. The configuration is readable, shareable, version-controlled.</div>
+  </div>
+
+  <!-- ═══ BEAT 4 ═══ -->
+  <div class="beat">
+    <div class="beat-header">
+      <span class="beat-title">Live interaction — ask something real</span>
+      <span class="beat-time">6:00 – 9:00</span>
+    </div>
+    <p class="do">DO: Do something live that shows CLI working across tools.</p>
+<pre>Look at the open issues in this repo. Are there any that need my attention? Summarize what's pending and suggest priorities.</pre>
+    <p class="say">Point at the output. CLI reads the GitHub issues, understands the context, and prioritizes. Not just listing — analyzing.</p>
+
+    <p class="do">DO: Then cross-reference with another source.</p>
+<pre>Check if any of the broken link issues overlap with content that was recently added. Are we creating problems with our own PRs?</pre>
+    <p class="say">This is the delta vs M365 Copilot. It's connecting GitHub issues with PR history — two different data sources — and finding a pattern. M365 Copilot can't do this. It doesn't have the connectors.</p>
+
+    <div class="tip"><strong>Fallback:</strong> If CLI is slow or gives a partial answer, just narrate what it's doing: "It's reading the issues, cross-referencing with recent PRs — this is the kind of multi-source analysis that would take me 20 minutes manually."</div>
+  </div>
+
+  <!-- ═══ BEAT 5 ═══ -->
+  <div class="beat">
+    <div class="beat-header">
+      <span class="beat-title">The bridge — this scales</span>
+      <span class="beat-time">9:00 – 12:00</span>
+    </div>
+    <p class="say">This is one workflow. A content library. But the same pattern works for any repeatable partner work that spans multiple sources and multiple steps.</p>
+    <p class="say">Partner briefings — pull PMX, MSX, email, synthesize into talking points. Workshop follow-ups — turn raw notes into phased action plans. Opportunity analysis — cross-reference pipeline data with market research. Same tool. Same connectors. Different workflow.</p>
+    <p class="say">We're running an intro session for the team to get everyone started. 60 minutes, hands-on, they build real workflows with their own partner data. No coding. They walk away with a working setup they can keep using.</p>
+
+    <p class="do">DO: Optional — if time allows, do one quick partner-work prompt.</p>
+<pre>Show me my PMX projects that are missing outcomes. Which ones should I fix first?</pre>
+    <p class="say">That just hit Dynamics 365 live. From the terminal. Plain English. This is what the team will learn to do in the intro session.</p>
+
+    <div class="key-msg"><strong>Message to land:</strong> I built and operate a production system in CLI. The same tool connects to PMX, MSX, M365, GitHub. The intro session gives everyone a working setup and tested patterns. This is us being customer zero for AI-first workflows.</div>
+  </div>
+
+  <!-- ═══ BEAT 6 ═══ -->
+  <div class="beat">
+    <div class="beat-header">
+      <span class="beat-title">Questions</span>
+      <span class="beat-time">12:00 – 15:00</span>
+    </div>
+    <p class="do">DO: Open for questions. Keep CLI running — answer questions by showing, not telling.</p>
+    <p class="say">If someone asks "can it do X?" — try it live. That's the strongest proof.</p>
+
+    <div class="tip"><strong>Likely questions and how to handle them:</strong>
+      <br>→ "Is this just for technical people?" — Show the plain English prompts. Point out: no code, no syntax, just sentences.
+      <br>→ "What about governance / data?" — Show that everything is in GitHub: version-controlled, auditable, reviewable. Human approval required for publishing.
+      <br>→ "How do we roll this out?" — The intro session is the first step. Setup takes 15 minutes. Then it's practice and patterns.
+      <br>→ "How is this different from M365 Copilot?" — M365 helps with one task at a time. CLI connects across tools and produces repeatable, inspectable workflows. Show the partner library as proof: M365 Copilot couldn't build this.
+    </div>
+  </div>
+
+  <div class="footer">
+    <p style="font-size:13px;color:var(--fg-muted);">Reference only. Keep this open on a second screen during the demo.</p>
+  </div>
+</div>
+</body>
+</html>
