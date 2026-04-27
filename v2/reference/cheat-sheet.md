@@ -28,6 +28,22 @@ The prompts and commands below are useful shortcuts — but natural language alw
 
 ---
 
+## The Kitchen Analogy
+
+Think of your CLI setup like a kitchen:
+
+| Piece | Kitchen | CLI |
+|-------|---------|-----|
+| **Instructions** | House rules — "veggies go on the left" | Rules that shape every output automatically. Write once, always active. |
+| **Prompts** | Saved recipes you pull out by name | Reusable workflows: `/prompt partner-briefing` |
+| **Skills** | Training that kicks in — like tempering chocolate when the order comes | Expertise that activates on its own when it detects a relevant topic |
+| **MCP Servers** | Kitchen equipment everyone shares | Live connectors to PMX, MSX, M365, GitHub — real data |
+| **Copilot** | Head chef who uses all of the above | The AI that ties instructions, prompts, skills, and tools together |
+
+You don't need to understand every piece on day one. Start with Copilot + MCP servers (the chef and the equipment). Instructions, prompts, and skills come naturally as you get comfortable.
+
+---
+
 ## Essential Commands
 
 | Command | What it does |
