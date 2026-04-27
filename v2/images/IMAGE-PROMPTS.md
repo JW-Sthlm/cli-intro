@@ -1,91 +1,93 @@
-# Image Prompts — Copilot CLI Intro Session
+# Image Prompts - Copilot CLI Intro Session (v2: Pixel Art)
+
+## Reference Character
+
+All images feature the same protagonist: the pixel avatar from `Casual pixel avatar with coffee and laptop.png`.
+
+**Character description for every prompt:** A friendly guy with short light-brown hair, light stubble, blue eyes, wearing a black t-shirt with a cyan/magenta pixel robot face on the chest. He holds a takeaway coffee cup in one hand and a silver laptop tucked under the other arm. Confident, relaxed posture.
+
+Upload the reference image alongside each prompt so GPT can match the character consistently.
 
 ## Reusable Images from copilot-cli-for-beginners (MIT Licensed)
 
-Credit: James Montemagno / GitHub — [github/copilot-cli-for-beginners](https://github.com/github/copilot-cli-for-beginners) (MIT)
+Credit: James Montemagno / GitHub - [github/copilot-cli-for-beginners](https://github.com/github/copilot-cli-for-beginners) (MIT)
 
 | Image | Source path | Use for | Notes |
 |-------|-------------|---------|-------|
-| Auth device flow | `00-quick-start/images/auth-device-flow.png` | Setup page, setup verify slide | Johan confirmed: "very good for the auth" — use as-is |
-| Colleague context analogy | `02-context-conversations/images/colleague-context-analogy.png` | "What Makes CLI Different" slide | Warm illustrated style, shows the "talk to it like a person" concept |
-| Cross-file intelligence | `02-context-conversations/images/cross-file-intelligence.png` | Demo 1 or reference materials | Shows multi-source synthesis — close to our briefing factory concept |
-| First Copilot experience | `01-setup-and-first-steps/images/first-copilot-experience.png` | Welcome slide or setup page | Good "first time" energy |
+| Auth device flow | `00-quick-start/images/auth-device-flow.png` | Setup page, setup verify slide | Use as-is - clean diagram style |
+| Colleague context analogy | `02-context-conversations/images/colleague-context-analogy.png` | Fallback for "What Makes CLI Different" | Warm illustrated style (different art style from our pixel set) |
 
-Download URLs (raw):
+Download URLs:
 - https://raw.githubusercontent.com/github/copilot-cli-for-beginners/main/00-quick-start/images/auth-device-flow.png
 - https://raw.githubusercontent.com/github/copilot-cli-for-beginners/main/02-context-conversations/images/colleague-context-analogy.png
-- https://raw.githubusercontent.com/github/copilot-cli-for-beginners/main/02-context-conversations/images/cross-file-intelligence.png
-- https://raw.githubusercontent.com/github/copilot-cli-for-beginners/main/01-setup-and-first-steps/images/first-copilot-experience.png
 
 ---
 
 ## Custom Image Prompts (for OpenAI GPT Image Gen)
 
-### Style guide for all prompts
+### Style guide - append to EVERY prompt
 
-Append this to every prompt:
-
-> **Style:** Warm, slightly anime-inspired digital illustration. Soft lighting with glowing accents (teal #2D6E6D and warm amber). Clean lines, gentle gradients, not photorealistic — closer to Studio Ghibli meets modern tech illustration. Characters should be friendly and relatable, diverse, wearing casual-professional clothes. Background should be simple and slightly blurred. No text in the image.
+> **Style:** Retro pixel art illustration in the style of the attached reference image. Semi-realistic pixel art - NOT 8-bit or 16-bit low-res sprites, but modern high-detail pixel art with visible square pixels, clean edges, and a slightly retro video game aesthetic. Color palette: black, teal (#2D6E6D), cyan, magenta/pink accents, warm skin tones, white background or simple flat-color backgrounds. The main character MUST match the attached reference image exactly - same hair, stubble, blue eyes, black t-shirt with cyan/magenta pixel robot logo, coffee cup, and laptop. No text or lettering in the image.
 
 ---
 
-### Prompt 1: "The Matrix Moment" — Realizing What CLI Can Do
+### Prompt 1: "The Matrix Moment" - Realizing What CLI Can Do
 
-**Use for:** Slide 3 ("What Makes CLI Different") or title slide hero
+**Use for:** Title slide hero or Slide 3 ("What Makes CLI Different")
 
 **Prompt:**
 
-A person sits at a desk with a simple dark terminal open on their laptop screen. They lean back slightly, eyes wide with a spark of wonder — the "aha" moment. From the terminal, luminous streams of structured data flow upward like gentle ribbons of light: calendar icons, email envelopes, document symbols, chart fragments, and partner logos — all orbiting softly around the person's head before settling into a clean, organized constellation above them. The feel is magical but grounded — not sci-fi dark, but warm and inviting. Think "knowledge uploading" from The Matrix, but reimagined as a cozy, empowering experience. The room has warm wood tones, a coffee mug, and a small plant.
+The pixel art guy (see attached reference) sits at a desk with his laptop open showing a dark terminal screen with teal-colored text. He leans back with wide eyes and a grin - the "aha" moment. From the terminal, luminous pixel streams flow upward: small pixel icons of a calendar, an email envelope, a bar chart, a database cylinder, and a document - all floating in an arc above his head like power-ups being absorbed in a video game. Small pixel sparkle effects (teal and magenta) burst around the icons. His coffee cup sits on the desk, steam rising in pixelated curls. The background is a simple warm cream/off-white. The feel is magical and empowering - like unlocking a new ability in an RPG.
 
-Style: Warm, slightly anime-inspired digital illustration. Soft lighting with glowing accents (teal and warm amber). Clean lines, gentle gradients, not photorealistic — closer to Studio Ghibli meets modern tech illustration. No text in the image.
+[Append style guide]
 
 ---
 
-### Prompt 2: "From Chaos to Clarity" — The Before/After
+### Prompt 2: "From Chaos to Clarity" - The Before/After
 
-**Use for:** Slide 2 ("The Copilot Ladder") or as a transition visual between positioning and demo
+**Use for:** Transition visual between positioning and demo, or Slide 2
 
 **Prompt:**
 
-A split-scene illustration divided by a soft glowing line. LEFT SIDE ("before"): A stressed but friendly person surrounded by floating browser tabs, sticky notes, half-open emails, a calendar with conflicts, spreadsheets, and scattered documents — everything slightly tilted and overlapping, creating visual chaos. Their expression is overwhelmed but not defeated. RIGHT SIDE ("after"): The same person, now calm and confident, sitting at a terminal. A single clean conversation flows on screen. The same information (calendar, email, documents, data) flows in as organized streams from the left, arriving as structured output on the right — a neat briefing document, a clear action plan. The person has a slight smile. The left side uses warm but cluttered oranges and yellows. The right side uses cool, calm teals and soft blues.
+A split-scene pixel art illustration with a soft glowing teal line dividing left and right. LEFT SIDE: The pixel art guy (see attached reference) looks stressed, surrounded by floating pixel browser tabs, sticky notes, half-open emails, a calendar with red conflict markers, and scattered spreadsheet icons - everything tilted and overlapping like a cluttered retro game inventory screen. He is juggling items and his coffee is spilling slightly. RIGHT SIDE: The same character, now calm and confident, sitting at his laptop with a single clean terminal window. The same data (calendar, email, documents) flows in as organized pixel streams from the left, arriving as a neat structured document on screen. He has a satisfied smile and his coffee is safely in hand. Left side has warm orange/yellow pixel tones. Right side has cool teal/blue tones.
 
-Style: Warm, slightly anime-inspired digital illustration. Soft lighting with glowing accents (teal and warm amber). Clean lines, gentle gradients, not photorealistic. No text in the image.
+[Append style guide]
 
 ---
 
-### Prompt 3: "The Briefing Factory" — Multi-Source Synthesis
+### Prompt 3: "The Briefing Factory" - Multi-Source Synthesis
 
-**Use for:** Demo 1 intro card ("Partner Briefing Factory") or exercise 1 header
+**Use for:** Demo 1 intro card ("Partner Briefing Factory")
 
 **Prompt:**
 
-A whimsical illustration of a friendly "information factory." On the left, different sources arrive on gentle conveyor belts: a small PMX database icon, an email envelope, a calendar, a Teams chat bubble, a partner company building miniature. They flow into a central glowing terminal screen at the center of the image, which acts as the factory core — warm light emanates from it. On the right, a single polished document emerges: a clean partner briefing with structured sections, checkmarks, and talking points visible as small icons. A person stands next to the terminal with arms crossed confidently, watching the process with a satisfied expression. Small sparkle effects around the output suggest quality and completeness. The factory is not industrial — it feels more like a magical workshop, with rounded edges and warm materials.
+A whimsical pixel art scene showing a friendly "information factory." The pixel art guy (see attached reference) stands at the center next to a glowing pixel terminal that acts as the machine core. From the left, small pixel icons arrive on simple conveyor belts: a tiny database cylinder (PMX), an email envelope, a calendar page, a Teams chat bubble, and a small office building (partner). They feed into the terminal, which glows teal. On the right, a single polished pixel document emerges - a clean briefing with small checkmark and bullet-point icons visible. Pixel sparkle effects (magenta and teal) surround the output. The guy has his arms crossed confidently, watching with a slight smile. His coffee cup sits on top of the terminal. The factory feels like a cozy RPG crafting station, not industrial.
 
-Style: Warm, slightly anime-inspired digital illustration. Soft lighting with glowing accents (teal and warm amber). Clean lines, gentle gradients, not photorealistic — closer to Studio Ghibli meets modern tech illustration. No text in the image.
+[Append style guide]
 
 ---
 
-### Prompt 4: "The Copilot Ladder" — Progression Visual
+### Prompt 4: "The Copilot Ladder" - Progression Visual
 
-**Use for:** Slide 2 ("The Copilot Ladder") — the core positioning visual
+**Use for:** Slide 2 ("The Copilot Ladder") - core positioning visual
 
 **Prompt:**
 
-A vertical progression illustration showing four ascending platforms connected by gentle glowing pathways. BOTTOM PLATFORM: A friendly chat bubble with a sparkle icon, surrounded by small everyday task icons (email draft, meeting summary, quick search). A person stands here waving. SECOND PLATFORM: A terminal window with connected tool icons (calendar, PMX database, email, files) orbiting it. The same person has climbed here and is now building something — structured documents flow out. Labeled energy: "operational." THIRD PLATFORM: The terminal is now wrapped in an official-looking frame with a small shield/lock icon, representing enterprise governance. Multiple people share the same workspace. FOURTH PLATFORM (partially in clouds): Multiple small agent figures work together on a complex task, passing artifacts between them. Each platform is slightly larger and more capable-looking than the last. The path between them glows warmly, suggesting natural progression — not difficulty. The overall composition goes from simple at bottom to powerful at top, but stays inviting throughout.
+A vertical pixel art illustration showing four ascending platforms connected by glowing teal pixel pathways, like levels in a platformer game. BOTTOM PLATFORM (green accent): A pixel chat bubble with a sparkle icon and small task icons (email, meeting note). SECOND PLATFORM (teal, highlighted/active): The pixel art guy (see attached reference) stands here at his laptop terminal, with connected tool icons orbiting - calendar, database, email, files. A structured document flows out. This platform glows brightest. THIRD PLATFORM (blue accent): The terminal is wrapped in a pixel shield/frame icon - representing enterprise governance. Multiple small pixel figures share the workspace. TOP PLATFORM (purple accent, partially in pixel clouds): Multiple small pixel agent figures work together, passing items between them like a co-op game. The path between platforms has small pixel arrows pointing up. The composition is vertical, bottom to top, and feels like natural progression - not difficulty. The guy's coffee cup is visible on the second platform.
 
-Style: Warm, slightly anime-inspired digital illustration. Soft lighting with glowing accents (teal and warm amber). Clean lines, gentle gradients, not photorealistic. No text in the image. Vertical composition.
+[Append style guide]
 
 ---
 
-### Prompt 5: "Sticky Notes to Strategy" — Workshop to Plan
+### Prompt 5: "Sticky Notes to Strategy" - Workshop to Plan
 
-**Use for:** Demo 2 intro card ("Workshop Notes → Action Plan") or exercise 2 header
+**Use for:** Demo 2 intro card ("Workshop Notes -> Action Plan")
 
 **Prompt:**
 
-A two-act illustration. LEFT SIDE: A whiteboard covered in colorful but messy sticky notes, hasty sketches, arrows going everywhere, and a few coffee ring stains. Some notes are falling off. It captures the energy of a great workshop — lots of ideas, zero structure. A few people stand around it looking excited but slightly lost about "what next." RIGHT SIDE: The same content has been transformed. A clean, phased project plan floats in the air as a beautiful holographic document — with clear phases, task cards neatly organized, owner avatars assigned, and a timeline flowing left to right. A terminal sits between the two sides, glowing gently as the bridge that made the transformation happen. Small particles of light flow from the sticky notes through the terminal into the structured plan.
+A two-act pixel art illustration. LEFT SIDE: A pixel whiteboard covered in colorful but messy pixel sticky notes (yellow, pink, green, blue), hasty pixel sketches, arrows going everywhere, and a small pixel coffee ring stain. The pixel art guy (see attached reference) and two other pixel colleagues stand around it - excited expressions but slightly confused about what is next, like characters looking at a puzzle in an adventure game. RIGHT SIDE: The same content transformed. A clean pixel project plan floats as a glowing holographic document - with clear phase labels as colored blocks, small task cards neatly stacked, tiny pixel avatar icons assigned to tasks, and a timeline bar flowing left to right. The guy's laptop terminal sits between the two sides, glowing teal as the bridge. Small teal pixel particles flow from the sticky notes through the terminal into the plan. He now looks satisfied, coffee in hand.
 
-Style: Warm, slightly anime-inspired digital illustration. Soft lighting with glowing accents (teal and warm amber). Clean lines, gentle gradients, not photorealistic — closer to Studio Ghibli meets modern tech illustration. No text in the image.
+[Append style guide]
 
 ---
 
@@ -95,8 +97,16 @@ Style: Warm, slightly anime-inspired digital illustration. Soft lighting with gl
 |-----------------|-------|------|
 | Title slide / hero | Prompt 1: "Matrix Moment" | Generate |
 | Slide 2: Copilot Ladder | Prompt 4: "Ladder" | Generate |
-| Slide 3: What Makes CLI Different | Prompt 2: "Chaos to Clarity" OR reuse `colleague-context-analogy.png` | Generate or reuse |
+| Slide 3: What Makes CLI Different | Prompt 2: "Chaos to Clarity" | Generate |
 | Demo 1 card: Briefing Factory | Prompt 3: "Briefing Factory" | Generate |
-| Demo 2 card: Workshop → Plan | Prompt 5: "Sticky Notes to Strategy" | Generate |
+| Demo 2 card: Workshop -> Plan | Prompt 5: "Sticky Notes to Strategy" | Generate |
 | Setup page | Reuse `auth-device-flow.png` | Reuse (credit James) |
-| Reference / cheat sheet | Reuse `cross-file-intelligence.png` | Reuse (credit James) |
+| Stand-alone avatar / social | Reference image as-is | Existing |
+
+## How to generate
+
+1. Open ChatGPT with GPT-4o image generation
+2. Upload `Casual pixel avatar with coffee and laptop.png` as the reference
+3. Paste the prompt + style guide
+4. If the character drifts, re-upload the reference and say: "Match this character exactly - same pixel art style, same hair, same shirt with robot logo, same coffee cup"
+5. Generate at 1024x1024 or 1792x1024 (wide) depending on slide layout
