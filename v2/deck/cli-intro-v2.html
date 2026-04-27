@@ -84,6 +84,30 @@ body{
   background:var(--teal);border-color:var(--teal);
   transform:scale(1.4);
 }
+.nav-dot.chapter-start{margin-top:10px}
+
+/* ── Chapter bar (top, horizontal) ── */
+#chapters{
+  position:fixed;top:14px;left:50%;transform:translateX(-50%);
+  display:flex;gap:2px;z-index:100;
+  background:var(--bg-white);
+  border:1px solid var(--border);border-radius:var(--radius-pill);
+  padding:4px 5px;box-shadow:var(--shadow-md);
+  font-family:var(--font-body);
+}
+.chapter-pill{
+  font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+  font-weight:600;color:var(--fg-muted);
+  padding:7px 13px;border-radius:var(--radius-pill);
+  cursor:pointer;background:transparent;border:none;
+  transition:all .25s var(--ease-out);
+  white-space:nowrap;font-family:inherit;
+}
+.chapter-pill:hover{color:var(--fg);background:var(--bg-elevated)}
+.chapter-pill.active{
+  background:var(--teal);color:#fff;
+}
+.chapter-pill.active:hover{background:var(--teal-hover)}
 
 /* ── Counter ── */
 #counter{
@@ -288,6 +312,8 @@ h2 .coral{color:var(--coral)}
   .block-grid{grid-template-columns:1fr}
   .ladder{max-width:100%}
   #nav{display:none}
+  #chapters{display:none}
+  .slide-img{display:none}
 }
 #header-link{
   position:fixed;top:16px;right:70px;z-index:99;
@@ -342,6 +368,7 @@ h2 .coral{color:var(--coral)}
 
 <div id="header-link">Johan Wallquist&ensp;|&ensp;Microsoft</div>
 <div id="progress"></div>
+<nav id="chapters"></nav>
 <nav id="nav"></nav>
 <div id="counter"><span>1</span> / 10</div>
 <div id="keys"><span class="key">&uarr;</span><span class="key">&darr;</span> navigate &nbsp;<span class="key">P</span> presenter</div>
@@ -349,7 +376,7 @@ h2 .coral{color:var(--coral)}
 <div id="deck">
 
 <!-- ═══════ SLIDE 1: TITLE ═══════ -->
-<section class="slide slide-title slide-hero" data-label="Title" data-notes="DO: Welcome. Quick show of hands — who has CLI installed? Who has used M365 Copilot this week? Good. SAY: Most of you use M365 Copilot. It helps you draft, summarize, find things. Today I want to show you the next step — where Copilot stops helping with individual tasks and starts operationalizing your work. Repeatable workflows. Connected tools. Persistent context. By the end of this hour, you will have tried it yourself.">
+<section id="title" class="slide slide-title slide-hero" data-label="Title" data-notes="DO: Welcome. Quick show of hands — who has CLI installed? Who has used M365 Copilot this week? Good. SAY: Most of you use M365 Copilot. It helps you draft, summarize, find things. Today I want to show you the next step — where Copilot stops helping with individual tasks and starts operationalizing your work. Repeatable workflows. Connected tools. Persistent context. By the end of this hour, you will have tried it yourself.">
   <img src="../images/matrix-moment.png" alt="" class="slide-img right" loading="lazy">
   <div class="slide-inner">
     <div class="reveal" style="font-family:var(--font-display);font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-weak);opacity:0.55;margin-bottom:20px;">60 min &middot; Hands-On Workshop</div>
@@ -364,7 +391,7 @@ h2 .coral{color:var(--coral)}
 </section>
 
 <!-- ═══════ SLIDE 2: THE COPILOT LADDER ═══════ -->
-<section class="slide slide-alt" data-label="Ladder" data-notes="DO: Walk through the ladder bottom to top. Pause on CLI. SAY: You already know M365 Copilot. It helps with individual tasks — draft this email, summarize that meeting. CLI is the next step. It connects to your actual tools — PMX, MSX, email, calendar — and produces structured, repeatable workflows. Not chat answers. Artifacts. Agency is what makes CLI Microsoft-ready — internal authentication, shared plugins, telemetry and governance. Squad is for the bigger stuff — multi-agent coordination for long-running initiatives. Today we focus on CLI. The step from getting help to operationalizing your work.">
+<section id="ladder" class="slide slide-alt" data-label="Ladder" data-notes="DO: Walk through the ladder bottom to top. Pause on CLI. SAY: You already know M365 Copilot. It helps with individual tasks — draft this email, summarize that meeting. CLI is the next step. It connects to your actual tools — PMX, MSX, email, calendar — and produces structured, repeatable workflows. Not chat answers. Artifacts. Agency is what makes CLI Microsoft-ready — internal authentication, shared plugins, telemetry and governance. Squad is for the bigger stuff — multi-agent coordination for long-running initiatives. Today we focus on CLI. The step from getting help to operationalizing your work.">
   <img src="../images/copilot-ladder.png" alt="" class="slide-img ladder-visual" loading="lazy">
   <div class="slide-inner">
     <span class="part-label reveal">Where does this fit?</span>
@@ -393,7 +420,7 @@ h2 .coral{color:var(--coral)}
 </section>
 
 <!-- ═══════ SLIDE 3: WHY NOW ═══════ -->
-<section class="slide" data-label="Why Now" data-notes="SAY: Why is this possible now? AI crossed a threshold. Three things changed. First, reasoning — AI can plan complex, multi-step tasks. Not just autocomplete. It decomposes a problem, figures out the sequence, and executes. Second, tool use — through MCP, the Model Context Protocol, AI connects to your actual systems. PMX, MSX, your email, your calendar. Real data, real actions. Third, self-correction — it checks its own work and iterates. And there is a quiet fourth shift — models got dramatically better at following long, detailed instructions. A year ago they would drift after two paragraphs. Now you can write a page of house rules and the model actually follows them. That is why custom instructions and prompts work — and why the kitchen analogy holds. The result? The barrier between describing what you want and getting it done just collapsed. That is why CLI exists.">
+<section id="why-now" class="slide" data-label="Why Now" data-notes="SAY: Why is this possible now? AI crossed a threshold. Three things changed. First, reasoning — AI can plan complex, multi-step tasks. Not just autocomplete. It decomposes a problem, figures out the sequence, and executes. Second, tool use — through MCP, the Model Context Protocol, AI connects to your actual systems. PMX, MSX, your email, your calendar. Real data, real actions. Third, self-correction — it checks its own work and iterates. And there is a quiet fourth shift — models got dramatically better at following long, detailed instructions. A year ago they would drift after two paragraphs. Now you can write a page of house rules and the model actually follows them. That is why custom instructions and prompts work — and why the kitchen analogy holds. The result? The barrier between describing what you want and getting it done just collapsed. That is why CLI exists.">
   <img src="../images/chaos-to-clarity.png" alt="" class="slide-img right" loading="lazy">
   <div class="slide-inner">
     <span class="part-label reveal">Why this matters now</span>
@@ -434,7 +461,7 @@ h2 .coral{color:var(--coral)}
 </section>
 
 <!-- ═══════ SLIDE 4: WHAT MAKES CLI DIFFERENT ═══════ -->
-<section class="slide slide-alt" data-label="Four Properties" data-notes="SAY: Four properties that make CLI different from M365 Copilot. Tool-connected — it calls your actual systems through MCP. PMX, MSX, email, calendar, GitHub. Real data. Repeatable — the same workflow works for any partner. Build the pattern once, reuse it, share it with your team. Inspectable — the output is an artifact. A structured document, a plan, a file. Not a chat answer that disappears when you close the tab. Persistent — slash resume picks up where you left off. Across days, across sessions. For work that evolves over time, this is the game changer. DO: If audience looks lost, use the kitchen analogy: think of MCP servers as kitchen equipment — the fridge, the oven. Instructions are house rules. Prompts are saved recipes. Skills are training that kicks in automatically. And Copilot is the head chef who uses all of it. You start with the chef and the equipment — everything else comes naturally.">
+<section id="four-properties" class="slide slide-alt" data-label="Four Properties" data-notes="SAY: Four properties that make CLI different from M365 Copilot. Tool-connected — it calls your actual systems through MCP. PMX, MSX, email, calendar, GitHub. Real data. Repeatable — the same workflow works for any partner. Build the pattern once, reuse it, share it with your team. Inspectable — the output is an artifact. A structured document, a plan, a file. Not a chat answer that disappears when you close the tab. Persistent — slash resume picks up where you left off. Across days, across sessions. For work that evolves over time, this is the game changer. DO: If audience looks lost, use the kitchen analogy: think of MCP servers as kitchen equipment — the fridge, the oven. Instructions are house rules. Prompts are saved recipes. Skills are training that kicks in automatically. And Copilot is the head chef who uses all of it. You start with the chef and the equipment — everything else comes naturally.">
   <div class="slide-inner">
     <span class="part-label reveal">The four properties</span>
     <h2 class="reveal d1">Not Another <span class="accent">Chat Window</span></h2>
@@ -461,7 +488,7 @@ h2 .coral{color:var(--coral)}
 </section>
 
 <!-- ═══════ SLIDE 5: DEMO — PARTNER BRIEFING ═══════ -->
-<section class="slide slide-hero" data-label="Demo 1" data-notes="DO: Run demo-01-partner-briefing. Full flow: pull PMX projects + MSX opps + partner team + recent emails → synthesize into structured briefing. Emphasize: tool calls visible, artifact not chat answer, repeatable for any partner. SAY: Let me show you what this looks like in practice. I have a partner Connect tomorrow. Instead of opening five tabs and assembling the picture myself, I will do it in one conversation. Watch which tools it calls and what comes out.">
+<section id="demo-1" class="slide slide-hero" data-label="Demo 1" data-notes="DO: Run demo-01-partner-briefing. Full flow: pull PMX projects + MSX opps + partner team + recent emails → synthesize into structured briefing. Emphasize: tool calls visible, artifact not chat answer, repeatable for any partner. SAY: Let me show you what this looks like in practice. I have a partner Connect tomorrow. Instead of opening five tabs and assembling the picture myself, I will do it in one conversation. Watch which tools it calls and what comes out.">
   <img src="../images/briefing-factory.png" alt="" class="slide-img demo-visual" loading="lazy">
   <div class="slide-inner">
     <span class="part-label reveal">Demo &mdash; The Briefing Factory</span>
@@ -472,7 +499,7 @@ h2 .coral{color:var(--coral)}
 </section>
 
 <!-- ═══════ SLIDE 6: EXERCISE 1 ═══════ -->
-<section class="slide slide-alt" data-label="Exercise 1" data-notes="DO: Give them 8 minutes. Guided start — everyone copies the briefing prompt. Then self-paced exploration. Walk around, troubleshoot. SAY: Your turn. Pick a partner you have real work with. Copy the prompt from exercise one, replace the name, and see what comes back. This is your data, your projects, your pipeline. Raise your hand if you need help.">
+<section id="exercise-1" class="slide slide-alt" data-label="Exercise 1" data-notes="DO: Give them 8 minutes. Guided start — everyone copies the briefing prompt. Then self-paced exploration. Walk around, troubleshoot. SAY: Your turn. Pick a partner you have real work with. Copy the prompt from exercise one, replace the name, and see what comes back. This is your data, your projects, your pipeline. Raise your hand if you need help.">
   <div class="slide-inner">
     <span class="part-label reveal">Your turn</span>
     <h2 class="reveal d1">Build Your Own <span class="accent">Partner Briefing</span></h2>
@@ -488,7 +515,7 @@ h2 .coral{color:var(--coral)}
 </section>
 
 <!-- ═══════ SLIDE 7: DEMO — WORKSHOP TO ACTION PLAN ═══════ -->
-<section class="slide slide-hero" data-label="Demo 2" data-notes="DO: Run demo-02-workshop-to-plan. Full flow: @workshop-notes.txt → analysis → structured plan → iteration (add TCO) → show /compact and /resume. SAY: This is the universal pain point. You have a great discovery call, great workshop, good notes — and then nothing structured happens. The notes live in OneNote. The action items live in memory. Let me show you how CLI bridges that gap.">
+<section id="demo-2" class="slide slide-hero" data-label="Demo 2" data-notes="DO: Run demo-02-workshop-to-plan. Full flow: @workshop-notes.txt → analysis → structured plan → iteration (add TCO) → show /compact and /resume. SAY: This is the universal pain point. You have a great discovery call, great workshop, good notes — and then nothing structured happens. The notes live in OneNote. The action items live in memory. Let me show you how CLI bridges that gap.">
   <img src="../images/sticky-notes-to-strategy.png" alt="" class="slide-img demo-visual" loading="lazy">
   <div class="slide-inner">
     <span class="part-label reveal">Demo &mdash; From Conversation to Structure</span>
@@ -499,7 +526,7 @@ h2 .coral{color:var(--coral)}
 </section>
 
 <!-- ═══════ SLIDE 8: EXERCISE 2 ═══════ -->
-<section class="slide slide-alt" data-label="Exercise 2" data-notes="DO: Give them 8 minutes. Self-paced — they pick the scenario closest to their real work. Walk around, help, point out interesting results. SAY: Last exercise. Pick the scenario that is closest to what you actually do. The exercise sheet has ready-to-paste prompts for each one. If you finish early, try a second one.">
+<section id="exercise-2" class="slide slide-alt" data-label="Exercise 2" data-notes="DO: Give them 8 minutes. Self-paced — they pick the scenario closest to their real work. Walk around, help, point out interesting results. SAY: Last exercise. Pick the scenario that is closest to what you actually do. The exercise sheet has ready-to-paste prompts for each one. If you finish early, try a second one.">
   <div class="slide-inner">
     <span class="part-label reveal">Your turn &mdash; pick a scenario</span>
     <h2 class="reveal d1">Pick Your <span class="accent">Scenario</span></h2>
@@ -525,7 +552,7 @@ h2 .coral{color:var(--coral)}
 </section>
 
 <!-- ═══════ SLIDE 9: THE BIGGER PICTURE ═══════ -->
-<section class="slide" data-label="Bigger Picture" data-notes="SAY: Everything I showed you today was individual. But the real power is when this becomes a team capability. Instructions and skills let you codify patterns — the partner briefing workflow, the workshop-to-plan workflow. Share them in a repo. Everyone uses the same pattern. Agency takes it further — internal authentication so MCP servers work out of the box, a shared plugin marketplace, telemetry so you can see what is being used and how. And Squad — for when the work gets bigger. Multi-agent teams with memory and roles. Long-running initiatives where you need coordination, not just a single conversation. The question for your team is not whether to use this. It is which workflow to standardize first.">
+<section id="bigger-picture" class="slide" data-label="Bigger Picture" data-notes="SAY: Everything I showed you today was individual. But the real power is when this becomes a team capability. Instructions and skills let you codify patterns — the partner briefing workflow, the workshop-to-plan workflow. Share them in a repo. Everyone uses the same pattern. Agency takes it further — internal authentication so MCP servers work out of the box, a shared plugin marketplace, telemetry so you can see what is being used and how. And Squad — for when the work gets bigger. Multi-agent teams with memory and roles. Long-running initiatives where you need coordination, not just a single conversation. The question for your team is not whether to use this. It is which workflow to standardize first.">
   <div class="slide-inner">
     <span class="part-label reveal">Where this goes</span>
     <h2 class="reveal d1">From Personal Tool to <span class="accent">Team Capability</span></h2>
@@ -552,7 +579,7 @@ h2 .coral{color:var(--coral)}
 </section>
 
 <!-- ═══════ SLIDE 10: CLOSE ═══════ -->
-<section class="slide slide-hero" data-label="Close" data-notes="SAY: Here is what you walk away with. A working Copilot CLI connected to your partner tools. Two workflow patterns you have now tested with your own data. And a cheat sheet with everything you need to keep going. My one ask: try one real task this week. Not a test. A real Connect prep, a real action plan from real workshop notes, a real opportunity review. That is how it sticks. The beginner course is linked in your materials — two hours, self-paced, goes much deeper. Questions?">
+<section id="close" class="slide slide-hero" data-label="Close" data-notes="SAY: Here is what you walk away with. A working Copilot CLI connected to your partner tools. Two workflow patterns you have now tested with your own data. And a cheat sheet with everything you need to keep going. My one ask: try one real task this week. Not a test. A real Connect prep, a real action plan from real workshop notes, a real opportunity review. That is how it sticks. The beginner course is linked in your materials — two hours, self-paced, goes much deeper. Questions?">
   <img src="../images/pixel-avatar-portrait.png" alt="" class="slide-img avatar" loading="lazy">
   <div class="slide-inner">
     <span class="part-label reveal">What you walk away with</span>
@@ -586,12 +613,37 @@ h2 .coral{color:var(--coral)}
 </div><!-- end #deck -->
 
 <script>
-const deck=document.getElementById('deck'),slides=[...document.querySelectorAll('.slide')],progress=document.getElementById('progress'),counter=document.getElementById('counter'),nav=document.getElementById('nav'),total=slides.length;
+const deck=document.getElementById('deck'),slides=[...document.querySelectorAll('.slide')],progress=document.getElementById('progress'),counter=document.getElementById('counter'),nav=document.getElementById('nav'),chaptersEl=document.getElementById('chapters'),total=slides.length;
+
+/* ── Chapter map ── */
+const chapters=[
+  {label:'Intro',ids:['title']},
+  {label:'Why Now',ids:['ladder','why-now']},
+  {label:'The Delta',ids:['four-properties']},
+  {label:'Demo 1',ids:['demo-1','exercise-1']},
+  {label:'Demo 2',ids:['demo-2','exercise-2']},
+  {label:'What\u2019s Next',ids:['bigger-picture','close']}
+];
+const slideChapter=slides.map(s=>chapters.findIndex(ch=>ch.ids.includes(s.id)));
+if(chapters.length){
+  chapters.forEach((ch,i)=>{
+    const b=document.createElement('button');
+    b.className='chapter-pill'+(i===0?' active':'');
+    b.textContent=ch.label;
+    b.addEventListener('click',()=>{
+      const target=document.getElementById(ch.ids[0]);
+      if(target) target.scrollIntoView({behavior:'smooth'});
+    });
+    chaptersEl.appendChild(b);
+  });
+}
+const pills=[...document.querySelectorAll('.chapter-pill')];
 
 slides.forEach((s,i)=>{
   const d=document.createElement('button');
   d.className='nav-dot'+(i===0?' active':'');
   d.dataset.label=s.dataset.label||`Slide ${i+1}`;
+  if(i>0 && slideChapter[i]!==-1 && slideChapter[i]!==slideChapter[i-1]) d.classList.add('chapter-start');
   d.addEventListener('click',()=>slides[i].scrollIntoView({behavior:'smooth'}));
   nav.appendChild(d);
 });
@@ -612,6 +664,8 @@ const slideObs=new IntersectionObserver(e=>{
         activeIndex=idx;
         broadcastSlide(idx);
         dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+        const chIdx=slideChapter[idx];
+        if(chIdx!==-1) pills.forEach((p,i)=>p.classList.toggle('active',i===chIdx));
         counter.innerHTML=`<span>${idx+1}</span> / ${total}`;
         progress.style.width=`${((idx+1)/total)*100}%`;
         const headerLink=document.getElementById('header-link');
