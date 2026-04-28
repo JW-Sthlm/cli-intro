@@ -348,6 +348,59 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
   font-family: 'JetBrains Mono', monospace; font-size: 11px;
   color: var(--muted); z-index: 20;
 }
+
+/* ── Presenter mode ── */
+#presenter-view { display: none; }
+body.mode-presenter { background: #010409; color: var(--text); overflow: hidden; }
+body.mode-presenter .stage, body.mode-presenter .hint { display: none; }
+body.mode-presenter #presenter-view {
+  display: grid; grid-template-rows: auto 1fr auto;
+  height: 100vh; font-family: 'Mona Sans', system-ui, sans-serif;
+}
+.pv-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 24px; border-bottom: 1px solid var(--border); background: var(--panel);
+}
+.pv-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  font-weight: 600; color: var(--purple); letter-spacing: .06em; text-transform: uppercase;
+}
+.pv-counter { font-size: 13px; color: var(--muted); font-weight: 500; }
+.pv-counter span { color: var(--purple); font-weight: 700; }
+.pv-main { display: grid; grid-template-columns: 420px 1fr; gap: 0; overflow: hidden; }
+.pv-thumb-panel {
+  background: var(--bg-2); border-right: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px; overflow: hidden;
+}
+.pv-thumb-frame {
+  width: 390px; height: 220px; border-radius: 8px;
+  border: 1px solid var(--border); overflow: hidden; background: var(--bg); position: relative;
+}
+.pv-thumb-frame iframe {
+  width: 1280px; height: 720px;
+  transform: scale(0.305); transform-origin: 0 0;
+  border: none; pointer-events: none;
+}
+.pv-notes-panel {
+  padding: 32px 40px; overflow-y: auto;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.pv-notes-do {
+  font-size: 14px; color: var(--green); font-weight: 600;
+  margin-bottom: 16px; line-height: 1.5;
+  font-family: 'JetBrains Mono', monospace;
+}
+.pv-notes-say { font-size: 26px; line-height: 1.65; font-weight: 300; color: var(--text); }
+.pv-waiting { color: var(--muted); font-style: italic; font-size: 18px; line-height: 1.6; }
+.pv-footer {
+  padding: 8px 24px; border-top: 1px solid var(--border);
+  font-size: 11px; color: var(--muted); background: var(--panel);
+  display: flex; justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace;
+}
+/* Thumbnail mode — hide chrome so iframe looks clean */
+body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { display: none; }
 </style>
 </head>
 <body>
@@ -660,8 +713,85 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
 </div><!-- end deck -->
 </div><!-- end stage -->
 
+<!-- Presenter notes view (same file, ?presenter=notes) -->
+<div id="presenter-view">
+  <div class="pv-header">
+    <div class="pv-label" id="pvLabel">Waiting for presentation&hellip;</div>
+    <div class="pv-counter"><span id="pvNum">-</span> / <span id="pvTotal">-</span></div>
+  </div>
+  <div class="pv-main">
+    <div class="pv-thumb-panel">
+      <div class="pv-thumb-frame">
+        <iframe id="pvThumb"></iframe>
+      </div>
+    </div>
+    <div class="pv-notes-panel">
+      <div id="pvDo" class="pv-notes-do" style="display:none;"></div>
+      <div id="pvSay" class="pv-notes-say">
+        <span class="pv-waiting">Connecting to presentation&hellip;</span>
+      </div>
+    </div>
+  </div>
+  <div class="pv-footer">
+    <span>Notes sync as you navigate the deck</span>
+    <span></span>
+  </div>
+</div>
+
 <script>
-// ── Six-act chapter map ──
+/* ── Mode detection ──
+   ?presenter=notes → dark presenter UI (this window)
+   ?presenter=thumb → silent thumbnail (used as iframe inside presenter)
+   (no param)       → normal deck
+*/
+const mode = new URLSearchParams(location.search).get('presenter') || 'deck';
+if (mode === 'notes') document.body.classList.add('mode-presenter');
+if (mode === 'thumb') document.body.classList.add('mode-thumb');
+
+/* ── Presenter notes mode ── */
+if (mode === 'notes') {
+  const pvThumb = document.getElementById('pvThumb');
+  const pvLabel = document.getElementById('pvLabel');
+  const pvNum = document.getElementById('pvNum');
+  const pvTotal = document.getElementById('pvTotal');
+  const pvDo = document.getElementById('pvDo');
+  const pvSay = document.getElementById('pvSay');
+  pvThumb.src = location.pathname + '?presenter=thumb';
+  let thumbReady = false;
+  let lastIndex = -1;
+  pvThumb.onload = () => { thumbReady = true; };
+
+  const channel = new BroadcastChannel('cli-intro-v3-presenter');
+  function parseNotes(raw) {
+    let doText = '', sayText = raw;
+    const doMatch = raw.match(/^DO:\s*(.*?)\s*SAY:\s*/i);
+    if (doMatch) { doText = doMatch[1].trim(); sayText = raw.substring(doMatch[0].length).trim(); }
+    else { const sayMatch = raw.match(/^SAY:\s*/i); if (sayMatch) sayText = raw.substring(sayMatch[0].length).trim(); }
+    return { doText, sayText };
+  }
+  channel.onmessage = (e) => {
+    if (!e.data || e.data.type !== 'slide-change') return;
+    const { index, total, label, notes } = e.data;
+    if (index === lastIndex) return;
+    lastIndex = index;
+    pvLabel.textContent = label;
+    pvNum.textContent = index + 1;
+    pvTotal.textContent = total;
+    if (thumbReady) pvThumb.contentWindow.postMessage({ type: 'scroll-to-slide', index }, '*');
+    const { doText, sayText } = parseNotes(notes || '');
+    pvSay.style.opacity = '0'; pvDo.style.opacity = '0';
+    setTimeout(() => {
+      if (doText) { pvDo.textContent = doText; pvDo.style.display = 'block'; pvDo.style.opacity = '1'; }
+      else pvDo.style.display = 'none';
+      pvSay.textContent = sayText || '(No notes for this slide)';
+      pvSay.style.opacity = '1';
+    }, 150);
+  };
+  channel.postMessage({ type: 'request-current' });
+}
+/* ── Deck mode (deck + thumb) ── */
+else {
+
 const ACTS = [
   { label: 'Intro',      num: '01', slides: [0] },
   { label: 'Why now',    num: '02', slides: [1, 2] },
@@ -760,6 +890,8 @@ document.addEventListener('keydown', e => {
     setTimeout(() => broadcastSlide(current), 500);
   }
 });
+
+} // end deck mode
 </script>
 </body>
 </html>
