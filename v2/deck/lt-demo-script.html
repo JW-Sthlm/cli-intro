@@ -11,6 +11,7 @@
 <style>
   :root{ --fg:#0b0b0d; --fg-muted:#5a5a66; --bg:#fafafa; --card:#fff; --accent:#2D6E6D; --accent-light:#EEF4F4; --border:#e5e7eb; --warn:#c4700a; --warn-bg:#FFF7ED; --code-bg:#1e1e2e; --code-fg:#cdd6f4; }
   *{box-sizing:border-box}
+  html{scroll-behavior:smooth;}
   body{margin:0;font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6;}
   .wrap{max-width:760px;margin:0 auto;padding:48px 24px 96px;}
   .tag{display:inline-block;background:var(--accent-light);color:var(--accent);font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:16px;}
@@ -19,7 +20,8 @@
   h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:700;margin:32px 0 8px;color:var(--accent);}
   h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;margin:16px 0 4px;}
 
-  .beat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin-bottom:16px;position:relative;}
+  .beat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin-bottom:16px;position:relative;scroll-margin-top:24px;}
+  .beat:target{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light);}
   .beat-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
   .beat-time{font-size:12px;font-weight:600;color:var(--accent);background:var(--accent-light);padding:3px 10px;border-radius:999px;}
   .beat-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:700;margin:0;}
@@ -39,6 +41,15 @@
   .key-msg{background:#f9f9f9;border-radius:10px;padding:16px 20px;margin:16px 0;font-size:14px;}
   .key-msg strong{color:var(--accent);}
 
+  .flow{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin:18px 0 24px;}
+  .flow-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;color:var(--accent);margin:0 0 10px;}
+  .flow ol{margin:0;padding-left:20px;}
+  .flow li{font-size:14px;margin:7px 0;color:var(--fg-muted);}
+  .flow li strong{color:var(--fg);}
+  .flow a{display:block;color:var(--fg-muted);border-radius:10px;padding:6px 8px;margin-left:-8px;text-decoration:none;}
+  .flow a:hover{background:var(--accent-light);color:var(--fg);}
+  .flow a:hover strong{color:var(--accent);}
+
   a{color:var(--accent);text-decoration:none;}
   a:hover{text-decoration:underline;}
   .footer{text-align:center;padding-top:24px;margin-top:32px;border-top:1px solid var(--border);}
@@ -47,102 +58,127 @@
 <body>
 <div class="wrap">
   <span class="tag">LT Demo · Tuesday · 15 min</span>
-  <h1>Copilot CLI in Action</h1>
-  <p class="sub">Live demo script for leadership team. No slides. Terminal + browser + talking. Copyable prompts on the side.</p>
+  <h1>AI-first Partner Delivery in Action</h1>
+  <p class="sub">Leadership demo script. No slides. Browser + terminal + one clear ask: double down on the motions already starting to work.</p>
 
   <div class="tip">
-    <strong>Format:</strong> You talk while you type. The CLI output IS the presentation. Keep the terminal large-font, dark theme. Have the browser ready with the live site and the repo open in separate tabs.
+    <strong>Format:</strong> You talk while you type. The CLI output is the evidence. Keep the terminal large-font, dark theme. Have the browser ready with the live site, the repo, and the optional Druid prototype in separate tabs.
   </div>
 
   <div class="warn">
-    <strong>Pre-staging:</strong> Before the call, launch CLI inside the partner library repo: <code>cd ~/projects/agentic-ai-partner-library && copilot</code>. Have the <a href="https://aka.ms/agenticlibrary" target="_blank">live site</a> and <a href="https://github.com/JW-Sthlm/agentic-ai-partner-library" target="_blank">repo</a> open in Edge tabs. Test that PMX/GitHub MCP work. Do a fresh <code>az login</code>.
+    <strong>Pre-staging:</strong> Before the call, launch CLI inside the partner library repo: <code>cd ~/projects/agentic-ai-partner-library && copilot</code>. Have the <a href="https://aka.ms/agenticlibrary" target="_blank">live site</a> and <a href="https://github.com/JW-Sthlm/agentic-ai-partner-library" target="_blank">repo</a> open in Edge tabs. Test that PMX/GitHub MCP work. Do a fresh <code>az login</code>. If you show Druid, keep it brief and avoid partner-sensitive details.
+  </div>
+
+  <div class="flow" id="flow">
+    <p class="flow-title">Flow at a glance</p>
+    <ol>
+      <li><a href="#beat-motion"><strong>Frame the ask:</strong> double down on Coding for Noncoders and AI-first partner delivery.</a></li>
+      <li><a href="#beat-production"><strong>Show production proof:</strong> Agentic AI Partner Library as agents + humans doing real work.</a></li>
+      <li><a href="#beat-model"><strong>Explain the model:</strong> roles, routing, review, and publishing are readable and governed.</a></li>
+      <li><a href="#beat-live"><strong>Interact live:</strong> ask CLI to prioritize issues and connect work across GitHub context.</a></li>
+      <li><a href="#beat-druid"><strong>Add the Druid cameo:</strong> short proof that a non-coder can build a partner prototype fast.</a></li>
+      <li><a href="#beat-ask"><strong>Close with the ask:</strong> sponsor sessions, reusable patterns, and CAIP/AIBS showcase projects.</a></li>
+    </ol>
   </div>
 
   <!-- ═══ BEAT 1 ═══ -->
-  <div class="beat">
+  <div class="beat" id="beat-motion">
     <div class="beat-header">
-      <span class="beat-title">Context — what you're looking at</span>
+      <span class="beat-title">The point — this is already becoming a motion</span>
       <span class="beat-time">0:00 – 1:30</span>
     </div>
     <p class="do">DO: Show the live site briefly in browser. Then switch to terminal.</p>
-    <p class="say">I run a curated content library for the Agentic AI partner community. 14 Microsoft sources scanned daily by agents. Domain experts review. Agents publish. I built and operate this in Copilot CLI — no code. Let me show you how a real cycle works.</p>
+    <p class="say">I want to show something bigger than a tool demo. We already have two motions starting to take shape: Coding for Noncoders, with a wider session on Thursday, and AI-first delivery for partners, where CAIP is my focus and Marvin and Giel are driving AIBS. My point today is simple: we should double down.</p>
+    <p class="say">This site is one proof point. It is a curated content library for the Agentic AI partner community. 14 Microsoft sources scanned daily by agents. Domain experts review. Agents publish. I built and operate the workflow in Copilot CLI, without being a developer.</p>
 
-    <div class="tip"><strong>Landing message:</strong> This is not a toy demo. This is a production system. Agents run overnight. Experts review in the morning. Content goes live by lunch.</div>
+    <div class="tip"><strong>Landing message:</strong> The proof is already there: agents doing useful work, humans applying judgment, and partner-facing output getting better.</div>
   </div>
 
   <!-- ═══ BEAT 2 ═══ -->
-  <div class="beat">
+  <div class="beat" id="beat-production">
     <div class="beat-header">
-      <span class="beat-title">The trigger — what agents found</span>
+      <span class="beat-title">Production proof — agents at work</span>
       <span class="beat-time">1:30 – 4:00</span>
     </div>
     <p class="do">DO: In CLI, ask about recent activity.</p>
 <pre>What happened in this repo this week? Show me recent issues and PRs — who created them, what were they about?</pre>
-    <p class="say">Let Copilot answer. Point out: some issues were created by <code>github-actions</code> (the research agent), some PRs by <code>copilot-swe-agent</code>, some by team members like Gilles. The system has multiple actors — agents and humans — working together.</p>
+    <p class="say">Let Copilot answer. Point out the mix of actors: <code>github-actions</code> creating research issues, <code>copilot-swe-agent</code> creating PRs, and team members reviewing or approving. This matters because the work is not hidden in one person's inbox. It is visible, inspectable, and repeatable.</p>
 
     <p class="do">DO: Drill into an agent-created issue.</p>
 <pre>Show me issue #50 — the one about the MAF evaluation suite. Who created it, what happened, and how was it resolved?</pre>
-    <p class="say">This is the flow: an agent scanned sources, found a relevant new repo, created an issue, tagged it for the right domain expert. The expert reviewed it, approved it, and assigned Copilot to publish. Copilot created PR #49, which added it to the site.</p>
+    <p class="say">This is the flow: an agent scanned sources, found a relevant new repo, created an issue, and tagged it for the right domain expert. The expert reviewed it, approved it, and assigned Copilot to publish. Copilot created PR #49, which added it to the site.</p>
 
-    <div class="key-msg"><strong>Message to land:</strong> Discovery, triage, and publishing — all automated. The human's job is judgment: is this relevant? Is it good enough? Three clicks from the expert. Everything else runs.</div>
+    <div class="key-msg"><strong>Message to land:</strong> Discovery, triage, and publishing are automated. The human's job is judgment: is this relevant, is it good enough, should it go live? That is the operating model we should scale.</div>
   </div>
 
   <!-- ═══ BEAT 3 ═══ -->
-  <div class="beat">
+  <div class="beat" id="beat-model">
     <div class="beat-header">
-      <span class="beat-title">The team — who does what</span>
+      <span class="beat-title">The operating model — humans and agents in roles</span>
       <span class="beat-time">4:00 – 6:00</span>
     </div>
     <p class="do">DO: Show the team structure.</p>
 <pre>Show me the team.yml file — who are the domain experts and what areas do they cover?</pre>
-    <p class="say">Six people. Each owns a solution area. The agent knows who to assign content to based on the topic. Kiko gets CAIP content. Lorette gets Copilot Studio. Peter gets Dynamics. The routing is defined here — in a YAML file, not in code.</p>
+    <p class="say">Six people. Each owns a solution area. The agent knows who to assign content to based on the topic. Kiko gets CAIP content. Lorette gets Copilot Studio. Peter gets Dynamics. The routing is defined here, in a YAML file a non-developer can read and change.</p>
 
     <p class="do">DO: Then show the sources.</p>
 <pre>How many sources do we scan? What types?</pre>
     <p class="say">14 sources. RSS feeds, GitHub releases, What's-New pages. The research agent checks them daily. New content becomes issues, issues become reviews, reviews become published entries.</p>
 
-    <div class="key-msg"><strong>Message to land:</strong> This is not one person doing everything. It's a system with defined roles — some human, some agent. The configuration is readable, shareable, version-controlled.</div>
+    <div class="key-msg"><strong>Message to land:</strong> This is the pattern: define the work, define the roles, let agents handle the repeatable parts, keep human judgment where it belongs. The configuration is readable, shareable, and version-controlled.</div>
   </div>
 
   <!-- ═══ BEAT 4 ═══ -->
-  <div class="beat">
+  <div class="beat" id="beat-live">
     <div class="beat-header">
       <span class="beat-title">Live interaction — ask something real</span>
       <span class="beat-time">6:00 – 9:00</span>
     </div>
     <p class="do">DO: Do something live that shows CLI working across tools.</p>
 <pre>Look at the open issues in this repo. Are there any that need my attention? Summarize what's pending and suggest priorities.</pre>
-    <p class="say">Point at the output. CLI reads the GitHub issues, understands the context, and prioritizes. Not just listing — analyzing.</p>
+    <p class="say">Point at the output. CLI reads the GitHub issues, understands the context, and prioritizes. The useful part is the judgment layer: what deserves attention now?</p>
 
     <p class="do">DO: Then cross-reference with another source.</p>
 <pre>Check if any of the broken link issues overlap with content that was recently added. Are we creating problems with our own PRs?</pre>
-    <p class="say">This is the delta vs M365 Copilot. It's connecting GitHub issues with PR history — two different data sources — and finding a pattern. M365 Copilot can't do this. It doesn't have the connectors.</p>
+    <p class="say">This is the delta versus personal productivity. M365 Copilot is very strong inside the productivity surface. Copilot CLI is different: it can operate across repos, issues, files, workflows, and connected systems. That makes it useful for repeatable delivery work.</p>
 
     <div class="tip"><strong>Fallback:</strong> If CLI is slow or gives a partial answer, just narrate what it's doing: "It's reading the issues, cross-referencing with recent PRs — this is the kind of multi-source analysis that would take me 20 minutes manually."</div>
   </div>
 
   <!-- ═══ BEAT 5 ═══ -->
-  <div class="beat">
+  <div class="beat" id="beat-druid">
     <div class="beat-header">
-      <span class="beat-title">The bridge — this scales</span>
-      <span class="beat-time">9:00 – 12:00</span>
+      <span class="beat-title">The proof that changes the conversation — Druid cameo</span>
+      <span class="beat-time">9:00 – 10:30</span>
     </div>
-    <p class="say">This is one workflow. A content library. But the same pattern works for any repeatable partner work that spans multiple sources and multiple steps.</p>
-    <p class="say">Partner briefings — pull PMX, MSX, email, synthesize into talking points. Workshop follow-ups — turn raw notes into phased action plans. Opportunity analysis — cross-reference pipeline data with market research. Same tool. Same connectors. Different workflow.</p>
-    <p class="say">We're running an intro session for the team to get everyone started. 60 minutes, hands-on, they build real workflows with their own partner data. No coding. They walk away with a working setup they can keep using.</p>
+    <p class="do">DO: Optional. Show the Druid avatar prototype in browser for 60-90 seconds. Do not deep-dive the architecture.</p>
+    <p class="say">This is the other proof point. Yesterday I used the same way of working to build a browser-based Azure Voice Live avatar prototype for a partner conversation. Don't overclaim it: this still needs production work. But it changes the conversation. A non-coder can now go from idea to working prototype fast enough to test a customer scenario.</p>
 
-    <p class="do">DO: Optional — if time allows, do one quick partner-work prompt.</p>
-<pre>Show me my PMX projects that are missing outcomes. Which ones should I fix first?</pre>
-    <p class="say">That just hit Dynamics 365 live. From the terminal. Plain English. This is what the team will learn to do in the intro session.</p>
-
-    <div class="key-msg"><strong>Message to land:</strong> I built and operate a production system in CLI. The same tool connects to PMX, MSX, M365, GitHub. The intro session gives everyone a working setup and tested patterns. This is us being customer zero for AI-first workflows.</div>
+    <div class="warn"><strong>Keep this tight:</strong> The avatar is the emotional proof, not the main act. If the room starts chasing the shiny object, bring it back to the delivery model: faster prototypes, better partner conversations, and reusable patterns.</div>
   </div>
 
   <!-- ═══ BEAT 6 ═══ -->
-  <div class="beat">
+  <div class="beat" id="beat-ask">
+    <div class="beat-header">
+      <span class="beat-title">The ask — double down on what is already moving</span>
+      <span class="beat-time">10:30 – 13:00</span>
+    </div>
+    <p class="say">The ask is simple: double down on what is already emerging.</p>
+    <p class="say">Coding for Noncoders builds the muscle: partner-facing roles learning to use agents, GitHub, and Copilot CLI without becoming developers. AI-first delivery applies that muscle to partner impact: CAIP, AIBS, reusable assets, partner demos, briefings, follow-ups, and opportunity work.</p>
+    <p class="say">The Agentic AI Partner Library proves agents at work in a governed workflow. The Druid prototype proves a non-coder can create a credible technical artifact fast enough to move a partner discussion. Same direction. Different proof points.</p>
+
+    <p class="do">DO: If time allows, run one quick partner-work prompt to show the broader pattern.</p>
+<pre>Show me my PMX projects that are missing outcomes. Which ones should I fix first?</pre>
+    <p class="say">That just hit Dynamics 365 live. From the terminal. Plain English. This is what the team can learn to do in the intro session, and what we can package into repeatable delivery patterns for CAIP and AIBS.</p>
+
+    <div class="key-msg"><strong>Message to land:</strong> Sponsor the scale-up: run the intro sessions, capture reusable patterns, pick a few showcase partner scenarios, and make CAIP and AIBS the first structured proving ground for AI-first delivery.</div>
+  </div>
+
+  <!-- ═══ BEAT 7 ═══ -->
+  <div class="beat" id="beat-questions">
     <div class="beat-header">
       <span class="beat-title">Questions</span>
-      <span class="beat-time">12:00 – 15:00</span>
+      <span class="beat-time">13:00 – 15:00</span>
     </div>
     <p class="do">DO: Open for questions. Keep CLI running — answer questions by showing, not telling.</p>
     <p class="say">If someone asks "can it do X?" — try it live. That's the strongest proof.</p>
@@ -150,8 +186,9 @@
     <div class="tip"><strong>Likely questions and how to handle them:</strong>
       <br>→ "Is this just for technical people?" — Show the plain English prompts. Point out: no code, no syntax, just sentences.
       <br>→ "What about governance / data?" — Show that everything is in GitHub: version-controlled, auditable, reviewable. Human approval required for publishing.
-      <br>→ "How do we roll this out?" — The intro session is the first step. Setup takes 15 minutes. Then it's practice and patterns.
-      <br>→ "How is this different from M365 Copilot?" — M365 helps with one task at a time. CLI connects across tools and produces repeatable, inspectable workflows. Show the partner library as proof: M365 Copilot couldn't build this.
+      <br>→ "Is the Druid prototype production-ready?" — No. It is a proof of speed and direction. Production would need proper security, monitoring, integration, operations, and reliability work.
+      <br>→ "How do we roll this out?" — Start with the Thursday session, then package repeatable patterns and pick a few showcase projects across CAIP and AIBS.
+      <br>→ "How is this different from M365 Copilot?" — M365 Copilot is strong for personal productivity. CLI connects across tools and produces repeatable, inspectable workflows for delivery.
     </div>
   </div>
 

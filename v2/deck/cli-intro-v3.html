@@ -715,7 +715,34 @@ function jump(n) {
   show(current);
 }
 
-// Show initial slide
+// ── BroadcastChannel presenter sync ──
+let channel = null;
+try { channel = new BroadcastChannel('cli-intro-v3-presenter'); } catch(e) {}
+function broadcastSlide(idx) {
+  if (!channel) return;
+  const s = slides[idx];
+  channel.postMessage({
+    type: 'slide-change',
+    index: idx,
+    total: slides.length,
+    label: s ? s.dataset.label || ('Slide ' + (idx + 1)) : '',
+    notes: s ? s.getAttribute('data-notes') || '' : ''
+  });
+}
+if (channel) {
+  channel.onmessage = (e) => {
+    if (e.data && e.data.type === 'request-current') broadcastSlide(current);
+  };
+}
+
+// Listen for scroll-to-slide postMessage (from presenter thumb iframe)
+window.addEventListener('message', (e) => {
+  if (e.data && e.data.type === 'scroll-to-slide' && typeof e.data.index === 'number') {
+    jump(e.data.index);
+  }
+});
+
+// Show initial slide + sync progress
 show(current);
 
 // ── Keyboard nav ──
@@ -731,31 +758,6 @@ document.addEventListener('keydown', e => {
   else if ((e.key === 'p' || e.key === 'P') && !e.ctrlKey && !e.metaKey) {
     window.open(location.href.split('?')[0] + '?presenter=notes', 'presenter', 'width=600,height=800');
     setTimeout(() => broadcastSlide(current), 500);
-  }
-});
-
-// ── BroadcastChannel presenter sync ──
-const channel = new BroadcastChannel('cli-intro-v3-presenter');
-function broadcastSlide(idx) {
-  const s = slides[idx];
-  channel.postMessage({
-    type: 'slide-change',
-    index: idx,
-    total: slides.length,
-    label: s ? s.dataset.label || ('Slide ' + (idx + 1)) : '',
-    notes: s ? s.getAttribute('data-notes') || '' : ''
-  });
-}
-
-// Listen for request-current from presenter window
-channel.onmessage = (e) => {
-  if (e.data && e.data.type === 'request-current') broadcastSlide(current);
-};
-
-// Listen for scroll-to-slide postMessage (from presenter thumb iframe)
-window.addEventListener('message', (e) => {
-  if (e.data && e.data.type === 'scroll-to-slide' && typeof e.data.index === 'number') {
-    jump(e.data.index);
   }
 });
 </script>
