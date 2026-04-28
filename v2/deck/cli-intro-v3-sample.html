@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CLI Intro v3 — Sample Slides</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;600;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0D1117;
+  --bg-2: #010409;
+  --panel: #161B22;
+  --border: #30363D;
+  --text: #E6EDF3;
+  --muted: #7D8590;
+  --link: #58A6FF;
+  --green: #3FB950;
+  --pink: #F778BA;
+  --amber: #D29922;
+  --purple: #8957E5;
+  --red: #F85149;
+  --teal: #39D2C0;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; background: var(--bg-2); color: var(--text); font-family: 'Mona Sans', system-ui, sans-serif; overflow: hidden; }
+.stage { position: relative; width: 100vw; height: 100vh; display: grid; place-items: center; }
+.deck {
+  width: min(96vw, 1600px); aspect-ratio: 16/9; max-height: 92vh;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 14px;
+  box-shadow: 0 30px 80px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.04);
+  position: relative; overflow: hidden;
+}
+
+/* ── Progress strip — 6 chapters ── */
+.progress {
+  position: absolute; top: 14px; left: 20px; right: 20px;
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; z-index: 8;
+}
+.progress button {
+  all: unset; cursor: pointer; display: flex; flex-direction: column; gap: 6px;
+  padding-top: 4px; transition: transform .15s ease;
+}
+.progress button:hover { transform: translateY(1px); }
+.progress .bar {
+  height: 3px; background: #21262D; border-radius: 2px;
+  position: relative; overflow: hidden; transition: background .2s ease;
+}
+.progress button.done .bar { background: rgba(137,87,229,.45); }
+.progress button.on .bar { background: var(--purple); box-shadow: 0 0 12px rgba(137,87,229,.7); }
+.progress button.on .bar::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent);
+  animation: sweep 2.4s linear infinite;
+}
+.progress button:hover .bar { background: rgba(137,87,229,.6); }
+.progress .label {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted);
+  letter-spacing: .12em; text-transform: uppercase; opacity: 0;
+  transition: opacity .15s ease, color .15s ease;
+}
+.progress button.on .label { opacity: 1; color: var(--text); }
+.progress button:hover .label { opacity: 1; color: var(--text); }
+.progress .num {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: .15em;
+}
+.progress button.on .num { color: var(--purple); }
+@keyframes sweep { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+
+/* ── Footer ── */
+.footer {
+  position: absolute; bottom: 18px; left: 24px; right: 24px;
+  display: flex; justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted);
+  letter-spacing: .04em; z-index: 5;
+}
+.footer .left { display: flex; gap: 14px; align-items: center; }
+.tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: var(--purple); background: rgba(137,87,229,.12);
+  border: 1px solid rgba(137,87,229,.35); padding: 3px 8px;
+  border-radius: 4px; letter-spacing: .04em;
+}
+.tag.green { color: var(--green); background: rgba(63,185,80,.12); border-color: rgba(63,185,80,.4); }
+.tag.pink { color: var(--pink); background: rgba(247,120,186,.12); border-color: rgba(247,120,186,.4); }
+.tag.amber { color: var(--amber); background: rgba(210,153,34,.12); border-color: rgba(210,153,34,.4); }
+.tag.teal { color: var(--teal); background: rgba(57,210,192,.12); border-color: rgba(57,210,192,.4); }
+
+/* ── Slide canvas ── */
+.slide {
+  position: absolute; inset: 0; padding: 60px 80px 60px;
+  display: none; flex-direction: column;
+}
+.slide.active { display: flex; animation: in 220ms ease-out; }
+@keyframes in { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+
+/* ═══ Slide 1: Hero ═══ */
+.hero { justify-content: center; align-items: flex-start; }
+.hero .eyebrow {
+  font-family: 'JetBrains Mono', monospace; color: var(--muted); font-size: 13px;
+  letter-spacing: .2em; text-transform: uppercase; margin-bottom: 28px;
+}
+.hero h1 {
+  font-weight: 900; font-size: clamp(56px, 7.5vw, 110px);
+  line-height: 0.95; letter-spacing: -0.035em; max-width: 20ch;
+}
+.hero h1 .accent { color: var(--purple); }
+.hero .cursor {
+  display: inline-block; width: .5ch; height: 1em; background: var(--text);
+  margin-left: .08em; vertical-align: -0.12em; animation: blink 1s steps(2, start) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+.hero .sub { margin-top: 36px; color: var(--muted); font-size: 18px; max-width: 56ch; line-height: 1.5; }
+.hero .by {
+  position: absolute; bottom: 80px; left: 80px; right: 80px;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted);
+}
+.hero .by strong {
+  color: var(--text); display: block; font-family: 'Mona Sans', sans-serif;
+  font-weight: 600; font-size: 16px; letter-spacing: 0;
+}
+
+/* ═══ Slide 2: Four Properties (card grid) ═══ */
+.props { justify-content: center; gap: 20px; }
+.props .kicker {
+  font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  color: var(--purple); letter-spacing: .15em; text-transform: uppercase;
+}
+.props h2 {
+  font-weight: 800; font-size: clamp(36px, 4.2vw, 56px);
+  line-height: 1.05; letter-spacing: -0.02em;
+}
+.props h2 .accent { color: var(--teal); }
+.props .lead { color: var(--muted); font-size: 17px; line-height: 1.55; max-width: 50ch; margin-bottom: 8px; }
+.prop-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 8px;
+}
+.prop-card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+  padding: 24px 22px; display: flex; flex-direction: column; gap: 10px;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.prop-card:hover { border-color: var(--purple); box-shadow: 0 0 24px rgba(137,87,229,.15); }
+.prop-card .icon { font-size: 28px; }
+.prop-card .title {
+  font-weight: 700; font-size: 16px; letter-spacing: -0.01em;
+}
+.prop-card .desc { color: var(--muted); font-size: 14px; line-height: 1.5; }
+.prop-card .mono {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: var(--green); letter-spacing: .04em; margin-top: auto;
+}
+
+/* ═══ Slide 3: Demo 1 — Briefing Factory (split with terminal) ═══ */
+.demo-split { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: stretch; height: 100%; }
+.demo-split .left-panel { display: flex; flex-direction: column; justify-content: center; }
+.demo-split h2 {
+  font-weight: 800; font-size: clamp(34px, 4vw, 56px);
+  line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 12px;
+}
+.demo-split h2 .accent { color: var(--green); }
+.demo-split .lead { color: var(--muted); font-size: 17px; line-height: 1.55; max-width: 38ch; margin-bottom: 24px; }
+.demo-split .watch-for {
+  display: flex; flex-direction: column; gap: 10px;
+  border-top: 1px solid var(--border); padding-top: 16px;
+}
+.watch-item {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 14px; color: var(--muted);
+}
+.watch-item .dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0;
+}
+.watch-item strong { color: var(--text); font-weight: 600; }
+
+/* Terminal panel */
+.term {
+  background: var(--bg-2); border: 1px solid var(--border); border-radius: 10px;
+  overflow: hidden; display: flex; flex-direction: column;
+  box-shadow: 0 10px 40px rgba(0,0,0,.5);
+}
+.term-bar {
+  display: flex; align-items: center; gap: 8px; padding: 10px 14px;
+  border-bottom: 1px solid var(--border); background: #0D1117;
+}
+.tdot { width: 12px; height: 12px; border-radius: 50%; }
+.tdot.r { background: #FF5F56; }
+.tdot.y { background: #FFBD2E; }
+.tdot.g { background: #27C93F; }
+.term-bar .name {
+  margin-left: 12px; font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; color: var(--muted);
+}
+.term-body {
+  padding: 22px 24px; font-family: 'JetBrains Mono', monospace;
+  font-size: 13.5px; line-height: 1.7; color: var(--text); flex: 1; overflow: hidden;
+}
+.term-body .prompt { color: var(--green); }
+.term-body .agent { color: var(--purple); }
+.term-body .com { color: var(--muted); }
+.term-body .ok { color: var(--green); }
+.term-body .warn { color: var(--amber); }
+.term-body .tool { color: var(--pink); }
+.term-body .data { color: var(--teal); }
+
+/* ── Pixel art image integration ── */
+.hero .pixel-art {
+  position: absolute; right: 60px; top: 50%; transform: translateY(-50%);
+  opacity: .15; max-height: 70vh; pointer-events: none;
+}
+
+/* ── Nav hint ── */
+.hint {
+  position: fixed; top: 18px; right: 24px;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  color: var(--muted); z-index: 20;
+}
+</style>
+</head>
+<body>
+<div class="hint">← → arrows &middot; P presenter &middot; 3 sample slides</div>
+<div class="stage">
+<div class="deck" id="deck">
+
+<!-- Progress strip -->
+<nav class="progress" id="progress" aria-label="Deck sections"></nav>
+
+<!-- ═══ SLIDE 1: Title Hero ═══ -->
+<section class="slide hero active" id="title" data-act="0" data-label="Title"
+  data-notes="DO: Welcome. Quick show of hands — who has CLI installed? Who has used M365 Copilot this week? SAY: Most of you use M365 Copilot. It helps you draft, summarize, find things. Today I want to show you the next step — where Copilot stops helping with individual tasks and starts operationalizing your work. Repeatable workflows. Connected tools. Persistent context. By the end of this hour, you will have tried it yourself.">
+  <img src="../images/matrix-moment.png" alt="" class="pixel-art" loading="lazy">
+  <div class="eyebrow">60 min &middot; Hands-On Workshop</div>
+  <h1>Your<br>Operational<br><span class="accent">Copilot</span><span class="cursor"></span></h1>
+  <p class="sub">From M365 help to repeatable, tool-connected partner workflows. You'll leave with a working setup and two patterns to use this week.</p>
+  <div class="by">
+    <div>
+      <strong>Johan Wallquist</strong>
+      Partner Solution Architect &middot; Microsoft Data &amp; AI
+    </div>
+    <div>cli-intro &middot; v3 sample</div>
+  </div>
+  <div class="footer"><div class="left"><span class="tag">[hero]</span><span>cli-intro / 01</span></div><div>&darr; press &rarr; to continue</div></div>
+</section>
+
+<!-- ═══ SLIDE 2: Four Properties ═══ -->
+<section class="slide props" id="four-properties" data-act="2" data-label="Four Properties"
+  data-notes="SAY: Four properties that make CLI different from M365 Copilot. Tool-connected — it calls your actual systems through MCP. PMX, MSX, email, calendar, GitHub. Real data. Repeatable — the same workflow works for any partner. Build the pattern once, reuse it, share it with your team. Inspectable — the output is an artifact. A structured document, a plan, a file. Not a chat answer that disappears when you close the tab. Persistent — slash resume picks up where you left off. Across days, across sessions.">
+  <div class="kicker">&#9670; the four properties</div>
+  <h2>Not another <span class="accent">chat window</span>.</h2>
+  <p class="lead">Four things M365 Copilot doesn't do — and CLI does.</p>
+  <div class="prop-grid">
+    <div class="prop-card">
+      <div class="icon">&#128268;</div>
+      <div class="title">Tool-Connected</div>
+      <div class="desc">Calls PMX, MSX, M365, GitHub. Real data from your actual systems — not guesses.</div>
+      <div class="mono">mcp &middot; pmx &middot; mail &middot; calendar</div>
+    </div>
+    <div class="prop-card">
+      <div class="icon">&#128257;</div>
+      <div class="title">Repeatable</div>
+      <div class="desc">Same workflow, different partner. Build once, reuse. Share patterns across your team.</div>
+      <div class="mono">prompts &middot; instructions &middot; skills</div>
+    </div>
+    <div class="prop-card">
+      <div class="icon">&#128203;</div>
+      <div class="title">Inspectable</div>
+      <div class="desc">Output is an artifact — a plan, a doc, a file. Not a chat bubble that disappears.</div>
+      <div class="mono">.docx &middot; .md &middot; .html &middot; email</div>
+    </div>
+    <div class="prop-card">
+      <div class="icon">&#129504;</div>
+      <div class="title">Persistent</div>
+      <div class="desc">/resume continues where you left off. Context, decisions, progress — across days.</div>
+      <div class="mono">/compact &middot; /resume &middot; sessions</div>
+    </div>
+  </div>
+  <div class="footer"><div class="left"><span class="tag teal">[delta]</span><span>cli-intro / 04</span></div><div>act 3 of 6 &middot; the delta</div></div>
+</section>
+
+<!-- ═══ SLIDE 3: Demo 1 — Briefing Factory ═══ -->
+<section class="slide" id="demo-1" data-act="3" data-label="Demo 1"
+  data-notes="DO: Run demo-01-partner-briefing. Full flow: pull PMX projects + MSX opps + partner team + recent emails → synthesize into structured briefing. Emphasize: tool calls visible, artifact not chat answer, repeatable for any partner. SAY: Let me show you what this looks like in practice. I have a partner Connect tomorrow. Instead of opening five tabs and assembling the picture myself, I will do it in one conversation. Watch which tools it calls and what comes out.">
+  <div class="demo-split">
+    <div class="left-panel">
+      <h2>Five tabs &rarr;<br>One <span class="accent">conversation</span>.</h2>
+      <p class="lead">PMX + MSX + M365 → structured partner briefing. Repeatable for any partner, every Connect.</p>
+      <div class="watch-for">
+        <div class="watch-item"><span class="dot"></span> <strong>Tool calls</strong> — watch which systems it connects to</div>
+        <div class="watch-item"><span class="dot"></span> <strong>Artifact</strong> — the output is a document, not a chat answer</div>
+        <div class="watch-item"><span class="dot"></span> <strong>Reusable</strong> — same prompt, different partner name</div>
+      </div>
+    </div>
+    <div class="term">
+      <div class="term-bar">
+        <span class="tdot r"></span><span class="tdot y"></span><span class="tdot g"></span>
+        <span class="name">Windows Terminal &mdash; copilot &middot; pwsh</span>
+      </div>
+      <div class="term-body">
+<span class="prompt">PS C:\projects&gt;</span> copilot<br>
+<br>
+<span class="agent">copilot &#9654;</span> Brief me on Frontier Consultancy<br>
+<span class="com">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for tomorrow's Connect.</span><br>
+<br>
+<span class="agent">&#9654; calling</span> <span class="tool">pmx</span> <span class="com">my_projects</span> <span class="ok">&#10003;</span><br>
+<span class="agent">&#9654; calling</span> <span class="tool">pmx</span> <span class="com">list_opportunities</span> <span class="ok">&#10003;</span><br>
+<span class="agent">&#9654; calling</span> <span class="tool">pmx</span> <span class="com">list_partner_team</span> <span class="ok">&#10003;</span><br>
+<span class="agent">&#9654; calling</span> <span class="tool">mail</span> <span class="com">SearchMessages</span> <span class="ok">&#10003;</span><br>
+<span class="agent">&#9654; calling</span> <span class="tool">calendar</span> <span class="com">ListCalendarView</span> <span class="ok">&#10003;</span><br>
+<br>
+<span class="agent">&#9654; writing</span> <span class="data">partner-briefing.md</span> <span class="warn">&#9654;</span><br>
+<br>
+<span class="com"># Frontier Consultancy — Connect Prep</span><br>
+<span class="com">## Pipeline: 3 open opps, $1.2M</span><br>
+<span class="com">## Team: PDM Radek, PTS Jarrod ...</span><br>
+<span class="com">## Recent: email re: Fabric POC ...</span>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><div class="left"><span class="tag green">[demo]</span><span>cli-intro / 05</span></div><div>act 4 of 6 &middot; demo 1</div></div>
+</section>
+
+</div><!-- end deck -->
+</div><!-- end stage -->
+
+<script>
+// ── Six-act chapter map (matches full CLI intro deck) ──
+const ACTS = [
+  { label: 'Intro',      num: '01', slide: 0 },
+  { label: 'Why now',    num: '02', slide: null },
+  { label: 'The delta',  num: '03', slide: 1 },
+  { label: 'Demo 1',     num: '04', slide: 2 },
+  { label: 'Demo 2',     num: '05', slide: null },
+  { label: 'What\u2019s next', num: '06', slide: null },
+];
+
+const slides = [...document.querySelectorAll('.slide')];
+const progress = document.getElementById('progress');
+let current = 0;
+
+// Build progress strip
+ACTS.forEach((act, idx) => {
+  const btn = document.createElement('button');
+  btn.className = act.slide === null ? 'disabled' : '';
+  btn.dataset.act = idx;
+  btn.innerHTML = `<span class="bar"></span><span class="num">${act.num}</span><span class="label">${act.label}</span>`;
+  btn.addEventListener('click', () => { if (act.slide !== null) jump(act.slide); });
+  progress.appendChild(btn);
+});
+
+function syncProgress() {
+  const currentAct = parseInt(slides[current].dataset.act, 10);
+  progress.querySelectorAll('button').forEach((b, idx) => {
+    b.classList.toggle('on', idx === currentAct);
+    b.classList.toggle('done', idx < currentAct);
+  });
+}
+
+function show(n) {
+  slides.forEach((s, idx) => s.classList.toggle('active', idx === n));
+  syncProgress();
+  broadcastSlide(current);
+}
+
+function go(d) {
+  current = Math.max(0, Math.min(slides.length - 1, current + d));
+  show(current);
+}
+
+function jump(n) {
+  current = Math.max(0, Math.min(slides.length - 1, n));
+  show(current);
+}
+
+// ── Keyboard nav ──
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); go(1); }
+  else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); go(-1); }
+  else if (e.key === 'Home') { e.preventDefault(); jump(0); }
+  else if (e.key === 'End') { e.preventDefault(); jump(slides.length - 1); }
+  else if (/^[1-6]$/.test(e.key)) {
+    const act = ACTS[parseInt(e.key, 10) - 1];
+    if (act && act.slide !== null) jump(act.slide);
+  }
+  else if ((e.key === 'p' || e.key === 'P') && !e.ctrlKey && !e.metaKey) {
+    window.open(location.href + (location.search ? '&' : '?') + 'presenter=notes', 'presenter', 'width=600,height=800');
+    setTimeout(() => broadcastSlide(current), 500);
+  }
+});
+
+// ── BroadcastChannel presenter sync ──
+const channel = new BroadcastChannel('cli-intro-v3-presenter');
+function broadcastSlide(idx) {
+  const s = slides[idx];
+  channel.postMessage({
+    type: 'slide-change',
+    index: idx,
+    total: slides.length,
+    label: s ? s.dataset.label || ('Slide '+(idx+1)) : '',
+    notes: s ? s.getAttribute('data-notes') || '' : ''
+  });
+}
+
+// Listen for request-current from presenter window
+channel.onmessage = (e) => {
+  if (e.data.type === 'request-current') broadcastSlide(current);
+};
+
+syncProgress();
+</script>
+</body>
+</html>
