@@ -84,11 +84,7 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
 @keyframes in { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
 
 /* ── Pixel art ── */
-.pixel-art {
-  position: absolute; right: 60px; top: 50%; transform: translateY(-50%);
-  opacity: .15; max-height: 70vh; pointer-events: none;
-}
-.pixel-art.low { opacity: .12; }
+/* ── Pixel art — removed, dark theme doesn't need ghost images ── */
 
 /* ═══ Slide 1: Hero ═══ */
 .hero { justify-content: center; align-items: flex-start; }
@@ -399,7 +395,6 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
 <!-- ═══ SLIDE 1: Title Hero ═══ -->
 <section class="slide hero active" id="title" data-act="0" data-label="Title"
   data-notes="DO: Welcome. Quick show of hands — who has CLI installed? Who has used M365 Copilot this week? Good. SAY: Most of you use M365 Copilot. It helps you draft, summarize, find things. Today I want to show you the next step — where Copilot stops helping with individual tasks and starts operationalizing your work. Repeatable workflows. Connected tools. Persistent context. By the end of this hour, you will have tried it yourself.">
-  <img src="../images/matrix-moment.png" alt="" class="pixel-art" loading="lazy">
   <div class="eyebrow">60 min &middot; Hands-On Workshop</div>
   <h1>Your<br>Operational<br><span class="accent">Copilot</span><span class="cursor"></span></h1>
   <p class="sub">From M365 help to repeatable, tool-connected partner workflows. You&rsquo;ll leave with a working setup and two patterns to use this week.</p>
@@ -416,7 +411,6 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
 <!-- ═══ SLIDE 2: Copilot Ladder ═══ -->
 <section class="slide ladder-slide" id="ladder" data-act="1" data-label="Ladder"
   data-notes="DO: Walk through the ladder bottom to top. Pause on CLI. SAY: You already know M365 Copilot. It helps with individual tasks — draft this email, summarize that meeting. CLI is the next step. It connects to your actual tools — PMX, MSX, email, calendar — and produces structured, repeatable workflows. Not chat answers. Artifacts. Agency is what makes CLI Microsoft-ready — internal authentication, shared plugins, telemetry and governance. Squad is for the bigger stuff — multi-agent coordination for long-running initiatives. Today we focus on CLI. The step from getting help to operationalizing your work.">
-  <img src="../images/copilot-ladder.png" alt="" class="pixel-art low" loading="lazy">
   <div class="kicker">&#9670; where does this fit?</div>
   <h2>The Copilot <span class="accent">Ladder</span></h2>
   <p class="lead">Each layer adds capability. You&rsquo;re already on the first rung.</p>
@@ -445,7 +439,6 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
 <!-- ═══ SLIDE 3: Why Now ═══ -->
 <section class="slide cards-slide" id="why-now" data-act="1" data-label="Why Now"
   data-notes="SAY: Why is this possible now? AI crossed a threshold. Three things changed. First, reasoning — AI can plan complex, multi-step tasks. Not just autocomplete. It decomposes a problem, figures out the sequence, and executes. Second, tool use — through MCP, the Model Context Protocol, AI connects to your actual systems. PMX, MSX, your email, your calendar. Real data, real actions. Third, self-correction — it checks its own work and iterates. And there is a quiet fourth shift — models got dramatically better at following long, detailed instructions. A year ago they would drift after two paragraphs. Now you can write a page of house rules and the model actually follows them. That is why custom instructions and prompts work — and why the kitchen analogy holds. The result? The barrier between describing what you want and getting it done just collapsed. That is why CLI exists.">
-  <img src="../images/chaos-to-clarity.png" alt="" class="pixel-art low" loading="lazy">
   <div class="kicker">&#9670; why this matters now</div>
   <h2>The barrier <span class="teal">collapsed</span>.</h2>
   <p class="lead">AI crossed a threshold. Three capabilities changed everything.</p>
