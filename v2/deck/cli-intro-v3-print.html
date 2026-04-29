@@ -1,12 +1,15 @@
+<!-- Print: Ctrl+P → Margins: None → Background graphics: ON → Save as PDF -->
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>CLI Intro v3 — Your Operational Copilot</title>
+<title>CLI Intro v3 — Your Operational Copilot (Print)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;600;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
+@page { size: 13.333in 7.5in; margin: 0; }
+
 :root {
   --bg: #0D1117;
   --bg-2: #010409;
@@ -22,69 +25,34 @@
   --red: #F85149;
   --teal: #39D2C0;
 }
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; background: var(--bg-2); color: var(--text); font-family: 'Mona Sans', system-ui, sans-serif; overflow: hidden; }
-.stage { position: relative; width: 100vw; height: 100vh; display: grid; place-items: center; }
-.deck {
-  width: min(96vw, 1600px); aspect-ratio: 16/9; max-height: 92vh;
-  background: var(--bg); border: 1px solid var(--border); border-radius: 14px;
-  box-shadow: 0 30px 80px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.04);
-  position: relative; overflow: hidden;
+
+html, body {
+  height: auto !important;
+  overflow: visible !important;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Mona Sans', system-ui, sans-serif;
+  print-color-adjust: exact !important;
+  -webkit-print-color-adjust: exact !important;
 }
 
-/* ── Progress strip — 6 chapters ── */
-.progress {
-  position: absolute; top: 14px; left: 20px; right: 20px;
-  display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; z-index: 8;
+/* ── Print slide container ── */
+.print-slide {
+  width: 13.333in;
+  height: 7.5in;
+  padding: 60px 80px;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  page-break-after: always;
 }
-.progress button {
-  all: unset; cursor: pointer; display: flex; flex-direction: column; gap: 6px;
-  padding-top: 4px; transition: transform .15s ease;
+.print-slide:last-of-type {
+  page-break-after: avoid;
 }
-.progress button:hover { transform: translateY(1px); }
-.progress .bar {
-  height: 3px; background: #21262D; border-radius: 2px;
-  position: relative; overflow: hidden; transition: background .2s ease;
-}
-.progress button.done .bar { background: rgba(137,87,229,.45); }
-.progress button.on .bar { background: var(--purple); box-shadow: 0 0 12px rgba(137,87,229,.7); }
-.progress button.on .bar::after {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent);
-  animation: sweep 2.4s linear infinite;
-}
-.progress button:hover .bar { background: rgba(137,87,229,.6); }
-.progress .label {
-  font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted);
-  letter-spacing: .12em; text-transform: uppercase; opacity: 0;
-  transition: opacity .15s ease, color .15s ease;
-}
-.progress button.on .label { opacity: 1; color: var(--text); }
-.progress button:hover .label { opacity: 1; color: var(--text); }
-.progress .num {
-  font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: .15em;
-}
-.progress button.on .num { color: var(--purple); }
-@keyframes sweep { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-
-/* ── Footer ── */
-.footer {
-  position: absolute; bottom: 18px; left: 24px; right: 24px;
-  display: flex; justify-content: flex-end;
-  font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted);
-  letter-spacing: .04em; z-index: 5;
-}
-
-/* ── Slide canvas ── */
-.slide {
-  position: absolute; inset: 0; padding: 60px 80px 60px;
-  display: none; flex-direction: column;
-}
-.slide.active { display: flex; animation: in 220ms ease-out; }
-@keyframes in { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
-
-/* ── Pixel art ── */
-/* ── Pixel art — removed, dark theme doesn't need ghost images ── */
 
 /* ═══ Slide 1: Hero ═══ */
 .hero { justify-content: center; align-items: flex-start; }
@@ -93,16 +61,10 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
   letter-spacing: .2em; text-transform: uppercase; margin-bottom: 28px;
 }
 .hero h1 {
-  font-weight: 900; font-size: clamp(56px, 7.5vw, 110px);
+  font-weight: 900; font-size: 90px;
   line-height: 0.95; letter-spacing: -0.035em; max-width: 20ch;
-  text-wrap: balance;
 }
 .hero h1 .accent { color: var(--purple); }
-.hero .cursor {
-  display: inline-block; width: .5ch; height: 1em; background: var(--text);
-  margin-left: .08em; vertical-align: -0.12em; animation: blink 1s steps(2, start) infinite;
-}
-@keyframes blink { 50% { opacity: 0; } }
 .hero .sub { margin-top: 36px; color: var(--muted); font-size: 20px; max-width: 56ch; line-height: 1.5; }
 .hero .by {
   position: absolute; bottom: 80px; left: 80px; right: 80px;
@@ -120,9 +82,8 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
   border: 1px solid rgba(137,87,229,.35); border-radius: 999px;
   color: var(--purple); text-decoration: none;
   font-family: 'JetBrains Mono', monospace; font-size: 11px;
-  letter-spacing: .02em; transition: background .15s ease, transform .15s ease;
+  letter-spacing: .02em;
 }
-.hero .by .hero-li:hover { background: rgba(137,87,229,.18); transform: translateY(-1px); }
 .hero .by .hero-li svg { flex: none; }
 
 /* ═══ Generic kicker / lead ═══ */
@@ -138,7 +99,7 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
 /* ═══ Slide 2: Ladder ═══ */
 .ladder-slide { justify-content: center; gap: 18px; }
 .ladder-slide h2 {
-  font-weight: 800; font-size: clamp(36px, 4.2vw, 56px);
+  font-weight: 800; font-size: 48px;
   line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance;
 }
 .ladder-slide h2 .accent { color: var(--purple); }
@@ -149,7 +110,6 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
   padding: 16px 22px; border-radius: 10px;
   background: var(--panel); border: 1px solid var(--border);
   border-left: 4px solid var(--muted);
-  transition: border-color .2s ease, box-shadow .2s ease;
 }
 .ladder-item .l-name { font-weight: 700; font-size: 17px; min-width: 180px; }
 .ladder-item .l-desc { color: var(--muted); font-size: 17px; line-height: 1.45; }
@@ -171,7 +131,7 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
 /* ═══ Slide 3 / 9: 3-column block cards ═══ */
 .cards-slide { justify-content: center; gap: 18px; }
 .cards-slide h2 {
-  font-weight: 800; font-size: clamp(36px, 4.2vw, 56px);
+  font-weight: 800; font-size: 48px;
   line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance;
 }
 .cards-slide h2 .teal { color: var(--teal); }
@@ -181,9 +141,7 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
 .block-card {
   background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
   padding: 26px 24px; display: flex; flex-direction: column; gap: 10px;
-  transition: border-color .2s ease, box-shadow .2s ease;
 }
-.block-card:hover { border-color: var(--purple); box-shadow: 0 0 24px rgba(137,87,229,.15); }
 .block-card .icon { font-size: 30px; }
 .block-card .title { font-weight: 700; font-size: 18px; }
 .block-card .desc { color: var(--muted); font-size: 16px; line-height: 1.5; }
@@ -202,7 +160,7 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
 /* ═══ Slide 4: Four Properties (card grid) ═══ */
 .props { justify-content: center; gap: 20px; }
 .props h2 {
-  font-weight: 800; font-size: clamp(36px, 4.2vw, 56px);
+  font-weight: 800; font-size: 48px;
   line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance;
 }
 .props h2 .accent { color: var(--teal); }
@@ -211,9 +169,7 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
 .prop-card {
   background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
   padding: 24px 22px; display: flex; flex-direction: column; gap: 10px;
-  transition: border-color .2s ease, box-shadow .2s ease;
 }
-.prop-card:hover { border-color: var(--purple); box-shadow: 0 0 24px rgba(137,87,229,.15); }
 .prop-card .icon { font-size: 28px; }
 .prop-card .title { font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
 .prop-card .desc { color: var(--muted); font-size: 16px; line-height: 1.5; }
@@ -226,7 +182,7 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
 .demo-split { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: stretch; height: 100%; }
 .demo-split .left-panel { display: flex; flex-direction: column; justify-content: center; }
 .demo-split h2 {
-  font-weight: 800; font-size: clamp(34px, 4vw, 56px);
+  font-weight: 800; font-size: 48px;
   line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 12px; text-wrap: balance;
 }
 .demo-split h2 .accent { color: var(--green); }
@@ -277,7 +233,7 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
 /* ═══ Exercise centered layout ═══ */
 .exercise-slide { justify-content: center; align-items: center; text-align: center; gap: 22px; }
 .exercise-slide h2 {
-  font-weight: 800; font-size: clamp(36px, 4.2vw, 56px);
+  font-weight: 800; font-size: 48px;
   line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance;
 }
 .exercise-slide h2 .accent-green { color: var(--green); }
@@ -294,9 +250,7 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
 .scenario-card {
   background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
   padding: 22px 24px; text-align: left; display: flex; flex-direction: column; gap: 8px;
-  transition: border-color .2s ease, box-shadow .2s ease;
 }
-.scenario-card:hover { border-color: var(--amber); box-shadow: 0 0 24px rgba(210,153,34,.15); }
 .scenario-card .icon { font-size: 26px; }
 .scenario-card .title { font-weight: 700; font-size: 17px; }
 .scenario-card .desc { color: var(--muted); font-size: 16px; line-height: 1.45; }
@@ -304,7 +258,7 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
 /* ═══ Slide 10: Close — stat grid ═══ */
 .close-slide { justify-content: center; gap: 24px; }
 .close-slide h2 {
-  font-weight: 800; font-size: clamp(36px, 4.2vw, 56px);
+  font-weight: 800; font-size: 48px;
   line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance;
 }
 .close-slide h2 .accent { color: var(--teal); }
@@ -329,11 +283,6 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
   margin-top: 6px; letter-spacing: .02em;
 }
 .close-links a { color: var(--teal); text-decoration: none; }
-.close-links a:hover { text-decoration: underline; }
-.close-avatar {
-  position: absolute; bottom: 60px; right: 60px;
-  width: 180px; opacity: .25; border-radius: 14px; pointer-events: none;
-}
 
 /* ── Quote blocks ── */
 .slide-quote {
@@ -342,83 +291,27 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
 }
 .slide-quote strong { color: var(--text); }
 
-/* ── Nav hint — hidden, available on hover ── */
-.hint { display: none; }
-
-/* ── Presenter mode ── */
-#presenter-view { display: none; }
-body.mode-presenter { background: #010409; color: var(--text); overflow: hidden; }
-body.mode-presenter .stage, body.mode-presenter .hint { display: none; }
-body.mode-presenter #presenter-view {
-  display: grid; grid-template-rows: auto 1fr auto;
-  height: 100vh; font-family: 'Mona Sans', system-ui, sans-serif;
+/* ── Slide number ── */
+.slide-num {
+  position: absolute; bottom: 18px; right: 24px;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted);
+  letter-spacing: .04em;
 }
-.pv-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 24px; border-bottom: 1px solid var(--border); background: var(--panel);
-}
-.pv-label {
-  font-family: 'JetBrains Mono', monospace; font-size: 13px;
-  font-weight: 600; color: var(--purple); letter-spacing: .06em; text-transform: uppercase;
-}
-.pv-counter { font-size: 13px; color: var(--muted); font-weight: 500; }
-.pv-counter span { color: var(--purple); font-weight: 700; }
-.pv-main { display: grid; grid-template-columns: 420px 1fr; gap: 0; overflow: hidden; }
-.pv-thumb-panel {
-  background: var(--bg-2); border-right: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  padding: 16px; overflow: hidden;
-}
-.pv-thumb-frame {
-  width: 390px; height: 220px; border-radius: 8px;
-  border: 1px solid var(--border); overflow: hidden; background: var(--bg); position: relative;
-}
-.pv-thumb-frame iframe {
-  width: 1280px; height: 720px;
-  transform: scale(0.305); transform-origin: 0 0;
-  border: none; pointer-events: none;
-}
-.pv-notes-panel {
-  padding: 32px 40px; overflow-y: auto;
-  display: flex; flex-direction: column; justify-content: center;
-}
-.pv-notes-do {
-  font-size: 13px; color: var(--green); font-weight: 600;
-  margin-bottom: 12px; line-height: 1.5;
-  font-family: 'JetBrains Mono', monospace;
-}
-.pv-notes-say { font-size: 16px; line-height: 1.65; font-weight: 400; color: var(--text); }
-.pv-waiting { color: var(--muted); font-style: italic; font-size: 18px; line-height: 1.6; }
-.pv-footer {
-  padding: 8px 24px; border-top: 1px solid var(--border);
-  font-size: 11px; color: var(--muted); background: var(--panel);
-  display: flex; justify-content: space-between;
-  font-family: 'JetBrains Mono', monospace;
-}
-/* Thumbnail mode — hide chrome so iframe looks clean */
-body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { display: none; }
 </style>
 </head>
 <body>
-<div class="hint">&larr; &rarr; &middot; P notes &middot; 1-6 jump</div>
-<div class="stage">
-<div class="deck" id="deck">
-
-<!-- Progress strip -->
-<nav class="progress" id="progress" aria-label="Deck sections"></nav>
 
 <!-- ═══ SLIDE 1: Title Hero ═══ -->
-<section class="slide hero active" id="title" data-act="0" data-label="Title"
-  data-notes="DO: Welcome. Quick show of hands: who has CLI installed? Who has used M365 Copilot this week? Good. SAY: Most of you already use M365 Copilot for drafts, summaries, finding things. Useful stuff. But today I want to show you the next level, where Copilot moves past individual tasks and starts operationalizing your work. Connected tools, repeatable workflows, context that persists across sessions. You will try it yourself before we leave this room.">
+<section class="print-slide hero">
   <div class="eyebrow">60 min &middot; Hands-On Workshop</div>
-  <h1>Your<br>Operational<br><span class="accent">Copilot</span><span class="cursor"></span></h1>
+  <h1>Your<br>Operational<br><span class="accent">Copilot</span></h1>
   <p class="sub">From M365 help to repeatable, tool-connected partner workflows. You&rsquo;ll leave with a working setup and two patterns to use this week.</p>
   <div class="by">
     <div>
       <strong>Johan Wallquist</strong>
       <span class="role">Partner Solution Architect &middot; Microsoft Data &amp; AI</span>
       <div>
-        <a class="hero-li" href="https://www.linkedin.com/in/johanwallquist/" target="_blank" rel="noopener">
+        <a class="hero-li" href="https://www.linkedin.com/in/johanwallquist/">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
           <span>linkedin.com/in/johanwallquist</span>
         </a>
@@ -426,12 +319,11 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
     </div>
     <div>cli-intro &middot; v3</div>
   </div>
-  <div class="footer">1 / 10</div>
+  <div class="slide-num">1 / 10</div>
 </section>
 
 <!-- ═══ SLIDE 2: Copilot Ladder ═══ -->
-<section class="slide ladder-slide" id="ladder" data-act="1" data-label="Ladder"
-  data-notes="DO: Walk through the ladder bottom to top. Pause on CLI. SAY: You already know M365 Copilot. Draft an email, summarize a meeting, individual tasks. CLI goes further. It connects to your actual tools, PMX, MSX, email, calendar, and produces structured repeatable workflows. Not chat answers. Artifacts. Agency makes CLI Microsoft-ready: internal authentication, shared plugins, telemetry and governance baked in. Squad handles the bigger stuff, multi-agent coordination for long-running initiatives. Our focus today is CLI. The step from getting help to operationalizing your work.">
+<section class="print-slide ladder-slide">
   <div class="kicker">&#9670; where does this fit?</div>
   <h2>The Copilot <span class="accent">Ladder</span></h2>
   <p class="lead">Each layer adds capability. You&rsquo;re already on the first rung.</p>
@@ -454,12 +346,11 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
     </div>
   </div>
   <div class="ladder-bottom">Today we focus on rung 2 &mdash; where your work becomes <strong>operational</strong>.</div>
-  <div class="footer">2 / 10</div>
+  <div class="slide-num">2 / 10</div>
 </section>
 
 <!-- ═══ SLIDE 3: Why Now ═══ -->
-<section class="slide cards-slide" id="why-now" data-act="1" data-label="Why Now"
-  data-notes="SAY: Why is this possible now? AI crossed a threshold. Three capabilities landed at once. Reasoning: AI can plan complex multi-step tasks, decompose a problem, figure out the sequence, and execute. Way beyond autocomplete. Tool use: through MCP, the Model Context Protocol, AI connects to your actual systems. PMX, MSX, your email, your calendar. Real data, real actions. Self-correction: it checks its own output and iterates when something is off. The process follows a loop. Understand the problem, plan the approach, act, check the result, iterate. All inside a governance wrapper so your organization stays in control. One more shift worth mentioning, a quiet one. Models got dramatically better at following long detailed instructions. A year ago they would drift after two paragraphs of guidance. Now you hand them a full page of house rules and they actually follow every line. Custom instructions and prompts work because of this. The kitchen analogy holds. So the barrier between describing what you want and getting it done? Gone. That is why CLI exists.">
+<section class="print-slide cards-slide">
   <div class="kicker">&#9670; why this matters now</div>
   <h2>The barrier <span class="teal">collapsed</span>.</h2>
   <p class="lead">AI crossed a threshold. Three capabilities changed everything.</p>
@@ -480,12 +371,11 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
       <div class="desc">AI checks its own work. Iterate, improve, converge &mdash; in loops, not one-shots.</div>
     </div>
   </div>
-  <div class="footer">3 / 10</div>
+  <div class="slide-num">3 / 10</div>
 </section>
 
 <!-- ═══ SLIDE 4: Four Properties ═══ -->
-<section class="slide props" id="four-properties" data-act="2" data-label="Four Properties"
-  data-notes="SAY: Four properties make CLI different from M365 Copilot. Tool-connected: it calls your actual systems through MCP. PMX, MSX, email, calendar, GitHub. Real data. Repeatable: the same workflow works for any partner. Build the pattern once, reuse it, share it with your team. Inspectable: the output is an artifact. A structured document, a plan, a file. Something you can review and hand to someone, not a chat answer that vanishes when you close the tab. Persistent: slash resume picks up where you left off. Across days, across sessions. For work that evolves over time, that changes everything. DO: If the audience looks lost, use the kitchen analogy. MCP servers are kitchen equipment, the fridge, the oven. Instructions are house rules. Prompts are saved recipes. Skills are training that kicks in automatically. Copilot is the head chef who uses all of it. Start with the chef and the equipment. Everything else comes naturally.">
+<section class="print-slide props">
   <div class="kicker">&#9670; the four properties</div>
   <h2>Not another <span class="accent">chat window</span>.</h2>
   <p class="lead">Four things M365 Copilot doesn&rsquo;t do &mdash; and CLI does.</p>
@@ -515,12 +405,11 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
       <div class="mono">/compact &middot; /resume &middot; sessions</div>
     </div>
   </div>
-  <div class="footer">4 / 10</div>
+  <div class="slide-num">4 / 10</div>
 </section>
 
 <!-- ═══ SLIDE 5: Demo 1 — Partner Briefing ═══ -->
-<section class="slide" id="demo-1" data-act="3" data-label="Demo 1"
-  data-notes="DO: Run demo-01-partner-briefing. Full flow: pull PMX projects, MSX opps, partner team, recent emails, then synthesize into structured briefing. Emphasize tool calls visible, artifact as output, repeatable for any partner. SAY: Let me show you what this looks like. I have a partner Connect tomorrow. Normally that means five browser tabs and twenty minutes stitching the picture together manually. Instead, one conversation. Watch which tools it calls. Watch what comes out.">
+<section class="print-slide">
   <div class="demo-split">
     <div class="left-panel">
       <h2>Five tabs &rarr;<br>One <span class="accent">conversation</span>.</h2>
@@ -557,12 +446,11 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
       </div>
     </div>
   </div>
-  <div class="footer">5 / 10</div>
+  <div class="slide-num">5 / 10</div>
 </section>
 
 <!-- ═══ SLIDE 6: Exercise 1 ═══ -->
-<section class="slide exercise-slide" id="exercise-1" data-act="3" data-label="Exercise 1"
-  data-notes="DO: Give them 8 minutes. Guided start: everyone copies the briefing prompt. Then self-paced exploration. Walk around, troubleshoot. SAY: Your turn. Pick a partner you have real work with. Copy the prompt from exercise one, swap in the name, and see what comes back. This is your data, your projects, your pipeline. Hand up if you get stuck.">
+<section class="print-slide exercise-slide">
   <div class="kicker">&#9670; your turn</div>
   <h2>Build your own <span class="accent-green">partner briefing</span>.</h2>
   <div class="process-flow" style="justify-content:center;">
@@ -571,12 +459,11 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
     <span class="step hl-green">Get your briefing</span>
   </div>
   <div class="quote">Copy the prompt from your exercise sheet. Replace the partner name. See what comes back.</div>
-  <div class="footer">6 / 10</div>
+  <div class="slide-num">6 / 10</div>
 </section>
 
 <!-- ═══ SLIDE 7: Demo 2 — Workshop to Plan ═══ -->
-<section class="slide" id="demo-2" data-act="4" data-label="Demo 2"
-  data-notes="DO: Run demo-02-workshop-to-plan. Full flow: @workshop-notes.txt to analysis to structured plan to iteration (add TCO), then show /compact and /resume. SAY: This is the universal pain point. You run a great discovery call, a great workshop, you take good notes. Then nothing structured happens. The notes sit in OneNote. Action items sit in your head. I want to show you how CLI bridges that gap.">
+<section class="print-slide">
   <div class="demo-split">
     <div class="left-panel">
       <h2>Great workshop.<br><span class="accent">Now what?</span></h2>
@@ -610,12 +497,11 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
       </div>
     </div>
   </div>
-  <div class="footer">7 / 10</div>
+  <div class="slide-num">7 / 10</div>
 </section>
 
 <!-- ═══ SLIDE 8: Exercise 2 ═══ -->
-<section class="slide exercise-slide" id="exercise-2" data-act="4" data-label="Exercise 2"
-  data-notes="DO: Give them 8 minutes. Self-paced: they pick the scenario closest to their real work. Walk around, help, highlight interesting results. SAY: Last exercise. Pick whichever scenario matches what you actually do day to day. The exercise sheet has ready-to-paste prompts for each one. Finish early? Try a second.">
+<section class="print-slide exercise-slide">
   <div class="kicker">&#9670; your turn &mdash; pick a scenario</div>
   <h2>Pick your <span class="accent-amber">scenario</span>.</h2>
   <div class="scenario-grid">
@@ -640,12 +526,11 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
       <div class="desc">Combine /research with pipeline data for strategic suggestions.</div>
     </div>
   </div>
-  <div class="footer">8 / 10</div>
+  <div class="slide-num">8 / 10</div>
 </section>
 
 <!-- ═══ SLIDE 9: Bigger Picture ═══ -->
-<section class="slide cards-slide" id="bigger-picture" data-act="5" data-label="Bigger Picture"
-  data-notes="SAY: Everything I showed you today was individual. One person, one workflow. The real shift happens when this becomes a team capability. Instructions and skills let you codify patterns. The partner briefing workflow, the workshop-to-plan workflow. Share them in a repo and everyone runs the same playbook. Agency takes it further: internal authentication so MCP servers work out of the box, a shared plugin marketplace, telemetry showing what gets used and how. Squad is for when the work outgrows a single conversation. Multi-agent teams with memory and roles, handling long-running initiatives that need coordination. So the question for your team is simple. Which workflow do you standardize first?">
+<section class="print-slide cards-slide">
   <div class="kicker">&#9670; where this goes</div>
   <h2>From personal tool to <span class="purple">team capability</span>.</h2>
   <p class="lead">CLI becomes powerful when workflows are standardized, shared, and governed.</p>
@@ -667,13 +552,11 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
     </div>
   </div>
   <div class="slide-quote">The question is not &ldquo;can I use this?&rdquo; &mdash; it&rsquo;s &ldquo;<strong>what workflow should my team standardize first?</strong>&rdquo;</div>
-  <div class="footer">9 / 10</div>
+  <div class="slide-num">9 / 10</div>
 </section>
 
 <!-- ═══ SLIDE 10: Close ═══ -->
-<section class="slide close-slide" id="close" data-act="5" data-label="Close"
-  data-notes="SAY: Here is what you walk away with. A working Copilot CLI connected to your partner tools. Two workflow patterns tested with your own data. Plus a cheat sheet with everything you need to keep going. One ask from me: try one real task this week. Not a test. A real Connect prep, a real action plan from workshop notes, a real opportunity review. That is how it sticks. The beginner course is linked in your materials, two hours, self-paced, goes much deeper. Questions?">
-  <img src="../images/pixel-avatar-portrait.png" alt="" class="close-avatar" loading="lazy">
+<section class="print-slide close-slide">
   <h2>You now <span class="accent">have</span></h2>
   <div class="stat-row">
     <div class="stat-card">
@@ -695,194 +578,11 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
     <div class="action-item"><span class="bullet">●</span> <strong>Take the beginner course</strong> for deeper skills &mdash; 2 hours, self-paced</div>
   </div>
   <div class="close-links">
-    <a href="https://gh.io/copilot-cli-course" target="_blank">gh.io/copilot-cli-course</a> &nbsp;&middot;&nbsp;
-    <a href="https://docs.github.com/copilot/cli" target="_blank">docs.github.com/copilot/cli</a>
+    <a href="https://gh.io/copilot-cli-course">gh.io/copilot-cli-course</a> &nbsp;&middot;&nbsp;
+    <a href="https://docs.github.com/copilot/cli">docs.github.com/copilot/cli</a>
   </div>
-  <div class="footer">10 / 10</div>
+  <div class="slide-num">10 / 10</div>
 </section>
 
-</div><!-- end deck -->
-</div><!-- end stage -->
-
-<!-- Presenter notes view (same file, ?presenter=notes) -->
-<div id="presenter-view">
-  <div class="pv-header">
-    <div class="pv-label" id="pvLabel">Waiting for presentation&hellip;</div>
-    <div class="pv-counter"><span id="pvNum">-</span> / <span id="pvTotal">-</span></div>
-  </div>
-  <div class="pv-main">
-    <div class="pv-thumb-panel">
-      <div class="pv-thumb-frame">
-        <iframe id="pvThumb"></iframe>
-      </div>
-    </div>
-    <div class="pv-notes-panel">
-      <div id="pvDo" class="pv-notes-do" style="display:none;"></div>
-      <div id="pvSay" class="pv-notes-say">
-        <span class="pv-waiting">Connecting to presentation&hellip;</span>
-      </div>
-    </div>
-  </div>
-  <div class="pv-footer">
-    <span>Notes sync as you navigate the deck</span>
-    <span></span>
-  </div>
-</div>
-
-<script>
-/* ── Mode detection ──
-   ?presenter=notes → dark presenter UI (this window)
-   ?presenter=thumb → silent thumbnail (used as iframe inside presenter)
-   (no param)       → normal deck
-*/
-const mode = new URLSearchParams(location.search).get('presenter') || 'deck';
-if (mode === 'notes') document.body.classList.add('mode-presenter');
-if (mode === 'thumb') document.body.classList.add('mode-thumb');
-
-/* ── Presenter notes mode ── */
-if (mode === 'notes') {
-  const pvThumb = document.getElementById('pvThumb');
-  const pvLabel = document.getElementById('pvLabel');
-  const pvNum = document.getElementById('pvNum');
-  const pvTotal = document.getElementById('pvTotal');
-  const pvDo = document.getElementById('pvDo');
-  const pvSay = document.getElementById('pvSay');
-  pvThumb.src = location.pathname + '?presenter=thumb';
-  let thumbReady = false;
-  let lastIndex = -1;
-  pvThumb.onload = () => { thumbReady = true; };
-
-  const channel = new BroadcastChannel('cli-intro-v3-presenter');
-  function parseNotes(raw) {
-    let doText = '', sayText = raw;
-    const doMatch = raw.match(/^DO:\s*(.*?)\s*SAY:\s*/i);
-    if (doMatch) { doText = doMatch[1].trim(); sayText = raw.substring(doMatch[0].length).trim(); }
-    else { const sayMatch = raw.match(/^SAY:\s*/i); if (sayMatch) sayText = raw.substring(sayMatch[0].length).trim(); }
-    return { doText, sayText };
-  }
-  channel.onmessage = (e) => {
-    if (!e.data || e.data.type !== 'slide-change') return;
-    const { index, total, label, notes } = e.data;
-    if (index === lastIndex) return;
-    lastIndex = index;
-    pvLabel.textContent = label;
-    pvNum.textContent = index + 1;
-    pvTotal.textContent = total;
-    if (thumbReady) pvThumb.contentWindow.postMessage({ type: 'scroll-to-slide', index }, '*');
-    const { doText, sayText } = parseNotes(notes || '');
-    pvSay.style.opacity = '0'; pvDo.style.opacity = '0';
-    setTimeout(() => {
-      if (doText) { pvDo.textContent = doText; pvDo.style.display = 'block'; pvDo.style.opacity = '1'; }
-      else pvDo.style.display = 'none';
-      pvSay.textContent = sayText || '(No notes for this slide)';
-      pvSay.style.opacity = '1';
-    }, 150);
-  };
-  channel.postMessage({ type: 'request-current' });
-}
-/* ── Deck mode (deck + thumb) ── */
-else {
-
-const ACTS = [
-  { label: 'Intro',      num: '01', slides: [0] },
-  { label: 'Why now',    num: '02', slides: [1, 2] },
-  { label: 'The delta',  num: '03', slides: [3] },
-  { label: 'Demo 1',     num: '04', slides: [4, 5] },
-  { label: 'Demo 2',     num: '05', slides: [6, 7] },
-  { label: 'What\u2019s next', num: '06', slides: [8, 9] },
-];
-
-const slides = [...document.querySelectorAll('.slide')];
-const progress = document.getElementById('progress');
-let current = 0;
-
-// Support ?slide=N URL param
-const urlParams = new URLSearchParams(location.search);
-if (urlParams.has('slide')) {
-  const requested = parseInt(urlParams.get('slide'), 10);
-  if (!isNaN(requested) && requested >= 0 && requested < slides.length) current = requested;
-}
-
-// Build progress strip
-ACTS.forEach((act, idx) => {
-  const btn = document.createElement('button');
-  btn.dataset.act = idx;
-  btn.innerHTML = `<span class="bar"></span><span class="num">${act.num}</span><span class="label">${act.label}</span>`;
-  btn.addEventListener('click', () => jump(act.slides[0]));
-  progress.appendChild(btn);
-});
-
-function syncProgress() {
-  const currentAct = parseInt(slides[current].dataset.act, 10);
-  progress.querySelectorAll('button').forEach((b, idx) => {
-    b.classList.toggle('on', idx === currentAct);
-    b.classList.toggle('done', idx < currentAct);
-  });
-}
-
-function show(n) {
-  slides.forEach((s, idx) => s.classList.toggle('active', idx === n));
-  syncProgress();
-  broadcastSlide(current);
-}
-
-function go(d) {
-  current = Math.max(0, Math.min(slides.length - 1, current + d));
-  show(current);
-}
-
-function jump(n) {
-  current = Math.max(0, Math.min(slides.length - 1, n));
-  show(current);
-}
-
-// ── BroadcastChannel presenter sync ──
-let channel = null;
-try { channel = new BroadcastChannel('cli-intro-v3-presenter'); } catch(e) {}
-function broadcastSlide(idx) {
-  if (!channel) return;
-  const s = slides[idx];
-  channel.postMessage({
-    type: 'slide-change',
-    index: idx,
-    total: slides.length,
-    label: s ? s.dataset.label || ('Slide ' + (idx + 1)) : '',
-    notes: s ? s.getAttribute('data-notes') || '' : ''
-  });
-}
-if (channel) {
-  channel.onmessage = (e) => {
-    if (e.data && e.data.type === 'request-current') broadcastSlide(current);
-  };
-}
-
-// Listen for scroll-to-slide postMessage (from presenter thumb iframe)
-window.addEventListener('message', (e) => {
-  if (e.data && e.data.type === 'scroll-to-slide' && typeof e.data.index === 'number') {
-    jump(e.data.index);
-  }
-});
-
-// Show initial slide + sync progress
-show(current);
-
-// ── Keyboard nav ──
-document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); go(1); }
-  else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); go(-1); }
-  else if (e.key === 'Home') { e.preventDefault(); jump(0); }
-  else if (e.key === 'End') { e.preventDefault(); jump(slides.length - 1); }
-  else if (/^[1-6]$/.test(e.key)) {
-    const act = ACTS[parseInt(e.key, 10) - 1];
-    if (act) jump(act.slides[0]);
-  }
-  else if ((e.key === 'p' || e.key === 'P') && !e.ctrlKey && !e.metaKey) {
-    window.open(location.href.split('?')[0] + '?presenter=notes', 'presenter', 'width=600,height=800');
-    setTimeout(() => broadcastSlide(current), 500);
-  }
-});
-
-} // end deck mode
-</script>
 </body>
 </html>

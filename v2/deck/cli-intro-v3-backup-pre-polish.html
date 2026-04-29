@@ -95,7 +95,6 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
 .hero h1 {
   font-weight: 900; font-size: clamp(56px, 7.5vw, 110px);
   line-height: 0.95; letter-spacing: -0.035em; max-width: 20ch;
-  text-wrap: balance;
 }
 .hero h1 .accent { color: var(--purple); }
 .hero .cursor {
@@ -111,35 +110,21 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
 }
 .hero .by strong {
   color: var(--text); display: block; font-family: 'Mona Sans', sans-serif;
-  font-weight: 600; font-size: 20px; letter-spacing: 0; margin-bottom: 4px;
+  font-weight: 600; font-size: 16px; letter-spacing: 0;
 }
-.hero .by .role { display: block; margin-bottom: 10px; }
-.hero .by .hero-li {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 4px 10px; background: rgba(137,87,229,.10);
-  border: 1px solid rgba(137,87,229,.35); border-radius: 999px;
-  color: var(--purple); text-decoration: none;
-  font-family: 'JetBrains Mono', monospace; font-size: 11px;
-  letter-spacing: .02em; transition: background .15s ease, transform .15s ease;
-}
-.hero .by .hero-li:hover { background: rgba(137,87,229,.18); transform: translateY(-1px); }
-.hero .by .hero-li svg { flex: none; }
 
 /* ═══ Generic kicker / lead ═══ */
 .kicker {
-  display: inline-flex; align-self: flex-start;
   font-family: 'JetBrains Mono', monospace; font-size: 12px;
   color: var(--purple); letter-spacing: .15em; text-transform: uppercase;
-  background: rgba(137,87,229,.08); border: 1px solid rgba(137,87,229,.25);
-  padding: 5px 10px; border-radius: 4px; margin-bottom: 14px;
 }
-.lead { color: var(--muted); font-size: 21px; line-height: 1.55; max-width: 54ch; text-wrap: balance; }
+.lead { color: var(--muted); font-size: 21px; line-height: 1.55; max-width: 54ch; }
 
 /* ═══ Slide 2: Ladder ═══ */
 .ladder-slide { justify-content: center; gap: 18px; }
 .ladder-slide h2 {
   font-weight: 800; font-size: clamp(36px, 4.2vw, 56px);
-  line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance;
+  line-height: 1.05; letter-spacing: -0.02em;
 }
 .ladder-slide h2 .accent { color: var(--purple); }
 .ladder-slide .lead { margin-bottom: 6px; }
@@ -172,7 +157,7 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
 .cards-slide { justify-content: center; gap: 18px; }
 .cards-slide h2 {
   font-weight: 800; font-size: clamp(36px, 4.2vw, 56px);
-  line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance;
+  line-height: 1.05; letter-spacing: -0.02em;
 }
 .cards-slide h2 .teal { color: var(--teal); }
 .cards-slide h2 .purple { color: var(--purple); }
@@ -203,7 +188,7 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
 .props { justify-content: center; gap: 20px; }
 .props h2 {
   font-weight: 800; font-size: clamp(36px, 4.2vw, 56px);
-  line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance;
+  line-height: 1.05; letter-spacing: -0.02em;
 }
 .props h2 .accent { color: var(--teal); }
 .props .lead { margin-bottom: 8px; }
@@ -227,7 +212,7 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
 .demo-split .left-panel { display: flex; flex-direction: column; justify-content: center; }
 .demo-split h2 {
   font-weight: 800; font-size: clamp(34px, 4vw, 56px);
-  line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 12px; text-wrap: balance;
+  line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 12px;
 }
 .demo-split h2 .accent { color: var(--green); }
 .demo-split .lead { font-size: 21px; max-width: 38ch; margin-bottom: 24px; }
@@ -278,7 +263,7 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
 .exercise-slide { justify-content: center; align-items: center; text-align: center; gap: 22px; }
 .exercise-slide h2 {
   font-weight: 800; font-size: clamp(36px, 4.2vw, 56px);
-  line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance;
+  line-height: 1.05; letter-spacing: -0.02em;
 }
 .exercise-slide h2 .accent-green { color: var(--green); }
 .exercise-slide h2 .accent-amber { color: var(--amber); }
@@ -305,7 +290,7 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
 .close-slide { justify-content: center; gap: 24px; }
 .close-slide h2 {
   font-weight: 800; font-size: clamp(36px, 4.2vw, 56px);
-  line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance;
+  line-height: 1.05; letter-spacing: -0.02em;
 }
 .close-slide h2 .accent { color: var(--teal); }
 .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -409,20 +394,14 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
 
 <!-- ═══ SLIDE 1: Title Hero ═══ -->
 <section class="slide hero active" id="title" data-act="0" data-label="Title"
-  data-notes="DO: Welcome. Quick show of hands: who has CLI installed? Who has used M365 Copilot this week? Good. SAY: Most of you already use M365 Copilot for drafts, summaries, finding things. Useful stuff. But today I want to show you the next level, where Copilot moves past individual tasks and starts operationalizing your work. Connected tools, repeatable workflows, context that persists across sessions. You will try it yourself before we leave this room.">
+  data-notes="DO: Welcome. Quick show of hands — who has CLI installed? Who has used M365 Copilot this week? Good. SAY: Most of you use M365 Copilot. It helps you draft, summarize, find things. Today I want to show you the next step — where Copilot stops helping with individual tasks and starts operationalizing your work. Repeatable workflows. Connected tools. Persistent context. By the end of this hour, you will have tried it yourself.">
   <div class="eyebrow">60 min &middot; Hands-On Workshop</div>
   <h1>Your<br>Operational<br><span class="accent">Copilot</span><span class="cursor"></span></h1>
   <p class="sub">From M365 help to repeatable, tool-connected partner workflows. You&rsquo;ll leave with a working setup and two patterns to use this week.</p>
   <div class="by">
     <div>
       <strong>Johan Wallquist</strong>
-      <span class="role">Partner Solution Architect &middot; Microsoft Data &amp; AI</span>
-      <div>
-        <a class="hero-li" href="https://www.linkedin.com/in/johanwallquist/" target="_blank" rel="noopener">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
-          <span>linkedin.com/in/johanwallquist</span>
-        </a>
-      </div>
+      Partner Solution Architect &middot; Microsoft Data &amp; AI
     </div>
     <div>cli-intro &middot; v3</div>
   </div>
@@ -431,7 +410,7 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
 
 <!-- ═══ SLIDE 2: Copilot Ladder ═══ -->
 <section class="slide ladder-slide" id="ladder" data-act="1" data-label="Ladder"
-  data-notes="DO: Walk through the ladder bottom to top. Pause on CLI. SAY: You already know M365 Copilot. Draft an email, summarize a meeting, individual tasks. CLI goes further. It connects to your actual tools, PMX, MSX, email, calendar, and produces structured repeatable workflows. Not chat answers. Artifacts. Agency makes CLI Microsoft-ready: internal authentication, shared plugins, telemetry and governance baked in. Squad handles the bigger stuff, multi-agent coordination for long-running initiatives. Our focus today is CLI. The step from getting help to operationalizing your work.">
+  data-notes="DO: Walk through the ladder bottom to top. Pause on CLI. SAY: You already know M365 Copilot. It helps with individual tasks — draft this email, summarize that meeting. CLI is the next step. It connects to your actual tools — PMX, MSX, email, calendar — and produces structured, repeatable workflows. Not chat answers. Artifacts. Agency is what makes CLI Microsoft-ready — internal authentication, shared plugins, telemetry and governance. Squad is for the bigger stuff — multi-agent coordination for long-running initiatives. Today we focus on CLI. The step from getting help to operationalizing your work.">
   <div class="kicker">&#9670; where does this fit?</div>
   <h2>The Copilot <span class="accent">Ladder</span></h2>
   <p class="lead">Each layer adds capability. You&rsquo;re already on the first rung.</p>
@@ -459,7 +438,7 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
 
 <!-- ═══ SLIDE 3: Why Now ═══ -->
 <section class="slide cards-slide" id="why-now" data-act="1" data-label="Why Now"
-  data-notes="SAY: Why is this possible now? AI crossed a threshold. Three capabilities landed at once. Reasoning: AI can plan complex multi-step tasks, decompose a problem, figure out the sequence, and execute. Way beyond autocomplete. Tool use: through MCP, the Model Context Protocol, AI connects to your actual systems. PMX, MSX, your email, your calendar. Real data, real actions. Self-correction: it checks its own output and iterates when something is off. The process follows a loop. Understand the problem, plan the approach, act, check the result, iterate. All inside a governance wrapper so your organization stays in control. One more shift worth mentioning, a quiet one. Models got dramatically better at following long detailed instructions. A year ago they would drift after two paragraphs of guidance. Now you hand them a full page of house rules and they actually follow every line. Custom instructions and prompts work because of this. The kitchen analogy holds. So the barrier between describing what you want and getting it done? Gone. That is why CLI exists.">
+  data-notes="SAY: Why is this possible now? AI crossed a threshold. Three things changed. First, reasoning — AI can plan complex, multi-step tasks. Not just autocomplete. It decomposes a problem, figures out the sequence, and executes. Second, tool use — through MCP, the Model Context Protocol, AI connects to your actual systems. PMX, MSX, your email, your calendar. Real data, real actions. Third, self-correction — it checks its own work and iterates. And there is a quiet fourth shift — models got dramatically better at following long, detailed instructions. A year ago they would drift after two paragraphs. Now you can write a page of house rules and the model actually follows them. That is why custom instructions and prompts work — and why the kitchen analogy holds. The result? The barrier between describing what you want and getting it done just collapsed. That is why CLI exists.">
   <div class="kicker">&#9670; why this matters now</div>
   <h2>The barrier <span class="teal">collapsed</span>.</h2>
   <p class="lead">AI crossed a threshold. Three capabilities changed everything.</p>
@@ -480,12 +459,20 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
       <div class="desc">AI checks its own work. Iterate, improve, converge &mdash; in loops, not one-shots.</div>
     </div>
   </div>
+  <div class="process-flow">
+    <span class="step">Understand</span><span class="arrow">&rarr;</span>
+    <span class="step">Plan</span><span class="arrow">&rarr;</span>
+    <span class="step">Act</span><span class="arrow">&rarr;</span>
+    <span class="step">Check</span><span class="arrow">&rarr;</span>
+    <span class="step hl">Iterate</span>
+  </div>
+  <div class="gov-note">Wrapped in: human review &middot; governance &middot; data boundaries</div>
   <div class="footer">3 / 10</div>
 </section>
 
 <!-- ═══ SLIDE 4: Four Properties ═══ -->
 <section class="slide props" id="four-properties" data-act="2" data-label="Four Properties"
-  data-notes="SAY: Four properties make CLI different from M365 Copilot. Tool-connected: it calls your actual systems through MCP. PMX, MSX, email, calendar, GitHub. Real data. Repeatable: the same workflow works for any partner. Build the pattern once, reuse it, share it with your team. Inspectable: the output is an artifact. A structured document, a plan, a file. Something you can review and hand to someone, not a chat answer that vanishes when you close the tab. Persistent: slash resume picks up where you left off. Across days, across sessions. For work that evolves over time, that changes everything. DO: If the audience looks lost, use the kitchen analogy. MCP servers are kitchen equipment, the fridge, the oven. Instructions are house rules. Prompts are saved recipes. Skills are training that kicks in automatically. Copilot is the head chef who uses all of it. Start with the chef and the equipment. Everything else comes naturally.">
+  data-notes="SAY: Four properties that make CLI different from M365 Copilot. Tool-connected — it calls your actual systems through MCP. PMX, MSX, email, calendar, GitHub. Real data. Repeatable — the same workflow works for any partner. Build the pattern once, reuse it, share it with your team. Inspectable — the output is an artifact. A structured document, a plan, a file. Not a chat answer that disappears when you close the tab. Persistent — slash resume picks up where you left off. Across days, across sessions. For work that evolves over time, this is the game changer. DO: If audience looks lost, use the kitchen analogy: think of MCP servers as kitchen equipment — the fridge, the oven. Instructions are house rules. Prompts are saved recipes. Skills are training that kicks in automatically. And Copilot is the head chef who uses all of it. You start with the chef and the equipment — everything else comes naturally.">
   <div class="kicker">&#9670; the four properties</div>
   <h2>Not another <span class="accent">chat window</span>.</h2>
   <p class="lead">Four things M365 Copilot doesn&rsquo;t do &mdash; and CLI does.</p>
@@ -520,7 +507,7 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
 
 <!-- ═══ SLIDE 5: Demo 1 — Partner Briefing ═══ -->
 <section class="slide" id="demo-1" data-act="3" data-label="Demo 1"
-  data-notes="DO: Run demo-01-partner-briefing. Full flow: pull PMX projects, MSX opps, partner team, recent emails, then synthesize into structured briefing. Emphasize tool calls visible, artifact as output, repeatable for any partner. SAY: Let me show you what this looks like. I have a partner Connect tomorrow. Normally that means five browser tabs and twenty minutes stitching the picture together manually. Instead, one conversation. Watch which tools it calls. Watch what comes out.">
+  data-notes="DO: Run demo-01-partner-briefing. Full flow: pull PMX projects + MSX opps + partner team + recent emails → synthesize into structured briefing. Emphasize: tool calls visible, artifact not chat answer, repeatable for any partner. SAY: Let me show you what this looks like in practice. I have a partner Connect tomorrow. Instead of opening five tabs and assembling the picture myself, I will do it in one conversation. Watch which tools it calls and what comes out.">
   <div class="demo-split">
     <div class="left-panel">
       <h2>Five tabs &rarr;<br>One <span class="accent">conversation</span>.</h2>
@@ -562,7 +549,7 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
 
 <!-- ═══ SLIDE 6: Exercise 1 ═══ -->
 <section class="slide exercise-slide" id="exercise-1" data-act="3" data-label="Exercise 1"
-  data-notes="DO: Give them 8 minutes. Guided start: everyone copies the briefing prompt. Then self-paced exploration. Walk around, troubleshoot. SAY: Your turn. Pick a partner you have real work with. Copy the prompt from exercise one, swap in the name, and see what comes back. This is your data, your projects, your pipeline. Hand up if you get stuck.">
+  data-notes="DO: Give them 8 minutes. Guided start — everyone copies the briefing prompt. Then self-paced exploration. Walk around, troubleshoot. SAY: Your turn. Pick a partner you have real work with. Copy the prompt from exercise one, replace the name, and see what comes back. This is your data, your projects, your pipeline. Raise your hand if you need help.">
   <div class="kicker">&#9670; your turn</div>
   <h2>Build your own <span class="accent-green">partner briefing</span>.</h2>
   <div class="process-flow" style="justify-content:center;">
@@ -576,7 +563,7 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
 
 <!-- ═══ SLIDE 7: Demo 2 — Workshop to Plan ═══ -->
 <section class="slide" id="demo-2" data-act="4" data-label="Demo 2"
-  data-notes="DO: Run demo-02-workshop-to-plan. Full flow: @workshop-notes.txt to analysis to structured plan to iteration (add TCO), then show /compact and /resume. SAY: This is the universal pain point. You run a great discovery call, a great workshop, you take good notes. Then nothing structured happens. The notes sit in OneNote. Action items sit in your head. I want to show you how CLI bridges that gap.">
+  data-notes="DO: Run demo-02-workshop-to-plan. Full flow: @workshop-notes.txt → analysis → structured plan → iteration (add TCO) → show /compact and /resume. SAY: This is the universal pain point. You have a great discovery call, great workshop, good notes — and then nothing structured happens. The notes live in OneNote. The action items live in memory. Let me show you how CLI bridges that gap.">
   <div class="demo-split">
     <div class="left-panel">
       <h2>Great workshop.<br><span class="accent">Now what?</span></h2>
@@ -615,7 +602,7 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
 
 <!-- ═══ SLIDE 8: Exercise 2 ═══ -->
 <section class="slide exercise-slide" id="exercise-2" data-act="4" data-label="Exercise 2"
-  data-notes="DO: Give them 8 minutes. Self-paced: they pick the scenario closest to their real work. Walk around, help, highlight interesting results. SAY: Last exercise. Pick whichever scenario matches what you actually do day to day. The exercise sheet has ready-to-paste prompts for each one. Finish early? Try a second.">
+  data-notes="DO: Give them 8 minutes. Self-paced — they pick the scenario closest to their real work. Walk around, help, point out interesting results. SAY: Last exercise. Pick the scenario that is closest to what you actually do. The exercise sheet has ready-to-paste prompts for each one. If you finish early, try a second one.">
   <div class="kicker">&#9670; your turn &mdash; pick a scenario</div>
   <h2>Pick your <span class="accent-amber">scenario</span>.</h2>
   <div class="scenario-grid">
@@ -645,7 +632,7 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
 
 <!-- ═══ SLIDE 9: Bigger Picture ═══ -->
 <section class="slide cards-slide" id="bigger-picture" data-act="5" data-label="Bigger Picture"
-  data-notes="SAY: Everything I showed you today was individual. One person, one workflow. The real shift happens when this becomes a team capability. Instructions and skills let you codify patterns. The partner briefing workflow, the workshop-to-plan workflow. Share them in a repo and everyone runs the same playbook. Agency takes it further: internal authentication so MCP servers work out of the box, a shared plugin marketplace, telemetry showing what gets used and how. Squad is for when the work outgrows a single conversation. Multi-agent teams with memory and roles, handling long-running initiatives that need coordination. So the question for your team is simple. Which workflow do you standardize first?">
+  data-notes="SAY: Everything I showed you today was individual. But the real power is when this becomes a team capability. Instructions and skills let you codify patterns — the partner briefing workflow, the workshop-to-plan workflow. Share them in a repo. Everyone uses the same pattern. Agency takes it further — internal authentication so MCP servers work out of the box, a shared plugin marketplace, telemetry so you can see what is being used and how. And Squad — for when the work gets bigger. Multi-agent teams with memory and roles. Long-running initiatives where you need coordination, not just a single conversation. The question for your team is not whether to use this. It is which workflow to standardize first.">
   <div class="kicker">&#9670; where this goes</div>
   <h2>From personal tool to <span class="purple">team capability</span>.</h2>
   <p class="lead">CLI becomes powerful when workflows are standardized, shared, and governed.</p>
@@ -672,7 +659,7 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
 
 <!-- ═══ SLIDE 10: Close ═══ -->
 <section class="slide close-slide" id="close" data-act="5" data-label="Close"
-  data-notes="SAY: Here is what you walk away with. A working Copilot CLI connected to your partner tools. Two workflow patterns tested with your own data. Plus a cheat sheet with everything you need to keep going. One ask from me: try one real task this week. Not a test. A real Connect prep, a real action plan from workshop notes, a real opportunity review. That is how it sticks. The beginner course is linked in your materials, two hours, self-paced, goes much deeper. Questions?">
+  data-notes="SAY: Here is what you walk away with. A working Copilot CLI connected to your partner tools. Two workflow patterns you have now tested with your own data. And a cheat sheet with everything you need to keep going. My one ask: try one real task this week. Not a test. A real Connect prep, a real action plan from real workshop notes, a real opportunity review. That is how it sticks. The beginner course is linked in your materials — two hours, self-paced, goes much deeper. Questions?">
   <img src="../images/pixel-avatar-portrait.png" alt="" class="close-avatar" loading="lazy">
   <h2>You now <span class="accent">have</span></h2>
   <div class="stat-row">
