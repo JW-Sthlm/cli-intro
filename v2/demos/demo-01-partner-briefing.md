@@ -8,7 +8,7 @@
 
 ## Why This Demo Matters
 
-**What the audience already does:** Before a partner Connect or QBR, they open PMX, check projects, open MSX, search opportunities, open Outlook, find recent threads, open Teams, check recent chats, maybe open a SharePoint for last quarter's deck — and then try to assemble it all in their head or a Word doc.
+**What the audience already does:** Before a Partner Sync or QBR, they open PMX, check projects, open MSX, search opportunities, open Outlook, find recent threads, open Teams, check recent chats, maybe open a SharePoint for last quarter's deck — and then try to assemble it all in their head or a Word doc.
 
 **What M365 Copilot can do:** Summarize one email thread. Summarize one meeting. Draft a generic email. Each is a single ask/answer — disconnected, not structured, not reusable.
 
@@ -28,7 +28,7 @@
 
 ### Act 1: Set the scene (1 min)
 
-**SAY:** "Imagine you have a partner Connect tomorrow. You need to know: where do our projects stand, are there outcome gaps, what's in the MSX pipeline, what did we last discuss, and who's on the team. Today, that means opening five tabs and assembling the picture yourself. Let me show you a different approach."
+**SAY:** "Imagine you have a Partner Sync tomorrow. You need to know: where do our projects stand, are there outcome gaps, what's in the MSX pipeline, what did we last discuss, and who's on the team. Today, that means opening five tabs and assembling the picture yourself. Let me show you a different approach."
 
 ---
 
@@ -37,7 +37,7 @@
 **Type:**
 
 ```
-I'm preparing for a Connect meeting with [Partner Name] tomorrow. Help me build a structured briefing. Start by pulling:
+I'm preparing for a Partner Sync with [Partner Name] tomorrow. Help me build a structured briefing. Start by pulling:
 1. Our active PMX projects with this partner — status, outcomes, deliverables
 2. The partner team — who is PDM, PTS, PSAM
 3. Open MSX opportunities with this partner in EMEA
