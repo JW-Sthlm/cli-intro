@@ -126,13 +126,15 @@ Good. Now add a TCO estimate section for Phase 1. Erik needs to see costs below 
 
 **SAY:** "What just happened? Raw workshop notes became a phased plan with tasks, owners, risks, and cost estimates — in about 5 minutes. I could refine it, share it, or hand it off. This is the gap CLI fills: between 'we had a great conversation' and 'here's what we're doing.'"
 
-**Optional — show /plan:**
+**Optional — show /plan (READ-ONLY — describe but do NOT execute in a live session):**
 
 ```
 /plan Create a PMX project for Contoso Nordic based on this action plan, with the Phase 1 deliverables as project deliverables.
 ```
 
-**SAY:** "And if you want CLI to think before acting — `/plan` creates a structured plan of what IT will do, so you can review before it executes."
+**SAY:** "And if you wanted CLI to take it further — `/plan` would lay out the steps to create a PMX project from this. I won't run it now because this is a live environment, but you can see it thinks through the steps before acting. That's the inspectable part — you always review before anything happens."
+
+> ⚠️ **FACILITATOR NOTE:** Do NOT execute /plan in the live session. Show the prompt, explain what it would do, then move on. PMX is a production system.
 
 ---
 
