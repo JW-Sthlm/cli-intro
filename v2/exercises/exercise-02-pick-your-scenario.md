@@ -32,7 +32,9 @@ Quick notes from call with Northwind Traders:
 - Opportunity: could expand to AI/ML workloads after analytics
 ```
 
-Save as `notes.txt`, then:
+Save as `notes.txt` **in the folder where you started Copilot CLI** (your working directory — the path shown in your terminal prompt). The `@` reference looks for the file there.
+
+> 💡 **Shortcut:** There is a ready-made `workshop-notes.txt` in the exercises folder. If you cloned the repo, you can use `@workshop-notes.txt` instead.
 
 ```
 @notes.txt Turn these workshop notes into a structured action plan with: executive summary, phased approach, task breakdown with owners, open questions, risks, and next steps.
