@@ -32,7 +32,7 @@ body {
 }
 a { color: inherit; }
 .page {
-  max-width: 900px;
+  max-width: 1020px;
   margin: 0 auto;
   padding: 40px 20px 72px;
 }
@@ -56,7 +56,11 @@ a { color: inherit; }
 .timeline-meta,
 .chapter-chip,
 .metric,
-.note-chip {
+.note-chip,
+.prompt-label,
+.section-label,
+.card-title,
+.timeline-link {
   font-family: 'JetBrains Mono', monospace;
 }
 .eyebrow {
@@ -125,12 +129,22 @@ a { color: inherit; }
   grid-template-columns: repeat(6, 1fr);
   gap: 10px;
 }
+.timeline-link {
+  display: block;
+  text-decoration: none;
+}
 .timeline-card {
   min-height: 106px;
   padding: 12px;
   border: 1px solid var(--border);
   border-radius: 14px;
   background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  transition: transform .18s ease, border-color .18s ease, background .18s ease;
+}
+.timeline-link:hover .timeline-card {
+  transform: translateY(-2px);
+  border-color: rgba(255,255,255,.18);
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.015));
 }
 .timeline-card strong {
   display: block;
@@ -158,6 +172,7 @@ a { color: inherit; }
 }
 .details-panel {
   overflow: hidden;
+  scroll-margin-top: 18px;
 }
 details {
   background: var(--card);
@@ -221,36 +236,46 @@ details.close-type[open] { border-left-color: var(--pink); }
 .tag-exercise { color: #D29922; background: rgba(210,153,34,.12); border: 1px solid rgba(210,153,34,.3); }
 .tag-close { color: #F778BA; background: rgba(247,120,186,.12); border: 1px solid rgba(247,120,186,.3); }
 .detail-body {
-  padding: 0 18px 18px;
+  padding: 18px;
   border-top: 1px solid rgba(255,255,255,.04);
 }
-.grid {
-  display: grid;
-  gap: 14px;
+.slide-row {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
 }
-.card {
-  background: rgba(255,255,255,.02);
+.slide-content {
+  flex: 1;
+  min-width: 0;
+}
+.thumb-frame {
+  width: 300px;
+  height: 169px;
+  border-radius: 8px;
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 14px;
+  overflow: hidden;
+  background: #0D1117;
+  flex-shrink: 0;
 }
-.card h3,
-.card h4 {
+.thumb-frame iframe {
+  width: 1280px;
+  height: 720px;
+  transform: scale(0.234);
+  transform-origin: 0 0;
+  border: none;
+  pointer-events: none;
+}
+.section-label {
   margin: 0 0 8px;
-  font-size: 13px;
-  letter-spacing: .06em;
+  font-size: 11px;
+  letter-spacing: .1em;
   text-transform: uppercase;
   color: var(--muted);
-}
-.card p,
-.card li,
-.card td,
-.card th {
-  font-size: 15px;
 }
 .say {
   font-size: 17px;
   line-height: 1.7;
+  margin: 0 0 10px;
 }
 .do {
   font-family: 'JetBrains Mono', monospace;
@@ -279,23 +304,12 @@ ul.clean {
 ul.clean li + li { margin-top: 6px; }
 pre {
   position: relative;
-  margin: 10px 0 0;
+  margin: 0;
   padding: 16px 16px 14px;
   background: #0D1117;
   border: 1px solid #30363D;
   border-radius: 12px;
   overflow-x: auto;
-}
-pre::after {
-  content: 'copy prompt';
-  position: absolute;
-  top: 8px;
-  right: 10px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  color: var(--muted);
 }
 code {
   font-family: 'JetBrains Mono', monospace;
@@ -320,13 +334,20 @@ th {
   text-transform: uppercase;
   letter-spacing: .06em;
 }
-.callout {
+.callout,
+.script-panel,
+.exercise-panel,
+.info-panel {
   padding: 12px 14px;
   border-radius: 12px;
   border: 1px solid var(--border);
   background: rgba(255,255,255,.02);
 }
-.callout strong { display: block; margin-bottom: 4px; }
+.callout strong,
+.card-title {
+  display: block;
+  margin-bottom: 4px;
+}
 .success {
   border-color: rgba(63,185,80,.28);
   background: rgba(63,185,80,.06);
@@ -339,16 +360,67 @@ th {
   border-color: rgba(247,120,186,.28);
   background: rgba(247,120,186,.06);
 }
+.script-panel,
+.exercise-panel,
+.info-panel {
+  margin-top: 18px;
+}
+.script-header,
+.exercise-header {
+  margin-bottom: 12px;
+}
+.script-header h3,
+.exercise-header h3,
+.info-panel h3 {
+  margin: 0;
+  font-size: 16px;
+}
+.script-act + .script-act,
+.script-block + .script-block,
+.info-stack > * + * {
+  margin-top: 14px;
+}
+.script-act h4,
+.script-block h4,
+.info-panel h4 {
+  margin: 0 0 8px;
+  font-size: 15px;
+}
+.prompt-label {
+  font-size: 11px;
+  color: var(--green);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+.compact-callouts {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.compact-callouts .callout {
+  padding: 10px 12px;
+  font-size: 14px;
+}
+.tight-list li + li { margin-top: 4px; }
 hr.rule {
   border: 0;
   border-top: 1px solid var(--border);
-  margin: 12px 0;
+  margin: 14px 0;
 }
 @media (max-width: 860px) {
   .timeline-grid,
   .two-col,
   .three-col {
     grid-template-columns: 1fr;
+  }
+  .slide-row {
+    flex-direction: column;
+  }
+  .thumb-frame {
+    width: 100%;
+    max-width: 300px;
   }
   .page { padding-inline: 14px; }
   details summary { align-items: flex-start; }
@@ -375,153 +447,226 @@ hr.rule {
       <div class="timeline-meta">Approximate timing · keep the exercises honest</div>
     </div>
     <div class="timeline-grid">
-      <div class="timeline-card chapter-intro">
-        <strong>Intro</strong>
-        <div class="time">3 min</div>
-        <div class="slides">Slide 1</div>
-      </div>
-      <div class="timeline-card chapter-why">
-        <strong>Why Now</strong>
-        <div class="time">8 min</div>
-        <div class="slides">Slides 2–3</div>
-      </div>
-      <div class="timeline-card chapter-delta">
-        <strong>The Delta</strong>
-        <div class="time">5 min</div>
-        <div class="slides">Slide 4</div>
-      </div>
-      <div class="timeline-card chapter-demo1">
-        <strong>Demo 1</strong>
-        <div class="time">20 min</div>
-        <div class="slides">Slides 5–6<br><span class="muted">12 min demo + 8 min exercise</span></div>
-      </div>
-      <div class="timeline-card chapter-demo2">
-        <strong>Demo 2</strong>
-        <div class="time">18 min</div>
-        <div class="slides">Slides 7–8<br><span class="muted">10 min demo + 8 min exercise</span></div>
-      </div>
-      <div class="timeline-card chapter-close">
-        <strong>What's Next</strong>
-        <div class="time">6 min</div>
-        <div class="slides">Slides 9–10</div>
-      </div>
+      <a class="timeline-link" href="#slide-0">
+        <div class="timeline-card chapter-intro">
+          <strong>Intro</strong>
+          <div class="time">3 min</div>
+          <div class="slides">Slide 0</div>
+        </div>
+      </a>
+      <a class="timeline-link" href="#slide-1">
+        <div class="timeline-card chapter-why">
+          <strong>Why Now</strong>
+          <div class="time">8 min</div>
+          <div class="slides">Slides 1–2</div>
+        </div>
+      </a>
+      <a class="timeline-link" href="#slide-3">
+        <div class="timeline-card chapter-delta">
+          <strong>The Delta</strong>
+          <div class="time">5 min</div>
+          <div class="slides">Slide 3</div>
+        </div>
+      </a>
+      <a class="timeline-link" href="#slide-4">
+        <div class="timeline-card chapter-demo1">
+          <strong>Demo 1</strong>
+          <div class="time">20 min</div>
+          <div class="slides">Slides 4–5<br><span class="muted">12 min demo + 8 min exercise</span></div>
+        </div>
+      </a>
+      <a class="timeline-link" href="#slide-6">
+        <div class="timeline-card chapter-demo2">
+          <strong>Demo 2</strong>
+          <div class="time">18 min</div>
+          <div class="slides">Slides 6–7<br><span class="muted">10 min demo + 8 min exercise</span></div>
+        </div>
+      </a>
+      <a class="timeline-link" href="#slide-8">
+        <div class="timeline-card chapter-close">
+          <strong>What's Next</strong>
+          <div class="time">6 min</div>
+          <div class="slides">Slides 8–9</div>
+        </div>
+      </a>
     </div>
   </section>
 
   <section class="storyboard" aria-label="Slide-by-slide storyboard">
 
-    <div class="details-panel">
+    <div class="details-panel" id="slide-0">
       <details class="talk">
         <summary>
           <span class="summary-text">
-            <span class="summary-main">Slide 1 · Title · 3 min ·</span>
+            <span class="summary-main">Slide 0 · Title · 3 min ·</span>
             <span class="tag tag-talk">talk</span>
             <span class="chapter-chip">Intro</span>
           </span>
         </summary>
-        <div class="detail-body grid">
-          <div class="card"><h3>Key Message</h3><p>CLI is the step beyond M365 Copilot: operational, tool-connected, repeatable work that attendees will try themselves today.</p></div>
-          <div class="card"><h3>On Screen</h3><p>Dark hero opener: “Your Operational Copilot,” Johan’s name, and the promise of working setup plus two workflow patterns.</p></div>
-          <div class="card"><h3>SAY</h3><p class="say">Most of you already use M365 Copilot for drafts, summaries, finding things. Useful stuff. But today I want to show you the next level, where Copilot moves past individual tasks and starts operationalizing your work. Connected tools, repeatable workflows, context that persists across sessions. You will try it yourself before we leave this room.</p></div>
-          <div class="card"><h3>DO</h3><div class="do">Welcome. Quick show of hands: who has CLI installed? Who has used M365 Copilot this week? Good.</div></div>
+        <div class="detail-body">
+          <div class="slide-row">
+            <div class="thumb-frame">
+              <iframe src="cli-intro-v3.html?slide=0" loading="lazy"></iframe>
+            </div>
+            <div class="slide-content">
+              <div class="section-label">DO</div>
+              <div class="do">Welcome. Quick show of hands: who has CLI installed? Who has used M365 Copilot this week? Good.</div>
+              <div class="section-label" style="margin-top:12px;">SAY</div>
+              <p class="say">Most of you already use M365 Copilot for drafts, summaries, finding things. Useful stuff.</p>
+              <p class="say">But today I want to show you the next level, where Copilot moves past individual tasks and starts operationalizing your work.</p>
+              <p class="say">Connected tools, repeatable workflows, context that persists across sessions.</p>
+              <p class="say">You will try it yourself before we leave this room.</p>
+            </div>
+          </div>
         </div>
       </details>
     </div>
 
-    <div class="details-panel">
+    <div class="details-panel" id="slide-1">
       <details class="talk">
         <summary>
           <span class="summary-text">
-            <span class="summary-main">Slide 2 · Ladder · 4 min ·</span>
+            <span class="summary-main">Slide 1 · Ladder · 4 min ·</span>
             <span class="tag tag-talk">talk</span>
             <span class="chapter-chip">Why Now</span>
           </span>
         </summary>
-        <div class="detail-body grid">
-          <div class="card"><h3>Key Message</h3><p>CLI sits above M365 Copilot because it connects tools and produces repeatable workflows, while Agency and Squad extend that pattern further.</p></div>
-          <div class="card"><h3>On Screen</h3><p>A four-rung Copilot Ladder: M365 Copilot, GitHub Copilot CLI, Agency, and Squad, with CLI highlighted as today’s focus.</p></div>
-          <div class="card"><h3>SAY</h3><p class="say">You already know M365 Copilot. Draft an email, summarize a meeting, individual tasks. CLI goes further. It connects to your actual tools, PMX, MSX, email, calendar, and produces structured repeatable workflows. Not chat answers. Artifacts. Agency makes CLI Microsoft-ready: internal authentication, shared plugins, telemetry and governance baked in. Squad handles the bigger stuff, multi-agent coordination for long-running initiatives. Our focus today is CLI. The step from getting help to operationalizing your work.</p></div>
-          <div class="card"><h3>DO</h3><div class="do">Walk through the ladder bottom to top. Pause on CLI.</div></div>
+        <div class="detail-body">
+          <div class="slide-row">
+            <div class="thumb-frame">
+              <iframe src="cli-intro-v3.html?slide=1" loading="lazy"></iframe>
+            </div>
+            <div class="slide-content">
+              <div class="section-label">DO</div>
+              <div class="do">Walk through the ladder bottom to top. Pause on CLI.</div>
+              <div class="section-label" style="margin-top:12px;">SAY</div>
+              <p class="say">You already know M365 Copilot. Draft an email, summarize a meeting, individual tasks.</p>
+              <p class="say">CLI goes further. It connects to your actual tools, PMX, MSX, email, calendar, and produces structured repeatable workflows. Not chat answers. Artifacts.</p>
+              <p class="say">Agency makes CLI Microsoft-ready: internal authentication, shared plugins, telemetry and governance baked in. Squad handles the bigger stuff, multi-agent coordination for long-running initiatives.</p>
+              <p class="say">Our focus today is CLI. The step from getting help to operationalizing your work.</p>
+            </div>
+          </div>
         </div>
       </details>
     </div>
 
-    <div class="details-panel">
+    <div class="details-panel" id="slide-2">
       <details class="talk">
         <summary>
           <span class="summary-text">
-            <span class="summary-main">Slide 3 · Why Now · 4 min ·</span>
+            <span class="summary-main">Slide 2 · Why Now · 4 min ·</span>
             <span class="tag tag-talk">talk</span>
             <span class="chapter-chip">Why Now</span>
           </span>
         </summary>
-        <div class="detail-body grid">
-          <div class="card"><h3>Key Message</h3><p>The moment changed because reasoning, tool use, self-correction, and stronger instruction-following all arrived at once.</p></div>
-          <div class="card"><h3>On Screen</h3><p>Three capability cards — Reasoning, Tool Use, Self-Correction — framed as the threshold that made CLI viable.</p></div>
-          <div class="card"><h3>SAY</h3><p class="say">Why is this possible now? AI crossed a threshold. Three capabilities landed at once. Reasoning: AI can plan complex multi-step tasks, decompose a problem, figure out the sequence, and execute. Way beyond autocomplete. Tool use: through MCP, the Model Context Protocol, AI connects to your actual systems. PMX, MSX, your email, your calendar. Real data, real actions. Self-correction: it checks its own output and iterates when something is off. The process follows a loop. Understand the problem, plan the approach, act, check the result, iterate. All inside a governance wrapper so your organization stays in control. One more shift worth mentioning, a quiet one. Models got dramatically better at following long detailed instructions. A year ago they would drift after two paragraphs of guidance. Now you hand them a full page of house rules and they actually follow every line. Custom instructions and prompts work because of this. The kitchen analogy holds. So the barrier between describing what you want and getting it done? Gone. That is why CLI exists.</p></div>
-          <div class="card"><h3>DO</h3><div class="do">No explicit stage direction in the deck notes. Keep pacing steady and give the audience one beat after each capability.</div></div>
+        <div class="detail-body">
+          <div class="slide-row">
+            <div class="thumb-frame">
+              <iframe src="cli-intro-v3.html?slide=2" loading="lazy"></iframe>
+            </div>
+            <div class="slide-content">
+              <div class="section-label">DO</div>
+              <div class="do">No explicit stage direction in the deck notes. Keep pacing steady and give the audience one beat after each capability.</div>
+              <div class="section-label" style="margin-top:12px;">SAY</div>
+              <p class="say">Why is this possible now? AI crossed a threshold. Three capabilities landed at once.</p>
+              <p class="say">Reasoning: AI can plan complex multi-step tasks, decompose a problem, figure out the sequence, and execute. Way beyond autocomplete. Tool use: through MCP, the Model Context Protocol, AI connects to your actual systems. PMX, MSX, your email, your calendar. Real data, real actions.</p>
+              <p class="say">Self-correction: it checks its own output and iterates when something is off. The process follows a loop. Understand the problem, plan the approach, act, check the result, iterate. All inside a governance wrapper so your organization stays in control.</p>
+              <p class="say">One more shift worth mentioning, a quiet one. Models got dramatically better at following long detailed instructions. A year ago they would drift after two paragraphs of guidance. Now you hand them a full page of house rules and they actually follow every line. Custom instructions and prompts work because of this. The kitchen analogy holds.</p>
+              <p class="say">So the barrier between describing what you want and getting it done? Gone. That is why CLI exists.</p>
+            </div>
+          </div>
         </div>
       </details>
     </div>
 
-    <div class="details-panel">
+    <div class="details-panel" id="slide-3">
       <details class="talk">
         <summary>
           <span class="summary-text">
-            <span class="summary-main">Slide 4 · Four Properties · 5 min ·</span>
+            <span class="summary-main">Slide 3 · Four Properties · 5 min ·</span>
             <span class="tag tag-talk">talk</span>
             <span class="chapter-chip">The Delta</span>
           </span>
         </summary>
-        <div class="detail-body grid">
-          <div class="card"><h3>Key Message</h3><p>The delta versus M365 Copilot is simple: CLI is tool-connected, repeatable, inspectable, and persistent.</p></div>
-          <div class="card"><h3>On Screen</h3><p>Four property cards with examples: tool-connected, repeatable, inspectable, persistent, plus a “not another chat window” headline.</p></div>
-          <div class="card"><h3>SAY</h3><p class="say">Four properties make CLI different from M365 Copilot. Tool-connected: it calls your actual systems through MCP. PMX, MSX, email, calendar, GitHub. Real data. Repeatable: the same workflow works for any partner. Build the pattern once, reuse it, share it with your team. Inspectable: the output is an artifact. A structured document, a plan, a file. Something you can review and hand to someone, not a chat answer that vanishes when you close the tab. Persistent: slash resume picks up where you left off. Across days, across sessions. For work that evolves over time, that changes everything.</p></div>
-          <div class="card"><h3>DO</h3><div class="do">If the audience looks lost, use the kitchen analogy. MCP servers are kitchen equipment, the fridge, the oven. Instructions are house rules. Prompts are saved recipes. Skills are training that kicks in automatically. Copilot is the head chef who uses all of it. Start with the chef and the equipment. Everything else comes naturally.</div></div>
+        <div class="detail-body">
+          <div class="slide-row">
+            <div class="thumb-frame">
+              <iframe src="cli-intro-v3.html?slide=3" loading="lazy"></iframe>
+            </div>
+            <div class="slide-content">
+              <div class="section-label">DO</div>
+              <div class="do">If the audience looks lost, use the kitchen analogy. MCP servers are kitchen equipment, the fridge, the oven. Instructions are house rules. Prompts are saved recipes. Skills are training that kicks in automatically. Copilot is the head chef who uses all of it. Start with the chef and the equipment. Everything else comes naturally.</div>
+              <div class="section-label" style="margin-top:12px;">SAY</div>
+              <p class="say">Four properties make CLI different from M365 Copilot.</p>
+              <p class="say">Tool-connected: it calls your actual systems through MCP. PMX, MSX, email, calendar, GitHub. Real data.</p>
+              <p class="say">Repeatable: the same workflow works for any partner. Build the pattern once, reuse it, share it with your team.</p>
+              <p class="say">Inspectable: the output is an artifact. A structured document, a plan, a file. Something you can review and hand to someone, not a chat answer that vanishes when you close the tab.</p>
+              <p class="say">Persistent: slash resume picks up where you left off. Across days, across sessions. For work that evolves over time, that changes everything.</p>
+            </div>
+          </div>
         </div>
       </details>
     </div>
 
-    <div class="details-panel">
+    <div class="details-panel" id="slide-4">
       <details class="demo" open>
         <summary>
           <span class="summary-text">
-            <span class="summary-main">Slide 5 · Demo 1 · 12 min ·</span>
+            <span class="summary-main">Slide 4 · Demo 1 · 12 min ·</span>
             <span class="tag tag-demo">demo</span>
             <span class="chapter-chip">Demo 1</span>
           </span>
         </summary>
-        <div class="detail-body grid">
-          <div class="card"><h3>Key Message</h3><p>CLI turns partner prep from five disconnected tabs into one repeatable briefing workflow built on real systems.</p></div>
-          <div class="card"><h3>On Screen</h3><p>Terminal-styled “five tabs → one conversation” slide showing PMX, MSX, mail, and calendar tool calls leading to a partner briefing artifact.</p></div>
-          <div class="card"><h3>SAY</h3><p class="say">Let me show you what this looks like. I have a partner Connect tomorrow. Normally that means five browser tabs and twenty minutes stitching the picture together manually. Instead, one conversation. Watch which tools it calls. Watch what comes out.</p></div>
-          <div class="card"><h3>DO</h3><div class="do">Run demo-01-partner-briefing. Full flow: pull PMX projects, MSX opps, partner team, recent emails, then synthesize into structured briefing. Emphasize tool calls visible, artifact as output, repeatable for any partner.</div></div>
+        <div class="detail-body">
+          <div class="slide-row">
+            <div class="thumb-frame">
+              <iframe src="cli-intro-v3.html?slide=4" loading="lazy"></iframe>
+            </div>
+            <div class="slide-content">
+              <div class="section-label">DO</div>
+              <div class="do">Run demo-01-partner-briefing. Full flow: pull PMX projects, MSX opps, partner team, recent emails, then synthesize into structured briefing. Emphasize tool calls visible, artifact as output, repeatable for any partner.</div>
+              <div class="section-label" style="margin-top:12px;">SAY</div>
+              <p class="say">Let me show you what this looks like.</p>
+              <p class="say">I have a partner Connect tomorrow. Normally that means five browser tabs and twenty minutes stitching the picture together manually.</p>
+              <p class="say">Instead, one conversation.</p>
+              <p class="say">Watch which tools it calls. Watch what comes out.</p>
+            </div>
+          </div>
 
-          <div class="card">
-            <h3>Full Demo Script</h3>
-            <div class="grid">
+          <section class="script-panel">
+            <div class="script-header">
+              <h3>Full Demo Script</h3>
+            </div>
+            <div class="compact-callouts">
               <div class="callout"><strong>Why this demo matters</strong><span>Audience pain: Connect prep means PMX, MSX, Outlook, Teams, SharePoint, then manual stitching. M365 Copilot helps with one thread at a time. CLI runs one connected workflow and produces a structured briefing you can reuse for any partner.</span></div>
               <div class="callout success"><strong>Setup requirements</strong><span>Copilot CLI running with PMX, M365, and GitHub MCP servers. Pick a real partner you have active projects with. Have at least one recent email or meeting tied to that partner.</span></div>
+            </div>
 
-              <div class="card">
-                <h4>Act 1 · Set the scene · 1 min</h4>
-                <p class="say">“Imagine you have a partner Connect tomorrow. You need to know: where do our projects stand, are there outcome gaps, what's in the MSX pipeline, what did we last discuss, and who's on the team. Today, that means opening five tabs and assembling the picture yourself. Let me show you a different approach.”</p>
-              </div>
+            <div class="script-act">
+              <h4>Act 1 · Set the scene · 1 min</h4>
+              <p class="say">“Imagine you have a partner Connect tomorrow. You need to know: where do our projects stand, are there outcome gaps, what's in the MSX pipeline, what did we last discuss, and who's on the team. Today, that means opening five tabs and assembling the picture yourself. Let me show you a different approach.”</p>
+            </div>
 
-              <div class="card">
-                <h4>Act 2 · Pull the data · 5 min</h4>
-                <pre><code>I'm preparing for a Connect meeting with [Partner Name] tomorrow. Help me build a structured briefing. Start by pulling:
+            <hr class="rule">
+
+            <div class="script-act">
+              <h4>Act 2 · Pull the data · 5 min</h4>
+              <div class="prompt-label">▸ PROMPT</div>
+              <pre><code>I'm preparing for a Connect meeting with [Partner Name] tomorrow. Help me build a structured briefing. Start by pulling:
 1. Our active PMX projects with this partner — status, outcomes, deliverables
 2. The partner team — who is PDM, PTS, PSAM
 3. Open MSX opportunities with this partner in EMEA
 4. My recent emails to or from people at this partner</code></pre>
-                <p class="say">Talking point: “Notice what's happening. It's not guessing — it's calling specific tools. PMX for project data. MSX for the pipeline. M365 for your email. Each tool returns real, current data from your actual systems. M365 Copilot can't do this — it lives inside Office. CLI connects across tools.”</p>
-                <div class="do">Point out the tool calls as they happen. The audience should see PMX, MSX, M365 being invoked explicitly.</div>
-              </div>
+              <p class="say">Talking point: “Notice what's happening. It's not guessing — it's calling specific tools. PMX for project data. MSX for the pipeline. M365 for your email. Each tool returns real, current data from your actual systems. M365 Copilot can't do this — it lives inside Office. CLI connects across tools.”</p>
+              <div class="do">Point out the tool calls as they happen. The audience should see PMX, MSX, M365 being invoked explicitly.</div>
+            </div>
 
-              <div class="card">
-                <h4>Act 3 · Synthesize the artifact · 3 min</h4>
-                <pre><code>Now synthesize this into a structured partner briefing with these sections:
+            <hr class="rule">
+
+            <div class="script-act">
+              <h4>Act 3 · Synthesize the artifact · 3 min</h4>
+              <div class="prompt-label">▸ PROMPT</div>
+              <pre><code>Now synthesize this into a structured partner briefing with these sections:
 1. Partner Overview — team, key contacts
 2. Project Portfolio — status, health, any at risk
 3. Outcome Coverage — what's linked, what's missing
@@ -531,69 +676,83 @@ hr.rule {
 7. Suggested Next Steps — concrete actions with owners
 
 Format it as a clean document I could share with my team.</code></pre>
-                <p class="say">Talking point: “This is the key difference. M365 Copilot gives you an answer in a chat bubble. CLI gives you an artifact — structured, sections, shareable. You could paste this into a prep doc, email it to the team, or build on it next week.”</p>
-                <div class="do">Let the output render. Give the audience time to read the structure. Point out: talking points are derived from data, not generic.</div>
-              </div>
-
-              <div class="card">
-                <h4>Act 4 · Show repeatability · 2 min</h4>
-                <p class="say">“Now here's why this is a factory, not just a one-off. This exact conversation? I can rerun it for any partner. Change the name, same workflow. And if I save these prompts as a skill or instruction file, my whole team can use the same pattern.”</p>
-                <pre><code>Save this conversation workflow. If I wanted to reuse this exact briefing pattern for a different partner next week, what would I need?</code></pre>
-                <p class="say">Talking point: “This is what takes CLI from 'useful tool' to 'operational capability.' Instructions files, skills, custom agents — these are how you standardize a workflow across a team. Not everyone needs to learn the prompts. You build the pattern once, everyone uses it.”</p>
-              </div>
-
-              <div class="card">
-                <h4>Act 5 · Show persistence · 1 min</h4>
-                <p class="say">“One more thing M365 Copilot can't do.”</p>
-                <pre><code>/compact</code></pre>
-                <p class="say">“This summarizes the conversation for later. If I close this and come back tomorrow with <code>/resume</code>, all the context is there. The decisions, the data, the briefing — nothing lost. For work that spans multiple days or sessions, this is the game changer.”</p>
-              </div>
-
-              <div class="card">
-                <h4>Key messages table</h4>
-                <table>
-                  <thead><tr><th>Message</th><th>How to land it</th></tr></thead>
-                  <tbody>
-                    <tr><td><strong>Tool-connected</strong></td><td>Point at each MCP tool call as it happens.</td></tr>
-                    <tr><td><strong>Multi-source synthesis</strong></td><td>“Five tabs → one conversation.”</td></tr>
-                    <tr><td><strong>Artifact, not answer</strong></td><td>“A structured document, not a chat bubble.”</td></tr>
-                    <tr><td><strong>Repeatable</strong></td><td>“Change the partner name, same workflow.”</td></tr>
-                    <tr><td><strong>Team-standardizable</strong></td><td>“Instructions + skills = everyone uses the same pattern.”</td></tr>
-                    <tr><td><strong>Persistent</strong></td><td><code>/resume</code> = context survives across sessions.</td></tr>
-                    <tr><td><strong>Delta vs M365 Copilot</strong></td><td>“M365 helps you with one thing at a time. CLI operationalizes the whole workflow.”</td></tr>
-                  </tbody>
-                </table>
-              </div>
+              <p class="say">Talking point: “This is the key difference. M365 Copilot gives you an answer in a chat bubble. CLI gives you an artifact — structured, sections, shareable. You could paste this into a prep doc, email it to the team, or build on it next week.”</p>
+              <div class="do">Let the output render. Give the audience time to read the structure. Point out: talking points are derived from data, not generic.</div>
             </div>
-          </div>
+
+            <hr class="rule">
+
+            <div class="script-act">
+              <h4>Act 4 · Show repeatability · 2 min</h4>
+              <p class="say">“Now here's why this is a factory, not just a one-off. This exact conversation? I can rerun it for any partner. Change the name, same workflow. And if I save these prompts as a skill or instruction file, my whole team can use the same pattern.”</p>
+              <div class="prompt-label">▸ PROMPT</div>
+              <pre><code>Save this conversation workflow. If I wanted to reuse this exact briefing pattern for a different partner next week, what would I need?</code></pre>
+              <p class="say">Talking point: “This is what takes CLI from 'useful tool' to 'operational capability.' Instructions files, skills, custom agents — these are how you standardize a workflow across a team. Not everyone needs to learn the prompts. You build the pattern once, everyone uses it.”</p>
+            </div>
+
+            <hr class="rule">
+
+            <div class="script-act">
+              <h4>Act 5 · Show persistence · 1 min</h4>
+              <p class="say">“One more thing M365 Copilot can't do.”</p>
+              <div class="prompt-label">▸ PROMPT</div>
+              <pre><code>/compact</code></pre>
+              <p class="say">“This summarizes the conversation for later. If I close this and come back tomorrow with <code>/resume</code>, all the context is there. The decisions, the data, the briefing — nothing lost. For work that spans multiple days or sessions, this is the game changer.”</p>
+            </div>
+
+            <hr class="rule">
+
+            <div class="script-block">
+              <h4>Key messages table</h4>
+              <table>
+                <thead><tr><th>Message</th><th>How to land it</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Tool-connected</strong></td><td>Point at each MCP tool call as it happens.</td></tr>
+                  <tr><td><strong>Multi-source synthesis</strong></td><td>“Five tabs → one conversation.”</td></tr>
+                  <tr><td><strong>Artifact, not answer</strong></td><td>“A structured document, not a chat bubble.”</td></tr>
+                  <tr><td><strong>Repeatable</strong></td><td>“Change the partner name, same workflow.”</td></tr>
+                  <tr><td><strong>Team-standardizable</strong></td><td>“Instructions + skills = everyone uses the same pattern.”</td></tr>
+                  <tr><td><strong>Persistent</strong></td><td><code>/resume</code> = context survives across sessions.</td></tr>
+                  <tr><td><strong>Delta vs M365 Copilot</strong></td><td>“M365 helps you with one thing at a time. CLI operationalizes the whole workflow.”</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
         </div>
       </details>
     </div>
 
-    <div class="details-panel">
+    <div class="details-panel" id="slide-5">
       <details class="exercise">
         <summary>
           <span class="summary-text">
-            <span class="summary-main">Slide 6 · Exercise 1 · 8 min ·</span>
+            <span class="summary-main">Slide 5 · Exercise 1 · 8 min ·</span>
             <span class="tag tag-exercise">exercise</span>
             <span class="chapter-chip">Demo 1</span>
           </span>
         </summary>
-        <div class="detail-body grid">
-          <div class="card"><h3>Key Message</h3><p>Attendees should leave this block having built one real briefing against their own partner data, not watched a simulation.</p></div>
-          <div class="card"><h3>On Screen</h3><p>Simple exercise slide: pick a partner, pull data, get your briefing, with a prompt-copy cue.</p></div>
-          <div class="card"><h3>SAY</h3><p class="say">Your turn. Pick a partner you have real work with. Copy the prompt from exercise one, swap in the name, and see what comes back. This is your data, your projects, your pipeline. Hand up if you get stuck.</p></div>
-          <div class="card"><h3>DO</h3><div class="do">Give them 8 minutes. Guided start: everyone copies the briefing prompt. Then self-paced exploration. Walk around, troubleshoot.</div></div>
-
-          <div class="card">
-            <h3>Facilitation Guide</h3>
-            <div class="two-col">
-              <div class="callout success"><strong>Timing breakdown</strong><span><strong>Part A — 4 min:</strong> guided build of the briefing. <strong>Part B — 4 min:</strong> follow-up exploration.</span></div>
-              <div class="callout"><strong>What to watch for</strong><span>Make sure everyone starts with a real partner. Scan for tool connectivity issues early so the room does not drift into silent troubleshooting.</span></div>
+        <div class="detail-body">
+          <div class="slide-row">
+            <div class="thumb-frame">
+              <iframe src="cli-intro-v3.html?slide=5" loading="lazy"></iframe>
             </div>
+            <div class="slide-content">
+              <div class="section-label">DO</div>
+              <div class="do">Give them 8 minutes. Guided start: everyone copies the briefing prompt. Then self-paced exploration. Walk around, troubleshoot.</div>
+              <div class="section-label" style="margin-top:12px;">SAY</div>
+              <p class="say">Your turn.</p>
+              <p class="say">Pick a partner you have real work with. Copy the prompt from exercise one, swap in the name, and see what comes back.</p>
+              <p class="say">This is your data, your projects, your pipeline.</p>
+              <p class="say">Hand up if you get stuck.</p>
+            </div>
+          </div>
 
-            <div class="card">
-              <h4>Exact prompt attendees copy</h4>
+          <section class="exercise-panel">
+            <div class="exercise-header">
+              <h3>Facilitation Guide</h3>
+            </div>
+            <div class="info-stack">
+              <div class="prompt-label">▸ PROMPT</div>
               <pre><code>I'm preparing for a meeting with [Partner Name]. Build me a structured partner briefing:
 
 1. Pull our active PMX projects — show status, outcomes, deliverables at risk
@@ -608,69 +767,80 @@ Then synthesize into a briefing with:
 - Pipeline summary
 - Recommended talking points
 - Suggested next steps</code></pre>
-            </div>
 
-            <div class="three-col">
-              <div class="card">
-                <h4>Part A · Guided start</h4>
-                <ul class="clean">
-                  <li>Confirm Copilot CLI is running.</li>
-                  <li>Have them replace <code>[Partner Name]</code> only — nothing else yet.</li>
-                  <li>Ask them to wait for structured output before experimenting.</li>
-                </ul>
+              <div class="two-col">
+                <div class="callout success"><strong>Timing breakdown</strong><span><strong>Part A — 4 min:</strong> guided build of the briefing. <strong>Part B — 4 min:</strong> follow-up exploration.</span></div>
+                <div class="callout"><strong>What success looks like</strong><ul class="clean tight-list"><li>A structured briefing pulling live PMX, MSX, and M365 context.</li><li>Attendee can explain one useful talking point it surfaced.</li><li>They see the difference between chat help and workflow output.</li></ul></div>
               </div>
-              <div class="card">
-                <h4>Part B · Explore</h4>
-                <ul class="clean">
-                  <li>Suggest one follow-up only if they stall.</li>
-                  <li>Useful options: missing MSX links, prep email draft, compare two partners, or ask how to make it repeatable.</li>
-                  <li>Highlight good outputs out loud to create momentum.</li>
-                </ul>
-              </div>
-              <div class="card">
-                <h4>What success looks like</h4>
-                <ul class="clean">
-                  <li>A structured briefing pulling live PMX, MSX, and M365 context.</li>
-                  <li>Attendee can explain one useful talking point it surfaced.</li>
-                  <li>They see the difference between chat help and workflow output.</li>
-                </ul>
-              </div>
-            </div>
 
-            <div class="two-col">
+              <div class="two-col">
+                <div class="info-panel">
+                  <h4>Part A · Guided start</h4>
+                  <ul class="clean tight-list">
+                    <li>Confirm Copilot CLI is running.</li>
+                    <li>Have them replace <code>[Partner Name]</code> only — nothing else yet.</li>
+                    <li>Ask them to wait for structured output before experimenting.</li>
+                  </ul>
+                </div>
+                <div class="info-panel">
+                  <h4>Part B · Explore</h4>
+                  <ul class="clean tight-list">
+                    <li>Suggest one follow-up only if they stall.</li>
+                    <li>Useful options: missing MSX links, prep email draft, compare two partners, or ask how to make it repeatable.</li>
+                    <li>Highlight good outputs out loud to create momentum.</li>
+                  </ul>
+                </div>
+              </div>
+
               <div class="callout warning"><strong>Troubleshooting tips</strong><span><strong>PMX auth:</strong> re-run <code>az login --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47</code> in a separate PowerShell. <strong>“No projects found”:</strong> ask them to try a different partner, or start with <code>Show me my active PMX projects</code> to find one.</span></div>
+
+              <div class="callout"><strong>What to watch for</strong><span>Make sure everyone starts with a real partner. Scan for tool connectivity issues early so the room does not drift into silent troubleshooting.</span></div>
+
               <div class="callout"><strong>Useful follow-ups if they finish Part A fast</strong><span><code>Which of my projects with [Partner Name] are missing MSX opportunity links? Can you find matching opportunities?</code><br><code>Draft a short prep email to the PDM with the key talking points from this briefing.</code></span></div>
             </div>
-          </div>
+          </section>
         </div>
       </details>
     </div>
 
-    <div class="details-panel">
+    <div class="details-panel" id="slide-6">
       <details class="demo" open>
         <summary>
           <span class="summary-text">
-            <span class="summary-main">Slide 7 · Demo 2 · 10 min ·</span>
+            <span class="summary-main">Slide 6 · Demo 2 · 10 min ·</span>
             <span class="tag tag-demo">demo</span>
             <span class="chapter-chip">Demo 2</span>
           </span>
         </summary>
-        <div class="detail-body grid">
-          <div class="card"><h3>Key Message</h3><p>CLI closes the gap between a good workshop and a concrete next-step plan by turning raw notes into a living artifact.</p></div>
-          <div class="card"><h3>On Screen</h3><p>Terminal-styled workshop-to-plan slide showing <code>@workshop-notes.txt</code>, phased planning, file output, and persistence.</p></div>
-          <div class="card"><h3>SAY</h3><p class="say">This is the universal pain point. You run a great discovery call, a great workshop, you take good notes. Then nothing structured happens. The notes sit in OneNote. Action items sit in your head. I want to show you how CLI bridges that gap.</p></div>
-          <div class="card"><h3>DO</h3><div class="do">Run demo-02-workshop-to-plan. Full flow: @workshop-notes.txt to analysis to structured plan to iteration (add TCO), then show /compact and /resume.</div></div>
+        <div class="detail-body">
+          <div class="slide-row">
+            <div class="thumb-frame">
+              <iframe src="cli-intro-v3.html?slide=6" loading="lazy"></iframe>
+            </div>
+            <div class="slide-content">
+              <div class="section-label">DO</div>
+              <div class="do">Run demo-02-workshop-to-plan. Full flow: @workshop-notes.txt to analysis to structured plan to iteration (add TCO), then show /compact and /resume.</div>
+              <div class="section-label" style="margin-top:12px;">SAY</div>
+              <p class="say">This is the universal pain point.</p>
+              <p class="say">You run a great discovery call, a great workshop, you take good notes. Then nothing structured happens.</p>
+              <p class="say">The notes sit in OneNote. Action items sit in your head.</p>
+              <p class="say">I want to show you how CLI bridges that gap.</p>
+            </div>
+          </div>
 
-          <div class="card">
-            <h3>Full Demo Script</h3>
-            <div class="grid">
+          <section class="script-panel">
+            <div class="script-header">
+              <h3>Full Demo Script</h3>
+            </div>
+            <div class="compact-callouts">
               <div class="callout"><strong>Why this demo matters</strong><span>Discovery calls and workshops often stall after the meeting. Notes live in OneNote, actions live in memory, and momentum dies. CLI turns raw input into a structured, handoff-ready plan.</span></div>
               <div class="callout success"><strong>Setup requirements</strong><span>Copilot CLI running. A fabricated but realistic set of workshop notes prepared in advance. Optional: a real transcript or real notes from your own work.</span></div>
+            </div>
 
-              <div class="card">
-                <h4>Workshop notes content to use</h4>
-                <p class="muted">Create <code>workshop-notes.txt</code> in the working directory before the demo.</p>
-                <pre><code>Discovery Workshop — Contoso Nordic (ISV Partner)
+            <div class="script-block">
+              <h4>Workshop notes content to use</h4>
+              <p class="muted">Create <code>workshop-notes.txt</code> in the working directory before the demo.</p>
+              <pre><code>Discovery Workshop — Contoso Nordic (ISV Partner)
 Date: 2026-04-15
 Attendees: Johan (PSA), Maria (PTS), Erik (Contoso CTO), Anna (Contoso PM)
 
@@ -693,27 +863,35 @@ Key findings:
 - Need to check: ISV benefits for Azure AI consumption
 - Risk: their App Service plan may be too small for AI workloads
 - Risk: Erik may push back if phase 1 cost exceeds 5k EUR/month</code></pre>
-              </div>
+            </div>
 
-              <div class="card">
-                <h4>Act 1 · Set the scene · 1 min</h4>
-                <p class="say">“Every partner-facing role has this experience. Great workshop, great energy, good notes — and then... nothing structured happens. The notes live in OneNote. The action items live in memory. Two weeks later, the partner follows up and you're reconstructing what you agreed. Let me show you how CLI changes this.”</p>
-              </div>
+            <hr class="rule">
 
-              <div class="card">
-                <h4>Act 2 · Feed the context · 2 min</h4>
-                <pre><code>@workshop-notes.txt
+            <div class="script-act">
+              <h4>Act 1 · Set the scene · 1 min</h4>
+              <p class="say">“Every partner-facing role has this experience. Great workshop, great energy, good notes — and then... nothing structured happens. The notes live in OneNote. The action items live in memory. Two weeks later, the partner follows up and you're reconstructing what you agreed. Let me show you how CLI changes this.”</p>
+            </div>
+
+            <hr class="rule">
+
+            <div class="script-act">
+              <h4>Act 2 · Feed the context · 2 min</h4>
+              <div class="prompt-label">▸ PROMPT</div>
+              <pre><code>@workshop-notes.txt
 
 These are raw notes from a discovery workshop with an ISV partner. I need to turn this into a structured action plan. But first — analyze the notes and tell me:
 1. What are the key opportunities here?
 2. What are the risks and blockers?
 3. What's missing — what questions should we have asked but didn't?</code></pre>
-                <p class="say">Talking point: “The <code>@</code> tells CLI to read the file. It doesn't just summarize — it analyzes. Look at the 'what's missing' section. That's the kind of insight that usually takes a week to surface.”</p>
-              </div>
+              <p class="say">Talking point: “The <code>@</code> tells CLI to read the file. It doesn't just summarize — it analyzes. Look at the 'what's missing' section. That's the kind of insight that usually takes a week to surface.”</p>
+            </div>
 
-              <div class="card">
-                <h4>Act 3 · Generate the structured plan · 4 min</h4>
-                <pre><code>Now create a structured action plan from this workshop. Include:
+            <hr class="rule">
+
+            <div class="script-act">
+              <h4>Act 3 · Generate the structured plan · 4 min</h4>
+              <div class="prompt-label">▸ PROMPT</div>
+              <pre><code>Now create a structured action plan from this workshop. Include:
 1. Executive summary — 3 sentences max
 2. Phased roadmap — Phase 1 (MVP, 3 months) and Phase 2 (full, 6 months)
 3. For each phase: deliverables, Azure services needed, effort estimate, key assumptions
@@ -723,147 +901,192 @@ These are raw notes from a discovery workshop with an ISV partner. I need to tur
 7. Next steps — what happens this week
 
 Make it actionable enough that someone who wasn't in the workshop could pick this up and run with it.</code></pre>
-                <p class="say">Talking point: “This is the bridge. The raw notes become a plan. Phased. With owners. With risks. With open questions. You could send this to the partner, share it with your team, or put it in PMX.”</p>
-                <div class="do">Let the full output render. Give audience time to read the structure — especially the task breakdown and next steps.</div>
-              </div>
-
-              <div class="card">
-                <h4>Act 4 · Show iteration · 2 min</h4>
-                <pre><code>Good. Now add a TCO estimate section for Phase 1. Erik needs to see costs below 5k EUR/month. Use Azure Document Intelligence pricing and Azure OpenAI pricing for a mid-volume scenario (assume 10,000 documents/month, average 3 pages each).</code></pre>
-                <p class="say">Talking point: “The plan is a living document. I can add sections, refine estimates, adjust scope — all in the same session. And if I come back tomorrow...”</p>
-                <pre><code>/compact</code></pre>
-                <p class="say">“...I <code>/resume</code> and keep going. The plan, the context, the decisions — all preserved.”</p>
-              </div>
-
-              <div class="card">
-                <h4>Act 5 · Land the message · 1 min</h4>
-                <p class="say">“What just happened? Raw workshop notes became a phased plan with tasks, owners, risks, and cost estimates — in about 5 minutes. I could refine it, share it, or hand it off. This is the gap CLI fills: between 'we had a great conversation' and 'here's what we're doing.'”</p>
-                <pre><code>/plan Create a PMX project for Contoso Nordic based on this action plan, with the Phase 1 deliverables as project deliverables.</code></pre>
-                <p class="say">“And if you want CLI to think before acting — <code>/plan</code> creates a structured plan of what IT will do, so you can review before it executes.”</p>
-              </div>
-
-              <div class="card">
-                <h4>Key messages table</h4>
-                <table>
-                  <thead><tr><th>Message</th><th>How to land it</th></tr></thead>
-                  <tbody>
-                    <tr><td><strong>From conversation to action</strong></td><td>“Notes → phased plan in 5 minutes.”</td></tr>
-                    <tr><td><strong>Inspectable</strong></td><td>“The plan is an artifact — visible, shareable, reviewable.”</td></tr>
-                    <tr><td><strong>Iterable</strong></td><td>“Add a TCO section? Sure. Refine scope? Keep going.”</td></tr>
-                    <tr><td><strong>Persistent</strong></td><td><code>/resume</code> = continue the plan next week.</td></tr>
-                    <tr><td><strong>Decomposition</strong></td><td>“Not just summary — tasks, owners, risks, dependencies.”</td></tr>
-                    <tr><td><strong>Delta vs M365 Copilot</strong></td><td>“M365 summarizes the meeting. CLI turns it into a living plan.”</td></tr>
-                    <tr><td><strong>Handoff-ready</strong></td><td>“Someone who wasn't there can pick this up and run.”</td></tr>
-                  </tbody>
-                </table>
-              </div>
+              <p class="say">Talking point: “This is the bridge. The raw notes become a plan. Phased. With owners. With risks. With open questions. You could send this to the partner, share it with your team, or put it in PMX.”</p>
+              <div class="do">Let the full output render. Give audience time to read the structure — especially the task breakdown and next steps.</div>
             </div>
-          </div>
+
+            <hr class="rule">
+
+            <div class="script-act">
+              <h4>Act 4 · Show iteration · 2 min</h4>
+              <div class="prompt-label">▸ PROMPT</div>
+              <pre><code>Good. Now add a TCO estimate section for Phase 1. Erik needs to see costs below 5k EUR/month. Use Azure Document Intelligence pricing and Azure OpenAI pricing for a mid-volume scenario (assume 10,000 documents/month, average 3 pages each).</code></pre>
+              <p class="say">Talking point: “The plan is a living document. I can add sections, refine estimates, adjust scope — all in the same session. And if I come back tomorrow...”</p>
+              <div class="prompt-label" style="margin-top:10px;">▸ PROMPT</div>
+              <pre><code>/compact</code></pre>
+              <p class="say">“...I <code>/resume</code> and keep going. The plan, the context, the decisions — all preserved.”</p>
+            </div>
+
+            <hr class="rule">
+
+            <div class="script-act">
+              <h4>Act 5 · Land the message · 1 min</h4>
+              <p class="say">“What just happened? Raw workshop notes became a phased plan with tasks, owners, risks, and cost estimates — in about 5 minutes. I could refine it, share it, or hand it off. This is the gap CLI fills: between 'we had a great conversation' and 'here's what we're doing.'”</p>
+              <div class="prompt-label">▸ PROMPT</div>
+              <pre><code>/plan Create a PMX project for Contoso Nordic based on this action plan, with the Phase 1 deliverables as project deliverables.</code></pre>
+              <p class="say">“And if you want CLI to think before acting — <code>/plan</code> creates a structured plan of what IT will do, so you can review before it executes.”</p>
+            </div>
+
+            <hr class="rule">
+
+            <div class="script-block">
+              <h4>Key messages table</h4>
+              <table>
+                <thead><tr><th>Message</th><th>How to land it</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>From conversation to action</strong></td><td>“Notes → phased plan in 5 minutes.”</td></tr>
+                  <tr><td><strong>Inspectable</strong></td><td>“The plan is an artifact — visible, shareable, reviewable.”</td></tr>
+                  <tr><td><strong>Iterable</strong></td><td>“Add a TCO section? Sure. Refine scope? Keep going.”</td></tr>
+                  <tr><td><strong>Persistent</strong></td><td><code>/resume</code> = continue the plan next week.</td></tr>
+                  <tr><td><strong>Decomposition</strong></td><td>“Not just summary — tasks, owners, risks, dependencies.”</td></tr>
+                  <tr><td><strong>Delta vs M365 Copilot</strong></td><td>“M365 summarizes the meeting. CLI turns it into a living plan.”</td></tr>
+                  <tr><td><strong>Handoff-ready</strong></td><td>“Someone who wasn't there can pick this up and run.”</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
         </div>
       </details>
     </div>
 
-    <div class="details-panel">
+    <div class="details-panel" id="slide-7">
       <details class="exercise">
         <summary>
           <span class="summary-text">
-            <span class="summary-main">Slide 8 · Exercise 2 · 8 min ·</span>
+            <span class="summary-main">Slide 7 · Exercise 2 · 8 min ·</span>
             <span class="tag tag-exercise">exercise</span>
             <span class="chapter-chip">Demo 2</span>
           </span>
         </summary>
-        <div class="detail-body grid">
-          <div class="card"><h3>Key Message</h3><p>Give people a scenario that matches their actual role so they leave with a workflow they can picture using this week.</p></div>
-          <div class="card"><h3>On Screen</h3><p>Four scenario cards: workshop → plan, opportunity gaps, multi-source email, research → roadmap.</p></div>
-          <div class="card"><h3>SAY</h3><p class="say">Last exercise. Pick whichever scenario matches what you actually do day to day. The exercise sheet has ready-to-paste prompts for each one. Finish early? Try a second.</p></div>
-          <div class="card"><h3>DO</h3><div class="do">Give them 8 minutes. Self-paced: they pick the scenario closest to their real work. Walk around, help, highlight interesting results.</div></div>
+        <div class="detail-body">
+          <div class="slide-row">
+            <div class="thumb-frame">
+              <iframe src="cli-intro-v3.html?slide=7" loading="lazy"></iframe>
+            </div>
+            <div class="slide-content">
+              <div class="section-label">DO</div>
+              <div class="do">Give them 8 minutes. Self-paced: they pick the scenario closest to their real work. Walk around, help, highlight interesting results.</div>
+              <div class="section-label" style="margin-top:12px;">SAY</div>
+              <p class="say">Last exercise.</p>
+              <p class="say">Pick whichever scenario matches what you actually do day to day.</p>
+              <p class="say">The exercise sheet has ready-to-paste prompts for each one.</p>
+              <p class="say">Finish early? Try a second.</p>
+            </div>
+          </div>
 
-          <div class="card">
-            <h3>Facilitation Guide</h3>
-            <div class="two-col">
+          <section class="exercise-panel">
+            <div class="exercise-header">
+              <h3>Facilitation Guide</h3>
+            </div>
+            <div class="info-stack">
               <div class="callout"><strong>Run this section like a marketplace</strong><span>Do a 30-second verbal tour of the four scenarios, then let the room self-select. Help people choose the closest fit instead of the fanciest prompt.</span></div>
-              <div class="callout success"><strong>What success looks like</strong><span>They complete one scenario, ask at least one follow-up, and can describe where CLI adds value versus M365 Copilot.</span></div>
-            </div>
 
-            <div class="card">
-              <h4>Four scenarios and who they suit</h4>
-              <table>
-                <thead><tr><th>Scenario</th><th>Who it suits</th><th>Prompt anchor</th></tr></thead>
-                <tbody>
-                  <tr><td><strong>A · Workshop Notes → Action Plan</strong></td><td>PSA, PTS, PSS, practice leads — anyone running discovery calls or workshops.</td><td><code>@notes.txt Turn these workshop notes into a structured action plan...</code></td></tr>
-                  <tr><td><strong>B · Opportunity Gap Analysis</strong></td><td>PTS, PDM, Partner GTM — anyone tracking partner pipeline and outcome hygiene.</td><td><code>Show me all my PMX projects and their linked MSX opportunities...</code></td></tr>
-                  <tr><td><strong>C · Multi-Source Partner Email</strong></td><td>PDM, Partner GTM, PSA — anyone writing partner-facing follow-up.</td><td><code>I need to write a follow-up email to [Partner Name]...</code></td></tr>
-                  <tr><td><strong>D · Research → Partner Roadmap</strong></td><td>PSA, PTS, partner solution leads — strategic and technical conversations.</td><td><code>/research What are the top AI workloads that ISV partners in EMEA are building on Azure in 2026?</code></td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="two-col">
-              <div class="card">
-                <h4>Common questions</h4>
-                <ul class="clean">
-                  <li><strong>“Do I need special syntax?”</strong> No. Just describe what you want in plain English.</li>
-                  <li><strong>“What if it fails?”</strong> Rephrase, ask what went wrong, or ask which tools it used.</li>
-                  <li><strong>“Can I ask side questions?”</strong> Yes — use <code>/ask</code> if you want the explanation without losing your working thread.</li>
-                  <li><strong>“Can I mix scenarios?”</strong> Yes. Encourage it if they already finished one path.</li>
-                </ul>
+              <div>
+                <div class="prompt-label">▸ PROMPT</div>
+                <pre><code>A · @notes.txt Turn these workshop notes into a structured action plan...
+B · Show me all my PMX projects and their linked MSX opportunities...
+C · I need to write a follow-up email to [Partner Name]...
+D · /research What are the top AI workloads that ISV partners in EMEA are building on Azure in 2026?</code></pre>
               </div>
-              <div class="card">
-                <h4>Finished early?</h4>
-                <ul class="clean">
-                  <li>Try a second scenario.</li>
-                  <li>Swap in a real partner or project name.</li>
-                  <li>Ask for a shorter version, a status update, or a handoff-ready artifact.</li>
-                  <li>Experiment with your own weekly workflow that crosses multiple tools or data sources.</li>
-                </ul>
+
+              <div class="two-col">
+                <div class="callout success"><strong>Timing split</strong><span>30-second verbal tour of the four scenarios, then the room self-selects and works for the balance of the 8 minutes.</span></div>
+                <div class="callout success"><strong>What success looks like</strong><ul class="clean tight-list"><li>They complete one scenario.</li><li>They ask at least one follow-up.</li><li>They can describe where CLI adds value versus M365 Copilot.</li></ul></div>
+              </div>
+
+              <div class="info-panel">
+                <h4>Four scenarios and who they suit</h4>
+                <table>
+                  <thead><tr><th>Scenario</th><th>Who it suits</th><th>Prompt anchor</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>A · Workshop Notes → Action Plan</strong></td><td>PSA, PTS, PSS, practice leads — anyone running discovery calls or workshops.</td><td><code>@notes.txt Turn these workshop notes into a structured action plan...</code></td></tr>
+                    <tr><td><strong>B · Opportunity Gap Analysis</strong></td><td>PTS, PDM, Partner GTM — anyone tracking partner pipeline and outcome hygiene.</td><td><code>Show me all my PMX projects and their linked MSX opportunities...</code></td></tr>
+                    <tr><td><strong>C · Multi-Source Partner Email</strong></td><td>PDM, Partner GTM, PSA — anyone writing partner-facing follow-up.</td><td><code>I need to write a follow-up email to [Partner Name]...</code></td></tr>
+                    <tr><td><strong>D · Research → Partner Roadmap</strong></td><td>PSA, PTS, partner solution leads — strategic and technical conversations.</td><td><code>/research What are the top AI workloads that ISV partners in EMEA are building on Azure in 2026?</code></td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="callout warning"><strong>Troubleshooting tips</strong><span><strong>“Do I need special syntax?”</strong> No. Just describe what you want in plain English. <strong>“What if it fails?”</strong> Rephrase, ask what went wrong, or ask which tools it used. <strong>“Can I ask side questions?”</strong> Yes — use <code>/ask</code> if you want the explanation without losing your working thread. <strong>“Can I mix scenarios?”</strong> Yes. Encourage it if they already finished one path.</span></div>
+
+              <div class="two-col">
+                <div class="info-panel">
+                  <h4>Finished early?</h4>
+                  <ul class="clean tight-list">
+                    <li>Try a second scenario.</li>
+                    <li>Swap in a real partner or project name.</li>
+                    <li>Ask for a shorter version, a status update, or a handoff-ready artifact.</li>
+                    <li>Experiment with your own weekly workflow that crosses multiple tools or data sources.</li>
+                  </ul>
+                </div>
+                <div class="info-panel close-accent">
+                  <h4>Reflection prompts</h4>
+                  <ul class="clean tight-list">
+                    <li>Could this workflow become a repeatable pattern for your team?</li>
+                    <li>Where is the delta versus what M365 Copilot already does for you?</li>
+                    <li>What would you need to standardize this as a team workflow?</li>
+                  </ul>
+                </div>
               </div>
             </div>
+          </section>
+        </div>
+      </details>
+    </div>
 
-            <div class="card close-accent">
-              <h4>Reflection prompts</h4>
-              <ul class="clean">
-                <li>Could this workflow become a repeatable pattern for your team?</li>
-                <li>Where is the delta versus what M365 Copilot already does for you?</li>
-                <li>What would you need to standardize this as a team workflow?</li>
-              </ul>
+    <div class="details-panel" id="slide-8">
+      <details class="talk">
+        <summary>
+          <span class="summary-text">
+            <span class="summary-main">Slide 8 · Bigger Picture · 3 min ·</span>
+            <span class="tag tag-talk">talk</span>
+            <span class="chapter-chip">What's Next</span>
+          </span>
+        </summary>
+        <div class="detail-body">
+          <div class="slide-row">
+            <div class="thumb-frame">
+              <iframe src="cli-intro-v3.html?slide=8" loading="lazy"></iframe>
+            </div>
+            <div class="slide-content">
+              <div class="section-label">DO</div>
+              <div class="do">No explicit DO line in the deck notes. Slow down here: this is the strategic handoff from personal utility to team operating model.</div>
+              <div class="section-label" style="margin-top:12px;">SAY</div>
+              <p class="say">Everything I showed you today was individual. One person, one workflow.</p>
+              <p class="say">The real shift happens when this becomes a team capability. Instructions and skills let you codify patterns. The partner briefing workflow, the workshop-to-plan workflow. Share them in a repo and everyone runs the same playbook.</p>
+              <p class="say">Agency takes it further: internal authentication so MCP servers work out of the box, a shared plugin marketplace, telemetry showing what gets used and how.</p>
+              <p class="say">Squad is for when the work outgrows a single conversation. Multi-agent teams with memory and roles, handling long-running initiatives that need coordination.</p>
+              <p class="say">So the question for your team is simple. Which workflow do you standardize first?</p>
             </div>
           </div>
         </div>
       </details>
     </div>
 
-    <div class="details-panel">
-      <details class="talk">
-        <summary>
-          <span class="summary-text">
-            <span class="summary-main">Slide 9 · Bigger Picture · 3 min ·</span>
-            <span class="tag tag-talk">talk</span>
-            <span class="chapter-chip">What's Next</span>
-          </span>
-        </summary>
-        <div class="detail-body grid">
-          <div class="card"><h3>Key Message</h3><p>The real payoff is not one person using CLI well — it is the team codifying and sharing the workflow patterns.</p></div>
-          <div class="card"><h3>On Screen</h3><p>Three cards — Instructions &amp; Skills, Agency, Squad — under the headline “From personal tool to team capability.”</p></div>
-          <div class="card"><h3>SAY</h3><p class="say">Everything I showed you today was individual. One person, one workflow. The real shift happens when this becomes a team capability. Instructions and skills let you codify patterns. The partner briefing workflow, the workshop-to-plan workflow. Share them in a repo and everyone runs the same playbook. Agency takes it further: internal authentication so MCP servers work out of the box, a shared plugin marketplace, telemetry showing what gets used and how. Squad is for when the work outgrows a single conversation. Multi-agent teams with memory and roles, handling long-running initiatives that need coordination. So the question for your team is simple. Which workflow do you standardize first?</p></div>
-          <div class="card"><h3>DO</h3><div class="do">No explicit DO line in the deck notes. Slow down here: this is the strategic handoff from personal utility to team operating model.</div></div>
-        </div>
-      </details>
-    </div>
-
-    <div class="details-panel">
+    <div class="details-panel" id="slide-9">
       <details class="close-type">
         <summary>
           <span class="summary-text">
-            <span class="summary-main">Slide 10 · Close · 3 min ·</span>
+            <span class="summary-main">Slide 9 · Close · 3 min ·</span>
             <span class="tag tag-close">close</span>
             <span class="chapter-chip">What's Next</span>
           </span>
         </summary>
-        <div class="detail-body grid">
-          <div class="card"><h3>Key Message</h3><p>Land one practical ask: use CLI on one real task this week so the session turns into actual behavior.</p></div>
-          <div class="card"><h3>On Screen</h3><p>Close slide with a simple stat-based takeaway: one operational Copilot, three connected tools, two reusable workflow patterns.</p></div>
-          <div class="card"><h3>SAY</h3><p class="say">Here is what you walk away with. A working Copilot CLI connected to your partner tools. Two workflow patterns tested with your own data. Plus a cheat sheet with everything you need to keep going. One ask from me: try one real task this week. Not a test. A real Connect prep, a real action plan from workshop notes, a real opportunity review. That is how it sticks. The beginner course is linked in your materials, two hours, self-paced, goes much deeper. Questions?</p></div>
-          <div class="card"><h3>DO</h3><div class="do">Pause after “one real task this week.” Then stop. Let the room ask questions rather than filling the silence.</div></div>
+        <div class="detail-body">
+          <div class="slide-row">
+            <div class="thumb-frame">
+              <iframe src="cli-intro-v3.html?slide=9" loading="lazy"></iframe>
+            </div>
+            <div class="slide-content">
+              <div class="section-label">DO</div>
+              <div class="do">Pause after “one real task this week.” Then stop. Let the room ask questions rather than filling the silence.</div>
+              <div class="section-label" style="margin-top:12px;">SAY</div>
+              <p class="say">Here is what you walk away with.</p>
+              <p class="say">A working Copilot CLI connected to your partner tools. Two workflow patterns tested with your own data. Plus a cheat sheet with everything you need to keep going.</p>
+              <p class="say">One ask from me: try one real task this week. Not a test. A real Connect prep, a real action plan from workshop notes, a real opportunity review. That is how it sticks.</p>
+              <p class="say">The beginner course is linked in your materials, two hours, self-paced, goes much deeper. Questions?</p>
+            </div>
+          </div>
         </div>
       </details>
     </div>
