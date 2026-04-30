@@ -12,16 +12,13 @@
 
 ## Before You Start
 
-1. **Open a project folder.** In Windows Terminal, navigate to a folder you use for work — or create one:
+1. **Open a project folder.** If you don't have one, ask Copilot CLI:
    ```
-   mkdir ~\projects\cli-workshop
-   cd ~\projects\cli-workshop
+   Create a folder called cli-workshop in my projects directory and open it.
    ```
    This is your working directory. Any files CLI creates or reads (with `@`) will be here.
 
-2. **Start Copilot CLI** by typing `copilot` (or however you launch it).
-
-3. **Check your tools are connected.** Just ask:
+2. **Check your tools are connected.** Just ask:
    ```
    Am I connected to PMX? What tools do I have available?
    ```
