@@ -12,11 +12,19 @@
 
 ## Before You Start
 
-Make sure Copilot CLI is running and your MCP servers are connected. If unsure, just ask:
+1. **Open a project folder.** In Windows Terminal, navigate to a folder you use for work — or create one:
+   ```
+   mkdir ~\projects\cli-workshop
+   cd ~\projects\cli-workshop
+   ```
+   This is your working directory. Any files CLI creates or reads (with `@`) will be here.
 
-```
-Am I connected to PMX? What tools do I have available?
-```
+2. **Start Copilot CLI** by typing `copilot` (or however you launch it).
+
+3. **Check your tools are connected.** Just ask:
+   ```
+   Am I connected to PMX? What tools do I have available?
+   ```
 
 ---
 

@@ -10,6 +10,8 @@
 
 ---
 
+> ⚠️ **Make sure you are in a project folder** with Copilot CLI running. If you completed Exercise 1, you are already set. If not, open Windows Terminal, navigate to a working folder (`cd ~\projects\cli-workshop`), and start CLI.
+
 Pick **one** scenario. Each one builds on what you saw in the demos. The prompts are ready to copy-paste — adjust the partner/project names to your own.
 
 ---
