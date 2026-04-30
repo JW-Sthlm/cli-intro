@@ -4,6 +4,8 @@
 > **Format:** Self-paced — pick the scenario closest to your real work  
 > **Goal:** Apply CLI to a partner workflow that matters to you
 
+> ⚠️ **These exercises are read-only.** All prompts pull and analyze data — nothing creates, updates, or deletes records in PMX, MSX, or any other system. "Draft" prompts generate text for you to review — they don't send anything.
+
 💡 **Remember:** These prompts are starting points. Rephrase them, shorten them, combine them — whatever feels natural. If you're not sure what to type, just describe what you want in plain English. There's no wrong way to talk to CLI.
 
 ---

@@ -4,6 +4,8 @@
 > **Format:** Guided start → self-paced exploration  
 > **Goal:** Everyone builds a real partner briefing using their own data
 
+> ⚠️ **These exercises are read-only.** All prompts below pull and analyze data — nothing creates, updates, or deletes records in PMX, MSX, or any other system. If CLI ever proposes to create or modify something, review before confirming.
+
 💡 **Remember:** The prompts below are starting points. You can rephrase, simplify, or ask follow-ups in your own words. Copilot CLI understands natural language — just talk to it like a colleague.
 
 ---
