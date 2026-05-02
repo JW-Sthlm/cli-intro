@@ -298,9 +298,7 @@ Same answers as before, but this time sign in with your `yourname_microsoft` (EM
 
 > **Don't have a `_microsoft` EMU account?** Skip this second login. You'll be able to do most of the workshop — only the PMX MCP server in Step 5 needs it, and we can demo that together.
 
-> **Stuck on "We couldn't sign you in" with a passkey error?** This is common on Dev Boxes and corp machines. The default Microsoft sign-in is trying to use a passkey that's registered to your phone, and the Dev Box browser can't reach it. Click **Sign in another way** in the dialog, then pick **Microsoft Authenticator** (push to phone) or text/call. You don't need to register a new passkey on the Dev Box itself.
-
-> **EMU login fails on Dev Box, no PIN option, only "Use security key"?** This means your Microsoft Entra account only has a phone passkey registered, and the Dev Box can't reach it (no Bluetooth, different machine). **Skip this second login for now** — cancel the dialog, close the browser tab, run `gh auth status` to confirm your personal account is still signed in, and continue to Step 3. Step 5 (PMX MCP install) won't work on this Dev Box, and that's OK — we'll demo it together. To fix permanently: from your laptop, go to https://mysignins.microsoft.com → **Add sign-in method** → **Passkey in Microsoft Authenticator** for a cross-device passkey that works from any browser via QR code.
+> **Stuck on "We couldn't sign you in" with a passkey error?** This is common when your phone is the registered passkey holder. Click **Sign in another way** in the dialog and pick **Microsoft Authenticator** (push to phone) or text/call.
 
 **Set your personal account as the active one.** After two logins, the EMU account is the active default. Switch back to personal so the rest of the workshop uses it by default:
 
