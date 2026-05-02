@@ -1,6 +1,8 @@
 # Pre-Session Checklist
 
-Run through these five checks before the session. If any fail, see the [Setup Guide](setup-guide.md) troubleshooting section.
+Prefer to run this automatically? See `verify.ps1` and run `.\v2\pre-work\verify.ps1` from PowerShell.
+
+**📖 Business roles** — Run through these five checks before the session. If any fail, see the [Setup Guide](setup-guide.md) troubleshooting section.
 
 💡 **For most of these checks, you can just ask Copilot CLI.** If a check has a technical command, that's for verification — but plain English works too.
 
@@ -8,7 +10,7 @@ Run through these five checks before the session. If any fail, see the [Setup Gu
 
 ## ✅ Check 1: Copilot CLI is installed
 
-Open PowerShell and run:
+**📖 Business roles** — Open PowerShell and run:
 
 ```
 copilot --version
@@ -19,6 +21,8 @@ copilot --version
 ---
 
 ## ✅ Check 2: You can log in
+
+**📖 Business roles** — Start CLI, then ask one plain-language question.
 
 ```
 copilot
@@ -42,7 +46,7 @@ Inside Copilot CLI, ask:
 Am I logged in to Azure? Which account am I using?
 ```
 
-Or verify manually in PowerShell: `az account show`
+**🔧 Technical deep dive** — Or verify manually in PowerShell: `az account show`
 
 **Pass:** Shows your Microsoft account name
 
@@ -50,7 +54,7 @@ Or verify manually in PowerShell: `az account show`
 
 ## ✅ Check 4: MCP servers are connected
 
-Inside Copilot CLI, ask:
+**📖 Business roles** — Inside Copilot CLI, ask:
 
 ```
 What tools and MCP servers do I have available?
@@ -62,7 +66,7 @@ What tools and MCP servers do I have available?
 
 ## ✅ Check 5: PMX data is accessible
 
-Inside Copilot CLI, ask:
+**📖 Business roles** — Inside Copilot CLI, ask:
 
 ```
 Show me my PMX projects
