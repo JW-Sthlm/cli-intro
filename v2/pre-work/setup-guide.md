@@ -418,37 +418,49 @@ You'll be jumping **between PowerShell and Copilot CLI in the same window**.Watc
 
 If you're inside Copilot CLI when a step says "in PowerShell", type `/exit` and press Enter first.
 
-1. **In PowerShell** — switch to your EMU account:
+1. **In PowerShell** — switch to your EMU account and tell git to use it:
 
    ```
    gh auth switch --user <yourname>_microsoft
+   gh auth setup-git
+   gh auth status
    ```
 
-2. **In PowerShell** — launch Copilot CLI:
+   The third command should show your `_microsoft` account as `Active account: true`. The middle one (`gh auth setup-git`) tells `git` to use the EMU credentials directly, instead of asking Windows to pop up a separate "Connect to GitHub" dialog when Copilot tries to clone.
+
+2. **In PowerShell** — confirm the private repo is reachable:
+
+   ```
+   gh repo view gim-home/pmx-mcp
+   ```
+
+   You should see the repo's description and details. If you get a 404 instead, the account switch didn't take — re-run step 1.
+
+3. **In PowerShell** — launch Copilot CLI:
 
    ```
    copilot
    ```
 
-3. **Inside Copilot CLI** — ask it to install the PMX MCP server:
+4. **Inside Copilot CLI** — ask it to install the PMX MCP server:
 
    ```
    Install the PMX MCP server from github.com/gim-home/pmx-mcp. Clone, build, and register it in my Copilot CLI MCP config.
    ```
 
-4. **Inside Copilot CLI** — when PMX is installed, leave Copilot CLI:
+5. **Inside Copilot CLI** — when PMX is installed, leave Copilot CLI:
 
    ```
    /exit
    ```
 
-5. **Back in PowerShell** — switch back to your personal account:
+6. **Back in PowerShell** — switch back to your personal account:
 
    ```
    gh auth switch --user <your-personal-username>
    ```
 
-6. **In PowerShell** — verify your personal account is active again:
+7. **In PowerShell** — verify your personal account is active again:
 
    ```
    gh auth status
