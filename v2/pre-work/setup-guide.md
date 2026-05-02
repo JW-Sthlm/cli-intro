@@ -409,7 +409,9 @@ When done, **type `/exit` and press Enter** to leave Copilot CLI and return to P
 
 PMX is the special case. Its server lives in `gim-home/pmx-mcp`, which only your Microsoft EMU (`yourname_microsoft`) account can access. So: switch accounts, install PMX, switch back.
 
-You'll be jumping **between PowerShell and Copilot CLI in the same window**. Watch the prompt to know which mode you're in:
+> **⚠️ Critical — switch the account FIRST.** If you launch Copilot CLI with your personal account active and ask it to install PMX, it cannot see the private `gim-home/pmx-mcp` repo and will helpfully install the **wrong** thing — there's a public `Galvill/pmx-mcp` (Proxmox virtualization tools, completely unrelated). Don't trust the AI to know which "PMX" you mean. Switch accounts first.
+
+You'll be jumping **between PowerShell and Copilot CLI in the same window**.Watch the prompt to know which mode you're in:
 
 - `PS C:\Users\YourName\cli-intro>` → you're in PowerShell.
 - A banner with a `❯` or `>` arrow → you're inside Copilot CLI.
