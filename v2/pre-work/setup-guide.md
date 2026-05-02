@@ -213,6 +213,10 @@ You should see a version number. If you get an error, close PowerShell, open a n
 
 ## Step 2: Log In
 
+You'll log into two different things: **Copilot CLI** itself (so it can talk to the AI model), and **GitHub CLI** (so other tools and scripts in the workshop can talk to GitHub on your behalf).
+
+### 2a. Sign in to Copilot CLI
+
 **In PowerShell** — start Copilot CLI by typing `copilot` and pressing Enter:
 
 ```
@@ -260,6 +264,57 @@ When login finishes, you're still **inside Copilot CLI**. To run the next step y
 ```
 
 The Copilot banner disappears and you're back at the PowerShell prompt (`PS C:\Users\YourName\cli-intro>`). Same window — you do **not** open a new one.
+
+### 2b. Sign in to GitHub CLI (`gh`)
+
+The `/login` step above signed you into **Copilot CLI**. There's a separate tool — **GitHub CLI** (`gh`) — that some later steps use to talk to GitHub on your behalf (the verify script in Step 3, and the PMX MCP install in Step 5). It has its own login. You'll sign in twice — once for each account from "Before You Start".
+
+**First, your personal account.**
+
+**In PowerShell** — run:
+
+```
+gh auth login
+```
+
+It will ask you several questions one at a time. Use the arrow keys to pick the answer, then press Enter:
+
+- *What account do you want to log into?* → **GitHub.com**
+- *What is your preferred protocol for Git operations?* → **HTTPS**
+- *Authenticate Git with your GitHub credentials?* → **Yes**
+- *How would you like to authenticate GitHub CLI?* → **Login with a web browser**
+
+It shows a one-time code and opens a browser tab. Paste the code in the browser, sign in with your **personal** GitHub account, and authorize. When the browser says "Congratulations, you're all set!", come back to PowerShell — it should now print `✓ Logged in as <your-personal-username>`.
+
+**Then, your Microsoft EMU account.**
+
+Run the same command again:
+
+```
+gh auth login
+```
+
+Same answers as before, but this time sign in with your `yourname_microsoft` (EMU) account in the browser.
+
+> **Don't have a `_microsoft` EMU account?** Skip this second login. You'll be able to do most of the workshop — only the PMX MCP server in Step 5 needs it, and we can demo that together.
+
+> **Stuck on "We couldn't sign you in" with a passkey error?** This is common on Dev Boxes and corp machines. The default Microsoft sign-in is trying to use a passkey that's registered to your phone, and the Dev Box browser can't reach it. Click **Sign in another way** in the dialog, then pick **Microsoft Authenticator** (push to phone) or text/call. You don't need to register a new passkey on the Dev Box itself.
+
+**Set your personal account as the active one.** After two logins, the EMU account is the active default. Switch back to personal so the rest of the workshop uses it by default:
+
+```
+gh auth status
+```
+
+Look at the output for the line that starts with `Logged in to github.com account <name>` for your **personal** account — copy that name. Then:
+
+```
+gh auth switch --user <your-personal-username>
+```
+
+(Replace `<your-personal-username>` with the name you just copied.)
+
+Run `gh auth status` again to confirm — your personal account should now show `Active account: true`.
 
 ---
 
