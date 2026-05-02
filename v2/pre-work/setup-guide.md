@@ -411,6 +411,8 @@ PMX is the special case. Its server lives in `gim-home/pmx-mcp`, which only your
 
 > **⚠️ Critical — switch the account FIRST.** If you launch Copilot CLI with your personal account active and ask it to install PMX, it cannot see the private `gim-home/pmx-mcp` repo and will helpfully install the **wrong** thing — there's a public `Galvill/pmx-mcp` (Proxmox virtualization tools, completely unrelated). Don't trust the AI to know which "PMX" you mean. Switch accounts first.
 
+> **⚠️ Second trap — the GitHub MCP server has stale auth.** When you installed the GitHub MCP in 5a (as personal account), it stored a personal-account token internally. That token does **not** update when you `gh auth switch` later. So even after switching to EMU, if Copilot uses the GitHub MCP tool to fetch the repo, it will still get a 404 and start hunting for "alternatives" — and find Proxmox again. The prompt below tells Copilot to use shell `git clone` instead, which uses your active `gh` credentials.
+
 You'll be jumping **between PowerShell and Copilot CLI in the same window**.Watch the prompt to know which mode you're in:
 
 - `PS C:\Users\YourName\cli-intro>` → you're in PowerShell.
@@ -445,8 +447,10 @@ If you're inside Copilot CLI when a step says "in PowerShell", type `/exit` and 
 4. **Inside Copilot CLI** — ask it to install the PMX MCP server:
 
    ```
-   Install the PMX MCP server from github.com/gim-home/pmx-mcp. Clone, build, and register it in my Copilot CLI MCP config.
+   Install the PMX MCP server from github.com/gim-home/pmx-mcp. Use shell `git clone https://github.com/gim-home/pmx-mcp.git` (NOT the github-mcp-server MCP tool — its token is stale). The repo is private and only my active gh CLI credentials can access it. Do NOT search for alternative "pmx-mcp" repos. If `git clone` fails, stop and tell me — never install Galvill/pmx-mcp or any similar-named repo. After cloning, run npm install, npm run build, and register the server in my Copilot CLI MCP config.
    ```
+
+   This prompt is deliberately strict. The agent has previously installed a wrong public repo (`Galvill/pmx-mcp` — Proxmox virtualization, unrelated) when it couldn't reach the private one. The "do NOT search" clause prevents the misfire.
 
 5. **Inside Copilot CLI** — when PMX is installed, leave Copilot CLI:
 
