@@ -367,35 +367,47 @@ A browser window will open. Sign in with your Microsoft account. Once it says "Y
 
 MCP servers are connectors that let Copilot CLI talk to external tools — think of them like Power Automate connectors. We need three:
 
-1. **PMX** — your partner management data in D365
-2. **GitHub** — repos, issues, pull requests
-3. **M365** — email, calendar, Teams
+1. **GitHub** — repos, issues, pull requests
+2. **M365** — email, calendar, Teams
+3. **PMX** — your partner management data in D365 (Microsoft-internal, installed last)
 
-The easiest way is to ask Copilot CLI itself to do the configuration.
+We do this in two passes because **PMX requires your Microsoft EMU account** to be the active GitHub account, while GitHub and M365 work fine with your personal one. Install the public ones first, then switch accounts and install PMX.
 
-1. **In PowerShell**, type `copilot` and press Enter.
+### 5a. Install GitHub and M365 (personal account)
 
-   ```
-   copilot
-   ```
+Make sure your personal account is the active GitHub account:
 
-   You'll see the Copilot CLI banner appear. The prompt will change — instead of `PS C:\Users\YourName\cli-intro>` you'll see something like a `❯` or `>` arrow on its own line. That means you're now **inside Copilot CLI**, not PowerShell.
+**In PowerShell** — run:
 
-2. **Inside Copilot CLI**, type this prompt and press Enter:
+```
+gh auth status
+```
 
-   ```
-   I need to set up MCP servers for PMX, GitHub, and M365 in Copilot CLI. PMX is a Microsoft-internal MCP server at github.com/gim-home/pmx-mcp — clone it, build it, and register it in my MCP config. For GitHub and M365, use the official public MCP servers. Walk me through it step by step.
-   ```
+Your personal account should show `Active account: true`. If not, run `gh auth switch --user <your-personal-username>` first.
 
-3. Copilot will walk you through it step by step. Answer in plain language — no syntax memorization needed.
+Then launch Copilot CLI:
 
-4. When you're done with the MCP setup, **type `/exit` and press Enter** to leave Copilot CLI and return to PowerShell.
+```
+copilot
+```
+
+You'll see the Copilot CLI banner appear. The prompt will change — instead of `PS C:\Users\YourName\cli-intro>` you'll see something like a `❯` or `>` arrow on its own line. That means you're now **inside Copilot CLI**, not PowerShell.
+
+**Inside Copilot CLI** — type this prompt and press Enter:
+
+```
+Set up the official GitHub and M365 MCP servers in my Copilot CLI config. Walk me through it step by step.
+```
+
+Copilot will walk you through it. Answer in plain language — no syntax memorization needed.
 
 > **⚠️ Common trap** — Copilot will ask **"Where do you want to configure these MCP servers?"** and show a numbered menu. Pick **2. Copilot CLI**. The other options configure MCP for VS Code's Copilot Chat, GitHub Copilot Coding Agent, or other tools — not your local CLI session.
 
-### PMX install: switch accounts, then switch back
+When done, **type `/exit` and press Enter** to leave Copilot CLI and return to PowerShell.
 
-PMX is the one special case. Its MCP server is stored in `gim-home/pmx-mcp`, which requires your Microsoft EMU account. So you need to switch accounts before the install, do the install, then switch back.
+### 5b. Install PMX (Microsoft EMU account)
+
+PMX is the special case. Its server lives in `gim-home/pmx-mcp`, which only your Microsoft EMU (`yourname_microsoft`) account can access. So: switch accounts, install PMX, switch back.
 
 You'll be jumping **between PowerShell and Copilot CLI in the same window**. Watch the prompt to know which mode you're in:
 
@@ -419,7 +431,7 @@ If you're inside Copilot CLI when a step says "in PowerShell", type `/exit` and 
 3. **Inside Copilot CLI** — ask it to install the PMX MCP server:
 
    ```
-   Install the PMX MCP server from gim-home/pmx-mcp and configure it for this machine.
+   Install the PMX MCP server from github.com/gim-home/pmx-mcp. Clone, build, and register it in my Copilot CLI MCP config.
    ```
 
 4. **Inside Copilot CLI** — when PMX is installed, leave Copilot CLI:
@@ -439,8 +451,6 @@ If you're inside Copilot CLI when a step says "in PowerShell", type `/exit` and 
    ```
    gh auth status
    ```
-
-For GitHub and M365 MCP setup, keep using your personal account unless Copilot tells you otherwise.
 
 You can also use the built-in command `/mcp` (inside Copilot CLI) to browse and add servers from a menu.
 
