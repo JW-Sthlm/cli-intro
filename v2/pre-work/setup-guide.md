@@ -151,13 +151,23 @@ From inside the `cli-intro` folder (your prompt should still read `PS C:\Users\Y
 
 The leading `.\` means "in this current folder" — it tells PowerShell to look for the script right where you are, not somewhere else on the system.
 
-When the script finishes, **close that PowerShell window**, **open a new PowerShell 7 window** the same way you did in step 1a, then `cd` back into the workshop folder before continuing to Step 2:
+When the script finishes, **close that PowerShell window**, **open a new PowerShell 7 window** the same way you did in step 1a, then `cd` back into the workshop folder:
 
 ```
 cd $HOME\cli-intro
 ```
 
+Then verify Copilot CLI is reachable:
+
+```
+copilot --version
+```
+
+You should see a version number. If you get an error, close PowerShell, open a new window, and try again.
+
 (The fresh window is needed because some installs only become available to *new* PowerShell sessions, not the one that did the installing.)
+
+✅ **Done with Option A.** Continue to **Step 2: Log In** below.
 
 > **⚠️ Common trap** — If your corporate IT or Defender policy blocks the script, use Option B instead.
 
@@ -197,6 +207,8 @@ copilot --version
 
 You should see a version number. If you get an error, close PowerShell, open a new window, and try again.
 
+✅ **Done with Option B.** Continue to **Step 2: Log In** below.
+
 ---
 
 ## Step 2: Log In
@@ -207,6 +219,8 @@ You should see a version number. If you get an error, close PowerShell, open a n
 copilot
 ```
 
+The first time you launch Copilot CLI in this folder, it shows a **"Confirm folder trust"** prompt asking whether to allow it to read and execute code in `C:\Users\YourName\cli-intro`. Use the arrow keys to select option **2. Yes, and remember this folder for future sessions**, then press Enter. (Picking option 2 means you won't be asked again next time you launch Copilot CLI here.)
+
 When the Copilot banner appears, the prompt changes — you're now **inside Copilot CLI**.
 
 **Inside Copilot CLI** — type `/login` and press Enter:
@@ -215,7 +229,25 @@ When the Copilot banner appears, the prompt changes — you're now **inside Copi
 /login
 ```
 
+You'll see a prompt asking *"What account do you want to log into?"* with two options. Pick option **1. GitHub.com** and press Enter. (Option 2 is for enterprise customers with a custom GitHub data-residency setup — not what you want here.)
+
 Follow the on-screen instructions — it will open a browser window where you authenticate with your **personal** GitHub account (recommended for this session).
+
+You'll go through three browser screens. Here's what to do at each:
+
+**1. Sign in to GitHub** — enter your personal GitHub username and password.
+
+![GitHub sign-in screen](../images/pre-work/login-01-github-signin.png)
+
+**2. Two-factor authentication** — confirm using whatever method you have set up (passkey, GitHub Mobile, or authenticator app).
+
+![GitHub 2FA screen](../images/pre-work/login-02-2fa-passkey.png)
+
+**3. Single sign-on to your organization** — if your personal GitHub account is also a member of an organization that requires SSO (most Microsoft employees will see **Microsoft** here), click the green **Authorize** button next to the organization, then click **Continue**.
+
+![Single sign-on authorize Microsoft](../images/pre-work/login-03-microsoft-sso.png)
+
+> **Why authorize?** Authorizing extends your GitHub session so Copilot CLI can read repos and resources inside that org. It's safe and expected — without it, you'll hit "resource not accessible by integration" errors later when working with org-internal repos. If you don't recognize the org name, click **Continue** without authorizing.
 
 > **Note:** You need an active Copilot subscription on the account you log in with. Verify at https://copilot.github.microsoft.com/ or https://github.com/settings/copilot.
 
