@@ -63,7 +63,9 @@ Live findings during the show-and-tell walkthrough. Each entry: what was unclear
 
 ### Step 5 — MCP install
 
-- **MCP target prompt validated.** When Copilot CLI asks "Where do you want to configure these MCP servers?" the right answer is option **2. Copilot CLI**. Other options shown: 1. VS Code (Copilot Chat), 3. GitHub Copilot Coding Agent (copilot-setup-steps.yml), 4. Other, 5. Other (type your answer). Replaced the TODO placeholder in setup-guide.md with the confirmed answer. Closed plan todo `p10-validate-mcp-prompt`.
+- **Copilot CLI doesn't know what "PMX" is.** When asked to set up "PMX, GitHub, M365" with the original generic prompt, Copilot CLI replied "Can you clarify what PMX refers to? Is it a specific MCP server or tool you have in mind?" → Updated the setup-guide prompt to include the repo URL (`github.com/gim-home/pmx-mcp`), the install method (clone, build, register), and explicit "use official public MCP servers" for GitHub and M365. Self-sufficient prompt → no clarification round-trip.
+
+- **MCP target prompt validated.**When Copilot CLI asks "Where do you want to configure these MCP servers?" the right answer is option **2. Copilot CLI**. Other options shown: 1. VS Code (Copilot Chat), 3. GitHub Copilot Coding Agent (copilot-setup-steps.yml), 4. Other, 5. Other (type your answer). Replaced the TODO placeholder in setup-guide.md with the confirmed answer. Closed plan todo `p10-validate-mcp-prompt`.
 
 ### Step 2 → Step 3 — bridge between modes
 

@@ -384,7 +384,7 @@ The easiest way is to ask Copilot CLI itself to do the configuration.
 2. **Inside Copilot CLI**, type this prompt and press Enter:
 
    ```
-   I need to set up MCP servers for PMX, GitHub, and M365. Help me configure them.
+   I need to set up MCP servers for PMX, GitHub, and M365 in Copilot CLI. PMX is a Microsoft-internal MCP server at github.com/gim-home/pmx-mcp — clone it, build it, and register it in my MCP config. For GitHub and M365, use the official public MCP servers. Walk me through it step by step.
    ```
 
 3. Copilot will walk you through it step by step. Answer in plain language — no syntax memorization needed.
