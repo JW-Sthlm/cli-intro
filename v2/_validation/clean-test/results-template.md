@@ -61,6 +61,10 @@ Live findings during the show-and-tell walkthrough. Each entry: what was unclear
 
 - **Screenshots / terminal mockups.** Added inline mockups for the 1b prompt-change moment. More mockups can be added at later checkpoints (after `winget install`, after `verify.ps1`, after Copilot banner appears) — flagged for a screenshot pass once the guide stabilises.
 
+### Step 5 — MCP install
+
+- **MCP target prompt validated.** When Copilot CLI asks "Where do you want to configure these MCP servers?" the right answer is option **2. Copilot CLI**. Other options shown: 1. VS Code (Copilot Chat), 3. GitHub Copilot Coding Agent (copilot-setup-steps.yml), 4. Other, 5. Other (type your answer). Replaced the TODO placeholder in setup-guide.md with the confirmed answer. Closed plan todo `p10-validate-mcp-prompt`.
+
 ### Step 2 → Step 3 — bridge between modes
 
 - **EMU sign-in passkey failure on Dev Box.** During `gh auth login` for the Microsoft account, the browser hit "We couldn't sign you in. If you're using a passkey from your Android Work Profile, please use the camera app in that profile." The default Microsoft sign-in path tries to use a phone-registered passkey that the Dev Box browser can't reach. → Added a callout in 2b telling users to click **Sign in another way** and pick **Microsoft Authenticator** (push to phone) or text/call. Documents that no new passkey registration on the Dev Box is needed.

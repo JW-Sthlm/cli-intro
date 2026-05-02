@@ -391,12 +391,7 @@ The easiest way is to ask Copilot CLI itself to do the configuration.
 
 4. When you're done with the MCP setup, **type `/exit` and press Enter** to leave Copilot CLI and return to PowerShell.
 
-> **⚠️ Common trap** — When CLI asks "Where should I configure these MCP servers?"
-> Pick **`<TODO: confirm exact menu label — likely "VS Code (user)" or the global/user-scope option>`**.
-> This makes the servers available in any folder on your machine.
-> **Do NOT pick "Copilot Cloud Agent"** — that's for cloud-hosted agents, not your local CLI.
->
-> _This answer is being validated — see plan todo `p10-validate-mcp-prompt`._
+> **⚠️ Common trap** — Copilot will ask **"Where do you want to configure these MCP servers?"** and show a numbered menu. Pick **2. Copilot CLI**. The other options configure MCP for VS Code's Copilot Chat, GitHub Copilot Coding Agent, or other tools — not your local CLI session.
 
 ### PMX install: switch accounts, then switch back
 
