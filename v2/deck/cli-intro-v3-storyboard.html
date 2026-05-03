@@ -435,7 +435,7 @@ hr.rule {
     <p class="subtitle">60 min · Hands-On · Facilitator prep</p>
     <div class="overview">
       <div class="metric"><strong>6 chapters</strong><span>session arc</span></div>
-      <div class="metric"><strong>10 slides</strong><span>one scrollable playbook</span></div>
+      <div class="metric"><strong>13 slides</strong><span>one scrollable playbook</span></div>
       <div class="metric"><strong>2 demos</strong><span>partner briefing + workshop to plan</span></div>
       <div class="metric"><strong>2 exercises</strong><span>guided, then self-paced</span></div>
     </div>
@@ -456,8 +456,8 @@ hr.rule {
       </a>
       <a class="timeline-link" href="#slide-1">
         <div class="timeline-card chapter-why">
-          <strong>Why Now</strong>
-          <div class="time">8 min</div>
+          <strong>Context</strong>
+          <div class="time">7 min</div>
           <div class="slides">Slides 1–2</div>
         </div>
       </a>
@@ -472,21 +472,21 @@ hr.rule {
         <div class="timeline-card chapter-demo1">
           <strong>Demo 1</strong>
           <div class="time">20 min</div>
-          <div class="slides">Slides 4–5<br><span class="muted">12 min demo + 8 min exercise</span></div>
+          <div class="slides">Slides 4–6<br><span class="muted">demo + 90 sec blocks + exercise</span></div>
         </div>
       </a>
-      <a class="timeline-link" href="#slide-6">
+      <a class="timeline-link" href="#slide-7">
         <div class="timeline-card chapter-demo2">
           <strong>Demo 2</strong>
           <div class="time">18 min</div>
-          <div class="slides">Slides 6–7<br><span class="muted">10 min demo + 8 min exercise</span></div>
+          <div class="slides">Slides 7–8<br><span class="muted">10 min demo + 8 min exercise</span></div>
         </div>
       </a>
-      <a class="timeline-link" href="#slide-8">
+      <a class="timeline-link" href="#slide-9">
         <div class="timeline-card chapter-close">
           <strong>What's Next</strong>
-          <div class="time">6 min</div>
-          <div class="slides">Slides 8–9</div>
+          <div class="time">9 min</div>
+          <div class="slides">Slides 9–12<br><span class="muted">bigger picture, landscape, curve, close</span></div>
         </div>
       </a>
     </div>
@@ -526,9 +526,9 @@ hr.rule {
       <details class="talk">
         <summary>
           <span class="summary-text">
-            <span class="summary-main">Slide 1 · Ladder · 4 min ·</span>
+            <span class="summary-main">Slide 1 · Operating Stack · 3 min ·</span>
             <span class="tag tag-talk">talk</span>
-            <span class="chapter-chip">Why Now</span>
+            <span class="chapter-chip">Context</span>
           </span>
         </summary>
         <div class="detail-body">
@@ -538,12 +538,15 @@ hr.rule {
             </div>
             <div class="slide-content">
               <div class="section-label">DO</div>
-              <div class="do">Walk through the ladder bottom to top. Pause on CLI.</div>
+              <div class="do">Quick orient. 60&ndash;90 seconds. This is the map, not the pitch.</div>
               <div class="section-label" style="margin-top:12px;">SAY</div>
-              <p class="say">You already know M365 Copilot. Draft an email, summarize a meeting, individual tasks.</p>
-              <p class="say">CLI goes further. It connects to your actual tools, PMX, MSX, email, calendar, and produces structured repeatable workflows. Not chat answers. Artifacts.</p>
-              <p class="say">Agency makes CLI Microsoft-ready: internal authentication, shared plugins, telemetry and governance baked in. Squad handles the bigger stuff, multi-agent coordination for long-running initiatives.</p>
-              <p class="say">Our focus today is CLI. The step from getting help to operationalizing your work.</p>
+              <p class="say">Lots of confusion at the last workshop about which Copilot to pick when. Here is the map.</p>
+              <p class="say">M365 Copilot is the everyday assistant inside Office. Ambient help, individual tasks.</p>
+              <p class="say">CLI is where the work becomes operational. It runs commands, talks to your tools, keeps state, produces artifacts. That is where we are today.</p>
+              <p class="say">Agency is Microsoft internal. Partners cannot use it. Squads sit on top &mdash; experimental multi-agent teams.</p>
+              <p class="say"><strong>Anticipated Q:</strong> Where does Cowork fit?</p>
+              <p class="say"><strong>Anticipated A:</strong> Parallel surface for non-terminal users. Same data, less control, no tool orchestration with state. We come back to it on the landscape slide.</p>
+              <p class="say">Today is about CLI. And how it changes the kind of work you can hand off.</p>
             </div>
           </div>
         </div>
@@ -722,12 +725,13 @@ Format it as a clean document I could share with my team.</code></pre>
       </details>
     </div>
 
+
     <div class="details-panel" id="slide-5">
-      <details class="exercise">
+      <details class="talk">
         <summary>
           <span class="summary-text">
-            <span class="summary-main">Slide 5 · Exercise 1 · 8 min ·</span>
-            <span class="tag tag-exercise">exercise</span>
+            <span class="summary-main">Slide 5 · Building Blocks · 90 sec ·</span>
+            <span class="tag tag-talk">talk</span>
             <span class="chapter-chip">Demo 1</span>
           </span>
         </summary>
@@ -735,6 +739,35 @@ Format it as a clean document I could share with my team.</code></pre>
           <div class="slide-row">
             <div class="thumb-frame">
               <iframe src="cli-intro-v3.html?slide=5" loading="lazy"></iframe>
+            </div>
+            <div class="slide-content">
+              <div class="section-label">DO</div>
+              <div class="do">90 seconds max. Use this as the under-the-hood bridge between the demo and Exercise 1. Don't go deep on each block. Point at the connection panel last.</div>
+              <div class="section-label" style="margin-top:12px;">SAY</div>
+              <p class="say">Quick map under the hood.</p>
+              <p class="say">Seven building blocks. You only need the first two to start: Instructions and MCP servers.</p>
+              <p class="say">Instructions are your house rules. MCP servers are the connectors to your tools. Skills are reusable abilities. Agents are scoped helpers. Plugins bundle the lot. Extensions are small tools CLI can run. Hooks are lifecycle interceptors &mdash; they run before or after another action.</p>
+              <p class="say">Look at the panel on the right. A plugin bundles skills, extensions, hooks, and agents. An agent uses instructions, MCP, and skills. That is the relationship.</p>
+              <p class="say">Don't memorise all seven. The first two get you 80 percent of the value. The rest you reach for when you have a real reason.</p>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <div class="details-panel" id="slide-6">
+      <details class="exercise">
+        <summary>
+          <span class="summary-text">
+            <span class="summary-main">Slide 6 · Exercise 1 · 8 min ·</span>
+            <span class="tag tag-exercise">exercise</span>
+            <span class="chapter-chip">Demo 1</span>
+          </span>
+        </summary>
+        <div class="detail-body">
+          <div class="slide-row">
+            <div class="thumb-frame">
+              <iframe src="cli-intro-v3.html?slide=6" loading="lazy"></iframe>
             </div>
             <div class="slide-content">
               <div class="section-label">DO</div>
@@ -803,11 +836,11 @@ Then synthesize into a briefing with:
       </details>
     </div>
 
-    <div class="details-panel" id="slide-6">
+    <div class="details-panel" id="slide-7">
       <details class="demo" open>
         <summary>
           <span class="summary-text">
-            <span class="summary-main">Slide 6 · Demo 2 · 10 min ·</span>
+            <span class="summary-main">Slide 7 · Demo 2 · 10 min ·</span>
             <span class="tag tag-demo">demo</span>
             <span class="chapter-chip">Demo 2</span>
           </span>
@@ -815,7 +848,7 @@ Then synthesize into a briefing with:
         <div class="detail-body">
           <div class="slide-row">
             <div class="thumb-frame">
-              <iframe src="cli-intro-v3.html?slide=6" loading="lazy"></iframe>
+              <iframe src="cli-intro-v3.html?slide=7" loading="lazy"></iframe>
             </div>
             <div class="slide-content">
               <div class="section-label">DO</div>
@@ -950,11 +983,11 @@ Make it actionable enough that someone who wasn't in the workshop could pick thi
       </details>
     </div>
 
-    <div class="details-panel" id="slide-7">
+    <div class="details-panel" id="slide-8">
       <details class="exercise">
         <summary>
           <span class="summary-text">
-            <span class="summary-main">Slide 7 · Exercise 2 · 8 min ·</span>
+            <span class="summary-main">Slide 8 · Exercise 2 · 8 min ·</span>
             <span class="tag tag-exercise">exercise</span>
             <span class="chapter-chip">Demo 2</span>
           </span>
@@ -962,7 +995,7 @@ Make it actionable enough that someone who wasn't in the workshop could pick thi
         <div class="detail-body">
           <div class="slide-row">
             <div class="thumb-frame">
-              <iframe src="cli-intro-v3.html?slide=7" loading="lazy"></iframe>
+              <iframe src="cli-intro-v3.html?slide=8" loading="lazy"></iframe>
             </div>
             <div class="slide-content">
               <div class="section-label">DO</div>
@@ -1035,11 +1068,11 @@ D · /research What are the top AI workloads that ISV partners in EMEA are build
       </details>
     </div>
 
-    <div class="details-panel" id="slide-8">
+    <div class="details-panel" id="slide-9">
       <details class="talk">
         <summary>
           <span class="summary-text">
-            <span class="summary-main">Slide 8 · Bigger Picture · 3 min ·</span>
+            <span class="summary-main">Slide 9 · Bigger Picture · 3 min ·</span>
             <span class="tag tag-talk">talk</span>
             <span class="chapter-chip">What's Next</span>
           </span>
@@ -1047,7 +1080,7 @@ D · /research What are the top AI workloads that ISV partners in EMEA are build
         <div class="detail-body">
           <div class="slide-row">
             <div class="thumb-frame">
-              <iframe src="cli-intro-v3.html?slide=8" loading="lazy"></iframe>
+              <iframe src="cli-intro-v3.html?slide=9" loading="lazy"></iframe>
             </div>
             <div class="slide-content">
               <div class="section-label">DO</div>
@@ -1064,11 +1097,71 @@ D · /research What are the top AI workloads that ISV partners in EMEA are build
       </details>
     </div>
 
-    <div class="details-panel" id="slide-9">
+    <div class="details-panel" id="slide-10">
+      <details class="talk">
+        <summary>
+          <span class="summary-text">
+            <span class="summary-main">Slide 10 · Landscape · 2 min ·</span>
+            <span class="tag tag-talk">talk</span>
+            <span class="chapter-chip">What's Next</span>
+          </span>
+        </summary>
+        <div class="detail-body">
+          <div class="slide-row">
+            <div class="thumb-frame">
+              <iframe src="cli-intro-v3.html?slide=10" loading="lazy"></iframe>
+            </div>
+            <div class="slide-content">
+              <div class="section-label">DO</div>
+              <div class="do">Pause about 60 seconds. Some folks already know the names from leaks; some don't. Don't go deep on each one &mdash; point at them, name the pattern, move on.</div>
+              <div class="section-label" style="margin-top:12px;">SAY</div>
+              <p class="say">There's a wave of new Microsoft AI surfaces coming. Project Lobster, ClawPilot, Agency Cowork, the GitHub Desktop App. Don't worry about memorising the names.</p>
+              <p class="say">Notice what they all share at the bottom. They sit on the same engine &mdash; GitHub Copilot CLI. The internal apps are wrappers. Skins. The CLI is the spine.</p>
+              <p class="say">M365 Copilot Cowork sits on a different track. The consumer M365 stack. Different license, already mainstream. Not what we're learning today.</p>
+              <p class="say">Why this matters for you: the apps on top are gated, internal-only, and still moving. You can't put any of them in a partner's hands. The CLI is the only path that's public, GA, and shareable today.</p>
+              <p class="say">Learn the engine. Every app coming next is a 30-minute pickup once you have the substrate.</p>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <div class="details-panel" id="slide-11">
+      <details class="talk">
+        <summary>
+          <span class="summary-text">
+            <span class="summary-main">Slide 11 · Adoption Curve · 2 min ·</span>
+            <span class="tag tag-talk">talk</span>
+            <span class="chapter-chip">What's Next</span>
+          </span>
+        </summary>
+        <div class="detail-body">
+          <div class="slide-row">
+            <div class="thumb-frame">
+              <iframe src="cli-intro-v3.html?slide=11" loading="lazy"></iframe>
+            </div>
+            <div class="slide-content">
+              <div class="section-label">DO</div>
+              <div class="do">Closer-before-the-closer. Land the visual. Pause. Then the punchline.</div>
+              <div class="section-label" style="margin-top:12px;">SAY</div>
+              <p class="say">One curve. You know it.</p>
+              <p class="say">Now look where partners are sitting today.</p>
+              <p class="say">M365 Copilot Cowork &mdash; well past the chasm, into early majority. Mainstream. Crowded. Hard to differentiate.</p>
+              <p class="say">Copilot CLI &mdash; deep innovators. The whole curve is wide open. That purple zone? That is where you can sit for the next 12 months while everyone else figures out what 'agentic' even means.</p>
+              <p class="say">Here is the punch.</p>
+              <p class="say">Your competitor walks into a partner meeting next Tuesday with M365 Copilot. You walk in with a tool-connected briefing, a structured action plan, and a working environment. Same hour. Different conversation.</p>
+              <p class="say">That gap does not exist forever. It exists right now.</p>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <div class="details-panel" id="slide-12">
       <details class="close-type">
         <summary>
           <span class="summary-text">
-            <span class="summary-main">Slide 9 · Close · 3 min ·</span>
+            <span class="summary-main">Slide 12 · Close · 3 min ·</span>
             <span class="tag tag-close">close</span>
             <span class="chapter-chip">What's Next</span>
           </span>
@@ -1076,7 +1169,7 @@ D · /research What are the top AI workloads that ISV partners in EMEA are build
         <div class="detail-body">
           <div class="slide-row">
             <div class="thumb-frame">
-              <iframe src="cli-intro-v3.html?slide=9" loading="lazy"></iframe>
+              <iframe src="cli-intro-v3.html?slide=12" loading="lazy"></iframe>
             </div>
             <div class="slide-content">
               <div class="section-label">DO</div>

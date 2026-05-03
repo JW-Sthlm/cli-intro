@@ -87,7 +87,7 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
 /* ── Pixel art — removed, dark theme doesn't need ghost images ── */
 
 /* ═══ Slide 1: Hero ═══ */
-.hero { justify-content: center; align-items: flex-start; }
+.hero { justify-content: flex-start; align-items: flex-start; }
 .hero .eyebrow {
   font-family: 'JetBrains Mono', monospace; color: var(--muted); font-size: 13px;
   letter-spacing: .2em; text-transform: uppercase; margin-bottom: 28px;
@@ -105,7 +105,7 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
 @keyframes blink { 50% { opacity: 0; } }
 .hero .sub { margin-top: 36px; color: var(--muted); font-size: 20px; max-width: 56ch; line-height: 1.5; }
 .hero .by {
-  position: absolute; bottom: 80px; left: 80px; right: 80px;
+  margin-top: auto; width: 100%;
   display: flex; justify-content: space-between; align-items: flex-end;
   font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted);
 }
@@ -133,40 +133,119 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
   background: rgba(137,87,229,.08); border: 1px solid rgba(137,87,229,.25);
   padding: 5px 10px; border-radius: 4px; margin-bottom: 14px;
 }
-.lead { color: var(--muted); font-size: 21px; line-height: 1.55; max-width: 54ch; text-wrap: balance; }
+.audience-badges { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
+.audience-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700;
+  color: #b9fffb; background: rgba(13,115,119,.22); border: 1px solid rgba(57,210,192,.50);
+  padding: 5px 10px; border-radius: 999px; letter-spacing: .03em;
+}
+.audience-badge.tech { color: #d8ccff; background: rgba(137,87,229,.16); border-color: rgba(137,87,229,.45); }
+.audience-badge.trap { color: #ffe3a3; background: rgba(210,153,34,.16); border-color: rgba(210,153,34,.45); }
+.exercise-slide .audience-badges { justify-content: center; margin-bottom: 0; }
+.lead { color: var(--muted); font-size: 21px; line-height: 1.55; max-width: 54ch; text-wrap: pretty; }
 
-/* ═══ Slide 2: Ladder ═══ */
-.ladder-slide { justify-content: center; gap: 18px; }
-.ladder-slide h2 {
+
+/* ═══ Operating stack flow ═══ */
+.stack-slide { justify-content: center; gap: 18px; }
+.stack-slide h2 {
   font-weight: 800; font-size: clamp(36px, 4.2vw, 56px);
   line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance;
 }
-.ladder-slide h2 .accent { color: var(--purple); }
-.ladder-slide .lead { margin-bottom: 6px; }
-.ladder-stack { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
-.ladder-item {
-  display: flex; align-items: center; gap: 18px;
-  padding: 16px 22px; border-radius: 10px;
-  background: var(--panel); border: 1px solid var(--border);
-  border-left: 4px solid var(--muted);
-  transition: border-color .2s ease, box-shadow .2s ease;
+.stack-slide h2 .accent { color: var(--teal); }
+.stack-flow {
+  display: grid;
+  grid-template-columns: 1fr 34px 1.18fr 34px 1fr 34px 1fr;
+  gap: 9px; align-items: stretch; margin-top: 8px;
 }
-.ladder-item .l-name { font-weight: 700; font-size: 17px; min-width: 180px; }
-.ladder-item .l-desc { color: var(--muted); font-size: 17px; line-height: 1.45; }
-.ladder-item.green-b { border-left-color: var(--green); }
-.ladder-item.purple-b {
-  border-left-color: var(--purple);
-  background: rgba(137,87,229,.08); border-color: rgba(137,87,229,.35);
-  box-shadow: 0 0 24px rgba(137,87,229,.12);
+.stack-card {
+  position: relative; min-height: 232px;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+  padding: 18px 16px 16px; display: flex; flex-direction: column; gap: 10px;
 }
-.ladder-item.purple-b .l-name { color: var(--purple); }
-.ladder-item.blue-b { border-left-color: var(--link); }
-.ladder-item.pink-b { border-left-color: var(--pink); }
-.ladder-bottom {
-  margin-top: 10px; color: var(--muted); font-size: 17px; line-height: 1.5;
-  border-top: 1px solid var(--border); padding-top: 14px;
+.stack-card .layer {
+  font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted);
+  letter-spacing: .1em; text-transform: uppercase;
 }
-.ladder-bottom strong { color: var(--text); }
+.stack-card .name { font-weight: 800; font-size: 20px; letter-spacing: -0.02em; }
+.stack-card .role { color: var(--text); font-size: 14px; line-height: 1.36; }
+.stack-card .who {
+  margin-top: auto; color: #A7B0BC; font-size: 13px; line-height: 1.35;
+  border-top: 1px solid rgba(255,255,255,.06); padding-top: 10px;
+}
+.stack-card .who strong { color: var(--teal); font-weight: 700; }
+.stack-card.cli-card {
+  min-height: 252px; margin-top: -10px; margin-bottom: -10px;
+  border-color: rgba(57,210,192,.55); background: rgba(57,210,192,.08);
+  box-shadow: 0 0 30px rgba(57,210,192,.16);
+}
+.stack-card.cli-card .name { color: var(--teal); font-size: 23px; }
+.stack-card.cowork-card { border-color: rgba(57,210,192,.28); }
+.stack-arrow {
+  align-self: center; justify-self: center; width: 34px; height: 34px; border-radius: 50%;
+  display: grid; place-items: center; color: var(--muted); border: 1px solid var(--border);
+  background: rgba(255,255,255,.03); font-family: 'JetBrains Mono', monospace; font-size: 18px;
+}
+.stack-arrow.choice {
+  color: var(--teal); border-color: rgba(57,210,192,.55);
+  width: 40px; height: 40px; font-size: 12px; font-weight: 800;
+}
+.comfort-choice {
+  width: calc(40% + 58px); margin-left: calc(20% + 43px); margin-top: 10px;
+  border: 1px solid rgba(57,210,192,.34); border-radius: 999px; color: var(--muted);
+  padding: 7px 14px; font-size: 13px; text-align: center; background: rgba(57,210,192,.05);
+}
+.comfort-choice strong { color: var(--teal); }
+.stack-close {
+  margin-top: 10px; padding: 15px 18px; border-radius: 10px;
+  background: var(--panel); border: 1px solid rgba(57,210,192,.30);
+  color: var(--muted); font-size: 18px; line-height: 1.45;
+}
+.stack-close strong { color: var(--text); }
+
+/* ═══ Building blocks grid ═══ */
+.blocks-slide { justify-content: center; gap: 16px; }
+.blocks-slide h2 {
+  font-weight: 800; font-size: clamp(36px, 4.2vw, 56px);
+  line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance;
+}
+.blocks-slide h2 .accent { color: var(--teal); }
+.block-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px; margin-top: 4px; }
+.building-card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+  padding: 16px 18px; display: grid; grid-template-columns: auto 1fr; column-gap: 12px; row-gap: 4px;
+  min-height: 118px;
+}
+.building-card .b-icon {
+  grid-row: 1 / span 2; width: 38px; height: 38px; border-radius: 10px;
+  display: grid; place-items: center; background: rgba(57,210,192,.09);
+  border: 1px solid rgba(57,210,192,.24); font-size: 21px;
+}
+.building-card .b-title { font-weight: 800; font-size: 17px; letter-spacing: -0.01em; }
+.building-card .b-desc { color: #A7B0BC; font-size: 14px; line-height: 1.42; }
+.building-card.primary { border-color: rgba(57,210,192,.46); background: rgba(57,210,192,.06); }
+.connection-panel {
+  grid-column: span 2;
+  background: linear-gradient(135deg, rgba(137,87,229,.14), rgba(57,210,192,.06));
+  border: 1px solid rgba(137,87,229,.40); border-radius: 10px;
+  padding: 14px 18px;
+  display: flex; flex-direction: column; justify-content: center; gap: 8px;
+}
+.connection-panel .conn-title {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: .14em; text-transform: uppercase; font-weight: 700;
+  color: var(--purple); margin-bottom: 2px;
+}
+.connection-panel .conn-rule {
+  font-size: 13px; line-height: 1.5; color: var(--text);
+}
+.connection-panel .conn-key {
+  display: inline-block; padding: 1px 8px; border-radius: 4px;
+  background: rgba(57,210,192,.16); color: var(--teal);
+  font-weight: 800; font-family: 'JetBrains Mono', monospace; font-size: 11px;
+  letter-spacing: .04em; margin-right: 6px; vertical-align: 1px;
+}
+
 
 /* ═══ Slide 3 / 9: 3-column block cards ═══ */
 .cards-slide { justify-content: center; gap: 18px; }
@@ -342,6 +421,99 @@ html, body { height: 100%; background: var(--bg-2); color: var(--text); font-fam
 }
 .slide-quote strong { color: var(--text); }
 
+/* ═══ Slide 11+12: Landscape stack ═══ */
+.landscape-slide { justify-content: center; gap: 14px; }
+.landscape-slide h2 {
+  font-weight: 800; font-size: clamp(34px, 3.9vw, 50px);
+  line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance;
+}
+.landscape-slide h2 .accent { color: var(--purple); }
+.landscape-slide .lead { margin-bottom: 4px; }
+.landscape-grid {
+  display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: 22px; margin-top: 4px;
+}
+.landscape-stack { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.landscape-group-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: .14em; text-transform: uppercase; font-weight: 700;
+  color: var(--muted); margin: 4px 0 0 2px;
+}
+.landscape-group-label:first-child { margin-top: 0; }
+.landscape-layer {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  padding: 9px 16px; border-radius: 8px;
+  background: var(--panel); border: 1px solid var(--border);
+}
+.landscape-layer .layer-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.landscape-layer .layer-name {
+  font-weight: 700; font-size: 15px; letter-spacing: -0.01em;
+}
+.landscape-layer .layer-desc { color: var(--muted); font-size: 13px; line-height: 1.4; }
+.landscape-layer.future {
+  background: rgba(255,255,255,.02);
+  border-style: dashed; border-color: rgba(125,133,144,.5);
+}
+.landscape-layer.future .layer-name { color: var(--muted); }
+.landscape-layer.substrate {
+  background: rgba(137,87,229,.10);
+  border: 2px solid var(--purple);
+  padding: 12px 16px;
+  box-shadow: 0 0 28px rgba(137,87,229,.18);
+}
+.landscape-layer.substrate .layer-name {
+  font-size: 18px; font-weight: 800; color: var(--purple);
+}
+.landscape-layer.substrate .layer-desc { color: var(--text); }
+.landscape-badge {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: .08em; text-transform: uppercase; font-weight: 700;
+  padding: 4px 9px; border-radius: 4px; white-space: nowrap; flex-shrink: 0;
+}
+.landscape-badge.purple {
+  background: rgba(137,87,229,.18); color: var(--purple);
+  border: 1px solid rgba(137,87,229,.5);
+}
+.landscape-badge.teal {
+  background: rgba(57,210,192,.14); color: var(--teal);
+  border: 1px solid rgba(57,210,192,.4);
+}
+.landscape-badge.dim {
+  background: rgba(255,255,255,.04); color: var(--muted);
+  border: 1px dashed rgba(125,133,144,.5);
+}
+.landscape-notes { display: flex; flex-direction: column; gap: 12px; padding-top: 2px; }
+.landscape-note {
+  border-left: 3px solid var(--border);
+  padding: 4px 0 4px 14px;
+}
+.landscape-note .note-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  letter-spacing: .14em; text-transform: uppercase; font-weight: 700;
+  color: var(--muted); margin-bottom: 6px;
+}
+.landscape-note .note-text {
+  font-size: 13.5px; line-height: 1.5; color: var(--muted); text-wrap: pretty;
+}
+.landscape-note.primary { border-left-color: var(--purple); }
+.landscape-note.primary .note-label { color: var(--purple); }
+.landscape-note.primary .note-text { color: var(--text); font-weight: 500; }
+.landscape-note .pink { color: var(--pink); font-weight: 700; }
+
+/* ═══ Slide 12+13: Adoption curve ═══ */
+.curve-slide { justify-content: center; gap: 14px; }
+.curve-slide h2 {
+  font-weight: 800; font-size: clamp(34px, 3.9vw, 50px);
+  line-height: 1.05; letter-spacing: -0.02em; text-wrap: balance;
+}
+.curve-slide h2 .accent { color: var(--purple); }
+.curve-slide .lead { margin-bottom: 2px; }
+.curve-card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+  padding: 14px 22px 4px; margin-top: 2px;
+}
+.curve-svg { width: 100%; height: auto; max-height: 340px; display: block; }
+
 /* ── Nav hint — hidden, available on hover ── */
 .hint { display: none; }
 
@@ -427,35 +599,42 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
     </div>
     <div>cli-intro &middot; v3</div>
   </div>
-  <div class="footer">1 / 10</div>
+  <div class="footer">1 / 13</div>
 </section>
 
-<!-- ═══ SLIDE 2: Copilot Ladder ═══ -->
-<section class="slide ladder-slide" id="ladder" data-act="1" data-label="Ladder"
-  data-notes="DO: Walk through the ladder bottom to top. Pause on CLI and tap it.&#10;&#10;SAY: You already know M365 Copilot. Draft an email, summarize a meeting. Individual tasks.&#10;&#10;CLI goes further. It connects to your actual tools &mdash; PMX, MSX, email, calendar &mdash; and produces structured repeatable workflows. Not chat answers. Artifacts.&#10;&#10;Agency makes CLI Microsoft-ready: internal auth, shared plugins, telemetry, governance.&#10;&#10;Squad handles the bigger stuff &mdash; multi-agent coordination for long-running initiatives.&#10;&#10;Our focus today is CLI. The step from getting help to operationalizing your work.">
-  <div class="kicker">&#9670; where does this fit?</div>
-  <h2>The Copilot <span class="accent">Ladder</span></h2>
-  <p class="lead">Each layer adds capability. You&rsquo;re already on the first rung.</p>
-  <div class="ladder-stack">
-    <div class="ladder-item pink-b">
-      <div class="l-name">Squad</div>
-      <div class="l-desc">Multi-agent coordination. Long-running, role-divided, memory-heavy work.</div>
+<!-- ═══ SLIDE: The operating stack ═══ -->
+<section class="slide stack-slide" id="operating-stack" data-act="1" data-label="Operating Stack"
+  data-notes="DO: Quick orient. 60-90 seconds. This is the map, not the pitch.&#10;&#10;SAY: There has been a lot of confusion about which Copilot to pick when. Here is the map.&#10;&#10;M365 Copilot is the everyday assistant inside Office. Ambient help, individual tasks.&#10;&#10;CLI is where the work becomes operational. It runs commands, talks to your tools, keeps state, and produces artifacts. That is where we are today.&#10;&#10;Agency is Microsoft internal only. Partners cannot use it. Squads are experimental multi-agent teams on top.&#10;&#10;Anticipated Q: Where does Cowork fit?&#10;Anticipated A: Parallel surface for non-terminal users. Same data, less control, no tool orchestration with state. We come back to it on the landscape slide.&#10;&#10;Today is about CLI &mdash; and how it changes the kind of work you can hand off.">
+  <div class="kicker">&#9670; where CLI fits</div>
+  <h2>The <span class="accent">operating stack</span></h2>
+  <p class="lead">Pick the layer by the work you need done.</p>
+  <div class="stack-flow" aria-label="Operating stack from M365 Copilot to Squads">
+    <div class="stack-card">
+      <div class="name">M365 Copilot</div>
+      <div class="role">Ambient assistant inside Word, Outlook, and Teams.</div>
+      <div class="who"><strong>Who:</strong> Everyone, every day</div>
     </div>
-    <div class="ladder-item blue-b">
-      <div class="l-name">Agency</div>
-      <div class="l-desc">Microsoft integration layer. Internal auth, shared plugins, telemetry, governance.</div>
+    <div class="stack-arrow">&rarr;</div>
+    <div class="stack-card cli-card">
+      <div class="name">Copilot CLI</div>
+      <div class="role">Operational workflows in your terminal. Runs commands, talks to tools, keeps state.</div>
+      <div class="who"><strong>Who:</strong> Anyone willing to leave the chat box</div>
     </div>
-    <div class="ladder-item purple-b">
-      <div class="l-name">GitHub Copilot CLI</div>
-      <div class="l-desc">Operationalizes work. Multi-step, multi-source, repeatable, inspectable.</div>
+    <div class="stack-arrow">&rarr;</div>
+    <div class="stack-card">
+      <div class="name">Agency</div>
+      <div class="role">Internal Microsoft auth and tool wrapper around CLI.</div>
+      <div class="who"><strong>Who:</strong> Microsoft internal only &mdash; not for partners</div>
     </div>
-    <div class="ladder-item green-b">
-      <div class="l-name">M365 Copilot</div>
-      <div class="l-desc">Helps you with work. Draft, summarize, find. One task at a time.</div>
+    <div class="stack-arrow">&rarr;</div>
+    <div class="stack-card">
+      <div class="name">Squads</div>
+      <div class="role">Multi-agent virtual teams on top of CLI.</div>
+      <div class="who"><strong>Who:</strong> Experimental, open-source</div>
     </div>
   </div>
-  <div class="ladder-bottom">Today we focus on rung 2 &mdash; where your work becomes <strong>operational</strong>.</div>
-  <div class="footer">2 / 10</div>
+  <div class="stack-close">Today is about <strong>CLI</strong> &mdash; and how it changes the kind of work you can hand off.</div>
+  <div class="footer">2 / 13</div>
 </section>
 
 <!-- ═══ SLIDE 3: Why Now ═══ -->
@@ -481,7 +660,7 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
       <div class="desc">AI checks its own work. Iterate, improve, converge &mdash; in loops, not one-shots.</div>
     </div>
   </div>
-  <div class="footer">3 / 10</div>
+  <div class="footer">3 / 13</div>
 </section>
 
 <!-- ═══ SLIDE 4: Four Properties ═══ -->
@@ -516,7 +695,7 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
       <div class="mono">/compact &middot; /resume &middot; sessions</div>
     </div>
   </div>
-  <div class="footer">4 / 10</div>
+  <div class="footer">4 / 13</div>
 </section>
 
 <!-- ═══ SLIDE 5: Demo 1 — Partner Briefing ═══ -->
@@ -524,6 +703,7 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
   data-notes="DO: LIVE DEMO. Have Notepad open with the two prompts ready to paste. All prompts are READ-ONLY. We pull data. We do not create anything in PMX.&#10;&#10;Before you paste, remind the room this is a live environment. No create, update, or link commands today.&#10;&#10;Prompt flow:&#10;1. Paste Prompt 1 for the partner briefing.&#10;2. Let the tool calls show. Do not talk over the first few calls.&#10;3. Scroll slowly when the structured output appears.&#10;4. Paste Prompt 2 to refine or reshape the briefing.&#10;5. At the end, show /compact as a concept. If time is tight, say it rather than running it.&#10;&#10;If a tool call is slow, say: the first multi-tool run is often the slowest. That is normal.&#10;&#10;SAY: Let me show you what this looks like. I have a Partner Sync tomorrow.&#10;&#10;Normally that means five browser tabs and twenty minutes stitching the picture together. Instead, one conversation.&#10;&#10;Watch two things: which tools it calls, and what comes out.&#10;&#10;[PASTE PROMPT 1 from Notepad]&#10;&#10;While it runs: Notice it is calling specific tools. PMX for project data. MSX for the pipeline. M365 for email. Each tool returns real, current data from your actual systems.&#10;&#10;M365 Copilot cannot do this. It lives inside Office. CLI connects across tools.&#10;&#10;[PASTE PROMPT 2 from Notepad]&#10;&#10;This is the key difference. M365 Copilot gives you an answer in a chat bubble. CLI gives you an artifact &mdash; structured, sections, shareable.&#10;&#10;Now here is why this is a factory, not a one-off. Same conversation, different partner name. And if you save these prompts as instructions, your whole team runs the same pattern.&#10;&#10;One more thing M365 Copilot cannot do: /compact. This summarizes the session. Tomorrow I /resume and all the context is still there.">
   <div class="demo-split">
     <div class="left-panel">
+      <div class="audience-badges"><span class="audience-badge">📖 Business roles</span><span class="audience-badge tech">🔧 Technical deep dive</span></div>
       <h2>Five tabs &rarr;<br>One <span class="accent">conversation</span>.</h2>
       <p class="lead">PMX + MSX + M365 &rarr; structured partner briefing. Repeatable for any partner, every Partner Sync.</p>
       <div class="watch-for">
@@ -558,12 +738,65 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
       </div>
     </div>
   </div>
-  <div class="footer">5 / 10</div>
+  <div class="footer">5 / 13</div>
+</section>
+
+<!-- ═══ SLIDE: What's inside Copilot CLI ═══ -->
+<section class="slide blocks-slide" id="cli-building-blocks" data-act="3" data-label="Building Blocks"
+  data-notes="DO: 90 seconds. Bridge between the demo and Exercise 1. Don't read every card.&#10;&#10;SAY: This is the map. Seven moving parts. You only need the first two to start.&#10;&#10;Instructions are your house rules &mdash; markdown files CLI reads every session. MCP servers are the connectors to your tools: PMX, GitHub, M365.&#10;&#10;The rest is for when you have a workflow worth packaging. Skills are reusable abilities you trigger by phrase. Agents are scoped sub-personas with their own context. Plugins bundle the lot. Extensions are small tools the CLI can run. Hooks are lifecycle interceptors &mdash; pre-prompt, post-tool, that kind of thing.&#10;&#10;Right side shows how they fit together. A plugin bundles skills, extensions, hooks, agents. An agent uses instructions, MCP, skills.&#10;&#10;Don't try to memorize all seven. Most people start with Instructions and MCP servers. The rest comes later.">
+  <div class="audience-badges"><span class="audience-badge tech">🔧 Technical deep dive</span></div>
+  <div class="kicker">&#9670; the moving parts</div>
+  <h2>What's inside <span class="accent">Copilot CLI</span></h2>
+  <p class="lead">Seven building blocks. You only need the first two to start.</p>
+  <div class="block-grid">
+    <div class="building-card primary">
+      <div class="b-icon">&#128221;</div>
+      <div class="b-title">Instructions</div>
+      <div class="b-desc">Markdown house rules (<code>copilot-instructions.md</code>). Set once, applies always.</div>
+    </div>
+    <div class="building-card primary">
+      <div class="b-icon">&#128268;</div>
+      <div class="b-title">MCP servers</div>
+      <div class="b-desc">Connectors to your tools: PMX, GitHub, M365. Like Power Automate connectors.</div>
+    </div>
+    <div class="building-card">
+      <div class="b-icon">&#9889;</div>
+      <div class="b-title">Skills</div>
+      <div class="b-desc">Reusable abilities CLI can invoke: build a deck, humanize content. Trigger by phrase.</div>
+    </div>
+    <div class="building-card">
+      <div class="b-icon">&#129302;</div>
+      <div class="b-title">Agents</div>
+      <div class="b-desc">Sub-personas with their own scope: rubber-duck, outlook-assistant.</div>
+    </div>
+    <div class="building-card">
+      <div class="b-icon">&#128230;</div>
+      <div class="b-title">Plugins</div>
+      <div class="b-desc">Bundles of skills, extensions, hooks, agents. Install in one shot.</div>
+    </div>
+    <div class="building-card">
+      <div class="b-icon">&#128736;</div>
+      <div class="b-title">Extensions</div>
+      <div class="b-desc">Small bits of code CLI can run as tools, like environment scanners.</div>
+    </div>
+    <div class="building-card">
+      <div class="b-icon">&#129693;</div>
+      <div class="b-title">Hooks</div>
+      <div class="b-desc">Lifecycle interceptors. Pre-prompt, post-tool, on-session-start.</div>
+    </div>
+    <div class="connection-panel">
+      <div class="conn-title">how they connect</div>
+      <div class="conn-rule"><span class="conn-key">Plugin</span> bundles Skills &middot; Extensions &middot; Hooks &middot; Agents</div>
+      <div class="conn-rule"><span class="conn-key">Agent</span> uses Instructions &middot; MCP &middot; Skills</div>
+    </div>
+  </div>
+  <div class="footer">6 / 13</div>
 </section>
 
 <!-- ═══ SLIDE 6: Exercise 1 ═══ -->
 <section class="slide exercise-slide" id="exercise-1" data-act="3" data-label="Exercise 1"
   data-notes="DO: Give them 8 minutes. Everyone starts with the same prompt from exercise sheet. Then self-paced. Walk around, troubleshoot.&#10;&#10;Facilitation cues:&#10;1. Ask everyone to start with a real partner name they already work with.&#10;2. After 2 minutes, check who is still stuck at setup.&#10;3. Ask one person with a good result to compare what sections came back.&#10;4. Keep saying: read-only only. No create or update actions in PMX today.&#10;&#10;Common issues:&#10;&mdash; PMX auth expired: re-run az login in separate PowerShell&#10;&mdash; No projects found: try a different partner name&#10;&mdash; Slow response: normal for first multi-tool call&#10;&#10;SAY: Your turn. Pick a partner you have real work with.&#10;&#10;Copy the prompt from exercise one, swap in the partner name, and see what comes back.&#10;&#10;This is your data. Your projects. Your pipeline. Real results, not a simulation.&#10;&#10;Hand up if you get stuck.">
+  <div class="audience-badges"><span class="audience-badge">📖 Business roles</span></div>
   <div class="kicker">&#9670; your turn</div>
   <h2>Build your own <span class="accent-green">partner briefing</span>.</h2>
   <div class="process-flow" style="justify-content:center;">
@@ -572,7 +805,7 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
     <span class="step hl-green">Get your briefing</span>
   </div>
   <div class="quote">Copy the prompt from your exercise sheet. Replace the partner name. See what comes back.</div>
-  <div class="footer">6 / 10</div>
+  <div class="footer">7 / 13</div>
 </section>
 
 <!-- ═══ SLIDE 7: Demo 2 — Workshop to Plan ═══ -->
@@ -580,6 +813,7 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
   data-notes="DO: LIVE DEMO. Have Notepad open with prompts. Workshop-notes.txt must be in your working directory. All prompts are READ-ONLY.&#10;&#10;Before you start, remind the room: this demo stays on analysis and planning. Do not run anything that creates or updates PMX records in the live environment.&#10;&#10;Prompt flow:&#10;1. Paste Prompt 1 and feed @workshop-notes.txt for analysis.&#10;2. Pause on what-is-missing and read one or two examples out loud.&#10;3. Paste Prompt 2 to generate the structured action plan.&#10;4. Scroll through phases, owners, risks, and open questions.&#10;5. Paste Prompt 3 to add the TCO estimate.&#10;6. If time allows, show /compact. Then say /resume brings it back tomorrow.&#10;&#10;NOTE: The storyboard has a /plan Create PMX project prompt. DO NOT run it. Show only. Say: CLI could take it further and create the project in PMX, but I will not run that in the live environment.&#10;&#10;SAY: This is the universal pain point. You run a great discovery call, take good notes. Then nothing structured happens. Notes sit in OneNote. Action items sit in your head.&#10;&#10;Let me show you how CLI bridges that gap.&#10;&#10;[PASTE PROMPT 1 &mdash; feed @workshop-notes.txt and ask for analysis]&#10;&#10;The @ tells CLI to read the file. It does not just summarize &mdash; it analyzes. Look at the what-is-missing section. That kind of insight usually takes a week to surface.&#10;&#10;[PASTE PROMPT 2 &mdash; generate structured action plan]&#10;&#10;This is the bridge. Raw notes become a phased plan with tasks, owners, risks, open questions.&#10;&#10;[PASTE PROMPT 3 &mdash; add TCO estimate]&#10;&#10;The plan is a living document. Add sections, refine estimates, adjust scope &mdash; all in the same session.&#10;&#10;And if I come back tomorrow: /compact now, /resume later. Nothing lost.">
   <div class="demo-split">
     <div class="left-panel">
+      <div class="audience-badges"><span class="audience-badge">📖 Business roles</span><span class="audience-badge tech">🔧 Technical deep dive</span><span class="audience-badge trap">⚠️ Common trap</span></div>
       <h2>Great workshop.<br><span class="accent">Now what?</span></h2>
       <p class="lead">Raw notes &rarr; phased plan with tasks, owners, risks, and next steps.</p>
       <div class="watch-for">
@@ -611,12 +845,13 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
       </div>
     </div>
   </div>
-  <div class="footer">7 / 10</div>
+  <div class="footer">8 / 13</div>
 </section>
 
 <!-- ═══ SLIDE 8: Exercise 2 ═══ -->
 <section class="slide exercise-slide" id="exercise-2" data-act="4" data-label="Exercise 2"
   data-notes="DO: Give them 8 minutes. Self-paced. Walk around, highlight interesting results. Time calls: 4 min warning, 1 min warning.&#10;&#10;Facilitation cues:&#10;1. Tell them to pick the scenario closest to their real work, not the fanciest one.&#10;2. If someone finishes early, ask them what they would do next in the same session.&#10;3. Ask two people to share which scenario they chose and why.&#10;4. Keep steering people away from write actions in live PMX. Read-only only today.&#10;&#10;SAY: Last exercise. Pick whichever scenario matches what you actually do.&#10;&#10;Four options on the exercise sheet. Workshop to plan, opportunity gaps, multi-source email, research to roadmap. Each has ready-to-paste prompts.&#10;&#10;Finish early? Try a second one.">
+  <div class="audience-badges"><span class="audience-badge">📖 Business roles</span></div>
   <div class="kicker">&#9670; your turn &mdash; pick a scenario</div>
   <h2>Pick your <span class="accent-amber">scenario</span>.</h2>
   <div class="scenario-grid">
@@ -641,7 +876,7 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
       <div class="desc">Combine /research with pipeline data for strategic suggestions.</div>
     </div>
   </div>
-  <div class="footer">8 / 10</div>
+  <div class="footer">9 / 13</div>
 </section>
 
 <!-- ═══ SLIDE 9: Bigger Picture ═══ -->
@@ -668,7 +903,148 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
     </div>
   </div>
   <div class="slide-quote">The question is not &ldquo;can I use this?&rdquo; &mdash; it&rsquo;s &ldquo;<strong>what workflow should my team standardize first?</strong>&rdquo;</div>
-  <div class="footer">9 / 10</div>
+  <div class="footer">10 / 13</div>
+</section>
+
+<!-- ═══ SLIDE: Landscape Stack ═══ -->
+<section class="slide landscape-slide" id="landscape-stack" data-act="5" data-label="Landscape"
+  data-notes="DO: Pause about 60 seconds. Some folks already know the names from leaks; some don&rsquo;t. Don&rsquo;t go deep on each one &mdash; point at them, name the pattern, move on.&#10;&#10;SAY: There&rsquo;s a wave of new Microsoft AI surfaces coming. Project Lobster, ClawPilot, Agency Cowork, the GitHub Desktop App. Don&rsquo;t worry about memorizing the names.&#10;&#10;Notice what they all share at the bottom. They sit on the same engine &mdash; GitHub Copilot CLI. The internal apps are wrappers. Skins. The CLI is the spine.&#10;&#10;M365 Copilot Cowork sits on a different track. The consumer M365 stack. Different license, already mainstream. Not what we&rsquo;re learning today.&#10;&#10;Why this matters for you: the apps on top are gated, internal-only, and still moving. You can&rsquo;t put any of them in a partner&rsquo;s hands. The CLI is the only path that&rsquo;s public, GA, and shareable today.&#10;&#10;Learn the engine. Every app coming next is a 30-minute pickup once you have the substrate.">
+  <div class="kicker">&#9670; the landscape, simplified</div>
+  <h2>Apps are skins. The <span class="accent">CLI is the spine</span>.</h2>
+  <p class="lead">A wave of new Microsoft AI surfaces is coming. Almost all of them sit on the same engine.</p>
+
+  <div class="landscape-grid">
+    <div class="landscape-stack">
+      <div class="landscape-group-label">Strategic futures</div>
+      <div class="landscape-layer future">
+        <div class="layer-info">
+          <div class="layer-name">Project Lobster</div>
+          <div class="layer-desc">Identity, governance, runtime &mdash; builds on Cowork + ClawPilot</div>
+        </div>
+        <span class="landscape-badge dim">Future</span>
+      </div>
+
+      <div class="landscape-group-label">GUI wrappers (skins on the engine)</div>
+      <div class="landscape-layer">
+        <div class="layer-info">
+          <div class="layer-name">GitHub Desktop App</div>
+          <div class="layer-desc">Desktop GUI &mdash; requires gh CLI + Copilot CLI underneath</div>
+        </div>
+        <span class="landscape-badge teal">Internal Insiders</span>
+      </div>
+      <div class="landscape-layer">
+        <div class="layer-info">
+          <div class="layer-name">Agency Cowork</div>
+          <div class="layer-desc">Microsoft-flavoured wrapper around GitHub Copilot CLI</div>
+        </div>
+        <span class="landscape-badge teal">Internal MSFT</span>
+      </div>
+      <div class="landscape-layer">
+        <div class="layer-info">
+          <div class="layer-name">ClawPilot</div>
+          <div class="layer-desc">Dogfood &mdash; same AI pipeline as approved GitHub Copilot CLI</div>
+        </div>
+        <span class="landscape-badge teal">Internal dogfood</span>
+      </div>
+
+      <div class="landscape-group-label">The substrate</div>
+      <div class="landscape-layer substrate">
+        <div class="layer-info">
+          <div class="layer-name">GitHub Copilot CLI</div>
+          <div class="layer-desc">The engine everything else wraps &middot; GA &middot; partner-shareable today</div>
+        </div>
+        <span class="landscape-badge purple">Public &middot; GA</span>
+      </div>
+    </div>
+
+    <div class="landscape-notes">
+      <div class="landscape-note primary">
+        <div class="note-label">Where you enter</div>
+        <div class="note-text">Start at the substrate. Skills compound upward to every layer above.</div>
+      </div>
+      <div class="landscape-note">
+        <div class="note-label">Adjacent track</div>
+        <div class="note-text"><span class="pink">M365 Copilot Cowork</span> sits on the M365 stack, not this one. Different license, already mainstream.</div>
+      </div>
+      <div class="landscape-note">
+        <div class="note-label">Why not wait</div>
+        <div class="note-text">Internal apps are gated to Microsoft tenants. The CLI is the only path you can put in a partner&rsquo;s hands today.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-quote">The internal apps are exciting &mdash; and gated, mid-build, and shifting. <strong>The CLI is the constant.</strong> Bet on the layer that doesn&rsquo;t change.</div>
+  <div class="footer">11 / 13</div>
+</section>
+
+<!-- ═══ SLIDE: Adoption Curve ═══ -->
+<section class="slide curve-slide" id="adoption-curve" data-act="5" data-label="Curve"
+  data-notes="DO: Closer-before-the-closer. Land the visual. Pause. Then the punchline.&#10;&#10;SAY: One curve. You know it.&#10;&#10;Now look where partners are sitting today.&#10;&#10;M365 Copilot Cowork &mdash; well past the chasm, into early majority. Mainstream. Crowded. Hard to differentiate.&#10;&#10;Copilot CLI &mdash; deep innovators. The whole curve is wide open. That purple zone? That is where you can sit for the next 12 months while everyone else figures out what 'agentic' even means.&#10;&#10;Here is the punch.&#10;&#10;Your competitor walks into a partner meeting next Tuesday with M365 Copilot. You walk in with a tool-connected briefing, a structured action plan, and a working environment. Same hour. Different conversation.&#10;&#10;That gap does not exist forever. It exists right now.">
+  <div class="kicker">&#9670; where the opportunity is</div>
+  <h2>Be the early adopter who teaches the <span class="accent">early adopters</span>.</h2>
+  <p class="lead">Partners are well into early majority on M365 Copilot. On Copilot CLI, the curve is wide open &mdash; for at least 12 months.</p>
+
+  <div class="curve-card">
+    <svg viewBox="0 0 1100 460" class="curve-svg" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Adoption curve showing partners on Copilot CLI versus M365 Copilot Cowork">
+      <defs>
+        <clipPath id="bellAreaDeck">
+          <path d="M 0,380 C 220,380 380,100 550,100 C 720,100 880,380 1100,380 Z" />
+        </clipPath>
+      </defs>
+
+      <rect x="27.5" y="0" width="148.5" height="380" fill="rgba(137,87,229,0.22)" clip-path="url(#bellAreaDeck)" />
+
+      <path d="M 0,380 C 220,380 380,100 550,100 C 720,100 880,380 1100,380 Z" fill="rgba(230,237,243,0.04)" />
+      <path d="M 0,380 C 220,380 380,100 550,100 C 720,100 880,380 1100,380" fill="none" stroke="rgba(230,237,243,0.45)" stroke-width="2" />
+
+      <line x1="0" y1="380" x2="1100" y2="380" stroke="rgba(230,237,243,0.25)" stroke-width="1" />
+
+      <line x1="27.5" y1="380" x2="27.5" y2="408" stroke="rgba(230,237,243,0.3)" stroke-width="1" stroke-dasharray="2,3" />
+      <line x1="176" y1="380" x2="176" y2="408" stroke="rgba(230,237,243,0.3)" stroke-width="1" stroke-dasharray="2,3" />
+      <line x1="550" y1="380" x2="550" y2="408" stroke="rgba(230,237,243,0.3)" stroke-width="1" stroke-dasharray="2,3" />
+      <line x1="924" y1="380" x2="924" y2="408" stroke="rgba(230,237,243,0.3)" stroke-width="1" stroke-dasharray="2,3" />
+
+      <text x="14" y="425" text-anchor="middle" fill="rgba(230,237,243,0.7)" font-size="11" font-family="Mona Sans" font-weight="600">Innovators</text>
+      <text x="14" y="442" text-anchor="middle" fill="rgba(230,237,243,0.4)" font-size="10" font-family="JetBrains Mono">2.5%</text>
+
+      <text x="101" y="425" text-anchor="middle" fill="rgba(230,237,243,0.7)" font-size="11" font-family="Mona Sans" font-weight="600">Early Adopters</text>
+      <text x="101" y="442" text-anchor="middle" fill="rgba(230,237,243,0.4)" font-size="10" font-family="JetBrains Mono">13.5%</text>
+
+      <text x="363" y="425" text-anchor="middle" fill="rgba(230,237,243,0.7)" font-size="11" font-family="Mona Sans" font-weight="600">Early Majority</text>
+      <text x="363" y="442" text-anchor="middle" fill="rgba(230,237,243,0.4)" font-size="10" font-family="JetBrains Mono">34%</text>
+
+      <text x="737" y="425" text-anchor="middle" fill="rgba(230,237,243,0.7)" font-size="11" font-family="Mona Sans" font-weight="600">Late Majority</text>
+      <text x="737" y="442" text-anchor="middle" fill="rgba(230,237,243,0.4)" font-size="10" font-family="JetBrains Mono">34%</text>
+
+      <text x="1012" y="425" text-anchor="middle" fill="rgba(230,237,243,0.7)" font-size="11" font-family="Mona Sans" font-weight="600">Laggards</text>
+      <text x="1012" y="442" text-anchor="middle" fill="rgba(230,237,243,0.4)" font-size="10" font-family="JetBrains Mono">16%</text>
+
+      <line x1="20" y1="80" x2="20" y2="378" stroke="#8957E5" stroke-width="2" />
+      <circle cx="20" cy="378" r="6" fill="#8957E5" stroke="#0D1117" stroke-width="2" />
+      <g transform="translate(20, 70)">
+        <rect x="-4" y="-46" width="240" height="46" rx="6" fill="#8957E5" />
+        <text x="116" y="-26" text-anchor="middle" fill="#FFFFFF" font-size="11" font-family="Mona Sans" font-weight="800" letter-spacing="0.08em">PARTNERS &middot; COPILOT CLI</text>
+        <text x="116" y="-9" text-anchor="middle" fill="#FFFFFF" font-size="12" font-family="Mona Sans" font-weight="500">Today: deep innovators</text>
+      </g>
+
+      <line x1="600" y1="170" x2="600" y2="378" stroke="#F778BA" stroke-width="2" />
+      <circle cx="600" cy="170" r="6" fill="#F778BA" stroke="#0D1117" stroke-width="2" />
+      <g transform="translate(600, 160)">
+        <rect x="-150" y="-46" width="300" height="46" rx="6" fill="#F778BA" />
+        <text x="0" y="-26" text-anchor="middle" fill="#0D1117" font-size="11" font-family="Mona Sans" font-weight="800" letter-spacing="0.08em">PARTNERS &middot; M365 COPILOT COWORK</text>
+        <text x="0" y="-9" text-anchor="middle" fill="#0D1117" font-size="12" font-family="Mona Sans" font-weight="500">Today: well into early majority</text>
+      </g>
+
+      <g transform="translate(101, 280)">
+        <rect x="-95" y="-15" width="190" height="30" rx="15" fill="#8957E5" />
+        <text x="0" y="5" text-anchor="middle" fill="#FFFFFF" font-size="12" font-family="Mona Sans" font-weight="800" letter-spacing="0.06em">YOU CAN LEAD HERE</text>
+      </g>
+      <line x1="101" y1="296" x2="101" y2="345" stroke="#8957E5" stroke-width="1.5" stroke-dasharray="3,3" />
+    </svg>
+  </div>
+
+  <div class="slide-quote">Skills built on the CLI transfer up to every app coming next. Skills built on apps don&rsquo;t transfer down. <strong>Bet on the substrate.</strong></div>
+  <div class="footer">12 / 13</div>
 </section>
 
 <!-- ═══ SLIDE 10: Close ═══ -->
@@ -699,7 +1075,7 @@ body.mode-thumb .hint, body.mode-thumb .progress, body.mode-thumb .footer { disp
     <a href="https://gh.io/copilot-cli-course" target="_blank">gh.io/copilot-cli-course</a> &nbsp;&middot;&nbsp;
     <a href="https://docs.github.com/copilot/cli" target="_blank">docs.github.com/copilot/cli</a>
   </div>
-  <div class="footer">10 / 10</div>
+  <div class="footer">13 / 13</div>
 </section>
 
 </div><!-- end deck -->
@@ -786,11 +1162,11 @@ else {
 
 const ACTS = [
   { label: 'Intro',      num: '01', slides: [0] },
-  { label: 'Why now',    num: '02', slides: [1, 2] },
+  { label: 'Context',    num: '02', slides: [1, 2] },
   { label: 'The delta',  num: '03', slides: [3] },
-  { label: 'Demo 1',     num: '04', slides: [4, 5] },
-  { label: 'Demo 2',     num: '05', slides: [6, 7] },
-  { label: 'What\u2019s next', num: '06', slides: [8, 9] },
+  { label: 'Demo 1',     num: '04', slides: [4, 5, 6] },
+  { label: 'Demo 2',     num: '05', slides: [7, 8] },
+  { label: 'What\u2019s next', num: '06', slides: [9, 10, 11, 12] },
 ];
 
 const slides = [...document.querySelectorAll('.slide')];

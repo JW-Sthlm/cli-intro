@@ -13,21 +13,31 @@
 ## Before You Start
 
 1. **Open a project folder.** If you don't have one, ask Copilot CLI:
+
+   **📖 Business roles** — Just ask CLI to create a safe working folder.
+
    ```
    Create a folder called cli-workshop in my projects directory and open it.
    ```
    This is your working directory. Any files CLI creates or reads (with `@`) will be here.
 
 2. **Check your tools are connected.** Just ask:
+
+   **📖 Business roles** — This tells you whether the workshop connectors are ready.
+
    ```
    Am I connected to PMX? What tools do I have available?
    ```
+
+   **🔧 Technical deep dive** — If you want to inspect the loaded connectors manually, use `/env` inside CLI and look for MCP servers.
 
 ---
 
 ## Part A: Guided — Build the Briefing (4 min)
 
-Pick a partner you have active work with. Copy-paste this prompt, replacing `[Partner Name]`:
+Pick a partner you have active work with.
+
+**📖 Business roles** — Copy-paste this prompt, replacing `[Partner Name]`.
 
 ```
 I'm preparing for a meeting with [Partner Name]. Build me a structured partner briefing:
@@ -48,15 +58,15 @@ Then synthesize into a briefing with:
 
 **What you should see:** A structured briefing pulling live data from PMX, MSX, and M365.
 
-> **Not working?** 
-> - PMX errors → re-run `az login --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47` in a separate PowerShell
-> - "No projects found" → try a different partner, or ask `Show me my active PMX projects` first to find one
+> **⚠️ Common trap** — PMX errors usually mean Azure login expired. Re-run `az login --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47` in a separate PowerShell.
+>
+> **📖 Business roles** — If you see "No projects found", try a different partner, or ask `Show me my active PMX projects` first to find one.
 
 ---
 
 ## Part B: Explore (4 min)
 
-Try any of these follow-ups:
+**📖 Business roles** — Try any of these follow-ups. Pick the one closest to your real work.
 
 **Go deeper on gaps:**
 ```
@@ -72,6 +82,8 @@ Draft a short prep email to the PDM with the key talking points from this briefi
 ```
 Now do the same briefing for [Other Partner]. How do they compare in terms of project health and pipeline?
 ```
+
+**🔧 Technical deep dive** — This prompt is for people who want to understand repeatability and reuse. Optional.
 
 **Ask about the workflow:**
 ```

@@ -8,9 +8,11 @@
 
 This repo contains all materials for the **Copilot CLI intro session** — slides, exercise prompts, cheat sheets, and setup guides. You're here to grab exercise prompts during the session and reference materials after.
 
+**📖 Business roles** — Follow the path below. You can complete the workshop by browsing, copying prompts, and talking to CLI.
+
 **Your journey through these materials:**
 
-> 📖 **You are here** → [Setup Guide](pre-work/setup-guide.md) → [Verify Checklist](pre-work/verify-checklist.md) → **Session day!** → [Exercise 1](exercises/exercise-01-build-your-briefing.md) → [Exercise 2](exercises/exercise-02-pick-your-scenario.md) → [Cheat Sheet](reference/cheat-sheet.md) → [After-Session Resources](reference/after-session-resources.md)
+> 📖 **You are here** → [Setup Guide](pre-work/setup-guide.md) → [Verify Checklist](pre-work/verify-checklist.md) → **Session day!** → [Exercise 1](exercises/exercise-01-build-your-briefing.md) → [Exercise 2](exercises/exercise-02-pick-your-scenario.md) → [Exercise 3](exercises/exercise-03-your-copilot-passport.md) → [Cheat Sheet](reference/cheat-sheet.md) → [After-Session Resources](reference/after-session-resources.md)
 
 ---
 
@@ -46,6 +48,8 @@ You have two options. Pick whichever feels more comfortable:
 
 ### Option 1: Just browse on GitHub (easiest)
 
+**📖 Business roles** — Start here if you do not care where the files live. Browse, copy, paste.
+
 1. You're already here — this page is on GitHub
 2. Click on the **`exercises/`** folder in the file list above
 3. Click on the exercise file (e.g., `exercise-01-build-your-briefing.md`)
@@ -55,6 +59,8 @@ That's it. No installation, no terminal magic. Just browse and copy.
 
 ### Option 2: Clone the repo to your machine (more useful long-term)
 
+**🔧 Technical deep dive** — Clone the repo if you want CLI to read local files with `@filename` or if you want to keep your own notes.
+
 "Cloning" means downloading the entire folder to your laptop. Useful because:
 - Files are on your machine — works offline
 - Copilot CLI can read files directly with `@filename`
@@ -62,7 +68,7 @@ That's it. No installation, no terminal magic. Just browse and copy.
 
 **How to clone:**
 
-Open PowerShell and run:
+**📖 Business roles** — Open PowerShell and run these lines.
 
 ```powershell
 cd ~\projects
@@ -84,7 +90,8 @@ Now all files are in `C:\Users\<you>\projects\cli-intro\v2\`. You can open them 
 v2/
 ├── exercises/               ← YOUR exercise prompts — copy-paste these! ⭐
 │   ├── exercise-01-build-your-briefing.md
-│   └── exercise-02-pick-your-scenario.md
+│   ├── exercise-02-pick-your-scenario.md
+│   └── exercise-03-your-copilot-passport.md
 ├── reference/               ← Keep these — useful during + after the session
 │   ├── cheat-sheet.md          Quick reference for commands and workflows
 │   ├── after-session-resources.md   Links for deep dives and self-study
@@ -99,6 +106,8 @@ v2/
 ---
 
 ## Jargon decoder
+
+**📖 Business roles** — Use this table when a facilitator says a word that sounds like developer jargon.
 
 | Term | What it means | Familiar analogy |
 |------|-------------|-----------------|
@@ -118,9 +127,13 @@ v2/
 
 **Before the session:** Go to the [Setup Guide](pre-work/setup-guide.md) → then run the [Verify Checklist](pre-work/verify-checklist.md)
 
-**During the session:** Open [Exercise 1](exercises/exercise-01-build-your-briefing.md) when the facilitator says "your turn"
+**Stuck on setup?** See [Setup Clinic](setup-clinic/README.md) — a 30–45 min guided session you can run before the main workshop.
+
+**During the session:** Open [Exercise 1](exercises/exercise-01-build-your-briefing.md), [Exercise 2](exercises/exercise-02-pick-your-scenario.md), and [Exercise 3](exercises/exercise-03-your-copilot-passport.md) when the facilitator says "your turn"
 
 **After the session:** Bookmark the [Cheat Sheet](reference/cheat-sheet.md) and check out [After-Session Resources](reference/after-session-resources.md)
+
+**Want to go deeper async, or missed the workshop?** [Self-service course](self-service-course/README.md) — partner-flavored, 90 min – 3h, two tracks (📖 business / 🔧 technical).
 
 ---
 

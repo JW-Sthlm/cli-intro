@@ -4,13 +4,72 @@ Common issues and fixes for Copilot CLI.
 
 ---
 
+## Account & Auth Traps
+
+### ⚠️ Common trap: I was asked for a Personal Access Token
+
+**📖 Business roles** — Stop there. Do not create a Personal Access Token for this workshop. It usually means GitHub is using the wrong account.
+
+Run this in PowerShell instead:
+
+```
+gh auth switch --user <other-account>
+```
+
+Then retry the step that failed.
+
+**🔧 Technical deep dive** — A Personal Access Token is a manual GitHub password replacement. It can work, but it creates a side quest: scopes, expiry, copy/paste, and security warnings. For this workshop, account switching is the clean answer.
+
+### ⚠️ Common trap: PMX MCP install fails / says repo not found
+
+**📖 Business roles** — PMX is the exception to the personal-account rule. The PMX MCP server lives in `gim-home/pmx-mcp`, a Microsoft GitHub organization. Use your EMU account for that install, then switch back.
+
+```
+gh auth switch --user <yourname>_microsoft
+```
+
+Ask Copilot CLI to install the PMX MCP server. When it is done:
+
+```
+gh auth switch --user <your-personal-username>
+gh auth status
+```
+
+**🔧 Technical deep dive** — `repo not found` can mean the repo exists, but your active GitHub account cannot see it. Switching to EMU gives `git` and `gh` the right credentials for the `gim-home` clone.
+
+### Which account am I on right now?
+
+**📖 Business roles** — Ask GitHub CLI directly:
+
+```
+gh auth status
+```
+
+Look for the account marked as active. Example:
+
+```
+github.com
+  ✓ Logged in to github.com account JW-Sthlm
+  - Active account: true
+```
+
+If the wrong account is active, switch:
+
+```
+gh auth switch --user <account-name>
+```
+
+---
+
 ## Account & Login Issues
 
 ### Which GitHub account should I use?
 
-You have two accounts: **EMU** (`yourname_microsoft`) and **personal**. For this session, use your **personal** account — it has unlimited code completions and its own premium request quota.
+**📖 Business roles** — Use your **personal** account for normal Copilot CLI work. Use your **EMU** account only when you need Microsoft-internal GitHub access, such as installing `gim-home/pmx-mcp`. Then switch back to personal.
 
 ### Switching between accounts
+
+**📖 Business roles** — Use this whenever the active GitHub account is wrong.
 
 ```
 gh auth switch --user <account-name>
@@ -50,31 +109,11 @@ Go to https://copilot.github.microsoft.com/ — it has a verification function t
 
 ---
 
-## Login Issues
-
-### `/login` fails or times out
-
-**Possible causes:**
-1. Not on corporate network or VPN
-2. Browser pop-up blocked
-3. Copilot subscription not active
-
-**Fix:** 
-- Make sure you're on VPN
-- Check your browser didn't block the pop-up
-- Verify your Copilot subscription at https://copilot.github.microsoft.com/ or https://github.com/settings/copilot
-
-### "You don't have access to Copilot"
-
-**Fix:** Your organization may need to enable Copilot CLI. Check with your team lead or admin. See: https://docs.github.com/copilot/managing-copilot
-
----
-
 ## MCP Server Issues
 
 ### MCP servers not showing
 
-**First, try asking CLI:** Inside Copilot CLI, type:
+**📖 Business roles** — First, try asking CLI: Inside Copilot CLI, type:
 
 ```
 My MCP servers aren't showing up. Can you help me diagnose and fix this?
@@ -86,7 +125,7 @@ CLI can often find the issue and walk you through fixing it.
 
 ### MCP server listed but tools not working
 
-**Fix:** Some MCP servers need separate authentication. For PMX, ask CLI:
+**🔧 Technical deep dive** — Some MCP servers need separate authentication. For PMX, ask CLI:
 
 ```
 PMX is not working. Can you help me reconnect to Azure for the PMX MCP server?
@@ -104,7 +143,7 @@ az login --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47
 
 ### "Failed to retrieve" or authentication errors
 
-**Fix:** Your Azure login may have expired. Ask CLI:
+**⚠️ Common trap** — Your Azure login may have expired. Ask CLI:
 
 ```
 Help me reconnect to Azure for PMX
@@ -113,6 +152,8 @@ Help me reconnect to Azure for PMX
 Or re-run `az login --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47` in PowerShell, then restart Copilot CLI.
 
 ### "No projects found"
+
+**📖 Business roles** — This may be a data access issue, not a prompt issue.
 
 **Possible causes:**
 1. You're not assigned to any projects in D365
@@ -138,6 +179,14 @@ Or re-run `az login --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47` in PowerShell
 ---
 
 ## General Issues
+
+### ⚠️ Common trap: a new session keeps crashing
+
+**📖 Business roles** — Do not spend the workshop debugging a broken live session. Start a fresh terminal, try `copilot` once, and if it still crashes switch to the backup/demo path and ask for help after.
+
+**🔧 Technical deep dive** — Hosts should capture the exact error, model, and first prompt. Then use `/feedback` or the CLI issue path after the session, not during the live exercise.
+
+
 
 ### Copilot gives wrong or irrelevant answers
 

@@ -1,5 +1,8 @@
 # Demo 2 — From Workshop Notes to Action Plan
 
+> **Before running this demo:** check `_demo-prep-checklist.md` 15 minutes before  
+> **If something breaks:** see `_demo-failsafe.md`
+
 > **Duration:** ~10 min  
 > **Goal:** Show how CLI bridges the gap between "good conversation" and "structured next step"  
 > **Core message:** CLI doesn't just summarize — it decomposes, structures, and produces a persistent, inspectable plan you can hand off and iterate on.
@@ -24,7 +27,7 @@
 
 ### Workshop Notes (paste these into a file before the demo)
 
-Create `workshop-notes.txt` in your working directory:
+**🔧 Technical deep dive** — Create `workshop-notes.txt` in your working directory so the `@workshop-notes.txt` reference works during the demo.
 
 ```
 Discovery Workshop — Contoso Nordic (ISV Partner)
@@ -64,6 +67,8 @@ Key findings:
 
 ### Act 2: Feed the context — show @ file reference (2 min)
 
+**📖 Business roles** — The audience only needs to understand that `@workshop-notes.txt` means "read this file".
+
 **Type:**
 
 ```
@@ -75,11 +80,15 @@ These are raw notes from a discovery workshop with an ISV partner. I need to tur
 3. What's missing — what questions should we have asked but didn't?
 ```
 
+**🔧 Technical deep dive** — This is the inspection moment: file input becomes context, then context becomes analysis.
+
 **Talking point:** "The `@` tells CLI to read the file. It doesn't just summarize — it analyzes. Look at the 'what's missing' section. That's the kind of insight that usually takes a week to surface."
 
 ---
 
 ### Act 3: Generate the structured plan (4 min)
+
+**📖 Business roles** — This is the main "notes to plan" ask.
 
 **Type:**
 
@@ -134,7 +143,7 @@ Good. Now add a TCO estimate section for Phase 1. Erik needs to see costs below 
 
 **SAY:** "And if you wanted CLI to take it further — `/plan` would lay out the steps to create a PMX project from this. I won't run it now because this is a live environment, but you can see it thinks through the steps before acting. That's the inspectable part — you always review before anything happens."
 
-> ⚠️ **FACILITATOR NOTE:** Do NOT execute /plan in the live session. Show the prompt, explain what it would do, then move on. PMX is a production system.
+> **⚠️ Common trap** — Do NOT execute /plan in the live session. Show the prompt, explain what it would do, then move on. PMX is a production system.
 
 ---
 

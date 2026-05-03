@@ -11,3 +11,9 @@ desktop.ini
 
 # Node (if any tooling added later)
 node_modules/
+
+# Workshop session artifacts (transcripts, recordings, scratch text)
+v2/_session-notes/
+*.vtt
+transcript-*.txt
+tx-*.txt

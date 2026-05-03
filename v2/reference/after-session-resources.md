@@ -4,15 +4,15 @@
 
 ---
 
-## Your Copilot Passport
+## Build your first skill
 
-Generate a personal HTML dashboard of everything in your Copilot CLI setup — agents, skills, plugins, MCP servers, projects.
+Exercise 3 turns the building blocks into something concrete: a small reusable skill for your own work. The Copilot Overview plugin is the worked reference example.
 
-- **[Install + use guide](../extras/copilot-overview/README.md)** — 30-second install, one prompt to run
-- **[Exercise 3: Your Copilot Passport](../exercises/exercise-03-your-copilot-passport.md)** — guided walkthrough
+- **[Exercise 3: Build your first skill](../exercises/exercise-03-your-copilot-passport.md)** — guided build-your-own walkthrough
+- **[Copilot Overview install + use guide](../extras/copilot-overview/README.md)** — reference example for a packaged skill
 - **[Source on GitHub](https://github.com/JW-Sthlm/copilot-overview)** — public repo, read the code if you're curious
 
-Run it now and take a screenshot. Run it again in a month and watch it fill up.
+Use the skill once this week on real work. Then improve the trigger or output format while the need is still fresh.
 
 ---
 
@@ -20,7 +20,8 @@ Run it now and take a screenshot. Run it again in a month and watch it fill up.
 
 | Resource | What it is | Time |
 |----------|-----------|------|
-| [Copilot CLI for Beginners](https://jamesmontemagno.github.io/copilot-cli-for-beginners/) | Hands-on course — 8 chapters from zero to productive | ~2 hours |
+| **[Self-service course (this repo)](../self-service-course/README.md)** | **Partner-flavored course adapted from GitHub's beginner course. Two tracks: Business (📖) or Technical (🔧).** | **90 min – 3h** |
+| [Copilot CLI for Beginners (source)](https://jamesmontemagno.github.io/copilot-cli-for-beginners/) | The original GitHub course this is adapted from — developer-focused, 8 chapters, Python sample app | ~2 hours |
 | [Course repo (Codespaces-ready)](https://github.com/github/copilot-cli-for-beginners) | Code, exercises, and a sample app to practice with | Self-paced |
 | [Copilot CLI Deep Dive Workshop](https://github.com/copilot-dev-days/copilot-cli-deep-dive-workshop) | Dev Days workshop with slides and exercises | ~2 hours |
 
