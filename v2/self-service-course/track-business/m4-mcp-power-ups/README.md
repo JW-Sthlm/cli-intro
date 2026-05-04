@@ -73,18 +73,44 @@ Real data. From your real GitHub. No copy-paste.
 
 **Prereq:** you must be logged into your `*_microsoft` EMU account (see M1).
 
-**The account dance:**
+There are two ways to install it.
+
+### Option 1 — Plugin marketplace (recommended)
+
+Four commands, no clone, no `npm install`. The repo ships a manifest and Copilot CLI handles the rest.
 
 ```powershell
 # Switch to your EMU account (PMX is private to gim-home org)
 gh auth switch --user <your-microsoft-username>
 
-# Now install
+# Install via the marketplace
+copilot plugin marketplace add gim-home/pmx-mcp
+copilot plugin install pmx-mcp@pmx-mcp
+
+# Switch back to personal
+gh auth switch --user <your-personal-username>
+```
+
+Then relaunch Copilot CLI (`copilot` again, or `/restart` if you're already in) so the PMX tools register.
+
+### Option 2 — Direct install via Copilot prompt (legacy)
+
+Use this if you want the source on disk or the marketplace flow fails for any reason. Same account dance, but you ask Copilot CLI to clone and wire it up.
+
+```powershell
+# Switch to your EMU account
+gh auth switch --user <your-microsoft-username>
+
+# Now ask Copilot CLI to install
 copilot
 > Install the PMX MCP server. Use the gim-home/pmx-mcp repo.
 ```
 
-Follow prompts. Once installed:
+Follow prompts.
+
+### Verify
+
+Once installed (either option):
 
 ```
 > /mcp        # confirm pmx is listed

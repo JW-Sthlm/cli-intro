@@ -409,6 +409,29 @@ When done, **type `/exit` and press Enter** to leave Copilot CLI and return to P
 
 PMX is the special case. Its server lives in `gim-home/pmx-mcp`, which only your Microsoft EMU (`yourname_microsoft`) account can access. So: switch accounts, install PMX, switch back.
 
+There are two ways. Pick one.
+
+#### Quick path — plugin marketplace (recommended)
+
+Four commands. Works on any machine with `gh` and `copilot` installed. No clone, no `npm install`, no MCP register prompt — the `gim-home/pmx-mcp` repo ships a [plugin manifest](https://github.com/gim-home/pmx-mcp/blob/main/plugin.json) that Copilot CLI knows how to install.
+
+```powershell
+gh auth switch --user <yourname>_microsoft
+copilot plugin marketplace add gim-home/pmx-mcp
+copilot plugin install pmx-mcp@pmx-mcp
+gh auth switch --user <your-personal-username>
+```
+
+Then relaunch Copilot CLI so the new MCP tools register (`/exit` and run `copilot` again, or `/restart`), and run `az login --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47` if you haven't already (Step 4).
+
+> **⚠️ Same EMU rule applies.** The `marketplace add` step fetches the manifest using your active `gh` credentials. If you skip the first switch, the command fails with a 404 and there's no helpful auto-recovery — switch first.
+
+That's it. Skip to Step 6 to verify.
+
+#### Manual path — clone the repo (fallback / contributors)
+
+Use this if the marketplace flow fails, you want to read or hack on the source, or you need to run a feature branch. It's the original install — slower, but gives you the full repo on disk.
+
 > **⚠️ Critical — switch the account FIRST.** If you launch Copilot CLI with your personal account active and ask it to install PMX, it cannot see the private `gim-home/pmx-mcp` repo and will helpfully install the **wrong** thing — there's a public `Galvill/pmx-mcp` (Proxmox virtualization tools, completely unrelated). Don't trust the AI to know which "PMX" you mean. Switch accounts first.
 
 > **⚠️ Second trap — the GitHub MCP server has stale auth.** When you installed the GitHub MCP in 5a (as personal account), it stored a personal-account token internally. That token does **not** update when you `gh auth switch` later. So even after switching to EMU, if Copilot uses the GitHub MCP tool to fetch the repo, it will still get a 404 and start hunting for "alternatives" — and find Proxmox again. The prompt below tells Copilot to use shell `git clone` instead, which uses your active `gh` credentials.

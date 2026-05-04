@@ -346,44 +346,41 @@ winget install Microsoft.AzureCLI
 
 #### What the host says
 
-"MCP servers are connectors. Think Power Automate connectors, but for Copilot CLI. We want PMX, GitHub, and M365 connected."
+"MCP servers are connectors. Think Power Automate connectors, but for Copilot CLI. We want PMX, GitHub, and M365 connected. PMX is the only one that needs the EMU account dance — it lives in a private Microsoft org. The other two install with your personal account."
 
 #### What the host does on screen
 
-Open Copilot CLI.
+**Install PMX via the plugin marketplace** (4 commands, no prompts):
 
-This starts Copilot CLI.
-
-```powershell
-copilot
-```
-
-Ask Copilot CLI to help configure the connectors.
-
-```text
-I need to set up MCP servers for PMX, GitHub, and M365. Help me configure them.
-```
-
-For PMX, switch to the Microsoft EMU account first.
-
-This switches GitHub CLI to the Microsoft EMU account for PMX install.
+Switch to the Microsoft EMU account so `gh` can reach the private repo.
 
 ```powershell
 gh auth switch --user <yourname>_microsoft
 ```
 
-Ask Copilot CLI to install PMX.
+Add the marketplace and install the plugin.
 
-```text
-Install the PMX MCP server from gim-home/pmx-mcp and configure it for this machine.
+```powershell
+copilot plugin marketplace add gim-home/pmx-mcp
+copilot plugin install pmx-mcp@pmx-mcp
 ```
 
-After PMX install, switch back to the personal account.
-
-This switches GitHub CLI back to the personal account.
+Switch back to the personal account.
 
 ```powershell
 gh auth switch --user <your-personal-username>
+```
+
+Launch Copilot CLI to install GitHub and M365 connectors.
+
+```powershell
+copilot
+```
+
+Ask Copilot CLI to set up the remaining connectors.
+
+```text
+I need to set up MCP servers for GitHub and M365. Help me configure them.
 ```
 
 #### What participants do

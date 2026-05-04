@@ -247,7 +247,7 @@ This is the same pattern Netflix uses to log into your TV. Safe, standard, and m
 
 </details>
 
-<!-- PLACEHOLDER: After p10 lands, add MCP install steps here for PMX, GitHub MCP, M365 MCP. The exact menu option to pick when prompted "Where do you want to install this MCP server?" is currently being validated. For now, the setup-guide marks it as TODO. -->
+<!-- PMX MCP install is covered in M4. The marketplace path (`copilot plugin marketplace add gim-home/pmx-mcp`) means PMX no longer goes through the "Where do you want to install this MCP server?" menu prompt. The menu still appears for GitHub and M365 MCP installs done via Copilot CLI's prompt-based flow — answer is "Copilot CLI" (option 2 in current builds), validation pending. -->
 
 ---
 
