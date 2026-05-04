@@ -2,6 +2,8 @@
 
 You only do this once on the host. After that, `launch.cmd` works.
 
+> **Tip — running on a Dev Box?** The same enable command works inside a Dev Box and gives you the gold-standard validation setup (clean cloud host + disposable sandbox per walk). See [sandbox-in-devbox.md](sandbox-in-devbox.md) for the full flow.
+
 ## Requirements
 
 - Windows 11 Pro, Enterprise, or Education (Home doesn't support Sandbox).

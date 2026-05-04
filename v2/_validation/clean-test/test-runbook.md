@@ -8,20 +8,21 @@ We're not testing scripts. We're testing instructions.
 
 | Option | When to use |
 |--------|-------------|
-| **Microsoft Dev Box** ⭐ recommended | Default. Fresh Windows 11, cloud-managed. Just connect and go. |
-| **Windows Sandbox** | Instant disposability per run. Skip on ARM64 + corporate-managed Windows — known hypervisor lockup. See [launch.cmd](launch.cmd) and [enable-sandbox.md](enable-sandbox.md). |
+| **Sandbox in Dev Box** ⭐ gold standard | Cloud-managed Windows 11 host + disposable Sandbox per walk. No local virtualization, no redeploy cost. See [sandbox-in-devbox.md](sandbox-in-devbox.md). |
+| **Microsoft Dev Box** (plain) | Falls back here when the pool blocks Sandbox. Just connect and go — but dirty after walk 1. |
+| **Windows Sandbox** (local) | When you don't have Dev Box access. Skip on ARM64 + corporate-managed Windows — known hypervisor lockup. See [launch.cmd](launch.cmd) and [enable-sandbox.md](enable-sandbox.md). |
 
-Both deliver the same test surface.
+All three deliver the same test surface. Sandbox-in-Dev-Box is the only one that's both clean and reset-in-seconds.
 
-### ⚠️ Dev Box gets "dirty" after one walk
+### ⚠️ Plain Dev Box gets "dirty" after one walk
 
-Once you've installed the prereqs on your Dev Box, it's no longer a clean machine. For a true second walk, you have three options:
+If you can't run Sandbox-in-Dev-Box (pool blocks the feature) and have to use plain Dev Box: once you've installed the prereqs, it's no longer a clean machine. For a true second walk:
 
-1. **Redeploy the Dev Box** (recommended for full validation cycles) — go to [devbox.microsoft.com](https://devbox.microsoft.com), select your Dev Box, click **... → Redeploy**. This wipes it back to factory image. Takes ~15 min. Use this when you've just changed the setup-guide and want a clean re-test.
-2. **Spin up a second Dev Box** if your pool allows it. Fastest option if you have quota.
-3. **Accept that subsequent walks only validate deltas** — if you only changed one paragraph in the guide, you don't need a full clean machine. Just walk that section.
+1. **Redeploy the Dev Box** — go to [devbox.microsoft.com](https://devbox.microsoft.com), select your Dev Box, click **... → Redeploy**. Wipes back to factory image. Takes ~15 min.
+2. **Spin up a second Dev Box** if your pool allows it.
+3. **Accept that subsequent walks only validate deltas** — if you only changed one paragraph, walk that section, not the whole guide.
 
-For p10 validation: one redeploy + one full walk is enough. After p10 lands, you don't need clean machines for routine guide tweaks.
+This whole problem goes away with Sandbox-in-Dev-Box. Worth the one-time enable.
 
 ## How the test relates to user instructions
 
