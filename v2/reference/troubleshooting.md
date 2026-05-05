@@ -24,18 +24,29 @@ Then retry the step that failed.
 
 **📖 Business roles** — PMX is the exception to the personal-account rule. The PMX MCP server lives in `gim-home/pmx-mcp`, a Microsoft GitHub organization. Use your EMU account for that install, then switch back.
 
+**Try the marketplace path first.** Four commands, no clone, no `npm install`:
+
 ```
 gh auth switch --user <yourname>_microsoft
+copilot plugin marketplace add gim-home/pmx-mcp
+copilot plugin install pmx-mcp@pmx-mcp
+gh auth switch --user <your-personal-username>
 ```
 
-Ask Copilot CLI to install the PMX MCP server. When it is done:
+Then relaunch Copilot CLI (`/exit` and run `copilot` again) so the new tools register. If your Azure session expired, also re-run `az login --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47`.
+
+> **⚠️ Switch the EMU account FIRST.** The `marketplace add` step uses your active `gh` credentials to fetch the manifest. If you skip the switch, the command 404s with no auto-recovery.
+
+**If the marketplace path fails**, fall back to the manual install. See [Setup Guide → Step 5b](../pre-work/setup-guide.md) — it has the strict prompt that stops Copilot from installing the wrong public `Galvill/pmx-mcp` repo (Proxmox tools, completely unrelated) when it can't reach the private one.
+
+When the install completes, switch back to your personal account:
 
 ```
 gh auth switch --user <your-personal-username>
 gh auth status
 ```
 
-**🔧 Technical deep dive** — `repo not found` can mean the repo exists, but your active GitHub account cannot see it. Switching to EMU gives `git` and `gh` the right credentials for the `gim-home` clone.
+**🔧 Technical deep dive** — `repo not found` can mean the repo exists, but your active GitHub account cannot see it. Switching to EMU gives `git`, `gh`, and the `marketplace add` fetch the right credentials for the `gim-home` repo.
 
 ### Which account am I on right now?
 
