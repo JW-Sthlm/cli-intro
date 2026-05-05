@@ -28,8 +28,14 @@ function Try-Install($displayName, $wingetId) {
     Write-Host ""
     Write-Host "-> Installing $displayName ($wingetId)" -ForegroundColor Yellow
     try {
-        winget install --id $wingetId --silent --accept-source-agreements --accept-package-agreements 2>&1 | Out-Host
-        Write-Host "   $displayName install attempted." -ForegroundColor Green
+        # --source winget pins to public winget source; skips msstore which
+        # is unreachable from Sandbox (REST API error 0x8a15003b)
+        winget install --id $wingetId --source winget --silent --accept-source-agreements --accept-package-agreements 2>&1 | Out-Host
+        if ($LASTEXITCODE -eq 0) {
+            Write-Host "   $displayName installed." -ForegroundColor Green
+        } else {
+            Write-Host "   $displayName winget exit code: $LASTEXITCODE (may already be installed)" -ForegroundColor Yellow
+        }
     } catch {
         Write-Host "   $displayName install FAILED: $_" -ForegroundColor Red
     }
