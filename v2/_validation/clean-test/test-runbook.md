@@ -1,34 +1,28 @@
 # Clean-test runbook
 
-What we're testing: **does `v2/pre-work/setup-guide.md` actually work end-to-end for a non-coder on a fresh Windows?**
+What we're testing: **does the current hosted setup guide actually work end-to-end for a non-coder on a fresh Windows?**
 
 We're not testing scripts. We're testing instructions.
+
+The canonical artifact is now **the hosted [`setup.html`](https://cli-intro-share.pages.dev/setup.html)** (Cloudflare Pages, fed from `cli-intro-share`). The markdown copy at `v2/pre-work/setup-guide.md` should match — but the hosted page is what real beta users see. **Test the hosted page first.**
+
+---
 
 ## Pick your fresh machine
 
 | Option | When to use |
 |--------|-------------|
 | **Sandbox in Dev Box** ⭐ gold standard | Cloud-managed Windows 11 host + disposable Sandbox per walk. No local virtualization, no redeploy cost. See [sandbox-in-devbox.md](sandbox-in-devbox.md). |
-| **Microsoft Dev Box** (plain) | Falls back here when the pool blocks Sandbox. Just connect and go — but dirty after walk 1. |
+| **Microsoft Dev Box** (plain) | Falls back here when the pool blocks Sandbox. Just connect and go — but dirty after walk 1. Redeploy (~15 min) for a true second walk. |
 | **Windows Sandbox** (local) | When you don't have Dev Box access. Skip on ARM64 + corporate-managed Windows — known hypervisor lockup. See [launch.cmd](launch.cmd) and [enable-sandbox.md](enable-sandbox.md). |
 
 All three deliver the same test surface. Sandbox-in-Dev-Box is the only one that's both clean and reset-in-seconds.
 
-### ⚠️ Plain Dev Box gets "dirty" after one walk
-
-If you can't run Sandbox-in-Dev-Box (pool blocks the feature) and have to use plain Dev Box: once you've installed the prereqs, it's no longer a clean machine. For a true second walk:
-
-1. **Redeploy the Dev Box** — go to [devbox.microsoft.com](https://devbox.microsoft.com), select your Dev Box, click **... → Redeploy**. Wipes back to factory image. Takes ~15 min.
-2. **Spin up a second Dev Box** if your pool allows it.
-3. **Accept that subsequent walks only validate deltas** — if you only changed one paragraph, walk that section, not the whole guide.
-
-This whole problem goes away with Sandbox-in-Dev-Box. Worth the one-time enable.
-
 ## How the test relates to user instructions
 
-📌 **Important:** the test IS following the user instructions. There is no separate "tester walkthrough." You open `setup-guide.md` and follow it as if you were an attendee.
+📌 **The test IS following the user instructions.** There is no separate "tester walkthrough." Open the hosted setup.html and follow it as if you were a workshop attendee.
 
-The runbook below adds two things on top of that:
+The runbook below adds two things on top:
 
 1. **Don't fix silently.** When something breaks, log it as a finding instead of working around it.
 2. **Log findings in a structured place.** [`results-template.md`](results-template.md) has the sections.
@@ -37,138 +31,144 @@ That's the whole "kit." It's the user instructions plus a notebook beside you.
 
 ## Before you start
 
-Open [results-template.md](results-template.md) in a text editor on your **host** (not the test machine). You'll fill it in as you go. The sandbox wipes on close; the Dev Box is fine but external notes are tidier.
-
-Pretend you're a non-coder PSA who has never used a CLI. Read the guide literally. Don't fix anything as you go — note the breakage.
+1. Open [results-template.md](results-template.md) on your **host** (not the test machine). Add a new `## Walk N — YYYY-MM-DD` section at the top of the walk log. The template's structured checklist sits at the bottom — copy that into your new section to fill in.
+2. Pretend you're a non-coder PSA who has never used a CLI. Read the guide literally. Don't fix anything as you go — note the breakage.
+3. Have your two GitHub accounts ready: personal (workshop default) and EMU (`*_microsoft`, for PMX install).
+4. Have your Microsoft tenant credentials ready (for `az login`).
 
 ---
 
-## Walk 1 — setup-guide.md, Express path ⭐
+## Walk A — Hosted setup.html, full path ⭐
 
-Goal: validate the Express install path in `setup-guide.md` Step 1, then the auth/MCP steps.
+This is the primary walk. ~45 min for a full clean run.
 
-1. On the fresh machine, get the cli-intro repo:
-   ```powershell
-   git clone https://github.com/JW-Sthlm/cli-intro.git C:\Test\cli-intro
-   cd C:\Test\cli-intro
-   ```
-   (If git isn't even installed yet, that's a finding — note it, `winget install Git.Git`, then continue.)
+1. On the fresh machine, open a browser and go to the hosted setup guide:
+   - https://cli-intro-share.pages.dev/setup.html
+   - (Bookmark it. You'll come back to it during the walk.)
 
-2. Open `v2\pre-work\setup-guide.md` in any text viewer (Notepad, VS Code, browser preview).
+2. Follow it from the top — every section, in order:
+   - **Intro foldout** (M365 Copilot vs Copilot CLI) — does it read cleanly? Does the librarian/contractor analogy land? Is the multi-MCP example believable? **Log a finding if anything reads as marketing fluff or confusing.**
+   - **Step 0 — GitHub account ready** — EMU vs personal explanation clear? Both accounts straight in your head before Step 1?
+   - **Step 1 — Install command-line tools** — PowerShell 7 install, then the five `winget install` commands. UAC pop-ups expected? Did the prompt change correctly? Did all five tools install?
+   - **Step 2a — Log into GitHub CLI** — `gh auth login` twice (personal first, then EMU). Browser flow + SSO authorize.
+   - **Step 2b — Log into Copilot CLI** — `copilot` → folder trust → `/login` → device code → browser.
+   - **Step 3 — Log in to Azure** — `az login --tenant ...`. **Subscription picker shows up — does the "just press Enter" note land?** Did `az account show` work afterward?
+   - **Step 4a — M365 install** — prompt-orchestrated, runs WorkIQ.
+   - **Step 4b — PMX install** ⚠️ **THE HIGH-VALUE TEST** — see Walk A1 below.
+   - **Step 5 — Verify everything** — five checklist items, all using styled command blocks. Did every Copy button work? Did each command return what the guide predicts?
+   - **Step 6 — Common issues** — skim only; don't trigger on purpose unless time allows (see Walk B).
 
-3. Follow it from the top — every section, in order:
-   - **Before You Start** (account dance)
-   - **Step 1** — pick the **Express** sub-path → run `.\v2\pre-work\express-setup.ps1`
-   - **Step 2** — Log In
-   - **Step 3** — Verify
-   - **Step 4** — Azure login
-   - **Step 5** — MCP setup ⚠️ this is the open question
-   - **Step 6** — Verify MCP servers
-
-4. As you go, capture in [results-template.md](results-template.md) under **Walk 1**:
+3. As you go, capture in [results-template.md](results-template.md):
    - Every step where the wording was unclear
    - Every prompt that didn't match the guide's prediction
    - Every command that errored
    - Every place a non-coder would have stopped and asked for help
 
-5. **Step 5 is the high-value finding.** Document the exact menu options offered. Use the matrix in **Walk 3** below to test multiple.
+### Walk A1 — Step 4b PMX prompt-orchestrated install ⭐
+
+**This is the test that justifies this whole iteration.** The PMX install was rewritten to a single Copilot CLI prompt that orchestrates the switch-install-switch sequence itself. We need to know: does it actually work clean?
+
+Inside Copilot CLI, paste the prompt block from setup.html Step 4b verbatim. Then watch:
+
+- [ ] Did Copilot run `gh auth status` to find the EMU username?
+- [ ] Did it run `gh auth switch --user <yourname>_microsoft` correctly?
+- [ ] Did it verify the switch took before running `marketplace add`?
+- [ ] Did `copilot plugin marketplace add gim-home/pmx-mcp` succeed without 403 or 404?
+- [ ] Did `copilot plugin install pmx-mcp@pmx-mcp` succeed?
+- [ ] Did Copilot switch back to personal at the end?
+- [ ] After `/exit` and re-launching `copilot`, are PMX tools actually registered (try `Show me my PMX projects`)?
+
+**If any of those fail**, log the exact transcript verbatim — it's the most useful artifact this kit will ever produce. Then drop into Walk B (manual fallback) to confirm the recovery path works.
+
+### Walk A2 — Verify checklist styling (UX check)
+
+This isn't a functional test, just a visual one. While you're on Step 5, confirm:
+
+- [ ] Every command in the verify checklist sits inside a dark `cmd-wrap` block with a shell label (POWERSHELL or ✦ Copilot CLI) and a working Copy button.
+- [ ] No raw `<span class="check-cmd">` artifacts showing up as inline grey text.
+- [ ] Checks #2/#4/#5 (which need you to launch Copilot then type a prompt) clearly show two separate blocks with hint text between them.
+
+If any look wrong, capture a screenshot and log under "Step 5 — Verify".
 
 ---
 
-## Walk 2 — setup-guide.md, Manual path (optional)
+## Walk B — Manual fallback foldout (PMX)
 
-Goal: validate the Manual install path produces the same end state as Express.
+Only run this if **Walk A1 failed** or if you specifically want to validate the manual recovery path.
 
-1. Reset to clean (close & reopen Sandbox, OR provision a second Dev Box, OR uninstall the 5 tools and re-run).
-2. Repeat Walk 1 but pick the **Manual** sub-path in Step 1 (the 5 separate winget commands).
-3. Note any difference in friction, errors, or end state.
+1. Reset the test machine (close & reopen Sandbox, OR redeploy Dev Box, OR `gh auth switch` back to personal-only and `copilot plugin uninstall pmx-mcp` if it got partially installed).
+2. On setup.html Step 4b, expand the **"If the prompt path didn't work"** foldout.
+3. Follow the five numbered steps verbatim:
+   - Step 1: Find your EMU username via `gh auth status`
+   - Step 2: `gh auth switch --user YOUR_EMU_USERNAME` (replace with your actual EMU name)
+   - Step 3: `gh auth status` again — confirm `Active account: true` is on the `_microsoft` line
+   - Step 4: `marketplace add` + `plugin install`
+   - Step 5: Switch back to personal
+4. Pay specific attention:
+   - [ ] Was the `YOUR_EMU_USERNAME` placeholder convention obvious (vs the old `<yourname>_microsoft` that pasted literally)?
+   - [ ] Did the verify-the-switch step in #3 catch any silent-failure case?
+   - [ ] Did the inline 403 callout match what you saw if anything went wrong?
 
-If Walk 1 was clean, Walk 2 is nice-to-have. If Walk 1 was rough, Walk 2 helps narrow down whether the issue is in the script or the manual list.
-
----
-
-## Walk 3 — MCP install location matrix ⭐ (the open question)
-
-This is the test that justifies the whole kit. Treat it as a controlled experiment.
-
-Once you have a working `copilot` (after Walks 1 or 2), trigger the MCP install:
-
-```
-copilot
-```
-Inside CLI:
-```
-I need to set up the GitHub MCP server. Help me configure it.
-```
-
-When the install-location menu appears, pick **one option per test session**, then verify with `/mcp` and a tool call. Reset between sessions (close Sandbox / fresh Dev Box / uninstall and re-run).
-
-| Option | Install completes? | Visible in `/mcp`? | Tool call works? | Notes |
-|--------|---|---|---|---|
-| VS Code (user)        | | | | |
-| VS Code (workspace)   | | | | |
-| Copilot Cloud Agent   | | | | |
-| Other / global / user | | | | |
-
-**Tip:** if reset cost is high (Dev Box re-provision is slow), this is where the optional `bootstrap.ps1` earns its keep — use it to skip the install steps and jump straight to MCP testing in a fresh sandbox.
-
-Record under **Walk 3** in results template. The winning option becomes the answer for `setup-guide.md` Step 5.
-
-### PMX MCP variant
-
-After confirming the right answer for the GitHub MCP, repeat once with PMX:
-
-1. `gh auth switch --user <yourname>_microsoft`
-2. In Copilot CLI: `Install the PMX MCP server from gim-home/pmx-mcp.`
-3. Use the install-location answer that worked above.
-4. Verify with `/mcp`.
-5. Switch back: `gh auth switch --user <your-personal-username>`
-6. Test: `Show me my PMX projects`.
-
-Record under **Walk 3 — PMX variant**.
+Log under "Step 4b — Manual fallback".
 
 ---
 
-## Walk 4 — copilot-overview-plugin install
+## Walk C — 403 reproduction (optional, time-permitting)
 
-Goal: validate the Exercise 3 reference plugin actually installs and runs end-to-end on a clean machine.
+Only run if you want to confirm the troubleshooting table row is accurate. Costs ~5 min.
+
+1. Make sure you're logged into both accounts (`gh auth status` shows both, personal active).
+2. Run `copilot plugin marketplace add gim-home/pmx-mcp` **without switching accounts first**.
+3. Confirm you get exactly: `remote: Write access to repository not granted. fatal: ... 403`.
+4. Open setup.html Step 6 (Common issues) and confirm the 403 row in the troubleshooting table matches what you saw and the fix points back to Walk B.
+
+Log under "Walk C — 403 repro" with the exact error string.
+
+---
+
+## Walk D — copilot-overview-plugin install (optional, separate scope)
+
+Only run if you have time and want to validate the Exercise 3 reference plugin still installs cleanly on a fresh machine. ~10 min.
 
 1. ```powershell
    git clone https://github.com/JW-Sthlm/copilot-overview C:\Test\copilot-overview
    ```
-2. Read `C:\Test\copilot-overview\INSTALL.md` and follow it exactly. Don't deviate. Don't fix anything as you go — note the breakage.
+2. Read `C:\Test\copilot-overview\INSTALL.md` and follow it exactly.
 3. After install, in a fresh `copilot` session:
    ```
    Generate my copilot overview.
    ```
-4. Record under **Walk 4**:
+4. Record under **Walk D**:
    - Did the install complete without manual fixes?
    - Did the trigger phrase work?
    - Was the dashboard generated?
-   - List every step where INSTALL.md was unclear, missing, or wrong.
+
+This is independent of the setup.html test — log findings against the `copilot-overview-plugin` repo, not against cli-intro.
 
 ---
 
 ## After the run
 
-1. Save the filled `results-template.md` somewhere persistent.
+1. Save the filled `results-template.md` somewhere persistent (commit it to the repo if it's a clean walk worth keeping as a record).
 2. Apply findings:
-   - **Walk 3 winner** → replace the `<TODO: confirm exact menu label>` placeholder in `v2/pre-work/setup-guide.md` Step 5.
-   - **Walk 1/2 friction** → update setup-guide.md or troubleshooting.md.
-   - **Walk 4 issues** → file as todos against `copilot-overview-plugin` repo.
-   - Mark `p10-validate-mcp-prompt` done in `plan.md`.
+   - **Walk A friction** → update `setup.html` (canonical) and `setup-guide.md` (mirror) and `troubleshooting.md`.
+   - **Walk A1 prompt-orchestration failures** → tighten the Step 4b prompt language (or fall back to the manual sequence as primary if the prompt is too unreliable).
+   - **Walk B manual-fallback failures** → re-harden the foldout. The whole point of the recent rewrite was to be bulletproof.
+   - **Walk C drift** → fix the troubleshooting row.
+   - **Walk D issues** → file as todos against the `copilot-overview-plugin` repo.
 
 ## Time budget
 
 | Phase | Realistic time |
 |-------|----------------|
-| Set up fresh machine | 5–10 min (Dev Box: just connect; Sandbox: launch.cmd) |
-| Walk 1 (Express path, full guide) | 20–30 min — first time on a clean machine |
-| Walk 2 (Manual path) | 15 min — optional |
-| Walk 3 (MCP matrix, ~4 sessions) | 15–20 min |
-| Walk 4 (overview plugin) | 5–10 min |
-| Documenting findings | 5–10 min |
-| **Total for first-time full run** | **~60–90 min** |
+| Set up fresh machine | 5 min (Sandbox-in-Dev-Box: just launch.cmd; Dev Box: just connect) |
+| Walk A (full setup.html, Express path) | 30–45 min — first time on a clean machine |
+| Walk A1 (PMX prompt-orchestrated install — the high-value test) | inside Walk A, ~5 min if it works |
+| Walk B (manual fallback) | 10 min — only if Walk A1 failed |
+| Walk C (403 repro) | 5 min — optional |
+| Walk D (overview plugin) | 10 min — optional |
+| Documenting findings | 10 min |
+| **Total for first-time full run** | **~60–75 min** |
 
 Re-runs after fixes are much faster — focus on the walk that changed.
 
@@ -176,9 +176,9 @@ Re-runs after fixes are much faster — focus on the walk that changed.
 
 ## Notes about `bootstrap.ps1`
 
-**Don't use it for the primary test.** It bypasses Step 1 of `setup-guide.md`, which is exactly what we're trying to validate.
+**Don't use it for the primary test.** It bypasses Step 1 of `setup.html`, which is exactly what we're trying to validate.
 
 When `bootstrap.ps1` IS useful:
-- Re-running Walk 3 (MCP matrix) — you've already validated Step 1 elsewhere
-- Re-running Walk 4 (overview plugin install)
+- Re-running Walk A1 (prompt-orchestrated install) — you've already validated Step 1 elsewhere
+- Re-running Walk D (overview plugin install)
 - Spinning up a sandbox quickly for a one-off check that requires the tools to be present

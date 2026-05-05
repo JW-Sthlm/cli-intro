@@ -127,61 +127,163 @@ Live findings during the show-and-tell walkthrough. Each entry: what was unclear
 
 ---
 
-## Walk 1 — setup-guide.md, Express path
+## Walk template — copy this into a new dated section at the top before each run
 
-### Before You Start (account dance section)
+This template tracks the current `setup.html` structure (Steps 0-6) and the runbook's Walks A / A1 / A2 / B / C / D. Copy from here into a fresh `## Walk N — YYYY-MM-DD` block at the top of the file before each Dev Box run.
 
-- [ ] Wording was clear about EMU vs personal accounts
-- [ ] The "switch to EMU → install PMX → switch back" pattern made sense
-- [ ] I knew where to find my EMU username
+### Intro foldout — M365 Copilot vs Copilot CLI
 
-Confusion / friction:
+- [ ] Read cleanly without sounding like marketing
+- [ ] Librarian/contractor analogy landed
+- [ ] Multi-MCP example (Calendar + PMX + Outlook chain) was believable
+- [ ] No inaccuracies about what M365 Copilot does/doesn't support
 
-> _none_
-
-### Step 1 — Install command-line tools (Express)
-
-- [ ] Found `express-setup.ps1`
-- [ ] Read it before running, understood what it would do
-- [ ] Script ran without errors
-- [ ] All 5 tools installed
-- [ ] After reopening PowerShell, all 5 commands work (`node --version`, `git --version`, etc.)
-
-Friction / errors:
+Friction:
 
 > _none_
 
-### Step 2 — Log In
+### Step 0 — Get your GitHub account ready
+
+- [ ] EMU vs personal explanation clear
+- [ ] Knew which account was which by end of Step 0
+- [ ] The "you might end up with two accounts" framing made sense
+- [ ] Microsoft Copilot entitlement step was actionable
+
+Friction:
+
+> _none_
+
+### Step 1 — Install command-line tools
+
+- [ ] PowerShell 7 install worked (or already present)
+- [ ] All five `winget install` commands ran without error
+- [ ] UAC pop-ups expected — knew to click Yes
+- [ ] After reopening PowerShell, all five tools verified (`gh --version`, `az --version`, `node --version`, `git --version`, `copilot --version`)
+
+Friction:
+
+> _none_
+
+### Step 2a — Log into GitHub CLI
+
+- [ ] `gh auth login` ran twice (personal + EMU) without surprises
+- [ ] SSO authorize step on org sign-in screen made sense
+- [ ] `gh auth status` showed both accounts at the end, personal active
+
+Friction:
+
+> _none_
+
+### Step 2b — Log into Copilot CLI
 
 - [ ] `copilot` launched
+- [ ] Folder trust prompt — option 2 was clearly the right choice
 - [ ] `/login` device-code flow worked
-- [ ] Browser sign-in completed
-- [ ] No surprising prompts (terms, telemetry, model picker)
+- [ ] Browser sign-in completed without surprises
 
 Friction:
 
 > _none_
 
-### Step 3 — Verify
-
-- [ ] `verify.ps1` ran from the repo
-- [ ] Test prompt got an answer
-- [ ] Verify script reported correctly
-
-> _verify.ps1 known bug (p12): may report GitHub auth not found even when logged in. Note actual output here._
-
-### Step 4 — Azure login
+### Step 3 — Log in to Azure
 
 - [ ] `az login --tenant ...` worked
-- [ ] Subscription picker appeared
-- [ ] Pressing Enter without choosing worked
-- [ ] `az account show` returns valid session
+- [ ] Subscription picker appeared — "just press Enter" note was clear
+- [ ] `az account show` returned valid session (no `--query` voodoo)
 
 Friction:
 
 > _none_
 
-### Step 5 — MCP setup ⚠️
+### Step 4a — M365 install (prompt-orchestrated)
+
+- [ ] Pasted prompt verbatim into Copilot CLI
+- [ ] Copilot installed WorkIQ MCP without surprises
+- [ ] After `/exit` and re-launching, M365 tools registered
+- [ ] Test prompt against M365 returned real data
+
+Friction:
+
+> _none_
+
+### Step 4b — PMX install (prompt-orchestrated) ⭐ HIGH-VALUE TEST
+
+- [ ] Copilot ran `gh auth status` to find EMU username
+- [ ] Copilot ran `gh auth switch --user <yourname>_microsoft` correctly
+- [ ] Copilot verified the switch took before running `marketplace add`
+- [ ] `copilot plugin marketplace add gim-home/pmx-mcp` succeeded — no 403, no 404
+- [ ] `copilot plugin install pmx-mcp@pmx-mcp` succeeded
+- [ ] Copilot switched back to personal at the end
+- [ ] After `/exit` and re-launching, PMX tools registered
+- [ ] Test prompt: "Show me my PMX projects" returned real data
+
+If anything failed, paste the verbatim Copilot transcript here:
+
+```
+<paste transcript>
+```
+
+Friction:
+
+> _none_
+
+### Step 5 — Verify everything (functional + UX)
+
+- [ ] All five verify checks passed against the predicted output
+- [ ] Every command sat inside a styled `cmd-wrap` block with shell label and Copy button
+- [ ] No raw `<span class="check-cmd">` artifacts visible
+- [ ] Checks #2/#4/#5 had clear "Launch Copilot:" / "Inside, type:" two-block pattern
+
+Friction:
+
+> _none_
+
+### Step 6 — Common issues
+
+- [ ] Skimmed only — didn't trigger anything on purpose
+- [ ] Troubleshooting rows looked accurate against issues seen during the walk
+
+Friction:
+
+> _none_
+
+---
+
+## Walk B — Manual fallback foldout (only if Walk A1 failed)
+
+- [ ] Foldout opened cleanly
+- [ ] `YOUR_EMU_USERNAME` placeholder convention was obvious (no temptation to paste literally)
+- [ ] Step 3 verify-the-switch caught any silent-failure case
+- [ ] `marketplace add` + `plugin install` succeeded after the verified switch
+- [ ] Switched back to personal at the end without confusion
+- [ ] Inline 403 callout matched what was seen earlier (if anything)
+
+Friction:
+
+> _none_
+
+---
+
+## Walk C — 403 reproduction (optional)
+
+- [ ] `marketplace add` on personal account returned: `remote: Write access to repository not granted. fatal: ... 403`
+- [ ] Step 6 troubleshooting table 403 row matched the error
+- [ ] Fix path (re-run with EMU active) recovered the install
+
+Exact error string seen:
+
+> _paste here_
+
+---
+
+## Walk D — copilot-overview-plugin install (optional, separate scope)
+
+- [ ] `git clone` succeeded
+- [ ] `INSTALL.md` followed without manual fixes
+- [ ] Trigger phrase "Generate my copilot overview" worked
+- [ ] Dashboard generated
+
+File any issues against the `copilot-overview-plugin` repo, not against cli-intro.
 
 - [ ] Talked-to-it install was triggered
 - [ ] The install-location prompt appeared
