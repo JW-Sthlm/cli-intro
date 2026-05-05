@@ -267,9 +267,7 @@ The Copilot banner disappears and you're back at the PowerShell prompt (`PS C:\U
 
 ### 2b. Sign in to GitHub CLI (`gh`)
 
-The `/login` step above signed you into **Copilot CLI**. There's a separate tool — **GitHub CLI** (`gh`) — that some later steps use to talk to GitHub on your behalf (the verify script in Step 3, and the PMX MCP install in Step 5). It has its own login. You'll sign in twice — once for each account from "Before You Start".
-
-**First, your personal account.**
+The `/login` step above signed you into **Copilot CLI**. There's a separate tool — **GitHub CLI** (`gh`) — that some later steps use to talk to GitHub on your behalf (the verify script in Step 3, and the PMX MCP install in Step 5). It has its own login. Sign in here with your **personal** account; you'll add your EMU account later in Step 5b when PMX needs it.
 
 **In PowerShell** — run:
 
@@ -286,35 +284,17 @@ It will ask you several questions one at a time. Use the arrow keys to pick the 
 
 It shows a one-time code and opens a browser tab. Paste the code in the browser, sign in with your **personal** GitHub account, and authorize. When the browser says "Congratulations, you're all set!", come back to PowerShell — it should now print `✓ Logged in as <your-personal-username>`.
 
-**Then, your Microsoft EMU account.**
-
-Run the same command again:
-
-```
-gh auth login
-```
-
-Same answers as before, but this time sign in with your `yourname_microsoft` (EMU) account in the browser.
-
-> **Don't have a `_microsoft` EMU account?** Skip this second login. You'll be able to do most of the workshop — only the PMX MCP server in Step 5 needs it, and we can demo that together.
-
 > **Stuck on "We couldn't sign you in" with a passkey error?** This is common when your phone is the registered passkey holder. Click **Sign in another way** in the dialog and pick **Microsoft Authenticator** (push to phone) or text/call.
 
-**Set your personal account as the active one.** After two logins, the EMU account is the active default. Switch back to personal so the rest of the workshop uses it by default:
+> **No `_microsoft` EMU account?** Skip Step 5b too — only PMX needs the EMU, and we can demo PMX together at the session.
+
+Confirm:
 
 ```
 gh auth status
 ```
 
-Look at the output for the line that starts with `Logged in to github.com account <name>` for your **personal** account — copy that name. Then:
-
-```
-gh auth switch --user <your-personal-username>
-```
-
-(Replace `<your-personal-username>` with the name you just copied.)
-
-Run `gh auth status` again to confirm — your personal account should now show `Active account: true`.
+Your personal account should be listed with `Active account: true`.
 
 ---
 
@@ -409,93 +389,88 @@ When done, **type `/exit` and press Enter** to leave Copilot CLI and return to P
 
 ### 5b. Install PMX (Microsoft EMU account)
 
-PMX is the special case. Its server lives in `gim-home/pmx-mcp`, which only your Microsoft EMU (`yourname_microsoft`) account can access. So: switch accounts, install PMX, switch back.
+PMX is the special case. Its server lives in `gim-home/pmx-mcp`, which only your Microsoft EMU (`yourname_microsoft`) account can access. The flow: log into `gh` as your EMU as well (you already logged in as personal in Step 2b), then let Copilot CLI orchestrate the install for you.
 
-There are two ways. Pick one.
+#### First: log in to gh as your EMU
 
-#### Quick path — plugin marketplace (recommended)
+In Step 2b you ran `gh auth login` as your **personal** account. Run it again — same four answers — but this time sign in as your `_microsoft` EMU when the browser opens.
 
-Four commands. Works on any machine with `gh` and `copilot` installed. No clone, no `npm install`, no MCP register prompt — the `gim-home/pmx-mcp` repo ships a [plugin manifest](https://github.com/gim-home/pmx-mcp/blob/main/plugin.json) that Copilot CLI knows how to install.
+**In PowerShell** — run:
 
-```powershell
+```
+gh auth login
+```
+
+Same answers as before:
+
+- *What account do you want to log into?* → **GitHub.com**
+- *What is your preferred protocol for Git operations?* → **HTTPS**
+- *Authenticate Git with your GitHub credentials?* → **Yes**
+- *How would you like to authenticate GitHub CLI?* → **Login with a web browser**
+
+When the browser opens, sign in with your `_microsoft` EMU account (Microsoft sign-in, not your personal GitHub).
+
+Then verify both accounts are now known to `gh`:
+
+```
+gh auth status
+```
+
+You should see **two** entries — your personal account and your `_microsoft` EMU. Both must be present before continuing. (Either one can be active right now; the prompt below will set it.)
+
+> **⚠️ Both accounts must be logged in before the next step.** The Copilot prompt switches between them — it does not create them. If `gh auth status` only shows one account, run `gh auth login` for the missing one first.
+
+#### Then: let Copilot install PMX
+
+**In PowerShell** — launch Copilot CLI:
+
+```
+copilot
+```
+
+**Inside Copilot CLI** — paste this prompt and press Enter:
+
+```
+Install the PMX MCP server for me. I have two GitHub accounts known to `gh` — my personal one and my Microsoft EMU (username ends in `_microsoft`).
+
+1. Run `gh auth status` to confirm both accounts are present and note their usernames.
+2. Switch the active gh account to the `_microsoft` EMU.
+3. Run `copilot plugin marketplace add gim-home/pmx-mcp`.
+4. Run `copilot plugin install pmx-mcp@pmx-mcp`.
+5. Switch the active gh account back to my personal one.
+6. Run `gh auth status` again to confirm my personal account is now active.
+
+If any step fails, stop and tell me what went wrong — don't continue. When everything succeeds, tell me to type /exit and run copilot again so the new MCP server registers.
+```
+
+Copilot will run each shell command in order, switching the active `gh` account as it goes. When it finishes, it will tell you to relaunch.
+
+**Inside Copilot CLI** — type `/exit`:
+
+```
+/exit
+```
+
+**In PowerShell** — start Copilot CLI again so the new MCP server registers:
+
+```
+copilot
+```
+
+Skip to Step 6 to verify everything is connected.
+
+#### Manual fallback — if the Copilot prompt fails
+
+If Copilot can't run shell commands or the prompt misfires, do the four commands yourself in PowerShell. Run them **one at a time**:
+
+```
 gh auth switch --user <yourname>_microsoft
 copilot plugin marketplace add gim-home/pmx-mcp
 copilot plugin install pmx-mcp@pmx-mcp
 gh auth switch --user <your-personal-username>
 ```
 
-Then relaunch Copilot CLI so the new MCP tools register (`/exit` and run `copilot` again, or `/restart`), and run `az login --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47` if you haven't already (Step 4).
-
-> **⚠️ Same EMU rule applies.** The `marketplace add` step fetches the manifest using your active `gh` credentials. If you skip the first switch, the command fails with a 404 and there's no helpful auto-recovery — switch first.
-
-That's it. Skip to Step 6 to verify.
-
-#### Manual path — clone the repo (fallback / contributors)
-
-Use this if the marketplace flow fails, you want to read or hack on the source, or you need to run a feature branch. It's the original install — slower, but gives you the full repo on disk.
-
-> **⚠️ Critical — switch the account FIRST.** If you launch Copilot CLI with your personal account active and ask it to install PMX, it cannot see the private `gim-home/pmx-mcp` repo and will helpfully install the **wrong** thing — there's a public `Galvill/pmx-mcp` (Proxmox virtualization tools, completely unrelated). Don't trust the AI to know which "PMX" you mean. Switch accounts first.
-
-> **⚠️ Second trap — the GitHub MCP server has stale auth.** When you installed the GitHub MCP in 5a (as personal account), it stored a personal-account token internally. That token does **not** update when you `gh auth switch` later. So even after switching to EMU, if Copilot uses the GitHub MCP tool to fetch the repo, it will still get a 404 and start hunting for "alternatives" — and find Proxmox again. The prompt below tells Copilot to use shell `git clone` instead, which uses your active `gh` credentials.
-
-You'll be jumping **between PowerShell and Copilot CLI in the same window**.Watch the prompt to know which mode you're in:
-
-- `PS C:\Users\YourName\cli-intro>` → you're in PowerShell.
-- A banner with a `❯` or `>` arrow → you're inside Copilot CLI.
-
-If you're inside Copilot CLI when a step says "in PowerShell", type `/exit` and press Enter first.
-
-1. **In PowerShell** — switch to your EMU account and tell git to use it:
-
-   ```
-   gh auth switch --user <yourname>_microsoft
-   gh auth setup-git
-   gh auth status
-   ```
-
-   The third command should show your `_microsoft` account as `Active account: true`. The middle one (`gh auth setup-git`) tells `git` to use the EMU credentials directly, instead of asking Windows to pop up a separate "Connect to GitHub" dialog when Copilot tries to clone.
-
-2. **In PowerShell** — confirm the private repo is reachable:
-
-   ```
-   gh repo view gim-home/pmx-mcp
-   ```
-
-   You should see the repo's description and details. If you get a 404 instead, the account switch didn't take — re-run step 1.
-
-3. **In PowerShell** — launch Copilot CLI:
-
-   ```
-   copilot
-   ```
-
-4. **Inside Copilot CLI** — ask it to install the PMX MCP server:
-
-   ```
-   Install the PMX MCP server from github.com/gim-home/pmx-mcp. Use shell `git clone https://github.com/gim-home/pmx-mcp.git` (NOT the github-mcp-server MCP tool — its token is stale). The repo is private and only my active gh CLI credentials can access it. Do NOT search for alternative "pmx-mcp" repos. If `git clone` fails, stop and tell me — never install Galvill/pmx-mcp or any similar-named repo. After cloning, run npm install, npm run build, and register the server in my Copilot CLI MCP config.
-   ```
-
-   This prompt is deliberately strict. The agent has previously installed a wrong public repo (`Galvill/pmx-mcp` — Proxmox virtualization, unrelated) when it couldn't reach the private one. The "do NOT search" clause prevents the misfire.
-
-5. **Inside Copilot CLI** — when PMX is installed, leave Copilot CLI:
-
-   ```
-   /exit
-   ```
-
-6. **Back in PowerShell** — switch back to your personal account:
-
-   ```
-   gh auth switch --user <your-personal-username>
-   ```
-
-7. **In PowerShell** — verify your personal account is active again:
-
-   ```
-   gh auth status
-   ```
-
-You can also use the built-in command `/mcp` (inside Copilot CLI) to browse and add servers from a menu.
+Same end state. The EMU must be active when `marketplace add` runs — that command fetches the manifest using your active `gh` credentials. Personal account → 404, no auto-recovery.
 
 > **Having trouble?** MCP setup depends on your environment and permissions. If it doesn't work, don't worry — we'll troubleshoot together at the start of the session. Just make sure Steps 1–4 are done.
 
