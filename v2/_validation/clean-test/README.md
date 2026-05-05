@@ -14,19 +14,20 @@ Three ways to get a fresh Windows, in priority order:
 
 | Option | When to use |
 |--------|-------------|
-| **Sandbox in Dev Box** ⭐ gold standard | Cloud-managed clean host + disposable per-walk sandbox. No local virtualization issues, no Dev Box redeploy between walks. See [sandbox-in-devbox.md](sandbox-in-devbox.md). |
-| **Microsoft Dev Box** (plain) | When the Dev Box pool doesn't allow Sandbox. Fresh Windows 11, cloud-managed. **Caveat:** dirty after walk 1 — redeploy (~15 min) for a true second walk. |
+| **Microsoft Dev Box** (plain) ⭐ default | The path that actually works in our tenant today. Connect and walk. Use [`reset-devbox.ps1`](reset-devbox.ps1) between walks 2-N to avoid the ~15-min redeploy. |
+| **Sandbox in Dev Box** | Aspirational — currently blocked by Dev Box pool policy (Containers-DisposableClientVM disabled). Doc kept for future tenants. See [sandbox-in-devbox.md](sandbox-in-devbox.md). |
 | **Windows Sandbox** (local) | When your laptop supports it and you don't have Dev Box access. Instant disposability per run. **WARNING:** known to cause hypervisor-level lockup on ARM64 + corporate-managed Windows. |
 
-Either way, the test is: open [setup-guide.md](../../pre-work/setup-guide.md), follow it as written, document findings using [results-template.md](results-template.md).
+The canonical artifact under test is the **hosted [setup.html](https://cli-intro-share.pages.dev/setup.html)**, not the markdown mirror. Open it, follow it, log findings in [results-template.md](results-template.md).
 
 ## Files in this kit
 
 | File | Purpose |
 |------|---------|
 | [test-runbook.md](test-runbook.md) | **Primary path.** Step-by-step manual test. Read this first. |
-| [sandbox-in-devbox.md](sandbox-in-devbox.md) | ⭐ **Gold-standard host setup.** Sandbox running inside a Dev Box — no local virtualization, no redeploy between walks. |
 | [results-template.md](results-template.md) | Pre-formatted results — copy and fill in as you go |
+| [reset-devbox.ps1](reset-devbox.ps1) | **Repeat-walk reset.** Soft mode wipes auth/config/repos in ~30s. Hard mode adds winget uninstall (best-effort, NOT pristine — redeploy for true clean). Always runs a verifier at the end. |
+| [sandbox-in-devbox.md](sandbox-in-devbox.md) | Aspirational Sandbox-in-Dev-Box workflow. Currently blocked by tenant pool policy — kept as reference. |
 | [launch.cmd](launch.cmd) | Starts Windows Sandbox (works inside Dev Box too once enabled) |
 | [sandbox-config.wsb](sandbox-config.wsb) | Sandbox config (mounts this folder read-only) |
 | [bootstrap.ps1](bootstrap.ps1) | **Optional shortcut** for re-runs. Auto-installs the 5 prereqs. **Do NOT use for the primary test** — it bypasses the very thing we're validating. |

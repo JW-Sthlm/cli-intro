@@ -12,11 +12,31 @@ The canonical artifact is now **the hosted [`setup.html`](https://cli-intro-shar
 
 | Option | When to use |
 |--------|-------------|
-| **Sandbox in Dev Box** ⭐ gold standard | Cloud-managed Windows 11 host + disposable Sandbox per walk. No local virtualization, no redeploy cost. See [sandbox-in-devbox.md](sandbox-in-devbox.md). |
-| **Microsoft Dev Box** (plain) | Falls back here when the pool blocks Sandbox. Just connect and go — but dirty after walk 1. Redeploy (~15 min) for a true second walk. |
+| **Microsoft Dev Box** ⭐ default | The path that actually works in our tenant. Just connect and go. After walk 1, run [`reset-devbox.ps1`](reset-devbox.ps1) to reuse the same box for walks 2-N. See "Repeat walks on the same Dev Box" below. |
+| **Sandbox in Dev Box** | Aspirational — Containers-DisposableClientVM is blocked by current Dev Box pool policy, so this path is a dead end on our tenant today. Doc kept for future tenants where it's allowed. See [sandbox-in-devbox.md](sandbox-in-devbox.md). |
 | **Windows Sandbox** (local) | When you don't have Dev Box access. Skip on ARM64 + corporate-managed Windows — known hypervisor lockup. See [launch.cmd](launch.cmd) and [enable-sandbox.md](enable-sandbox.md). |
 
-All three deliver the same test surface. Sandbox-in-Dev-Box is the only one that's both clean and reset-in-seconds.
+The realistic flow today is: connect to a Dev Box, walk through setup.html once on a freshly-deployed (pristine) box, then `reset-devbox.ps1` between subsequent walks.
+
+### Repeat walks on the same Dev Box
+
+Redeploying the Dev Box between every walk costs ~15 min. The reset script is the cheaper option for walks 2-N:
+
+```powershell
+# Soft (default) — clears auth + config + cloned repos. Tools stay installed.
+# Use this between Walk A1 reruns where you don't need to retest Step 1.
+.\reset-devbox.ps1
+
+# Hard — Soft + winget uninstall the 6 packages.
+# Use this when you want to retest Step 1. NOT a pristine reset (winget
+# leaves PATH/registry/state behind). For a true pristine machine, redeploy.
+.\reset-devbox.ps1 -Mode Hard
+
+# Preview without changing anything
+.\reset-devbox.ps1 -WhatIf
+```
+
+The script ends with a verifier that lists what's still present, so you know what the reset actually cleared. **The first walk on a redeployed box is always the most authoritative test** — use the reset script for everything after that.
 
 ## How the test relates to user instructions
 
@@ -96,7 +116,7 @@ If any look wrong, capture a screenshot and log under "Step 5 — Verify".
 
 Only run this if **Walk A1 failed** or if you specifically want to validate the manual recovery path.
 
-1. Reset the test machine (close & reopen Sandbox, OR redeploy Dev Box, OR `gh auth switch` back to personal-only and `copilot plugin uninstall pmx-mcp` if it got partially installed).
+1. Reset the test machine (run `.\reset-devbox.ps1` from this folder for the standard repeat-walk path, OR redeploy the Dev Box for a true pristine state, OR `gh auth switch` back to personal-only and `copilot plugin uninstall pmx-mcp` if it got partially installed).
 2. On setup.html Step 4b, expand the **"If the prompt path didn't work"** foldout.
 3. Follow the five numbered steps verbatim:
    - Step 1: Find your EMU username via `gh auth status`
