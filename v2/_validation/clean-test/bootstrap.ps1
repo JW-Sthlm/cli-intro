@@ -41,21 +41,61 @@ Write-Host "Architecture: $env:PROCESSOR_ARCHITECTURE"
 Write-Host "Test folder mounted at: C:\Test"
 Get-ChildItem C:\Test | Select-Object Name | Format-Table -HideTableHeaders | Out-String | Write-Host
 
-Section "Step 1 - check winget"
+Section "Step 1 - check winget (auto-bootstrap if missing)"
 $winget = Get-Command winget -ErrorAction SilentlyContinue
 if ($winget) {
     Write-Host "winget available at: $($winget.Source)" -ForegroundColor Green
 } else {
-    Write-Host "winget NOT available in this sandbox." -ForegroundColor Red
-    Write-Host "Modern Win11 sandboxes include it. If yours doesn't, install App Installer from the Store, then re-run this script." -ForegroundColor Yellow
-    Write-Host ""
-    Write-Host "Stopping bootstrap. Manual install path:" -ForegroundColor Yellow
-    Write-Host "  - Node:    https://nodejs.org/ (LTS)"
-    Write-Host "  - Git:     https://git-scm.com/download/win"
-    Write-Host "  - gh:      https://cli.github.com/"
-    Write-Host "  - az:      https://learn.microsoft.com/cli/azure/install-azure-cli-windows"
-    Write-Host "  - copilot: winget install GitHub.Copilot (after winget is available)"
-    return
+    Write-Host "winget NOT available - bootstrapping it now..." -ForegroundColor Yellow
+    Write-Host "(Expected in fresh Sandbox 24H2. Downloads ~250 MB; allow 3-5 min on Sandbox networking.)" -ForegroundColor Yellow
+
+    $tmp     = "$env:TEMP\winget-bootstrap"
+    $bundle  = Join-Path $tmp 'winget.msixbundle'
+    $deps    = Join-Path $tmp 'deps.zip'
+    $depsDir = Join-Path $tmp 'deps'
+    New-Item -ItemType Directory -Force -Path $tmp | Out-Null
+
+    $bundleUrl = 'https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle'
+    $depsUrl   = 'https://github.com/microsoft/winget-cli/releases/latest/download/DesktopAppInstaller_Dependencies.zip'
+
+    Write-Host "  -> downloading winget bundle..." -ForegroundColor Yellow
+    & curl.exe -L --fail -o $bundle $bundleUrl
+    if ($LASTEXITCODE -ne 0 -or -not (Test-Path $bundle)) {
+        Write-Host "Bundle download FAILED. Use Codespaces or a real Dev Box instead." -ForegroundColor Red
+        return
+    }
+
+    Write-Host "  -> downloading framework deps zip..." -ForegroundColor Yellow
+    & curl.exe -L --fail -o $deps $depsUrl
+    if ($LASTEXITCODE -ne 0 -or -not (Test-Path $deps)) {
+        Write-Host "Deps zip download FAILED. Use Codespaces or a real Dev Box instead." -ForegroundColor Red
+        return
+    }
+
+    Write-Host "  -> extracting deps..." -ForegroundColor Yellow
+    Expand-Archive -Path $deps -DestinationPath $depsDir -Force
+
+    Write-Host "  -> installing x64 framework packages..." -ForegroundColor Yellow
+    Get-ChildItem -Path $depsDir -Recurse -Include *.appx,*.msix |
+        Where-Object { $_.FullName -match '\\x64\\' } |
+        ForEach-Object {
+            Write-Host "       $($_.Name)" -ForegroundColor DarkGray
+            Add-AppxPackage -Path $_.FullName -ErrorAction Continue
+        }
+
+    Write-Host "  -> installing winget bundle..." -ForegroundColor Yellow
+    Add-AppxPackage -Path $bundle -ErrorAction Continue
+
+    $env:Path = [System.Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path','User')
+    $winget = Get-Command winget -ErrorAction SilentlyContinue
+    if ($winget) {
+        Write-Host "winget bootstrapped successfully at: $($winget.Source)" -ForegroundColor Green
+    } else {
+        Write-Host "winget bootstrap FAILED. Fallbacks:" -ForegroundColor Red
+        Write-Host "  - Open https://github.com/JW-Sthlm/cli-intro in Codespaces"
+        Write-Host "  - Use a real Dev Box (winget pre-installed)"
+        return
+    }
 }
 
 Section "Step 2 - install prerequisites"
