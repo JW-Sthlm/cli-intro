@@ -461,16 +461,47 @@ Skip to Step 6 to verify everything is connected.
 
 #### Manual fallback — if the Copilot prompt fails
 
-If Copilot can't run shell commands or the prompt misfires, do the four commands yourself in PowerShell. Run them **one at a time**:
+If Copilot can't run shell commands or the prompt misfires, do it yourself. Run them **one at a time**.
+
+**1. Find your EMU username.** Run:
 
 ```
-gh auth switch --user <yourname>_microsoft
+gh auth status
+```
+
+Look at both account lines. Your EMU username is the one ending in `_microsoft` (e.g. `jeghammer_microsoft`). Copy that exact name — you'll need it next.
+
+**2. Switch the active account to your EMU.** Replace `YOUR_EMU_USERNAME` with the name you copied above:
+
+```
+gh auth switch --user YOUR_EMU_USERNAME
+```
+
+**3. Confirm the switch worked.** Run `gh auth status` again and check that the line marked *"Active account: true"* is on your `_microsoft` entry. If it's still on your personal account, step 2 didn't take — re-run it.
+
+```
+gh auth status
+```
+
+**4. Install PMX.** With the EMU active, run these in order:
+
+```
 copilot plugin marketplace add gim-home/pmx-mcp
-copilot plugin install pmx-mcp@pmx-mcp
-gh auth switch --user <your-personal-username>
 ```
 
-Same end state. The EMU must be active when `marketplace add` runs — that command fetches the manifest using your active `gh` credentials. Personal account → 404, no auto-recovery.
+```
+copilot plugin install pmx-mcp@pmx-mcp
+```
+
+**5. Switch back to your personal account.** Replace `YOUR_PERSONAL_USERNAME` with your personal GitHub username:
+
+```
+gh auth switch --user YOUR_PERSONAL_USERNAME
+```
+
+> **⚠️ Got `403 Write access to repository not granted`?** Your personal account is still active. The `marketplace add` command is using personal creds against a Microsoft-internal repo. Re-run step 2 (the `gh auth switch`), verify with `gh auth status` that the EMU is active, then re-run the marketplace command.
+
+Same end state as the prompt path. The EMU must be the active account when `marketplace add` runs — that command fetches the manifest using your active `gh` credentials. Personal account → 403 or 404, no auto-recovery.
 
 > **Having trouble?** MCP setup depends on your environment and permissions. If it doesn't work, don't worry — we'll troubleshoot together at the start of the session. Just make sure Steps 1–4 are done.
 
