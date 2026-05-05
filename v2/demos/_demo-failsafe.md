@@ -13,7 +13,7 @@ Use this when the demo breaks during the session. The audience does not need to 
 
 ## If MCP servers fail to respond
 
-**📖 Business roles** — Keep the value story alive: structure first, live data second.
+Keep the value story alive: structure first, live data second.
 
 - [ ] Pivot to the prompt-only version of the demo with no real data.
 - [ ] Frame it clearly: "Imagine PMX data here. The structure is the point; the live connection is what makes it operational."
@@ -22,7 +22,7 @@ Use this when the demo breaks during the session. The audience does not need to 
 
 ## If the model is too slow / quota exceeded
 
-**🔧 Technical deep dive** — Switching models is optional depth. Do it once, then move on if it still fails.
+**🔧 Going deeper (optional)** — Switching models is optional depth. Do it once, then move on if it still fails.
 
 - [ ] Switch model live with `/model gpt-5-mini`, or whichever fast model is currently working.
 - [ ] Try the next prompt once after switching.

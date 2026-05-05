@@ -1,6 +1,6 @@
 # Participant Prep
 
-**📖 Business roles** — Do this before the Setup Clinic. It should take about 5 minutes.
+Do this before the Setup Clinic. It should take about 5 minutes.
 
 ## Bring
 
@@ -11,7 +11,7 @@
 
 ## That's it
 
-**📖 Business roles** — You do not need to complete the setup alone before joining.
+You do not need to complete the setup alone before joining.
 
 If you already tried the pre-work and got stuck, join anyway. The goal of the clinic is to get you unstuck.
 

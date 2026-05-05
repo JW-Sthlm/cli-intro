@@ -22,7 +22,7 @@
 
 ## Setup
 
-**🔧 Technical deep dive** — Verify the connectors before the audience arrives. Do not debug auth live unless that is the point of the session.
+**🔧 Going deeper (optional)** — Verify the connectors before the audience arrives. Do not debug auth live unless that is the point of the session.
 
 - Copilot CLI running with PMX, M365, and GitHub MCP servers
 - Pick a real partner you have active projects with
@@ -40,7 +40,7 @@
 
 ### Act 2: Pull the data — show the tools working (5 min)
 
-**📖 Business roles** — The audience should see this as one plain-language ask, not a command to memorize.
+The audience should see this as one plain-language ask, not a command to memorize.
 
 **Type:**
 
@@ -52,7 +52,7 @@ I'm preparing for a Partner Sync with [Partner Name] tomorrow. Help me build a s
 4. My recent emails to or from people at this partner
 ```
 
-**🔧 Technical deep dive** — Point to the tool calls for engineers who want to know what is happening under the hood.
+**🔧 Going deeper (optional)** — Point to the tool calls for engineers who want to know what is happening under the hood.
 
 **Talking point (while it works):** "Notice what's happening. It's not guessing — it's calling specific tools. PMX for project data. MSX for the pipeline. M365 for your email. Each tool returns real, current data from your actual systems. M365 Copilot can't do this — it lives inside Office. CLI connects across tools."
 
@@ -85,7 +85,7 @@ Format it as a clean document I could share with my team.
 
 ### Act 4: Show repeatability
 
-**🔧 Technical deep dive** — This is where you connect the business workflow to instructions, skills, and team standardization. (2 min)
+**🔧 Going deeper (optional)** — This is where you connect the business workflow to instructions, skills, and team standardization. (2 min)
 
 **SAY:** "Now here's why this is a factory, not just a one-off. This exact conversation? I can rerun it for any partner. Change the name, same workflow. And if I save these prompts as a skill or instruction file, my whole team can use the same pattern."
 
@@ -101,7 +101,7 @@ Save this conversation workflow. If I wanted to reuse this exact briefing patter
 
 ### Act 5: Show persistence
 
-**🔧 Technical deep dive** — `/compact` and `/resume` are optional depth. Land the concept even if you skip the live command. (1 min)
+**🔧 Going deeper (optional)** — `/compact` and `/resume` are optional depth. Land the concept even if you skip the live command. (1 min)
 
 **SAY:** "One more thing M365 Copilot can't do."
 

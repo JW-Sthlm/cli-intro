@@ -1,6 +1,6 @@
 # Exercise 1B — Build Your Partner Briefing in Cowork
 
-> **📖 Business roles** — Start here. This is a parallel version of Exercise 1, executed in M365 Copilot Cowork instead of the CLI. No terminal needed.
+> Start here. This is a parallel version of Exercise 1, executed in M365 Copilot Cowork instead of the CLI. No terminal needed.
 >
 > **Session ownership:** This exercise may be lifted out and run as part of a dedicated Cowork session by a separate facilitator. It is intentionally self-contained — no dependency on Exercise 1 or the CLI setup beyond the same goal (a partner briefing in your own voice).
 >
@@ -46,7 +46,7 @@ This is the same outcome as Exercise 1. The difference is the tool you use to ge
 - A real partner you have email, calendar, or Teams context for
 - A partner meeting coming up in the next 1–2 weeks
 
-> **📖 Business roles** — Pick a real partner, not a test case. The exercise works best when Cowork has recent emails, meetings, or chats to summarize.
+> Pick a real partner, not a test case. The exercise works best when Cowork has recent emails, meetings, or chats to summarize.
 
 ---
 
@@ -54,13 +54,13 @@ This is the same outcome as Exercise 1. The difference is the tool you use to ge
 
 Open M365 Copilot Cowork in Edge or Teams.
 
-**📖 Business roles** — Copy this prompt and replace `[Partner Name]`.
+Copy this prompt and replace `[Partner Name]`.
 
 ```
 Pull together everything from my recent emails, calendar, and Teams chats about [Partner Name] over the last 30 days. Group by theme.
 ```
 
-**📖 Business roles** — If the answer is too broad, refine it in plain English. For example:
+If the answer is too broad, refine it in plain English. For example:
 
 ```
 Focus only on the last two weeks and include named contacts if you can find them.
@@ -76,7 +76,7 @@ If you find project IDs or opportunity names, list them separately so I can veri
 
 **What you should see:** A grouped summary of recent Microsoft 365 context about the partner.
 
-> **📖 Business roles** — If the first answer is messy, that is normal. Cowork usually improves quickly when you ask it to narrow the date range, focus on specific people, or reorganize the answer.
+> If the first answer is messy, that is normal. Cowork usually improves quickly when you ask it to narrow the date range, focus on specific people, or reorganize the answer.
 
 ---
 
@@ -84,7 +84,7 @@ If you find project IDs or opportunity names, list them separately so I can veri
 
 Now turn the context into a briefing.
 
-**📖 Business roles** — Copy this prompt to turn the raw context into a briefing.
+Copy this prompt to turn the raw context into a briefing.
 
 ```
 Turn this into a partner briefing for my meeting next week.
@@ -98,7 +98,7 @@ Use these sections:
 Keep it concise and practical. Write it in my voice, as something I could use to prepare for the meeting.
 ```
 
-**📖 Business roles** — Then iterate. Cowork is good at simple follow-ups like:
+Then iterate. Cowork is good at simple follow-ups like:
 
 ```
 Make this more concise. Keep only what I need before the meeting.
@@ -122,7 +122,7 @@ Add a short opening paragraph I can paste into a meeting prep email.
 
 ## Part 3 — Compare to CLI (5 min, optional but valuable)
 
-**🔧 Technical deep dive** — Optional comparison for people who want to understand the tool boundary.
+**🔧 Going deeper (optional)** — Optional comparison for people who want to understand the tool boundary.
 
 If you are also doing Exercise 1 with CLI, run the same partner briefing there.
 
@@ -142,7 +142,7 @@ Compare this Cowork briefing with the CLI briefing. What is different in the sou
 Which version would I use before a real partner meeting, and what would I still need to verify manually?
 ```
 
-> **📖 Business roles** — This is not about picking a winner. It is about learning which tool fits which job.
+> This is not about picking a winner. It is about learning which tool fits which job.
 
 ---
 
@@ -160,7 +160,7 @@ Write 2–3 lines for yourself.
 
 ## When this exercise might NOT be enough
 
-**🔧 Technical deep dive** — Read this if you want to know when CLI becomes worth the extra setup.
+**🔧 Going deeper (optional)** — Read this if you want to know when CLI becomes worth the extra setup.
 
 Cowork is a strong starting point when the work lives in Microsoft 365. There are moments where the natural next step is CLI.
 

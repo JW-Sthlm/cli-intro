@@ -4,7 +4,7 @@
 > **Format:** Self-paced — pick the scenario closest to your real work  
 > **Goal:** Apply CLI to a partner workflow that matters to you
 
-> **📖 Business roles** — These exercises are read-only. All prompts pull and analyze data — nothing creates, updates, or deletes records in PMX, MSX, or any other system. "Draft" prompts generate text for you to review — they don't send anything.
+> These exercises are read-only. All prompts pull and analyze data — nothing creates, updates, or deletes records in PMX, MSX, or any other system. "Draft" prompts generate text for you to review — they don't send anything.
 
 💡 **Remember:** These prompts are starting points. Rephrase them, shorten them, combine them — whatever feels natural. If you're not sure what to type, just describe what you want in plain English. There's no wrong way to talk to CLI.
 
@@ -20,7 +20,7 @@ Pick **one** scenario. Each one builds on what you saw in the demos. The prompts
 
 *Best for: PSA, PTS, PSS, practice leads — anyone who runs discovery calls or workshops*
 
-**📖 Business roles** — Create a file with rough notes, or use these example notes.
+Create a file with rough notes, or use these example notes.
 
 ```
 Quick notes from call with Northwind Traders:
@@ -36,7 +36,7 @@ Quick notes from call with Northwind Traders:
 
 Save as `notes.txt` **in the folder where you started Copilot CLI** (your working directory — the path shown in your terminal prompt). The `@` reference looks for the file there.
 
-**🔧 Technical deep dive** — `@notes.txt` is a file reference. CLI reads that file from your current working directory and uses it as context.
+**🔧 Going deeper (optional)** — `@notes.txt` is a file reference. CLI reads that file from your current working directory and uses it as context.
 
 > 💡 **Shortcut:** There is a ready-made `workshop-notes.txt` in the exercises folder. If you cloned the repo, you can use `@workshop-notes.txt` instead.
 
@@ -56,7 +56,7 @@ Add a section on which Azure services are needed for Phase 1, and estimate month
 
 *Best for: PTS, PDM, Partner GTM — anyone tracking partner pipeline*
 
-**📖 Business roles** — Start by asking for the portfolio view.
+Start by asking for the portfolio view.
 
 ```
 Show me all my PMX projects and their linked MSX opportunities. For each project, tell me: is there a linked opportunity? If not, search MSX for a matching one.
@@ -80,7 +80,7 @@ Draft a summary of the gaps I should address this week, formatted as a status up
 
 *Best for: PDM, Partner GTM, PSA — anyone who writes partner-facing comms*
 
-**📖 Business roles** — Start by asking CLI to gather context before drafting.
+Start by asking CLI to gather context before drafting.
 
 ```
 I need to write a follow-up email to [Partner Name]. Before drafting, gather context:
@@ -103,7 +103,7 @@ Make the tone more direct. Add a specific ask for a meeting next week.
 
 *Best for: PSA, PTS, partner solution leads — strategic and technical conversations*
 
-**🔧 Technical deep dive** — This scenario uses `/research` plus internal pipeline context. Pick it if you want to see cross-source reasoning.
+**🔧 Going deeper (optional)** — This scenario uses `/research` plus internal pipeline context. Pick it if you want to see cross-source reasoning.
 
 ```
 /research What are the top AI workloads that ISV partners in EMEA are building on Azure in 2026? Focus on document intelligence, AI agents, and data platform modernization.

@@ -27,7 +27,7 @@
 
 ### Workshop Notes (paste these into a file before the demo)
 
-**🔧 Technical deep dive** — Create `workshop-notes.txt` in your working directory so the `@workshop-notes.txt` reference works during the demo.
+**🔧 Going deeper (optional)** — Create `workshop-notes.txt` in your working directory so the `@workshop-notes.txt` reference works during the demo.
 
 ```
 Discovery Workshop — Contoso Nordic (ISV Partner)
@@ -67,7 +67,7 @@ Key findings:
 
 ### Act 2: Feed the context — show @ file reference (2 min)
 
-**📖 Business roles** — The audience only needs to understand that `@workshop-notes.txt` means "read this file".
+The audience only needs to understand that `@workshop-notes.txt` means "read this file".
 
 **Type:**
 
@@ -80,7 +80,7 @@ These are raw notes from a discovery workshop with an ISV partner. I need to tur
 3. What's missing — what questions should we have asked but didn't?
 ```
 
-**🔧 Technical deep dive** — This is the inspection moment: file input becomes context, then context becomes analysis.
+**🔧 Going deeper (optional)** — This is the inspection moment: file input becomes context, then context becomes analysis.
 
 **Talking point:** "The `@` tells CLI to read the file. It doesn't just summarize — it analyzes. Look at the 'what's missing' section. That's the kind of insight that usually takes a week to surface."
 
@@ -88,7 +88,7 @@ These are raw notes from a discovery workshop with an ISV partner. I need to tur
 
 ### Act 3: Generate the structured plan (4 min)
 
-**📖 Business roles** — This is the main "notes to plan" ask.
+This is the main "notes to plan" ask.
 
 **Type:**
 

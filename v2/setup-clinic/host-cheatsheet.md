@@ -4,15 +4,15 @@ One-page command and troubleshooting reference for the Setup Clinic.
 
 Use this while people are sharing their verification output in chat.
 
-**📖 Business roles** — Keep the group moving. Ask for the summary line and first failed item only.
+Keep the group moving. Ask for the summary line and first failed item only.
 
-**🔧 Technical deep dive** — Use the commands below when you need to verify the exact tool, account, or tenant state.
+**🔧 Going deeper (optional)** — Use the commands below when you need to verify the exact tool, account, or tenant state.
 
 ---
 
 ## Core flow
 
-**📖 Business roles** — Start here when someone is unsure whether setup worked.
+Start here when someone is unsure whether setup worked.
 
 This checks the participant's setup.
 

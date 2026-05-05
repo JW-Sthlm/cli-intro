@@ -363,17 +363,17 @@ A browser window will open. Sign in with your Microsoft account. Once it says "Y
 
 ---
 
-## Step 5: Connect Your Tools (MCP Servers)
+## Step 5: Connect Your Tools (MCP Servers and Plugins)
 
-MCP servers are connectors that let Copilot CLI talk to external tools — think of them like Power Automate connectors. We need three:
+MCP servers and plugins are connectors that let Copilot CLI talk to external systems — like Power Automate connectors, but for CLI. We'll connect three:
 
-1. **GitHub** — repos, issues, pull requests
-2. **M365** — email, calendar, Teams
-3. **PMX** — your partner management data in D365 (Microsoft-internal, installed last)
+1. **GitHub** — repos, issues, pull requests *(built into Copilot CLI — no install needed)*
+2. **M365** — email, calendar, Teams *(installed as plugins in 5a)*
+3. **PMX** — your partner management data in D365 *(installed as an MCP server in 5b, Microsoft-internal)*
 
-We do this in two passes because **PMX requires your Microsoft EMU account** to be the active GitHub account, while GitHub and M365 work fine with your personal one. Install the public ones first, then switch accounts and install PMX.
+We do this in two passes because **PMX requires your Microsoft EMU account** to be the active GitHub account, while M365 works fine with your personal one. Set up M365 first, then switch accounts and install PMX.
 
-### 5a. Install GitHub and M365 (personal account)
+### 5a. Set up M365 (personal account)
 
 Make sure your personal account is the active GitHub account:
 
@@ -396,12 +396,14 @@ You'll see the Copilot CLI banner appear. The prompt will change — instead of 
 **Inside Copilot CLI** — type this prompt and press Enter:
 
 ```
-Set up the official GitHub and M365 MCP servers in my Copilot CLI config. Walk me through it step by step.
+Set up M365 capabilities (Outlook, Teams, Calendar, SharePoint) in my Copilot CLI. If anything is already installed, just confirm it. Then run a quick test — fetch my next calendar meeting and one of my recent GitHub repos.
 ```
 
-Copilot will walk you through it. Answer in plain language — no syntax memorization needed.
+Copilot will install whatever's missing, then run the tests. The GitHub test confirms the built-in GitHub MCP server is working too.
 
-> **⚠️ Common trap** — Copilot will ask **"Where do you want to configure these MCP servers?"** and show a numbered menu. Pick **2. Copilot CLI**. The other options configure MCP for VS Code's Copilot Chat, GitHub Copilot Coding Agent, or other tools — not your local CLI session.
+> **⚠️ Common trap** — If Copilot asks **"Where do you want to configure these MCP servers?"** and shows a numbered menu, pick **2. Copilot CLI**. The other options configure MCP for VS Code's Copilot Chat, GitHub Copilot Coding Agent, or other tools — not your local CLI session.
+
+✅ **Pass:** Copilot returns your next meeting and a GitHub repo. Both M365 and GitHub are alive.
 
 When done, **type `/exit` and press Enter** to leave Copilot CLI and return to PowerShell.
 
@@ -513,7 +515,7 @@ copilot
 /env
 ```
 
-Look for the MCP servers section. You should see entries for PMX, GitHub, and M365 tools. If any are missing, double-check your config file path and contents.
+You should see **PMX listed under MCP servers**, and **Outlook / Teams / Calendar / SharePoint listed under plugins**. (The GitHub MCP server is built into Copilot CLI, so it doesn't appear in either list.) If anything is missing, double-check your config file path and contents.
 
 **Inside Copilot CLI** — try a quick PMX smoke test:
 
@@ -538,7 +540,7 @@ If you'd rather run a one-shot check, use `verify.ps1` (added in `pre-work/`) �
 | `az login` fails | Run `winget install Microsoft.AzureCLI` first, restart PowerShell |
 | Stuck on the Azure subscription picker | Press Enter. The subscription choice does not matter for this workshop |
 | PMX returns errors | Re-run `az login --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47` |
-| MCP prompt unclear which to pick | See Step 5 placeholder. Default to the user/global option, do not choose Copilot Cloud Agent, and verify with Taras |
+| MCP prompt asks "Where do you want to configure these MCP servers?" | Pick **2. Copilot CLI**. Other options target VS Code Chat, GitHub Coding Agent, or other tools — not your local CLI |
 | MCP servers not showing in `/env` | Check that `mcp-config.json` is in the right folder and is valid JSON |
 
 ---

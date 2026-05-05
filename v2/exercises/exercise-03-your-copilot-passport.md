@@ -19,8 +19,8 @@ The fastest way to understand a skill is to build one. You do not need to hand-w
 
 Start with the working reference: [copilot-overview-plugin](https://github.com/JW-Sthlm/copilot-overview). Here's a working skill someone in this team built. It generates a personal Copilot environment dashboard. Read its [README](https://github.com/JW-Sthlm/copilot-overview/blob/main/README.md) to see the shape of a skill before you build yours.
 
-📖 **Business roles:** Read the README and focus on the pattern: trigger phrase → instructions → useful output.  
-🔧 **Technical deep dive:** Open `plugin.json` and `skills/copilot-overview/SKILL.md` to see how a plugin packages a skill.
+Read the README and focus on the pattern: trigger phrase → instructions → useful output.  
+🔧 **Going deeper (optional):** Open `plugin.json` and `skills/copilot-overview/SKILL.md` to see how a plugin packages a skill.
 
 ---
 
@@ -50,8 +50,8 @@ Show me the structure of ~/projects/copilot-overview-plugin and explain how a sk
 
 **Expected outcome:** Copilot explains the main pieces: `plugin.json`, the `skills/` folder, `SKILL.md`, trigger descriptions, and optional reference files.
 
-📖 **Business roles:** Ask follow-up questions in plain English: `What parts do I actually need for a simple skill?`  
-🔧 **Technical deep dive:** Ask Copilot to compare the README, INSTALL.md, and SKILL.md so you see the install story versus the runtime behavior.
+Ask follow-up questions in plain English: `What parts do I actually need for a simple skill?`  
+🔧 **Going deeper (optional):** Ask Copilot to compare the README, INSTALL.md, and SKILL.md so you see the install story versus the runtime behavior.
 
 ---
 
@@ -65,8 +65,8 @@ Help me scaffold a new skill called <their-skill-name> in ~/.copilot/skills/. Cr
 
 **Expected outcome:** A new folder appears under `~\.copilot\skills\<their-skill-name>\` with a starter `SKILL.md`.
 
-📖 **Business roles:** If Copilot asks what the skill should do, answer like you would brief a colleague.  
-🔧 **Technical deep dive:** Open the generated `SKILL.md` and check whether the trigger description is specific enough.
+If Copilot asks what the skill should do, answer like you would brief a colleague.  
+🔧 **Going deeper (optional):** Open the generated `SKILL.md` and check whether the trigger description is specific enough.
 
 ---
 
@@ -94,8 +94,8 @@ Given recent work notes, commits, emails, or project notes, write the SKILL.md t
 
 **Expected outcome:** Copilot updates `SKILL.md` with trigger phrases and step-by-step instructions the skill can follow.
 
-📖 **Business roles:** Focus on the output you want. Sections, tone, and usefulness matter more than file structure.  
-🔧 **Technical deep dive:** Add a `references/` folder with a sample template if your output should always follow the same format.
+Focus on the output you want. Sections, tone, and usefulness matter more than file structure.  
+🔧 **Going deeper (optional):** Add a `references/` folder with a sample template if your output should always follow the same format.
 
 ---
 
@@ -119,8 +119,8 @@ Use my partner briefing skill to prepare a briefing from the notes in C:\Users\<
 Why did my new skill not trigger? Review the SKILL.md trigger description and make it more explicit.
 ```
 
-📖 **Business roles:** The test passes when the output is useful enough to improve your next real meeting or update.  
-🔧 **Technical deep dive:** Check whether the trigger phrases in `SKILL.md` match how you naturally ask for the work.
+The test passes when the output is useful enough to improve your next real meeting or update.  
+🔧 **Going deeper (optional):** Check whether the trigger phrases in `SKILL.md` match how you naturally ask for the work.
 
 ---
 
@@ -134,8 +134,8 @@ What did we just build, and how would I share this skill with a colleague who is
 
 **Expected outcome:** Copilot summarizes the skill in plain language and gives a simple sharing path: copy the skill folder, share the `SKILL.md`, or package it later as a plugin.
 
-📖 **Business roles:** Practice the 30-second explanation: "I built a skill that turns X into Y when I ask Z."  
-🔧 **Technical deep dive:** Ask what would need to change if this became a team plugin.
+Practice the 30-second explanation: "I built a skill that turns X into Y when I ask Z."  
+🔧 **Going deeper (optional):** Ask what would need to change if this became a team plugin.
 
 ---
 

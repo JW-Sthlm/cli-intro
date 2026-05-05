@@ -8,7 +8,7 @@ Common issues and fixes for Copilot CLI.
 
 ### ⚠️ Common trap: I was asked for a Personal Access Token
 
-**📖 Business roles** — Stop there. Do not create a Personal Access Token for this workshop. It usually means GitHub is using the wrong account.
+Stop there. Do not create a Personal Access Token for this workshop. It usually means GitHub is using the wrong account.
 
 Run this in PowerShell instead:
 
@@ -18,11 +18,11 @@ gh auth switch --user <other-account>
 
 Then retry the step that failed.
 
-**🔧 Technical deep dive** — A Personal Access Token is a manual GitHub password replacement. It can work, but it creates a side quest: scopes, expiry, copy/paste, and security warnings. For this workshop, account switching is the clean answer.
+**🔧 Going deeper (optional)** — A Personal Access Token is a manual GitHub password replacement. It can work, but it creates a side quest: scopes, expiry, copy/paste, and security warnings. For this workshop, account switching is the clean answer.
 
 ### ⚠️ Common trap: PMX MCP install fails / says repo not found
 
-**📖 Business roles** — PMX is the exception to the personal-account rule. The PMX MCP server lives in `gim-home/pmx-mcp`, a Microsoft GitHub organization. Use your EMU account for that install, then switch back.
+PMX is the exception to the personal-account rule. The PMX MCP server lives in `gim-home/pmx-mcp`, a Microsoft GitHub organization. Use your EMU account for that install, then switch back.
 
 **Try the marketplace path first.** Four commands, no clone, no `npm install`:
 
@@ -46,11 +46,11 @@ gh auth switch --user <your-personal-username>
 gh auth status
 ```
 
-**🔧 Technical deep dive** — `repo not found` can mean the repo exists, but your active GitHub account cannot see it. Switching to EMU gives `git`, `gh`, and the `marketplace add` fetch the right credentials for the `gim-home` repo.
+**🔧 Going deeper (optional)** — `repo not found` can mean the repo exists, but your active GitHub account cannot see it. Switching to EMU gives `git`, `gh`, and the `marketplace add` fetch the right credentials for the `gim-home` repo.
 
 ### Which account am I on right now?
 
-**📖 Business roles** — Ask GitHub CLI directly:
+Ask GitHub CLI directly:
 
 ```
 gh auth status
@@ -76,11 +76,11 @@ gh auth switch --user <account-name>
 
 ### Which GitHub account should I use?
 
-**📖 Business roles** — Use your **personal** account for normal Copilot CLI work. Use your **EMU** account only when you need Microsoft-internal GitHub access, such as installing `gim-home/pmx-mcp`. Then switch back to personal.
+Use your **personal** account for normal Copilot CLI work. Use your **EMU** account only when you need Microsoft-internal GitHub access, such as installing `gim-home/pmx-mcp`. Then switch back to personal.
 
 ### Switching between accounts
 
-**📖 Business roles** — Use this whenever the active GitHub account is wrong.
+Use this whenever the active GitHub account is wrong.
 
 ```
 gh auth switch --user <account-name>
@@ -124,7 +124,7 @@ Go to https://copilot.github.microsoft.com/ — it has a verification function t
 
 ### MCP servers not showing
 
-**📖 Business roles** — First, try asking CLI: Inside Copilot CLI, type:
+First, try asking CLI: Inside Copilot CLI, type:
 
 ```
 My MCP servers aren't showing up. Can you help me diagnose and fix this?
@@ -136,7 +136,7 @@ CLI can often find the issue and walk you through fixing it.
 
 ### MCP server listed but tools not working
 
-**🔧 Technical deep dive** — Some MCP servers need separate authentication. For PMX, ask CLI:
+**🔧 Going deeper (optional)** — Some MCP servers need separate authentication. For PMX, ask CLI:
 
 ```
 PMX is not working. Can you help me reconnect to Azure for the PMX MCP server?
@@ -164,7 +164,7 @@ Or re-run `az login --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47` in PowerShell
 
 ### "No projects found"
 
-**📖 Business roles** — This may be a data access issue, not a prompt issue.
+This may be a data access issue, not a prompt issue.
 
 **Possible causes:**
 1. You're not assigned to any projects in D365
@@ -193,9 +193,9 @@ Or re-run `az login --tenant 72f988bf-86f1-41af-91ab-2d7cd011db47` in PowerShell
 
 ### ⚠️ Common trap: a new session keeps crashing
 
-**📖 Business roles** — Do not spend the workshop debugging a broken live session. Start a fresh terminal, try `copilot` once, and if it still crashes switch to the backup/demo path and ask for help after.
+Do not spend the workshop debugging a broken live session. Start a fresh terminal, try `copilot` once, and if it still crashes switch to the backup/demo path and ask for help after.
 
-**🔧 Technical deep dive** — Hosts should capture the exact error, model, and first prompt. Then use `/feedback` or the CLI issue path after the session, not during the live exercise.
+**🔧 Going deeper (optional)** — Hosts should capture the exact error, model, and first prompt. Then use `/feedback` or the CLI issue path after the session, not during the live exercise.
 
 
 

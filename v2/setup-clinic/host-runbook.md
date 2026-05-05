@@ -6,9 +6,9 @@ Goal: every participant leaves with Copilot CLI working, both GitHub accounts au
 
 No slides. No code. No judgement.
 
-**📖 Business roles** — Keep participants moving through copy-paste steps. They do not need to understand every command to succeed.
+Keep participants moving through copy-paste steps. They do not need to understand every command to succeed.
 
-**🔧 Technical deep dive** — Host-only explanations sit beside commands so engineers know what is being checked without derailing the clinic.
+**🔧 Going deeper (optional)** — Host-only explanations sit beside commands so engineers know what is being checked without derailing the clinic.
 
 ---
 
@@ -24,7 +24,7 @@ Open these files before people join:
 
 Start in the repo root folder if you have it cloned locally.
 
-**🔧 Technical deep dive** — This moves PowerShell to the repo root on Johan's machine. Adapt the path if you run from another folder.
+**🔧 Going deeper (optional)** — This moves PowerShell to the repo root on Johan's machine. Adapt the path if you run from another folder.
 
 ```powershell
 cd C:\Users\jwallquist\projects\cli-intro
@@ -72,9 +72,9 @@ Reassure them early: this is a setup clinic, not a coding test.
 
 Run the readiness script.
 
-**📖 Business roles** — Participants should look for the final pass/fail summary, not debug every line.
+Participants should look for the final pass/fail summary, not debug every line.
 
-**🔧 Technical deep dive** — This checks the laptop setup and prints a pass/fail summary.
+**🔧 Going deeper (optional)** — This checks the laptop setup and prints a pass/fail summary.
 
 ```powershell
 .\v2\pre-work\verify.ps1
@@ -123,7 +123,7 @@ Work through the [Setup Guide](../pre-work/setup-guide.md) in order. Move as a g
 
 Check the PowerShell version.
 
-**🔧 Technical deep dive** — This shows the PowerShell version currently running.
+**🔧 Going deeper (optional)** — This shows the PowerShell version currently running.
 
 ```powershell
 $PSVersionTable.PSVersion
@@ -159,7 +159,7 @@ winget install Microsoft.PowerShell
 
 Check Node.js.
 
-**🔧 Technical deep dive** — This checks whether Node.js is installed.
+**🔧 Going deeper (optional)** — This checks whether Node.js is installed.
 
 ```powershell
 node --version
@@ -203,9 +203,9 @@ https://nodejs.org/
 
 Install Copilot CLI if needed.
 
-**📖 Business roles** — This is the main tool participants will open and talk to.
+This is the main tool participants will open and talk to.
 
-**🔧 Technical deep dive** — This installs GitHub Copilot CLI.
+**🔧 Going deeper (optional)** — This installs GitHub Copilot CLI.
 
 ```powershell
 winget install GitHub.Copilot
@@ -445,7 +445,7 @@ copilot
 
 Send a simple first prompt.
 
-**📖 Business roles** — This is the first "just talk to it" moment. Let people write their own version if they want.
+This is the first "just talk to it" moment. Let people write their own version if they want.
 
 ```text
 Hello. In one sentence, explain what Copilot CLI can help me do in my partner-facing role.

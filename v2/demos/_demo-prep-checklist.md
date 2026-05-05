@@ -1,6 +1,6 @@
 # Demo Prep Checklist
 
-**📖 Business roles** — This checklist protects the audience experience. If the live path is unsafe, use the backup.
+This checklist protects the audience experience. If the live path is unsafe, use the backup.
 
 Run this 15–30 minutes before the session. The goal is not to prove you can debug under pressure. The goal is to know, early, whether the live demo is safe to run.
 
@@ -30,11 +30,11 @@ Run this 15–30 minutes before the session. The goal is not to prove you can de
 - [ ] Re-launch Copilot CLI with `copilot`.
 - [ ] Confirm the model selection persisted.
 - [ ] If using YOLO mode, decide deliberately before the session starts.
-- [ ] **🔧 Technical deep dive** — If using YOLO mode, be ready to explain the trade-off: faster demo flow, but scarier for non-coders because the tool acts with fewer pauses.
+- [ ] **🔧 Going deeper (optional)** — If using YOLO mode, be ready to explain the trade-off: faster demo flow, but scarier for non-coders because the tool acts with fewer pauses.
 
 ## T-5 minutes — content
 
-**🔧 Technical deep dive** — Keep only the windows and files needed for the live flow. Reduce accidental data exposure.
+**🔧 Going deeper (optional)** — Keep only the windows and files needed for the live flow. Reduce accidental data exposure.
 
 - [ ] Open the demo script in a side window: `demo-01-partner-briefing.md`.
 - [ ] Confirm the partner name in the script matches a real partner you have data for.

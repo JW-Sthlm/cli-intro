@@ -10,7 +10,7 @@ The point is simple: leave with a working setup.
 
 ## Who this is for
 
-📖 Business roles: this session is for PSAs, PTSs, PSAMs, PDMs, and other partner-facing roles who need Copilot CLI working before the main workshop.
+This session is for PSAs, PTSs, PSAMs, PDMs, and other partner-facing roles who need Copilot CLI working before the main workshop.
 
 It is especially useful if:
 

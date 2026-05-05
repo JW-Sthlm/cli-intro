@@ -2,7 +2,7 @@
 
 Prefer to run this automatically? See `verify.ps1` and run `.\v2\pre-work\verify.ps1` from PowerShell.
 
-**📖 Business roles** — Run through these five checks before the session. If any fail, see the [Setup Guide](setup-guide.md) troubleshooting section.
+Run through these five checks before the session. If any fail, see the [Setup Guide](setup-guide.md) troubleshooting section.
 
 💡 **For most of these checks, you can just ask Copilot CLI.** If a check has a technical command, that's for verification — but plain English works too.
 
@@ -10,7 +10,7 @@ Prefer to run this automatically? See `verify.ps1` and run `.\v2\pre-work\verify
 
 ## ✅ Check 1: Copilot CLI is installed
 
-**📖 Business roles** — Open PowerShell and run:
+Open PowerShell and run:
 
 ```
 copilot --version
@@ -22,7 +22,7 @@ copilot --version
 
 ## ✅ Check 2: You can log in
 
-**📖 Business roles** — Start CLI, then ask one plain-language question.
+Start CLI, then ask one plain-language question.
 
 ```
 copilot
@@ -46,7 +46,7 @@ Inside Copilot CLI, ask:
 Am I logged in to Azure? Which account am I using?
 ```
 
-**🔧 Technical deep dive** — Or verify manually in PowerShell: `az account show`
+**🔧 Going deeper (optional)** — Or verify manually in PowerShell: `az account show`
 
 **Pass:** Shows your Microsoft account name
 
@@ -54,7 +54,7 @@ Am I logged in to Azure? Which account am I using?
 
 ## ✅ Check 4: MCP servers are connected
 
-**📖 Business roles** — Inside Copilot CLI, ask:
+Inside Copilot CLI, ask:
 
 ```
 What tools and MCP servers do I have available?
@@ -66,7 +66,7 @@ What tools and MCP servers do I have available?
 
 ## ✅ Check 5: PMX data is accessible
 
-**📖 Business roles** — Inside Copilot CLI, ask:
+Inside Copilot CLI, ask:
 
 ```
 Show me my PMX projects

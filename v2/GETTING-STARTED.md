@@ -8,7 +8,7 @@
 
 This repo contains all materials for the **Copilot CLI intro session** — slides, exercise prompts, cheat sheets, and setup guides. You're here to grab exercise prompts during the session and reference materials after.
 
-**📖 Business roles** — Follow the path below. You can complete the workshop by browsing, copying prompts, and talking to CLI.
+Follow the path below. You can complete the workshop by browsing, copying prompts, and talking to CLI.
 
 **Your journey through these materials:**
 
@@ -48,7 +48,7 @@ You have two options. Pick whichever feels more comfortable:
 
 ### Option 1: Just browse on GitHub (easiest)
 
-**📖 Business roles** — Start here if you do not care where the files live. Browse, copy, paste.
+Start here if you do not care where the files live. Browse, copy, paste.
 
 1. You're already here — this page is on GitHub
 2. Click on the **`exercises/`** folder in the file list above
@@ -59,7 +59,7 @@ That's it. No installation, no terminal magic. Just browse and copy.
 
 ### Option 2: Clone the repo to your machine (more useful long-term)
 
-**🔧 Technical deep dive** — Clone the repo if you want CLI to read local files with `@filename` or if you want to keep your own notes.
+**🔧 Going deeper (optional)** — Clone the repo if you want CLI to read local files with `@filename` or if you want to keep your own notes.
 
 "Cloning" means downloading the entire folder to your laptop. Useful because:
 - Files are on your machine — works offline
@@ -68,7 +68,7 @@ That's it. No installation, no terminal magic. Just browse and copy.
 
 **How to clone:**
 
-**📖 Business roles** — Open PowerShell and run these lines.
+Open PowerShell and run these lines.
 
 ```powershell
 cd ~\projects
@@ -107,7 +107,7 @@ v2/
 
 ## Jargon decoder
 
-**📖 Business roles** — Use this table when a facilitator says a word that sounds like developer jargon.
+Use this table when a facilitator says a word that sounds like developer jargon.
 
 | Term | What it means | Familiar analogy |
 |------|-------------|-----------------|
