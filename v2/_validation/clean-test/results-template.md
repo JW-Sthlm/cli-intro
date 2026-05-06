@@ -9,6 +9,30 @@
 
 ---
 
+## Walk log — live (2026-05-05, Johan on Dev Box)
+
+Live findings from a Walk A run on a Microsoft Dev Box. **Caveat:** the box was soiled (`bootstrap.ps1` had pre-installed everything from a prior session), so Steps 0–1 were not exercised. Steps 2 onward were valid. The biggest finding from this run drove the auth-consolidation restructure that's now live in `setup.html` (`cli-intro-share@602563b` / `cli-intro@a9eb28a`).
+
+> **Numbering note:** this walk happened against the pre-restructure layout (Steps 2a/2b, 3, 4a/4b, 5). Findings are logged under the step labels they had at walk-time. Resolutions reference the new numbering (Step 2 with substeps a–d, Step 3 a–b, Step 4) where relevant.
+
+### Step 4a, M365 install ⭐
+
+- **First attempt misfired: prompt drifted into hand-editing `mcp.json`.** When Copilot CLI was asked to install the M365 MCP, the agent's first move was to try to write `mcp.json` directly on disk instead of using `copilot plugin install`. Aborted the session. Fresh session, same prompt, retried, and the second run went straight to the marketplace path. → Variability is in the agent, not the prompt. The marketplace path itself is solid. Logged here so we know to flag it again if it repeats on the post-restructure retest. No prompt change yet.
+- **Second attempt: pass.** `copilot plugin install` against the WorkIQ marketplace entry worked end-to-end. After `/exit` and re-launch, M365 tools registered. Test query returned real M365 data. → No change needed; this is the happy path.
+
+### Step 4b, PMX install (prompt-orchestrated) ⭐ HIGH-VALUE TEST
+
+- **Prompt-orchestrated install passed end-to-end.** Pasting the Step 4b prompt verbatim worked: Copilot ran `gh auth status` to find the EMU username, ran `gh auth switch --user <name>_microsoft`, ran `copilot plugin marketplace add gim-home/pmx-mcp` plus `copilot plugin install pmx-mcp@pmx-mcp`, then switched back to personal. After `/exit` and re-launch, PMX tools registered. → Pure validation. This is the test that justified this whole iteration.
+- **Copilot used SHELL subcommands, not `/mcp` REPL slash commands.** When the prompt says "install pmx", the agent chose to call the `copilot` binary as a subprocess (`copilot plugin install ...` from a shell), not the in-REPL `/mcp` slash commands. Both paths register the plugin correctly. → Worth keeping in mind: if the manual fallback foldout ever drifts toward `/mcp` syntax, that's a different code path. The prompt path uses shell. Keep documenting that.
+- **PMX smoke test passed.** After re-launch, prompt "List my 5 most recent PMX projects" returned real Dynamics data: names, dates, partners. End-to-end verified. → No change needed.
+
+### Structural finding: auth scattered across Steps 2 / 3 / 4 was the biggest confusion point
+
+- **Walk surfaced that "log in once, then go" is a much cleaner mental model.** Logging into `gh` in Step 2, `az` in Step 3, then doing MCP work that needed an EMU switch in Step 4 made the auth context shift three times as you moved down the page. Constant "wait, am I supposed to be logged in as personal or EMU right now?" → Restructured `setup.html`: **Step 2 now contains all four logins** (2a `gh` personal, 2b `gh` EMU plus switch back to personal, 2c Copilot CLI, 2d Azure CLI). **Step 3** (was Step 4) is pure tool-install with no auth preamble. Step 2 already leaves personal active and both gh accounts logged in. **Step 4** (was Step 5) is verify, `id="verify"` anchor preserved. Shipped.
+- **Soiled-box caveat: needs a fresh-Dev-Box retest.** Steps 0–1 were not exercised on this walk because the box already had everything installed. The new auth-consolidated Step 2 has not been walked end-to-end on a clean machine yet. → Logged as the next walk: re-test on a freshly redeployed Dev Box to validate the consolidated flow.
+
+---
+
 ## Walk log — live (2026-05-02, Johan on Dev Box)
 
 Live findings during the show-and-tell walkthrough. Each entry: what was unclear/broken → what was changed.
