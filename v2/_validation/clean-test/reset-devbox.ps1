@@ -1,5 +1,5 @@
 # ============================================================
-# reset-devbox.ps1 — clean-test reset script for a Dev Box
+# reset-devbox.ps1: clean-test reset script for a Dev Box
 #
 # Used between walks of the setup-guide validation kit when
 # Sandbox-in-Dev-Box is unavailable (corporate pool blocks the
@@ -15,7 +15,7 @@
 #
 #   -Mode Hard
 #     Soft + uninstalls all 6 winget packages. ~5 min. NOT a
-#     pristine reset — winget leaves PATH entries, registry
+#     pristine reset, winget leaves PATH entries, registry
 #     leftovers, %APPDATA% state. For a true pristine machine,
 #     redeploy the Dev Box (~15 min). Hard mode is "best-effort
 #     reinstall reset" only.
@@ -114,13 +114,13 @@ if ($Mode -eq 'Hard') {
 }
 
 # ============================================================
-# Soft mode — clear state. Always runs (Hard = Soft + more).
+# Soft mode, clear state. Always runs (Hard = Soft + more).
 # ============================================================
 Section "Clearing application state (Soft)"
 
 # 1. Copilot CLI: kill running processes, drop the config tree.
 #    The auth token lives in Windows Credential Manager under a
-#    target name we don't fully document — leaving it intact is
+#    target name we don't fully document, leaving it intact is
 #    the safer call. Next `copilot /login` overwrites it cleanly.
 $copilotProcs = Get-Process copilot -ErrorAction SilentlyContinue
 if ($copilotProcs) {
@@ -145,7 +145,7 @@ Track 'Copilot CLI config (~/.copilot)' $r $d
 # 2. GitHub CLI: logout each authenticated host then drop the dir.
 #    `gh auth logout` also removes the matching Git Credential
 #    Manager entries that gh planted, which is the right cleanup
-#    surface — we don't touch GCM directly.
+#    surface, we don't touch GCM directly.
 $gh = Get-Command gh -ErrorAction SilentlyContinue
 if ($gh) {
     try {
@@ -209,7 +209,7 @@ foreach ($repo in @('cli-intro', 'pmx-mcp', 'copilot-overview')) {
 }
 
 # ============================================================
-# Hard mode — uninstall winget packages. Best-effort only.
+# Hard mode, uninstall winget packages. Best-effort only.
 # ============================================================
 if ($Mode -eq 'Hard') {
     Section "Uninstalling tools (Hard)"
@@ -229,7 +229,7 @@ if ($Mode -eq 'Hard') {
 
     foreach ($p in $packages) {
         if ($p.Id -eq 'Microsoft.PowerShell' -and $isPwsh7) {
-            Track "winget uninstall $($p.Name)" 'SKIP' 'cannot uninstall the shell hosting this script — re-run from Windows PowerShell 5.1 (powershell.exe) to remove it'
+            Track "winget uninstall $($p.Name)" 'SKIP' 'cannot uninstall the shell hosting this script, re-run from Windows PowerShell 5.1 (powershell.exe) to remove it'
             continue
         }
         if ($PSCmdlet.ShouldProcess($p.Id, 'winget uninstall')) {
@@ -238,7 +238,7 @@ if ($Mode -eq 'Hard') {
                 if ($LASTEXITCODE -eq 0) {
                     Track "winget uninstall $($p.Name)" 'OK' $p.Id
                 } elseif ($LASTEXITCODE -eq -1978335212) {
-                    # 0x8A150014 — no installed package found
+                    # 0x8A150014, no installed package found
                     Track "winget uninstall $($p.Name)" 'SKIP' 'not installed'
                 } else {
                     Track "winget uninstall $($p.Name)" 'WARN' "winget exit code: $LASTEXITCODE"
@@ -260,9 +260,43 @@ if ($Mode -eq 'Hard') {
 }
 
 # ============================================================
-# Post-reset verifier — what's actually gone vs still present.
+# Preview-mode short-circuit
 # ============================================================
-Section "Verifier — what state remains"
+# When -WhatIf is used, nothing was actually deleted. Running the
+# verifier would just report 6+ [WARN] rows ("state still present")
+# which is correct but alarming. Skip it. Print a clear preview
+# summary and exit.
+# ============================================================
+if ($WhatIfPreference) {
+    Section "Preview summary (no changes were made)"
+    Write-Host "  -WhatIf was specified. Nothing was deleted."
+    Write-Host "  Each '[SKIP] ... WhatIf' line above is a path or process the"
+    Write-Host "  real run would touch."
+    Write-Host ""
+    Write-Host "  Mode: $Mode"
+    if ($Mode -eq 'Soft') {
+        Write-Host "  Soft mode would clear:" -ForegroundColor Yellow
+        Write-Host "    - Copilot config (~/.copilot)" -ForegroundColor Yellow
+        Write-Host "    - gh config (APPDATA + ~/.config/gh) and gh auth" -ForegroundColor Yellow
+        Write-Host "    - az config (~/.azure) and az auth" -ForegroundColor Yellow
+        Write-Host "    - cloned repos in `$HOME (cli-intro, pmx-mcp, copilot-overview)" -ForegroundColor Yellow
+        Write-Host "  Tools (gh, az, node, git, copilot) stay installed." -ForegroundColor Yellow
+    } else {
+        Write-Host "  Hard mode would do everything Soft does, plus winget uninstall" -ForegroundColor Yellow
+        Write-Host "  of GitHub.cli, Microsoft.AzureCLI, OpenJS.NodeJS.LTS, Git.Git," -ForegroundColor Yellow
+        Write-Host "  and GitHub.cli.Copilot. Best-effort. NOT a pristine reset." -ForegroundColor Yellow
+    }
+    Write-Host ""
+    Write-Host "👉 To actually reset, re-run without -WhatIf:" -ForegroundColor Cyan
+    Write-Host "     .\reset-devbox.ps1 -Mode $Mode" -ForegroundColor Cyan
+    Write-Host ""
+    exit 0
+}
+
+# ============================================================
+# Post-reset verifier, what's actually gone vs still present.
+# ============================================================
+Section "Verifier: what state remains"
 
 $remaining = @()
 

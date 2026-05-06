@@ -57,7 +57,9 @@ Always run with `-WhatIf` first:
 .\reset-devbox.ps1 -WhatIf
 ```
 
-The script prints every path it would remove, every process it would kill, every auth surface it would clear. Read the list. If anything in there is data you care about (a repo you forgot to push, a Copilot config you customized), stop and back it up first.
+The script prints every path it would remove, every process it would kill, every auth surface it would clear, then a `Preview summary` at the end. Read the list. If anything in there is data you care about (a repo you forgot to push, a Copilot config you customized), stop and back it up first.
+
+`-WhatIf` skips the post-reset verifier on purpose. Nothing was deleted, so a "state still present" report would be noise.
 
 ## Step 4: Run the reset
 
