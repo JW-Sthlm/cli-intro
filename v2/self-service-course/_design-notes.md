@@ -1,14 +1,14 @@
-# Self-service course — design notes
+# Self-service course, design notes
 
 Internal notes for whoever maintains this. Not part of the learner-facing material.
 
 ## Why this exists
 
-The 45-min workshop ([cli-intro v2](../README.md)) gets people excited but assumes setup is done. In practice many partners showed up to the workshop without setup completed — too many friction points without a guide. The Setup Clinic is one mitigation. This self-service course is the other: an async path for the partner who can't make a clinic, or who joins the org six months from now.
+The 45-min workshop ([cli-intro v2](../README.md)) gets people excited but assumes setup is done. In practice many partners showed up to the workshop without setup completed, too many friction points without a guide. The Setup Clinic is one mitigation. This self-service course is the other: an async path for the partner who can't make a clinic, or who joins the org six months from now.
 
 ## Source
 
-Adapted from [`jamesmontemagno/copilot-cli-for-beginners`](https://github.com/jamesmontemagno/copilot-cli-for-beginners) — MIT licensed. We took the chapter structure and replaced the developer-coded Python book app with partner-work scenarios.
+Adapted from [`jamesmontemagno/copilot-cli-for-beginners`](https://github.com/jamesmontemagno/copilot-cli-for-beginners), MIT licensed. We took the chapter structure and replaced the developer-coded Python book app with partner-work scenarios.
 
 ## Two-track decision
 
@@ -42,7 +42,8 @@ The course is now placeholder-free for the in-CLI flow. Remaining open items are
 |----|-------|---------------|
 | ~~p10~~ | ~~M1 (Setup), M4 (MCP)~~ | ✅ Resolved 2026-05-05 (Walk A): pick option 2 "Copilot CLI" at the install-target prompt. M4 now spells this out. |
 | course-validate-source-current | All modules | Re-check source course chapters didn't change before each ship. |
-| course-screenshot-pass | All modules | ✅ Replaced with HTML-style terminal mockups in fenced code blocks (2026-05-06). PNG screenshots dropped — code fences render clean on GitHub web + VS Code, edit on text drift, no asset pipeline. |
+| ~~course-screenshot-pass~~ | ~~All modules~~ | ✅ Replaced with HTML-style terminal mockups in fenced code blocks (2026-05-06). |
+| ~~course-humanizer-pass~~ | ~~All modules~~ | ✅ Done 2026-05-06. Em dashes swept across all 8 module READMEs + course README + design notes. Other AI tells (leverage/robust/crucial/furthermore) absent except in deliberate teaching examples (M2 rewrite exercise, M5 banned-word list). |
 | m6-skill-example | M6 | Pick a real shipped skill for the worked example (candidates: `content-humanizer`, `microsoft-foundry`, or a `vteam-update-formatter` we actually ship). |
 | m7-pipeline-example | M7 | Pick a real recurring partner task for the capstone. Strongest candidate: PMX `/hygiene` weekly check (real MCP tool, real cadence). |
 
@@ -56,9 +57,9 @@ The course is now placeholder-free for the in-CLI flow. Remaining open items are
 
 Modules use `<details><summary>` HTML inside markdown so non-tech readers can skip the dense bits and tech-curious readers can deep-dive. Convention:
 
-- **Always visible:** the spine — pitch, decision tables, critical warnings (data boundaries, the 2-account dance), the main step-by-step path, hands-on exercises (🚀), readiness gates (✅), next-module links (👉).
+- **Always visible:** the spine, pitch, decision tables, critical warnings (data boundaries, the 2-account dance), the main step-by-step path, hands-on exercises (🚀), readiness gates (✅), next-module links (👉).
 - **Folded:** optional context, definitions for non-tech readers ("never opened PowerShell?"), troubleshooting tables, alternative paths, legacy fallbacks, "for the curious" deep-dives.
-- **Summary line format:** `<strong>📖|🔧|⚠️ marker + topic</strong>: hint, click to expand` — colon connector (em-dash banned per voice profile).
+- **Summary line format:** `<strong>📖|🔧|⚠️ marker + topic</strong>: hint, click to expand`, colon connector (em-dash banned per voice profile).
 - **Tested in:** GitHub.com, VS Code preview.
 
 **Status:** applied to all 8 modules (M0-M7).
@@ -77,7 +78,7 @@ Conventions:
 
 - Use ` ```text ` or unlabeled fences. GitHub renders monospace either way.
 - Show the prompt indicator (`PS C:\... >` or `>`) so the reader knows where input ends.
-- Use Unicode glyphs (✓ ✦ ⬆️ ❯) freely — they render in code fences.
+- Use Unicode glyphs (✓ ✦ ⬆️ ❯) freely, they render in code fences.
 - Avoid `<div class="terminal">` styling. GitHub strips inline CSS.
 
 ## Why markdown, not HTML
@@ -103,4 +104,4 @@ The course should be discoverable from the workshop's `after-session-resources.m
 
 ## Maintenance
 
-This is a living artefact. When people complete it and feed back issues, edit the modules in place. Keep changes small and additive — don't restructure unless the friction is structural.
+This is a living artefact. When people complete it and feed back issues, edit the modules in place. Keep changes small and additive, don't restructure unless the friction is structural.

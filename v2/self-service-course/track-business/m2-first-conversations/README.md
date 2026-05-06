@@ -1,4 +1,4 @@
-# Module 2 — Your first conversations
+# Module 2: Your first conversations
 
 > ⏱️ **Estimated time:** 20 min
 > 🎯 **You'll be able to:** drive the CLI confidently for summarize, rewrite, and draft tasks. Know when to start a new session and when to keep going.
@@ -7,7 +7,7 @@
 
 ## The three modes you'll use
 
-Copilot CLI has three modes. You'll use them all naturally — just helpful to know they exist.
+Copilot CLI has three modes. You'll use them all naturally, just helpful to know they exist.
 
 | Mode | What it is | When to use |
 |------|-----------|-------------|
@@ -15,7 +15,7 @@ Copilot CLI has three modes. You'll use them all naturally — just helpful to k
 | **Agent** | It can run commands, edit files | "Find all TXT files in this folder." "Add a row to this CSV." |
 | **Plan** | It explains what it would do *before* doing it | High-stakes tasks, anything touching real files |
 
-You don't switch modes manually. The CLI picks based on what you ask. If it asks "want me to run this command?" — that's agent mode asking permission.
+You don't switch modes manually. The CLI picks based on what you ask. If it asks "want me to run this command?", that's agent mode asking permission.
 
 ⚠️ Always read what it's about to do. *Always.* Especially anything that says "delete" or "overwrite".
 
@@ -29,7 +29,7 @@ Open a fresh PowerShell. Type `copilot`. Wait for the prompt. Now try these in o
 
 📖 Paste this into the CLI:
 
-> Imagine you're a Microsoft Partner Solution Architect. A partner asks "what's the difference between Azure OpenAI and Foundry?" — give me a 4-bullet answer for a non-technical exec.
+> Imagine you're a Microsoft Partner Solution Architect. A partner asks: "what's the difference between Azure OpenAI and Foundry?" Give me a 4-bullet answer for a non-technical exec.
 
 **What you should get:** a structured 4-bullet response with comparable concepts. Decent first draft.
 
@@ -155,4 +155,4 @@ Compare the time. Compare the quality. That's the only validation that matters.
 
 ---
 
-## 👉 Next: [Module 3 — Drop a file in, get insight out](../m3-files-as-context/README.md)
+## 👉 Next: [Module 3: Drop a file in, get insight out](../m3-files-as-context/README.md)

@@ -1,4 +1,4 @@
-# Module 0 — Why CLI for partner work
+# Module 0: Why CLI for partner work
 
 > ⏱️ **Estimated time:** 10 min reading
 > 🎯 **You'll be able to:** decide whether this course is for you, and what you can realistically do with the CLI in your job.
@@ -7,7 +7,7 @@
 
 ## The pitch in one sentence
 
-You can talk to GitHub Copilot from your terminal — and it can read files, search your inbox, query your projects, and produce real artefacts. Faster than chat.com, more powerful than the assistant in Outlook.
+You can talk to GitHub Copilot from your terminal, and it can read files, search your inbox, query your projects, and produce real artefacts. Faster than chat.com, more powerful than the assistant in Outlook.
 
 That's the whole pitch. The rest of this module is "is that actually useful for *your* job?"
 
@@ -15,9 +15,9 @@ That's the whole pitch. The rest of this module is "is that actually useful for 
 
 ## Two paths through this course
 
-📖 **Track A — Use it.** You talk to the CLI. Drop files in. Get answers. Get drafts. Skills and agents that other people built do the heavy lifting. You never see code. **~90 minutes total** (M0–M4).
+📖 **Track A: Use it.** You talk to the CLI. Drop files in. Get answers. Get drafts. Skills and agents that other people built do the heavy lifting. You never see code. **~90 minutes total** (M0–M4).
 
-🔧 **Track B — Make stuff with it.** Same CLI. Now you build your own agents, your own skills, your own little tools. You still don't write code. You describe what you want, the CLI builds it, you redirect when it's wrong, you ship when it's right. **~3 hours total** (M0–M7).
+🔧 **Track B: Make stuff with it.** Same CLI. Now you build your own agents, your own skills, your own little tools. You still don't write code. You describe what you want, the CLI builds it, you redirect when it's wrong, you ship when it's right. **~3 hours total** (M0–M7).
 
 ### Track B is not "for the techy people"
 
@@ -27,7 +27,7 @@ The barrier used to be coding. Now the barrier is having the idea and 30 minutes
 
 You can build:
 
-- An agent that knows your partners, their priorities, and what was said last quarter — and writes your prep doc in 60 seconds
+- An agent that knows your partners, their priorities, and last quarter's notes. It drafts your prep doc in 60 seconds.
 - A skill that turns "give me the QBR deck for Contoso" into a finished slide outline
 - A mini-app that pulls your week's PMX projects, your inbox highlights, and your calendar into one Monday-morning briefing
 - An HTML presentation in the time it takes to make coffee
@@ -92,7 +92,7 @@ That's it. If you can use a chat box, you can use this terminal.
 
 ---
 
-## ⚠️ Data boundaries — read this
+## ⚠️ Data boundaries: read this
 
 You will be tempted to drop NDA partner content, customer data, internal Microsoft code into the CLI. Some of it is fine. Some of it is not.
 
@@ -102,9 +102,9 @@ You will be tempted to drop NDA partner content, customer data, internal Microso
 - Anything you'd post in your team's general Teams channel
 
 **Stop and think first:**
-- Customer-confidential content under NDA — usually fine for *summarization* you keep internal, but never for content you'll send back externally
-- Internal Microsoft strategy docs — same
-- Anything labeled Confidential or Highly Confidential — read your org's data policy first
+- Customer-confidential content under NDA: fine for *summarization* you keep internal, never for content you'll send back externally.
+- Internal Microsoft strategy docs: same rule.
+- Anything labeled Confidential or Highly Confidential: read your org's data policy first.
 
 **Never:**
 - Anything you'd be uncomfortable seeing in a screenshot of the CLI window
@@ -134,12 +134,12 @@ The CLI can *read* a lot. To *change* anything (send an email, update a calendar
 ## ✅ You're ready for M1 if you can answer these
 
 1. What does Track A let you do? *(talk, ask, get drafts, never see code)*
-2. What does Track B add on top? *(build your own agents, skills, mini-tools — still no coding)*
+2. What does Track B add on top? *(build your own agents, skills, mini-tools, still no coding)*
 3. Name two things this is NOT. *(VS Code Copilot; M365 Copilot; autonomous AI)*
 4. What's one thing in your week that this could replace? *(your answer here)*
 5. What's one thing you should stop and think about before pasting into the CLI? *(NDA content, credentials, customer PII)*
 
 ---
 
-## 👉 Next: [Module 1 — Setup, the lazy way](../m1-setup/README.md)
+## 👉 Next: [Module 1: Setup, the lazy way](../m1-setup/README.md)
 

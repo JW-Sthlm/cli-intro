@@ -1,4 +1,4 @@
-# Module 5 — Custom AI agents 🔧
+# Module 5: Custom AI agents 🔧
 
 > ⏱️ **Estimated time:** 25 min
 > 🎯 **You'll be able to:** build a reusable agent that handles a recurring partner task with consistent voice, structure, and context.
@@ -18,12 +18,12 @@ An **agent** is a saved set of instructions that runs every time you invoke it. 
 Compare:
 
 ```
-# Without agent — you type this every time
+# Without agent, you type this every time
 > You are a partner solution architect. Answer in 5 bullets max, exec
 > audience, plain language, no buzzwords, end with a single specific ask.
 > Now: <actual question>
 
-# With agent — you create the agent once, then:
+# With agent, you create the agent once, then:
 > /agent partner-briefing
 > <actual question>
 ```
@@ -51,16 +51,16 @@ You are a Microsoft Partner Solution Architect helping prepare for partner meeti
 
 Output rules:
 - Maximum 6 bullets
-- Plain language, no buzzwords ("synergy", "leverage", "ecosystem" — banned)
+- Plain language, no buzzwords ("synergy", "leverage", "ecosystem", banned)
 - Exec audience: assume your reader has 30 seconds
 - Always end with one specific question to ask the partner
-- If you don't know something, say so — don't make it up
+- If you don't know something, say so. Don't make it up.
 
 Format:
-**Background** — 2 bullets on who they are
-**Their angle** — 2 bullets on what they care about
-**The conversation** — 1 bullet on what to surface
-**The ask** — 1 question to leave them with
+**Background:** 2 bullets on who they are
+**Their angle:** 2 bullets on what they care about
+**The conversation:** 1 bullet on what to surface
+**The ask:** 1 question to leave them with
 ```
 
 Save that file as `~/.copilot/agents/partner-briefing.md`. Restart copilot. Now `partner-briefing` is a real agent.
@@ -182,7 +182,7 @@ User-level agents apply everywhere. Project-level agents apply only when you `cd
 
 🔧 Build one agent this week for a recurring task you actually do. Use it for two real partner interactions. If it saved you time, share it with the vTeam in Teams.
 
-If after two uses you're still editing the agent rules — keep iterating. That's the actual work of building good agents.
+If after two uses you're still editing the agent rules, keep iterating. That's the actual work of building good agents.
 
 ---
 
@@ -194,4 +194,4 @@ If after two uses you're still editing the agent rules — keep iterating. That'
 
 ---
 
-## 👉 Next: [Module 6 — Skills](../m6-skills/README.md)
+## 👉 Next: [Module 6: Skills](../m6-skills/README.md)

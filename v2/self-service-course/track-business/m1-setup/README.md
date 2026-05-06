@@ -1,6 +1,6 @@
-# Module 1 — Setup, the lazy way
+# Module 1: Setup, the lazy way
 
-> ⏱️ **Estimated time:** 15 min (Express path) — 30 min (Manual path)
+> ⏱️ **Estimated time:** 15 min (Express path), 30 min (Manual path)
 > 🎯 **You'll be able to:** open `copilot` in a terminal, talk to it, and have it answer.
 
 ---
@@ -10,7 +10,7 @@
 📖 The lazy path is:
 
 1. Go to [`v2/pre-work/setup-guide.md`](../../../pre-work/setup-guide.md).
-2. Pick **Option A — Express** in Step 1.
+2. Pick **Option A: Express** in Step 1.
 3. Run [`pre-work/verify.ps1`](../../../pre-work/verify.ps1) at the end.
 
 If verify reports all 8 checks pass, you're done. Skip to **Module 2**.
@@ -34,7 +34,7 @@ That's fine. PowerShell is just a text window where you type commands and press 
    PS C:\Users\YourName>
    ```
    That's the **prompt**. It's saying "I'm ready, type something."
-5. Type a command (any command — try `dir` and press Enter). Things will scroll past. That's the output.
+5. Type a command (any command, try `dir` and press Enter). Things will scroll past. That's the output.
 
 **To close it:** type `exit` and press Enter. Or just close the window.
 
@@ -49,10 +49,10 @@ That's fine. PowerShell is just a text window where you type commands and press 
 
 You'll hear these used interchangeably. They're not exactly the same, but for our purposes:
 
-- **Terminal** — the window itself (the dark rectangle on your screen).
-- **Shell** — the program inside the window that reads what you type and runs it. PowerShell is the shell on Windows.
-- **Command line / CLI** — generic name for "this whole thing."
-- **Prompt** — the cursor blinking next to `PS C:\Users\YourName>` waiting for input.
+- **Terminal:** the window itself (the dark rectangle on your screen).
+- **Shell:** the program inside the window that reads what you type and runs it. PowerShell is the shell on Windows.
+- **Command line / CLI:** generic name for "this whole thing."
+- **Prompt:** the cursor blinking next to `PS C:\Users\YourName>` waiting for input.
 
 In this course we'll mostly say "PowerShell" or "the terminal." They mean the same thing here.
 
@@ -69,16 +69,16 @@ You need 5 tools and 2 logins.
 
 **Tools (handled by Express path or installed manually):**
 
-1. **Node.js** — runtime. The Copilot CLI is written in JavaScript and needs Node.js to run. Like how a Word document needs Word installed to open.
-2. **Git** — version control. Lets you copy code repositories to your machine. You probably have this already.
-3. **GitHub CLI** (`gh`) — for talking to GitHub from the terminal (logging in, cloning repos, opening PRs).
-4. **Azure CLI** (`az`) — for Azure logins. Some MCP servers (PMX) need an Azure login behind the scenes.
-5. **GitHub Copilot CLI** (`copilot`) — the actual thing this course is about.
+1. **Node.js:** runtime. The Copilot CLI is written in JavaScript and needs Node.js to run. Like how a Word document needs Word installed to open.
+2. **Git:** version control. Lets you copy code repositories to your machine. You probably have this already.
+3. **GitHub CLI** (`gh`): for talking to GitHub from the terminal (logging in, cloning repos, opening PRs).
+4. **Azure CLI** (`az`): for Azure logins. Some MCP servers (PMX) need an Azure login behind the scenes.
+5. **GitHub Copilot CLI** (`copilot`): the actual thing this course is about.
 
 **Logins (you do these manually after install):**
 
-1. **GitHub** — sign in twice, with two accounts. Yes, two. (See "the two-GitHub-accounts dance" below.)
-2. **Azure** — `az login --tenant <microsoft-tenant>`.
+1. **GitHub:** sign in twice, with two accounts. Yes, two. (See "the two-GitHub-accounts dance" below.)
+2. **Azure:** `az login --tenant <microsoft-tenant>`.
 
 </details>
 
@@ -92,8 +92,8 @@ This trips up everyone the first time. Read this once, then refer back as needed
 
 **You need two GitHub identities to make this work in Microsoft:**
 
-- **Your personal GitHub username** (e.g., `jane-smith`) — what you use for general work, public repos, this course.
-- **Your `*_microsoft` EMU account** (e.g., `jsmith_microsoft`) — Microsoft Enterprise Managed User. Required for Microsoft-internal repos like PMX MCP. Microsoft IT provisioned this for you when you joined.
+- **Your personal GitHub username** (e.g., `jane-smith`). For general work, public repos, this course.
+- **Your `*_microsoft` EMU account** (e.g., `jsmith_microsoft`). Microsoft Enterprise Managed User. Required for Microsoft-internal repos like PMX MCP. IT provisioned this when you joined.
 
 **You must be logged into both** through `gh auth login`. The setup guide walks you through it.
 
@@ -106,9 +106,9 @@ If verify.ps1 says "Microsoft GitHub account not logged in", you're in this trap
 
 Easiest way: go to [github.com](https://github.com) in a browser, click your profile picture top right.
 
-If you see a username ending in `_microsoft` (like `jwallquist_microsoft`), that's your EMU account. Note it down — you'll need it.
+If you see a username ending in `_microsoft` (like `jwallquist_microsoft`), that's your EMU account. Note it down. You'll need it.
 
-If you don't see one, you might not be enrolled yet. Open a Teams chat with your manager or your IT sponsor and ask "do I have a Microsoft GitHub EMU account?" — they'll point you at the request form.
+If you don't see one, you might not be enrolled yet. Open a Teams chat with your manager or your IT sponsor and ask "do I have a Microsoft GitHub EMU account?". They'll point you at the request form.
 
 For most of this course (Track A, modules 0–4) you can survive with just your personal account. The EMU is only needed when you install PMX MCP in M4.
 
@@ -120,7 +120,7 @@ For most of this course (Track A, modules 0–4) you can survive with just your 
 
 📖 If you don't write code professionally, this is for you.
 
-The setup guide includes a 25-line PowerShell script ([`express-setup.ps1`](../../../pre-work/express-setup.ps1)) that runs `winget install` 5 times. That's the whole script — you can read it in 30 seconds. It does *not* sign you into anything (logins stay manual, that's intentional).
+The setup guide includes a 25-line PowerShell script ([`express-setup.ps1`](../../../pre-work/express-setup.ps1)) that runs `winget install` 5 times. That's the whole script. You can read it in 30 seconds. It does *not* sign you into anything (logins stay manual, that's intentional).
 
 **Why use it:** you don't have to remember 5 separate winget commands.
 **Why we kept it transparent:** non-coders are correctly trained "don't run random PowerShell from the internet." This script lives in our repo, is short, is readable. Open it before running.
@@ -145,7 +145,7 @@ The setup guide includes a 25-line PowerShell script ([`express-setup.ps1`](../.
    ```
    Watch the output. Each `winget install` prints a few lines, asks for permission, and either says "Successfully installed" or "Already installed". Either is fine.
 
-4. **Close PowerShell, open a fresh PowerShell window.** This is critical — the new tools won't be on your PATH until you reopen. (Skip this and you'll get "command not found" errors. Trust us.)
+4. **Close PowerShell, open a fresh PowerShell window.** This is critical. The new tools won't be on your PATH until you reopen. (Skip this and you'll get "command not found" errors. Trust us.)
 
 5. **Continue with the manual login steps below.**
 
@@ -156,8 +156,8 @@ The setup guide includes a 25-line PowerShell script ([`express-setup.ps1`](../.
 
 **Where do the packages come from?** By default, winget pulls from two sources:
 
-- **`msstore`** — Microsoft Store. Microsoft-vetted apps.
-- **`winget`** (community repository) — vendor-submitted packages that pass automated validation. Most major tools (Node.js, Git, GitHub CLI, Azure CLI) live here, published by the vendor themselves.
+- **`msstore`:** Microsoft Store. Microsoft-vetted apps.
+- **`winget`** (community repository): vendor-submitted packages that pass automated validation. Most major tools (Node.js, Git, GitHub CLI, Azure CLI) live here, published by the vendors themselves.
 
 **Are the 5 tools we install safe?** Yes. Each one is published by its official vendor:
 
@@ -169,7 +169,7 @@ The setup guide includes a 25-line PowerShell script ([`express-setup.ps1`](../.
 | Azure CLI | Microsoft | winget |
 | GitHub Copilot CLI | GitHub | winget |
 
-**Want to verify a package before installing?** Run `winget show <id>` — it shows the publisher, version, source, and homepage URL. Example:
+**Want to verify a package before installing?** Run `winget show <id>`. It shows the publisher, version, source, and homepage URL. Example:
 ```powershell
 winget show OpenJS.NodeJS.LTS
 ```
@@ -189,7 +189,7 @@ If you see something like "running scripts is disabled on this system", run this
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
-Then try the express script again. This is a per-user setting, not a security risk — it just lets you run scripts that you authored or downloaded explicitly. IT-managed Windows often defaults to "Restricted" which blocks even safe scripts.
+Then try the express script again. This is a per-user setting, not a security risk. It just lets you run scripts you authored or downloaded explicitly. IT-managed Windows often defaults to "Restricted" which blocks even safe scripts.
 
 If your IT has set the policy at machine scope and locked it, ask in the Teams thread or use the Manual path below.
 
@@ -247,7 +247,7 @@ This is the same pattern Netflix uses to log into your TV. Safe, standard, and m
 
 </details>
 
-<!-- PMX MCP install is covered in M4. The marketplace path (`copilot plugin marketplace add gim-home/pmx-mcp`) means PMX no longer goes through the "Where do you want to install this MCP server?" menu prompt. The menu still appears for GitHub and M365 MCP installs done via Copilot CLI's prompt-based flow — answer is "Copilot CLI" (option 2 in current builds), validation pending. -->
+<!-- PMX MCP install is covered in M4. The marketplace path (`copilot plugin marketplace add gim-home/pmx-mcp`) means PMX no longer goes through the "Where do you want to install this MCP server?" menu prompt. The menu still appears for GitHub and M365 MCP installs done via Copilot CLI's prompt-based flow, answer is "Copilot CLI" (option 2 in current builds), validation pending. -->
 
 ---
 
@@ -278,10 +278,10 @@ So: try it in Codespaces if you want a 5-min taste, but install locally for real
 |---------|-------------|-----|
 | `copilot: command not found` | Not on PATH yet | Close and reopen PowerShell |
 | `/login` says "couldn't open browser" | Corporate browser policy | Copy the URL from the error, paste it into your default browser manually |
-| verify.ps1 says GitHub auth failed but you're logged in | Old verify script | Pull the latest cli-intro — this was a known bug fixed in p12 |
+| verify.ps1 says GitHub auth failed but you're logged in | Old verify script | Pull the latest cli-intro. Known bug, fixed in p12. |
 | `winget install` denied | IT policy | Use Manual path or contact IT |
 | "Running scripts is disabled" | PowerShell execution policy | See the foldable in the Express section above |
-| Anything else | — | [troubleshooting.md](../../../reference/troubleshooting.md) |
+| Anything else | (varies) | [troubleshooting.md](../../../reference/troubleshooting.md) |
 
 </details>
 
@@ -295,5 +295,5 @@ So: try it in Codespaces if you want a 5-min taste, but install locally for real
 
 ---
 
-## 👉 Next: [Module 2 — Your first conversations](../m2-first-conversations/README.md)
+## 👉 Next: [Module 2: Your first conversations](../m2-first-conversations/README.md)
 

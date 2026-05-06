@@ -1,11 +1,11 @@
-# Module 6 — Skills 🔧
+# Module 6: Skills 🔧
 
 > ⏱️ **Estimated time:** 25 min
 > 🎯 **You'll be able to:** install skills the team has built, write your own simple skill, and ship it back to the vTeam for reuse.
 
 ---
 
-## Skills vs agents — the difference
+## Skills vs agents, the difference
 
 It's confusing because they both customize Copilot. The simple distinction:
 
@@ -88,7 +88,7 @@ Loaded skills:
   vteam-update-formatter ~/.copilot/skills/vteam-update-formatter/SKILL.md
 ```
 
-To trigger it, just say what you want — the description tells Copilot when to fire:
+To trigger it, just say what you want. The description tells Copilot when to fire:
 
 ```text
 > Prep my QBR for Contoso
@@ -102,8 +102,8 @@ To trigger it, just say what you want — the description tells Copilot when to 
   • 1 challenge: Fabric POC slipped two weeks on data access
 
   Open projects
-  • Foundry pilot — In Progress, due Q3
-  • Fabric POC   — In Progress, last update 12 days ago
+  • Foundry pilot, In Progress, due Q3
+  • Fabric POC  , In Progress, last update 12 days ago
 
   Next quarter
   • Align on Foundry agent build-out scope
@@ -172,7 +172,7 @@ The user will paste raw bullets, possibly messy.
 
 - Action verbs first ("Shipped X", not "X was shipped")
 - One line per item
-- "Highlight" is the single most important thing — pick wisely, prune the rest
+- "Highlight" is the single most important thing, pick wisely, prune the rest
 - If the user gave you fewer than 3 items, ask for more before producing output
 ```
 
@@ -254,4 +254,4 @@ Now anyone on the team can `git clone` it into their own `~/.copilot/skills/`.
 
 ---
 
-## 👉 Next: [Module 7 — Putting it all together](../m7-pipeline/README.md)
+## 👉 Next: [Module 7: Putting it all together](../m7-pipeline/README.md)

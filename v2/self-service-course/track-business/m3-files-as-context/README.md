@@ -1,4 +1,4 @@
-# Module 3 — Drop a file in, get insight out
+# Module 3: Drop a file in, get insight out
 
 > ⏱️ **Estimated time:** 20 min
 > 🎯 **You'll be able to:** point Copilot at a file or folder, get a structured analysis, and use the result in your work.
@@ -9,13 +9,13 @@
 
 📖 In M2 you typed prompts. That's chat. The actual win happens when you give the CLI **a real file** to work with.
 
-A 30-page partner RFP. A transcript from a call. A pitch deck. A folder of customer technical docs. The CLI can read all of that — and produce something useful.
+A 30-page partner RFP. A transcript from a call. A pitch deck. A folder of customer technical docs. The CLI can read all of that, and produce something useful.
 
 ---
 
 ## How "context" works
 
-When you run `copilot` from a folder, that folder becomes its working directory. The CLI can read files in that folder by filename. You don't paste content — you reference it.
+When you run `copilot` from a folder, that folder becomes its working directory. The CLI can read files in that folder by filename. You don't paste content, you reference it.
 
 Example:
 
@@ -63,11 +63,11 @@ Inside copilot:
 > Now identify three things the partner cares about that they didn't say out loud. What's the subtext?
 ```
 
-This is where the CLI earns its keep — pattern-matching across the whole document. Faster than you reading it.
+This is where the CLI earns its keep, pattern-matching across the whole document. Faster than you reading it.
 
 ### Exercise 2: structured extraction
 
-📖 Drop in a partner's website "About" page (save the HTML, or paste the URL — depending on your setup).
+📖 Drop in a partner's website "About" page (save the HTML, or paste the URL, depending on your setup).
 
 Ask:
 
@@ -173,4 +173,4 @@ That's the test that matters.
 
 ---
 
-## 👉 Next: [Module 4 — MCP power-ups: PMX, M365, GitHub](../m4-mcp-power-ups/README.md)
+## 👉 Next: [Module 4: MCP power-ups: PMX, M365, GitHub](../m4-mcp-power-ups/README.md)

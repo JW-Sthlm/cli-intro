@@ -1,6 +1,6 @@
-# Module 7 — Putting it all together 🔧
+# Module 7: Putting it all together 🔧
 
-> ⏱️ **Estimated time:** 30 min (or longer — this is the capstone)
+> ⏱️ **Estimated time:** 30 min (or longer, this is the capstone)
 > 🎯 **You'll be able to:** combine MCP + agents + skills into one end-to-end pipeline that handles a recurring partner task. You ship one reusable asset.
 
 ---
@@ -15,7 +15,7 @@ You now have the four building blocks:
 4. 🔧 **Agents** (M5)
 5. 🔧 **Skills** (M6)
 
-Real productivity comes from **combining them**. Not 5 separate tools — one workflow that uses all 5.
+Real productivity comes from **combining them**. Not 5 separate tools, one workflow that uses all 5.
 
 ---
 
@@ -25,12 +25,12 @@ Real productivity comes from **combining them**. Not 5 separate tools — one wo
 
 Examples:
 
-- **Weekly vTeam update** — pulls from PMX MCP, your inbox, your calendar; runs through `vteam-update-formatter` skill; outputs a Markdown file.
-- **Pre-QBR brief generator** — takes a partner name, pulls projects from PMX, recent emails from M365, generates a 1-pager via the `qbr-prep` skill.
-- **Partner technical assessment doc** — takes a partner's URL, pulls their public web content, asks Copilot to assess against a Microsoft technology fit framework, outputs a structured doc.
-- **Workshop attendee follow-up** — for each attendee in a CSV, pulls their public LinkedIn/GitHub data, drafts a personalized follow-up email.
+- **Weekly vTeam update:** pulls from PMX MCP, your inbox, your calendar; runs through `vteam-update-formatter` skill; outputs a Markdown file.
+- **Pre-QBR brief generator:** takes a partner name, pulls projects from PMX, recent emails from M365, generates a 1-pager via the `qbr-prep` skill.
+- **Partner technical assessment doc:** takes a partner's URL, pulls their public web content, asks Copilot to assess against a Microsoft technology fit framework, outputs a structured doc.
+- **Workshop attendee follow-up:** for each attendee in a CSV, pulls their public LinkedIn/GitHub data, drafts a personalized follow-up email.
 
-Pick one that's real for you. Don't pick the most ambitious — pick the most boring recurring one. That's where the time savings compound.
+Pick one that's real for you. Don't pick the most ambitious, pick the most boring recurring one. That's where the time savings compound.
 
 ---
 
@@ -135,8 +135,8 @@ PS C:\Users\you\vteam-updates> copilot
   - Ran workshop with 12 partners (Stockholm)
 
   ### Doing
-  - Self-service course foldable rollout (M2-M7) — by EOW
-  - Walk-A retest on fresh Dev Box — pending box provisioning
+  - Self-service course foldable rollout (M2-M7), by EOW
+  - Walk-A retest on fresh Dev Box, pending box provisioning
 
   ### Asks / blockers
   - Need a clean Dev Box image to validate Steps 0-1
@@ -150,7 +150,7 @@ PS C:\Users\you\vteam-updates> copilot
 ✦ Saved.
 ```
 
-It'll ask for confirmation before saving (good — you stay in the driver's seat). You review, edit, ship.
+It'll ask for confirmation before saving (good, you stay in the driver's seat). You review, edit, ship.
 
 ### Step 4: iterate
 

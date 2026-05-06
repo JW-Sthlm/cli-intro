@@ -1,4 +1,4 @@
-# Module 4 — MCP power-ups: PMX, M365, GitHub
+# Module 4: MCP power-ups: PMX, M365, GitHub
 
 > ⏱️ **Estimated time:** 20 min
 > 🎯 **You'll be able to:** install MCP servers, connect Copilot CLI to your inbox, calendar, projects, and repos, and have it pull real data into your work.
@@ -85,13 +85,13 @@ Real data. From your real GitHub. No copy-paste.
 
 ## 🚀 PMX MCP (Microsoft-internal)
 
-🔧 / 📖 PMX is Microsoft's Partner Management Experience — your projects, opportunities, partner accounts. Lives in Dataverse.
+🔧 / 📖 PMX is Microsoft's Partner Management Experience, your projects, opportunities, partner accounts. Lives in Dataverse.
 
 **Prereq:** you must be logged into your `*_microsoft` EMU account (see M1).
 
 There are two ways to install it.
 
-### Option 1 — Plugin marketplace (recommended)
+### Option 1: Plugin marketplace (recommended)
 
 Four commands, no clone, no `npm install`. The repo ships a manifest and Copilot CLI handles the rest.
 
@@ -143,9 +143,9 @@ Configured MCP servers:
   Fetching from PMX (Dataverse)...
 
   3 open projects:
-  • Contoso — AI Foundry pilot     (status: In Progress, last update 4 days ago)
-  • Fabrikam — Fabric POC          (status: In Progress, last update 12 days ago)
-  • Acme — Discovery Cards workshop (status: Not Started, due Q3)
+  • Contoso, AI Foundry pilot     (status: In Progress, last update 4 days ago)
+  • Fabrikam, Fabric POC          (status: In Progress, last update 12 days ago)
+  • Acme, Discovery Cards workshop (status: Not Started, due Q3)
 ```
 
 You should get a real list of your projects from PMX.
@@ -176,7 +176,7 @@ After install, try:
 > Find the most recent file I worked on with the word "QBR" in it.
 ```
 
-⚠️ **First-time consent.** Microsoft will ask you to consent to the MCP reading your inbox. Read the consent screen — it'll list permissions like `Mail.Read`, `Calendars.Read`. These are read-only by default. Don't grant write permissions you don't need.
+⚠️ **First-time consent.** Microsoft will ask you to consent to the MCP reading your inbox. Read the consent screen, it'll list permissions like `Mail.Read`, `Calendars.Read`. These are read-only by default. Don't grant write permissions you don't need.
 
 ---
 
@@ -203,7 +203,7 @@ That's three systems queried, one prompt, one draft output. Try it. It feels lik
 | Symptom | Cause | Fix |
 |---------|-------|-----|
 | MCP not in `/mcp` list | Installed in wrong location | Reinstall, pick option 2 (Copilot CLI) |
-| PMX returns auth error | Wrong GitHub account | `gh auth switch` to `*_microsoft`, retry |
+| PMX returns auth error | Wrong GitHub account | `gh auth switch` to `*_microsoft`. Retry. |
 | M365 says "no permissions" | Consent screen was declined | Reinstall, accept consent |
 | Slow / hangs | First-time auth bouncing through browser | Be patient, ~10 sec on slow networks |
 | "Tool not available" | MCP not running | Restart Copilot CLI |
@@ -243,4 +243,4 @@ If you can:
 ---
 
 ## 👉 Track A: [Back to course home](../../README.md)
-## 👉 Track B continues: [Module 5 — Custom AI agents](../../track-technical/m5-custom-agents/README.md)
+## 👉 Track B continues: [Module 5: Custom AI agents](../../track-technical/m5-custom-agents/README.md)
