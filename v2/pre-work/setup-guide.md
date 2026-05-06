@@ -45,4 +45,4 @@ If you maintain a doc that links back here, you can keep the link to `setup-guid
 
 ## Self-service course
 
-The full M0–M7 partner-flavored course is published at **https://jw-sthlm.github.io/cli-intro-share/course/README.md** (alongside the setup page). Two tracks (Business M0–M4, Technical M5–M7) for partners who want async learning instead of (or after) the live workshop.
+The full M0–M7 partner-flavored course is published at **https://github.com/JW-Sthlm/cli-intro-share/blob/main/course/README.md** (alongside the setup page). Two tracks (Business M0–M4, Technical M5–M7) for partners who want async learning instead of (or after) the live workshop.
