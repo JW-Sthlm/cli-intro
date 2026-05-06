@@ -129,7 +129,7 @@ Live findings during the show-and-tell walkthrough. Each entry: what was unclear
 
 ## Walk template — copy this into a new dated section at the top before each run
 
-This template tracks the current `setup.html` structure (Steps 0-6) and the runbook's Walks A / A1 / A2 / B / C / D. Copy from here into a fresh `## Walk N — YYYY-MM-DD` block at the top of the file before each Dev Box run.
+This template tracks the current `setup.html` structure (Steps 0-4 + Troubleshooting) and the runbook's Walks A / A1 / A2 / B / C / D. Copy from here into a fresh `## Walk N — YYYY-MM-DD` block at the top of the file before each Dev Box run.
 
 ### Intro foldout — M365 Copilot vs Copilot CLI
 
@@ -164,17 +164,27 @@ Friction:
 
 > _none_
 
-### Step 2a — Log into GitHub CLI
+### Step 2a — GitHub CLI (personal)
 
-- [ ] `gh auth login` ran twice (personal + EMU) without surprises
+- [ ] `gh auth login` ran without surprises
 - [ ] SSO authorize step on org sign-in screen made sense
-- [ ] `gh auth status` showed both accounts at the end, personal active
+- [ ] `gh auth status` showed personal account active
 
 Friction:
 
 > _none_
 
-### Step 2b — Log into Copilot CLI
+### Step 2b — GitHub CLI (Microsoft EMU)
+
+- [ ] Second `gh auth login` ran cleanly with `_microsoft` sign-in
+- [ ] `gh auth switch --user <personal>` made personal active again
+- [ ] `gh auth status` showed both accounts, personal marked `Active account: true`
+
+Friction:
+
+> _none_
+
+### Step 2c — Copilot CLI
 
 - [ ] `copilot` launched
 - [ ] Folder trust prompt — option 2 was clearly the right choice
@@ -185,7 +195,7 @@ Friction:
 
 > _none_
 
-### Step 3 — Log in to Azure
+### Step 2d — Azure CLI
 
 - [ ] `az login --tenant ...` worked
 - [ ] Subscription picker appeared — "just press Enter" note was clear
@@ -195,7 +205,7 @@ Friction:
 
 > _none_
 
-### Step 4a — M365 install (prompt-orchestrated)
+### Step 3a — M365 install (prompt-orchestrated)
 
 - [ ] Pasted prompt verbatim into Copilot CLI
 - [ ] Copilot installed WorkIQ MCP without surprises
@@ -206,7 +216,7 @@ Friction:
 
 > _none_
 
-### Step 4b — PMX install (prompt-orchestrated) ⭐ HIGH-VALUE TEST
+### Step 3b — PMX install (prompt-orchestrated) ⭐ HIGH-VALUE TEST
 
 - [ ] Copilot ran `gh auth status` to find EMU username
 - [ ] Copilot ran `gh auth switch --user <yourname>_microsoft` correctly
@@ -227,7 +237,7 @@ Friction:
 
 > _none_
 
-### Step 5 — Verify everything (functional + UX)
+### Step 4 — Verify everything (functional + UX)
 
 - [ ] All five verify checks passed against the predicted output
 - [ ] Every command sat inside a styled `cmd-wrap` block with shell label and Copy button
@@ -238,7 +248,7 @@ Friction:
 
 > _none_
 
-### Step 6 — Common issues
+### Troubleshooting — Common issues
 
 - [ ] Skimmed only — didn't trigger anything on purpose
 - [ ] Troubleshooting rows looked accurate against issues seen during the walk
@@ -267,7 +277,7 @@ Friction:
 ## Walk C — 403 reproduction (optional)
 
 - [ ] `marketplace add` on personal account returned: `remote: Write access to repository not granted. fatal: ... 403`
-- [ ] Step 6 troubleshooting table 403 row matched the error
+- [ ] Troubleshooting table 403 row matched the error
 - [ ] Fix path (re-run with EMU active) recovered the install
 
 Exact error string seen:

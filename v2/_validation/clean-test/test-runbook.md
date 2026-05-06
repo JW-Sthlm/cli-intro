@@ -70,13 +70,14 @@ This is the primary walk. ~45 min for a full clean run.
    - **Intro foldout** (M365 Copilot vs Copilot CLI) — does it read cleanly? Does the librarian/contractor analogy land? Is the multi-MCP example believable? **Log a finding if anything reads as marketing fluff or confusing.**
    - **Step 0 — GitHub account ready** — EMU vs personal explanation clear? Both accounts straight in your head before Step 1?
    - **Step 1 — Install command-line tools** — PowerShell 7 install, then the five `winget install` commands. UAC pop-ups expected? Did the prompt change correctly? Did all five tools install?
-   - **Step 2a — Log into GitHub CLI** — `gh auth login` twice (personal first, then EMU). Browser flow + SSO authorize.
-   - **Step 2b — Log into Copilot CLI** — `copilot` → folder trust → `/login` → device code → browser.
-   - **Step 3 — Log in to Azure** — `az login --tenant ...`. **Subscription picker shows up — does the "just press Enter" note land?** Did `az account show` work afterward?
-   - **Step 4a — M365 install** — prompt-orchestrated, runs WorkIQ.
-   - **Step 4b — PMX install** ⚠️ **THE HIGH-VALUE TEST** — see Walk A1 below.
-   - **Step 5 — Verify everything** — five checklist items, all using styled command blocks. Did every Copy button work? Did each command return what the guide predicts?
-   - **Step 6 — Common issues** — skim only; don't trigger on purpose unless time allows (see Walk B).
+   - **Step 2a — GitHub CLI (personal)** — `gh auth login`. Browser flow + SSO authorize. Pass: `✓ Logged in as <personal>`.
+   - **Step 2b — GitHub CLI (EMU)** — `gh auth login` again, sign in as `_microsoft`. Then `gh auth switch --user <personal>` to make personal active again. Pass: `gh auth status` shows both, personal marked `Active account: true`.
+   - **Step 2c — Copilot CLI** — `copilot` → folder trust → `/login` → device code → browser. Smoke-test "What day is it today?".
+   - **Step 2d — Azure CLI** — `az login --tenant ...`. **Subscription picker shows up — does the "just press Enter" note land?** Did `az account show` work afterward?
+   - **Step 3a — M365 install** — prompt-orchestrated, runs WorkIQ.
+   - **Step 3b — PMX install** ⚠️ **THE HIGH-VALUE TEST** — see Walk A1 below.
+   - **Step 4 — Verify everything** — five checklist items, all using styled command blocks. Did every Copy button work? Did each command return what the guide predicts?
+   - **Troubleshooting** — skim only; don't trigger on purpose unless time allows (see Walk B).
 
 3. As you go, capture in [results-template.md](results-template.md):
    - Every step where the wording was unclear
@@ -84,11 +85,11 @@ This is the primary walk. ~45 min for a full clean run.
    - Every command that errored
    - Every place a non-coder would have stopped and asked for help
 
-### Walk A1 — Step 4b PMX prompt-orchestrated install ⭐
+### Walk A1 — Step 3b PMX prompt-orchestrated install ⭐
 
 **This is the test that justifies this whole iteration.** The PMX install was rewritten to a single Copilot CLI prompt that orchestrates the switch-install-switch sequence itself. We need to know: does it actually work clean?
 
-Inside Copilot CLI, paste the prompt block from setup.html Step 4b verbatim. Then watch:
+Inside Copilot CLI, paste the prompt block from setup.html Step 3b verbatim. Then watch:
 
 - [ ] Did Copilot run `gh auth status` to find the EMU username?
 - [ ] Did it run `gh auth switch --user <yourname>_microsoft` correctly?
@@ -102,13 +103,13 @@ Inside Copilot CLI, paste the prompt block from setup.html Step 4b verbatim. The
 
 ### Walk A2 — Verify checklist styling (UX check)
 
-This isn't a functional test, just a visual one. While you're on Step 5, confirm:
+This isn't a functional test, just a visual one. While you're on Step 4, confirm:
 
 - [ ] Every command in the verify checklist sits inside a dark `cmd-wrap` block with a shell label (POWERSHELL or ✦ Copilot CLI) and a working Copy button.
 - [ ] No raw `<span class="check-cmd">` artifacts showing up as inline grey text.
 - [ ] Checks #2/#4/#5 (which need you to launch Copilot then type a prompt) clearly show two separate blocks with hint text between them.
 
-If any look wrong, capture a screenshot and log under "Step 5 — Verify".
+If any look wrong, capture a screenshot and log under "Step 4 — Verify".
 
 ---
 
@@ -117,7 +118,7 @@ If any look wrong, capture a screenshot and log under "Step 5 — Verify".
 Only run this if **Walk A1 failed** or if you specifically want to validate the manual recovery path.
 
 1. Reset the test machine (run `.\reset-devbox.ps1` from this folder for the standard repeat-walk path, OR redeploy the Dev Box for a true pristine state, OR `gh auth switch` back to personal-only and `copilot plugin uninstall pmx-mcp` if it got partially installed).
-2. On setup.html Step 4b, expand the **"If the prompt path didn't work"** foldout.
+2. On setup.html Step 3b, expand the **"If the prompt path didn't work"** foldout.
 3. Follow the five numbered steps verbatim:
    - Step 1: Find your EMU username via `gh auth status`
    - Step 2: `gh auth switch --user YOUR_EMU_USERNAME` (replace with your actual EMU name)
@@ -129,7 +130,7 @@ Only run this if **Walk A1 failed** or if you specifically want to validate the 
    - [ ] Did the verify-the-switch step in #3 catch any silent-failure case?
    - [ ] Did the inline 403 callout match what you saw if anything went wrong?
 
-Log under "Step 4b — Manual fallback".
+Log under "Step 3b — Manual fallback".
 
 ---
 
@@ -140,7 +141,7 @@ Only run if you want to confirm the troubleshooting table row is accurate. Costs
 1. Make sure you're logged into both accounts (`gh auth status` shows both, personal active).
 2. Run `copilot plugin marketplace add gim-home/pmx-mcp` **without switching accounts first**.
 3. Confirm you get exactly: `remote: Write access to repository not granted. fatal: ... 403`.
-4. Open setup.html Step 6 (Common issues) and confirm the 403 row in the troubleshooting table matches what you saw and the fix points back to Walk B.
+4. Open setup.html Troubleshooting (Common issues) and confirm the 403 row in the troubleshooting table matches what you saw and the fix points back to Walk B.
 
 Log under "Walk C — 403 repro" with the exact error string.
 
@@ -172,7 +173,7 @@ This is independent of the setup.html test — log findings against the `copilot
 1. Save the filled `results-template.md` somewhere persistent (commit it to the repo if it's a clean walk worth keeping as a record).
 2. Apply findings:
    - **Walk A friction** → update `setup.html` (canonical) and `setup-guide.md` (mirror) and `troubleshooting.md`.
-   - **Walk A1 prompt-orchestration failures** → tighten the Step 4b prompt language (or fall back to the manual sequence as primary if the prompt is too unreliable).
+   - **Walk A1 prompt-orchestration failures** → tighten the Step 3b prompt language (or fall back to the manual sequence as primary if the prompt is too unreliable).
    - **Walk B manual-fallback failures** → re-harden the foldout. The whole point of the recent rewrite was to be bulletproof.
    - **Walk C drift** → fix the troubleshooting row.
    - **Walk D issues** → file as todos against the `copilot-overview-plugin` repo.
