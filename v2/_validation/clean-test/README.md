@@ -2,6 +2,10 @@
 
 Internal kit used to validate that the hosted [setup.html](https://cli-intro-share.pages.dev/setup.html) actually works for a non-coder on a fresh Windows. **Not workshop content.**
 
+## ⚠️ Before any test walk: reset the Dev Box
+
+If your Dev Box has been used since the last redeploy (auth, config, or scripts left over), run [`RESET.md`](RESET.md) first. Step-by-step there. The short version is `cd` into this folder and run `.\reset-devbox.ps1 -WhatIf` then `.\reset-devbox.ps1`.
+
 ## What we test
 
 **The setup.html walkthrough.** A real human, on a real fresh machine, opens the hosted setup guide and follows it step by step. We document what's clear, what breaks, and where attendees would get stuck.
@@ -29,14 +33,15 @@ Use a Linux Codespace via [fallback-codespace.md](fallback-codespace.md). Differ
 
 | File | Purpose |
 |------|---------|
-| [test-runbook.md](test-runbook.md) | **Primary path.** Step-by-step manual test. Read this first. |
-| [results-template.md](results-template.md) | Pre-formatted results — copy and fill in as you go |
-| [reset-devbox.ps1](reset-devbox.ps1) | **Repeat-walk reset.** Soft mode wipes auth/config/repos in ~30s. Hard mode adds winget uninstall (best-effort, NOT pristine — redeploy for true clean). Always runs a verifier at the end. |
+| [RESET.md](RESET.md) | **Read before any walk.** Step-by-step for walking back Dev Box state, including which reset mode to pick. |
+| [test-runbook.md](test-runbook.md) | **Primary test path.** Step-by-step manual test. Read after RESET.md. |
+| [results-template.md](results-template.md) | Pre-formatted results, copy and fill in as you go. |
+| [reset-devbox.ps1](reset-devbox.ps1) | The reset script itself. RESET.md explains how to use it. Soft mode wipes auth/config/repos in ~30s. Hard mode adds winget uninstall (best-effort, NOT pristine, redeploy for true clean). Always runs a verifier at the end. |
 | [sandbox-in-devbox.md](sandbox-in-devbox.md) | **Dead-end report.** Why Sandbox-in-Dev-Box doesn't work in our tenant. Kept so nobody re-discovers it. |
-| [launch.cmd](launch.cmd) | Starts Windows Sandbox (kept for non-corporate machines; not part of our flow) |
-| [sandbox-config.wsb](sandbox-config.wsb) | Sandbox config (mounts this folder read-only; only relevant outside our flow) |
-| [bootstrap.ps1](bootstrap.ps1) | **Optional shortcut** for re-runs. Auto-installs the 5 prereqs. **Do NOT use for the primary test** — it bypasses the very thing we're validating. |
-| [enable-sandbox.md](enable-sandbox.md) | One-time host setup for Windows Sandbox (only relevant on a personal/non-corporate Windows machine; not used in our Dev Box flow) |
+| [launch.cmd](launch.cmd) | Starts Windows Sandbox (kept for non-corporate machines, not part of our flow). |
+| [sandbox-config.wsb](sandbox-config.wsb) | Sandbox config (mounts this folder read-only, only relevant outside our flow). |
+| [bootstrap.ps1](bootstrap.ps1) | **Optional shortcut** for re-runs. Auto-installs the 5 prereqs. **Do NOT use for the primary test**, it bypasses the very thing we're validating. |
+| [enable-sandbox.md](enable-sandbox.md) | One-time host setup for Windows Sandbox (only relevant on a personal/non-corporate Windows machine, not used in our Dev Box flow). |
 | [fallback-codespace.md](fallback-codespace.md) | Linux Codespace alternative when Dev Box isn't available. Different OS, so only validates non-Windows-specific issues. |
 
 ## When to re-run

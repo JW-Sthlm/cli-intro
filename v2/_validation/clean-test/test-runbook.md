@@ -20,23 +20,23 @@ The realistic flow today is: connect to a Dev Box, walk through setup.html once 
 
 ### Repeat walks on the same Dev Box
 
-Redeploying the Dev Box between every walk costs ~15 min. The reset script is the cheaper option for walks 2-N:
+Redeploying the Dev Box between every walk costs ~15 min. The reset script is the cheaper option for walks 2-N. **Step-by-step is in [RESET.md](RESET.md)** — it covers which mode to pick, what the verifier should show, and what to do when warnings appear. The TLDR:
 
 ```powershell
-# Soft (default) — clears auth + config + cloned repos. Tools stay installed.
+# Soft (default), clears auth + config + cloned repos. Tools stay installed.
 # Use this between Walk A1 reruns where you don't need to retest Step 1.
 .\reset-devbox.ps1
 
-# Hard — Soft + winget uninstall the 6 packages.
+# Hard, Soft + winget uninstall of the 6 packages.
 # Use this when you want to retest Step 1. NOT a pristine reset (winget
-# leaves PATH/registry/state behind). For a true pristine machine, redeploy.
+# leaves PATH/registry/state behind). For true pristine, redeploy.
 .\reset-devbox.ps1 -Mode Hard
 
 # Preview without changing anything
 .\reset-devbox.ps1 -WhatIf
 ```
 
-The script ends with a verifier that lists what's still present, so you know what the reset actually cleared. **The first walk on a redeployed box is always the most authoritative test** — use the reset script for everything after that.
+The script ends with a verifier that lists what's still present, so you know what the reset actually cleared. **The first walk on a redeployed box is always the most authoritative test**, use the reset script for everything after that.
 
 ## How the test relates to user instructions
 
