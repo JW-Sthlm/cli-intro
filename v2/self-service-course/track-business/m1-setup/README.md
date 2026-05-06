@@ -200,7 +200,7 @@ If your IT has set the policy at machine scope and locked it, ask in the Teams t
 <details>
 <summary><strong>🔧 The Manual path</strong> — for people who want to run each install themselves</summary>
 
-If you prefer to know exactly what each step does, or your IT blocks running PowerShell scripts, follow Step 1 Option B in setup-guide.md. Each install is one `winget install` line. ~10 minutes.
+If you prefer to know exactly what each step does, or your IT blocks running PowerShell scripts, follow [Step 1 Option B in the hosted setup guide](https://cli-intro-share.pages.dev/setup.html#step-1). Each install is one `winget install` line. ~10 minutes.
 
 ```powershell
 winget install --id OpenJS.NodeJS.LTS

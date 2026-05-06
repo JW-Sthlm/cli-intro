@@ -348,7 +348,7 @@ Friction:
 
 Would a non-coder PSA make it through this guide unaided? **yes / no — with caveats: _________**
 
-Top 3 friction points to fix in setup-guide.md:
+Top 3 friction points to fix in `setup.html`:
 
 1. _________
 2. _________
@@ -356,7 +356,7 @@ Top 3 friction points to fix in setup-guide.md:
 
 ---
 
-## Walk 2 — setup-guide.md, Manual path (optional)
+## Walk 2 — `setup.html`, Manual path (optional)
 
 Did Manual path produce the same end state as Express? **yes / no**
 
@@ -381,7 +381,7 @@ Friction unique to Manual path:
 | Copilot Cloud Agent   | | | | |
 | Other / global / user | | | | |
 
-**Winner option (use this in setup-guide.md Step 5):** _________
+**Winner option (use this in `setup.html` Step 3):** _________
 
 **Why the others failed:**
 
@@ -429,8 +429,8 @@ Anything else that broke, surprised you, or should be flagged for `troubleshooti
 
 ## Decisions to take back
 
-- [ ] `setup-guide.md` Step 5 placeholder → replace with: _________
-- [ ] `setup-guide.md` Step 1 (Express vs Manual) → any changes needed?
+- [ ] `setup.html` Step 3 (MCP install) → any changes needed?
+- [ ] `setup.html` Step 1 (Express vs Manual) → any changes needed?
 - [ ] `troubleshooting.md` → add new rows: _________
 - [ ] `verify.ps1` → fix bugs / add MCP check: _________
 - [ ] `copilot-overview-plugin` README/INSTALL → file issues: _________

@@ -4,7 +4,7 @@ Internal kit used to validate that `v2/pre-work/setup-guide.md` actually works f
 
 ## What we test
 
-**The setup-guide.md walkthrough.** A real human, on a real fresh machine, opens the setup guide and follows it step by step. We document what's clear, what breaks, and where attendees would get stuck.
+**The setup.html walkthrough.** A real human, on a real fresh machine, opens the hosted setup guide and follows it step by step. We document what's clear, what breaks, and where attendees would get stuck.
 
 This is **not** a test of installer scripts. It's a test of the **instructions**.
 

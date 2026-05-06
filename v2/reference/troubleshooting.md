@@ -24,7 +24,7 @@ Then retry the step that failed.
 
 PMX is the exception to the personal-account rule. The PMX MCP server lives in `gim-home/pmx-mcp`, a Microsoft GitHub organization. Use your EMU account for that install, then switch back.
 
-**The clean path is the prompt-orchestrated install in [Setup Guide → Step 5b](../pre-work/setup-guide.md)** — Copilot handles the switch-install-switch sequence itself, so there's nothing to misplace.
+**The clean path is the prompt-orchestrated install in [Setup Guide → Step 3b](https://cli-intro-share.pages.dev/setup.html#step-3)**. Copilot handles the switch-install-switch sequence itself, so there's nothing to misplace.
 
 **If you're doing it manually**, run them one at a time. Find your EMU username first:
 

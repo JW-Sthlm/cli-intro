@@ -18,7 +18,8 @@
 #
 # AFTER IT FINISHES
 #   Close PowerShell, open a new window, and continue with
-#   setup-guide.md from "Step 2: Log In".
+#   the hosted setup guide from Step 2 (Log in to all your accounts):
+#   https://cli-intro-share.pages.dev/setup.html#step-2
 # ----------------------------------------------------------------------
 
 $packages = @(
@@ -54,5 +55,6 @@ Write-Host ""
 Write-Host "Next steps:" -ForegroundColor Yellow
 Write-Host "  1. Close this PowerShell window."
 Write-Host "  2. Open a NEW PowerShell window (so the updated PATH is picked up)."
-Write-Host "  3. Continue with setup-guide.md from 'Step 2: Log In'."
+Write-Host "  3. Continue with Step 2 of the hosted setup guide:"
+Write-Host "     https://cli-intro-share.pages.dev/setup.html#step-2"
 Write-Host ""
