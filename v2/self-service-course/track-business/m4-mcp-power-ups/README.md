@@ -5,7 +5,8 @@
 
 ---
 
-## What MCP is, in plain English
+<details>
+<summary><strong>📖 "What MCP is, in plain English"</strong>: concept + table, click to expand</summary>
 
 📖 An **MCP server** is a small program that gives Copilot access to a system. Instead of you copy-pasting from Outlook into the CLI, an MCP server lets the CLI **read your inbox directly** when you ask.
 
@@ -19,21 +20,31 @@ Think of it as a translator between Copilot and a system.
 
 You don't write the MCP server. Other people do. You just install and use them.
 
+</details>
+
 ---
 
 ## ⚠️ The install prompt that confuses everyone
 
 When you install an MCP server, Copilot CLI asks:
 
-> Where do you want to install this MCP server?
+> Where do you want to configure these MCP servers?
 
-You'll see ~4 options. **Pick this one:**
+You'll see a numbered menu. **Pick option 2: Copilot CLI.**
 
-<!-- PLACEHOLDER: validated MCP install option name (p10 — currently being tested on Dev Box). Replace with the exact menu label once confirmed. -->
+```text
+Where do you want to configure these MCP servers?
 
-> _After p10 is validated, the answer for this course is: **`<option name>`**. The other options install the MCP somewhere Copilot CLI can't find it (VS Code workspace, etc.) and it silently fails._
+  1. VS Code (Copilot Chat)
+❯ 2. Copilot CLI
+  3. GitHub Copilot Coding Agent (copilot-setup-steps.yml)
+  4. Other
+  5. Other (type your answer)
+```
 
-If you pick the wrong one and your MCP is missing later, just re-run the install and pick the right one this time.
+The other options install the MCP somewhere Copilot CLI can't find it (VS Code workspace, GitHub-side runners, etc.) and it silently fails.
+
+If you pick the wrong one and your MCP is missing later, just re-run the install and pick option 2 this time.
 
 ---
 
@@ -51,8 +62,13 @@ Follow the prompts. When asked where to install, pick the option above.
 
 **Verify it worked:**
 
-```
+```text
 > /mcp
+
+Configured MCP servers:
+  github   ✓ connected   (47 tools)
+
+Type a prompt to use them.
 ```
 
 You should see `github` in the list.
@@ -93,9 +109,10 @@ gh auth switch --user <your-personal-username>
 
 Then relaunch Copilot CLI (`copilot` again, or `/restart` if you're already in) so the PMX tools register.
 
-### Option 2 — Direct install via Copilot prompt (legacy)
+<details>
+<summary><strong>🔧 "Option 2: Direct install via Copilot prompt (legacy fallback)"</strong>, click to expand</summary>
 
-Use this if you want the source on disk or the marketplace flow fails for any reason. Same account dance, but you ask Copilot CLI to clone and wire it up.
+🔧 Use this if you want the source on disk or the marketplace flow fails for any reason. Same account dance, but you ask Copilot CLI to clone and wire it up.
 
 ```powershell
 # Switch to your EMU account
@@ -106,15 +123,29 @@ copilot
 > Install the PMX MCP server. Use the gim-home/pmx-mcp repo.
 ```
 
-Follow prompts.
+Follow prompts. When asked where to configure the server, pick option 2 (Copilot CLI).
+
+</details>
 
 ### Verify
 
 Once installed (either option):
 
-```
-> /mcp        # confirm pmx is listed
+```text
+> /mcp
+
+Configured MCP servers:
+  github   ✓ connected   (47 tools)
+  pmx      ✓ connected   (38 tools)
+
 > Show me my open PMX projects.
+
+  Fetching from PMX (Dataverse)...
+
+  3 open projects:
+  • Contoso — AI Foundry pilot     (status: In Progress, last update 4 days ago)
+  • Fabrikam — Fabric POC          (status: In Progress, last update 12 days ago)
+  • Acme — Discovery Cards workshop (status: Not Started, due Q3)
 ```
 
 You should get a real list of your projects from PMX.
@@ -149,11 +180,12 @@ After install, try:
 
 ---
 
-## 📖 Combining MCP servers in one prompt
+<details>
+<summary><strong>📖 "Combining MCP servers in one prompt"</strong>: the magic moment, click to expand</summary>
 
-Once you have multiple MCPs installed, the magic happens:
+📖 Once you have multiple MCPs installed, the magic happens:
 
-```
+```text
 > Look at my PMX projects with status "in progress" that haven't had an update in 2 weeks.
 > Then check my email for any recent activity with those partners.
 > Draft a 1-line update for each project based on what you find.
@@ -161,19 +193,24 @@ Once you have multiple MCPs installed, the magic happens:
 
 That's three systems queried, one prompt, one draft output. Try it. It feels like the future.
 
+</details>
+
 ---
 
-## 🆘 When MCP doesn't work
+<details>
+<summary><strong>🆘 "When MCP doesn't work"</strong>: troubleshooting, click to expand</summary>
 
 | Symptom | Cause | Fix |
 |---------|-------|-----|
-| MCP not in `/mcp` list | Installed in wrong location | Reinstall, pick the right option (above) |
+| MCP not in `/mcp` list | Installed in wrong location | Reinstall, pick option 2 (Copilot CLI) |
 | PMX returns auth error | Wrong GitHub account | `gh auth switch` to `*_microsoft`, retry |
 | M365 says "no permissions" | Consent screen was declined | Reinstall, accept consent |
 | Slow / hangs | First-time auth bouncing through browser | Be patient, ~10 sec on slow networks |
 | "Tool not available" | MCP not running | Restart Copilot CLI |
 
 For deeper issues: [troubleshooting.md](../../../reference/troubleshooting.md).
+
+</details>
 
 ---
 

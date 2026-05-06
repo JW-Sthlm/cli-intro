@@ -64,7 +64,7 @@ Both tracks use the same CLI. Track B just adds the moves you make once you're t
 ---
 
 <details>
-<summary><strong>What this is NOT</strong> — common confusions, click to expand</summary>
+<summary><strong>What this is NOT</strong>: common confusions, click to expand</summary>
 
 ⚠️
 
@@ -75,7 +75,7 @@ Both tracks use the same CLI. Track B just adds the moves you make once you're t
 </details>
 
 <details>
-<summary><strong>"I'm not a terminal person"</strong> — the terminal thing demystified</summary>
+<summary><strong>"I'm not a terminal person"</strong>: the terminal thing demystified</summary>
 
 📖 That's fine. You don't need to be.
 
@@ -115,7 +115,7 @@ The CLI sends what you give it to a Copilot endpoint. Treat it the same way you 
 ---
 
 <details>
-<summary><strong>"Will I break anything?"</strong> — the safety story</summary>
+<summary><strong>"Will I break anything?"</strong>: the safety story</summary>
 
 📖 No. This course never asks you to:
 - Delete files you didn't create

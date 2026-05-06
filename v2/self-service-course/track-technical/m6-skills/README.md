@@ -80,14 +80,37 @@ git clone https://github.com/<org>/<skill-name>.git
 
 Then in Copilot CLI:
 
-```
-> /skills          # confirm the skill loaded
+```text
+> /skills
+
+Loaded skills:
+  qbr-prep              ~/.copilot/skills/qbr-prep/SKILL.md
+  vteam-update-formatter ~/.copilot/skills/vteam-update-formatter/SKILL.md
 ```
 
 To trigger it, just say what you want — the description tells Copilot when to fire:
 
-```
+```text
 > Prep my QBR for Contoso
+
+  ✦ Activating skill: qbr-prep
+  ✦ Pulling Contoso projects from PMX...
+  ✦ Pulling last 90 days of email with @contoso.com...
+
+  Last 90 days
+  • 3 wins: Foundry pilot kicked off, AI Discovery Cards delivered, ECIF approved
+  • 1 challenge: Fabric POC slipped two weeks on data access
+
+  Open projects
+  • Foundry pilot — In Progress, due Q3
+  • Fabric POC   — In Progress, last update 12 days ago
+
+  Next quarter
+  • Align on Foundry agent build-out scope
+  • Decide on managed-service tier vs self-serve
+
+  Open question to surface
+  • Who on Contoso's side will own the AI P&L next year?
 ```
 
 Copilot recognizes "QBR" + "prep" matches the skill description, and runs the skill.
@@ -169,7 +192,8 @@ You should get output in the expected format.
 
 ---
 
-## When to build a skill vs an agent vs nothing
+<details>
+<summary><strong>🔧 "When to build a skill vs an agent vs nothing"</strong>: decision tree, click to expand</summary>
 
 🔧 Decision tree:
 
@@ -180,11 +204,14 @@ You should get output in the expected format.
 
 A good test: "could a colleague replace me by reading this and following it?" If yes, it's a skill.
 
+</details>
+
 ---
 
-## Sharing skills
+<details>
+<summary><strong>🔧 "Sharing skills"</strong>: push to a Git repo for the team, click to expand</summary>
 
-Once your skill works for you, **make it a Git repo** and share with the vTeam:
+🔧 Once your skill works for you, **make it a Git repo** and share with the vTeam:
 
 ```powershell
 cd "$skillsRoot\vteam-update-formatter"
@@ -198,13 +225,18 @@ Now anyone on the team can `git clone` it into their own `~/.copilot/skills/`.
 
 ⚠️ **Don't put NDA partner content, customer data, or internal-only references in shared skills.** Skills travel. Treat them as if they'll be open-sourced eventually.
 
+</details>
+
 ---
 
-## ⚠️ Skill gotchas
+<details>
+<summary><strong>⚠️ "Skill gotchas"</strong>: known traps, click to expand</summary>
 
 - **Skills don't auto-update.** If the team upgrades a shared skill, you `git pull` to get it.
 - **Activation is best-effort.** The CLI decides when to fire a skill based on the description and the user's prompt. Be specific in the description (`Triggers: ...`) to make activation reliable.
 - **Skills can stack.** Two skills can fire in one conversation if both are relevant. This is usually fine; sometimes confusing.
+
+</details>
 
 ---
 

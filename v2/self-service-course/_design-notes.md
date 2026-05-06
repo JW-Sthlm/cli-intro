@@ -36,33 +36,49 @@ These mirror what setup-guide.md and the workshop slides use, so a learner movin
 
 ## Open questions / placeholders
 
-Several modules have `<!-- PLACEHOLDER: ... -->` markers. These need real content before this course is shipped externally:
+The course is now placeholder-free for the in-CLI flow. Remaining open items are content quality, not blockers:
 
 | ID | Where | What's needed |
 |----|-------|---------------|
-| p10 | M1 (Setup), M4 (MCP) | Validated MCP install-prompt option (which menu choice for VS Code vs CLI). |
+| ~~p10~~ | ~~M1 (Setup), M4 (MCP)~~ | ✅ Resolved 2026-05-05 (Walk A): pick option 2 "Copilot CLI" at the install-target prompt. M4 now spells this out. |
 | course-validate-source-current | All modules | Re-check source course chapters didn't change before each ship. |
-| course-screenshot-pass | All modules | Take partner-flavored screenshots; current copy has none. |
-| m6-skill-example | M6 | Pick a real skill we can ship as the worked example (candidates: vteam-update, partner-briefing, qbr-prep). |
-| m7-pipeline-example | M7 | Pick a real recurring partner task to use as the capstone (candidate: weekly vTeam update generated from PMX + Outlook). |
+| course-screenshot-pass | All modules | ✅ Replaced with HTML-style terminal mockups in fenced code blocks (2026-05-06). PNG screenshots dropped — code fences render clean on GitHub web + VS Code, edit on text drift, no asset pipeline. |
+| m6-skill-example | M6 | Pick a real shipped skill for the worked example (candidates: `content-humanizer`, `microsoft-foundry`, or a `vteam-update-formatter` we actually ship). |
+| m7-pipeline-example | M7 | Pick a real recurring partner task for the capstone. Strongest candidate: PMX `/hygiene` weekly check (real MCP tool, real cadence). |
 
 ## When to revise
 
-- After p10 lands, replace the MCP placeholder in M1 + M4.
 - After three or more partners complete the course async, gather feedback and revise.
 - When the source course pushes a major update (chapters added/removed), check for drift.
 - When PMX MCP, M365 MCP, or GitHub MCP changes their setup flow.
 
-## Foldable section pattern (rolled out 2026-05-02 to M0 + M1)
+## Foldable section pattern (rolled out 2026-05-02 to M0+M1, 2026-05-06 to M2-M7)
 
 Modules use `<details><summary>` HTML inside markdown so non-tech readers can skip the dense bits and tech-curious readers can deep-dive. Convention:
 
-- **Always visible:** the spine — pitch, decision tables, critical warnings (data boundaries, the 2-account dance), the main step-by-step path.
-- **Folded:** optional context, definitions for non-tech readers ("never opened PowerShell?"), troubleshooting tables, alternative paths, "for the curious" deep-dives.
-- **Summary line format:** `<strong>📖|🔧|⚠️ marker + the question or topic in plain language</strong>` — the marker tells readers if the foldable is for them.
-- **Tested in:** GitHub.com, VS Code preview, most static-site generators.
+- **Always visible:** the spine — pitch, decision tables, critical warnings (data boundaries, the 2-account dance), the main step-by-step path, hands-on exercises (🚀), readiness gates (✅), next-module links (👉).
+- **Folded:** optional context, definitions for non-tech readers ("never opened PowerShell?"), troubleshooting tables, alternative paths, legacy fallbacks, "for the curious" deep-dives.
+- **Summary line format:** `<strong>📖|🔧|⚠️ marker + topic</strong>: hint, click to expand` — colon connector (em-dash banned per voice profile).
+- **Tested in:** GitHub.com, VS Code preview.
 
-**Status:** applied to M0 + M1. Still to roll out to M2-M7 — pending Johan's review of the pattern.
+**Status:** applied to all 8 modules (M0-M7).
+
+## Terminal mockup pattern (rolled out 2026-05-06)
+
+Where M0/M1/M2-M7 would have benefited from a screenshot showing CLI behavior, we use a fenced `text` code block that mocks real terminal output. Reasons over PNG screenshots:
+
+- Editable when CLI output drifts (model versions, MCP names, prompts change quarterly).
+- Searchable (`grep` finds actual text inside mockups).
+- Renders consistently on GitHub web + VS Code preview without an asset pipeline.
+- Diff-friendly in PRs.
+- No image-to-image AI pass needed (the pass that prompted this pivot kept failing on terminal screenshots).
+
+Conventions:
+
+- Use ` ```text ` or unlabeled fences. GitHub renders monospace either way.
+- Show the prompt indicator (`PS C:\... >` or `>`) so the reader knows where input ends.
+- Use Unicode glyphs (✓ ✦ ⬆️ ❯) freely — they render in code fences.
+- Avoid `<div class="terminal">` styling. GitHub strips inline CSS.
 
 ## Why markdown, not HTML
 
@@ -73,7 +89,7 @@ Asked 2026-05-02. Answer:
 - When the course stabilises and we want a polished standalone web property, we publish via **GitHub Pages + mkdocs-material** (the same toolchain James's source course uses). Same markdown source, prettier rendering. Adds search, sidebar nav, dark mode, version selector.
 - Going to HTML now would mean rewriting on every change. Going to mkdocs later is one config commit.
 
-So: **markdown now, mkdocs-material later.** Decide on the publish step after p10 and a humanizer pass.
+So: **markdown now, mkdocs-material later.** Decide on the publish step after the humanizer pass.
 
 ## Course versus workshop versus clinic
 

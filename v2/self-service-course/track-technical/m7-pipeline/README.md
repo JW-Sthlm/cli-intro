@@ -114,11 +114,40 @@ Be specific. Use real project names and partner names. If data is missing, say s
 
 ### Step 3: trigger it
 
-```powershell
-cd <wherever you keep your weekly updates>
-copilot
+```text
+PS C:\Users\you\vteam-updates> copilot
+✦ Copilot CLI · gpt-5 · ready
 > /agent weekly-update
+✦ Switched to agent: weekly-update
+
 > Generate my update for this week.
+
+  ✦ Determining week range: 2026-05-04 → 2026-05-10
+  ✦ PMX MCP: pulling open projects with status changes...
+  ✦ M365 MCP: pulling calendar + sent/received with external partners...
+  ✦ vteam-update-formatter skill activated
+
+  ## Week of 2026-05-04 → 2026-05-10
+
+  ### Done
+  - Shipped PMX MCP marketplace install path (PR #39 merged)
+  - Closed Phase 13 sandbox dead-end + decision-tree update
+  - Ran workshop with 12 partners (Stockholm)
+
+  ### Doing
+  - Self-service course foldable rollout (M2-M7) — by EOW
+  - Walk-A retest on fresh Dev Box — pending box provisioning
+
+  ### Asks / blockers
+  - Need a clean Dev Box image to validate Steps 0-1
+
+  ### Highlight
+  PMX MCP install dropped from 30 minutes of cloning to four marketplace
+  commands. Workshop session 2 ran clean for the first time.
+
+  Save as weekly-update-2026-05-10.md? [y/N]
+> y
+✦ Saved.
 ```
 
 It'll ask for confirmation before saving (good — you stay in the driver's seat). You review, edit, ship.
@@ -129,7 +158,8 @@ First time will not be perfect. The output will need editing. Note what you edit
 
 ---
 
-## When this stops being a project and becomes a tool
+<details>
+<summary><strong>🔧 "When this stops being a project and becomes a tool"</strong>: the maturity bar, click to expand</summary>
 
 🔧 You know your pipeline is mature when:
 
@@ -141,15 +171,20 @@ That's the moment to share it. Push the agent and skill to a Git repo, document 
 
 That asset is now a force multiplier across the team.
 
+</details>
+
 ---
 
-## ⚠️ Common pipeline traps
+<details>
+<summary><strong>⚠️ "Common pipeline traps"</strong>: what kills pipelines, click to expand</summary>
 
 - **Over-engineering before validating.** Build the simplest version first. Use it for real. Iterate.
 - **Hiding too much.** Don't make the pipeline opaque. The user should always see what data was pulled and have a chance to correct before output is saved.
 - **Hard-coding things that should be flexible.** "Last 7 days" → make it a parameter. "vTeam channel" → ask the user.
 - **Brittle MCP dependencies.** If PMX MCP is down, the pipeline should degrade gracefully ("couldn't reach PMX, here's what I have from M365 only").
 - **Forgetting data boundaries.** A pipeline that generates partner-facing content from internal data needs an explicit human-review gate.
+
+</details>
 
 ---
 
@@ -161,9 +196,10 @@ That's the bar.
 
 ---
 
-## Where to go from here
+<details>
+<summary><strong>🔧 "Where to go from here"</strong>: what to ship next, click to expand</summary>
 
-You've now seen all four layers (conversations, context, MCPs, agents/skills). Real depth comes from doing the work:
+🔧 You've now seen all four layers (conversations, context, MCPs, agents/skills). Real depth comes from doing the work:
 
 - **Ship 3 pipelines** for your real recurring tasks. Most of them will be small.
 - **Share at least one** with the vTeam. Force-multiplier moment.
@@ -171,6 +207,8 @@ You've now seen all four layers (conversations, context, MCPs, agents/skills). R
 - **Watch the source course** for advanced patterns: [GitHub Copilot CLI for Beginners](https://jamesmontemagno.github.io/copilot-cli-for-beginners/).
 
 When new MCP servers ship (and they will), the playbook is the same: install, sketch the pipeline, build the agent/skill, iterate.
+
+</details>
 
 ---
 

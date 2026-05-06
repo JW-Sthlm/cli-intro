@@ -20,7 +20,7 @@ If something fails, read on.
 ---
 
 <details>
-<summary><strong>📖 "I've never opened PowerShell before"</strong> — the absolute basics, click to expand</summary>
+<summary><strong>📖 "I've never opened PowerShell before"</strong>: the absolute basics, click to expand</summary>
 
 That's fine. PowerShell is just a text window where you type commands and press Enter. Like a more powerful Notepad that talks back.
 
@@ -45,7 +45,7 @@ That's fine. PowerShell is just a text window where you type commands and press 
 </details>
 
 <details>
-<summary><strong>📖 "What's a terminal? What's a shell?"</strong> — words that all mean roughly the same thing</summary>
+<summary><strong>📖 "What's a terminal? What's a shell?"</strong>: words that all mean roughly the same thing</summary>
 
 You'll hear these used interchangeably. They're not exactly the same, but for our purposes:
 
@@ -65,7 +65,7 @@ In this course we'll mostly say "PowerShell" or "the terminal." They mean the sa
 You need 5 tools and 2 logins.
 
 <details>
-<summary><strong>📖 What is each tool, and why do I need it?</strong> — click to expand</summary>
+<summary><strong>📖 What is each tool, and why do I need it?</strong>, click to expand</summary>
 
 **Tools (handled by Express path or installed manually):**
 
@@ -102,7 +102,7 @@ This trips up everyone the first time. Read this once, then refer back as needed
 If verify.ps1 says "Microsoft GitHub account not logged in", you're in this trap. Fix: re-run `gh auth login` and pick the EMU account.
 
 <details>
-<summary><strong>📖 "I don't know what my EMU account is"</strong> — how to find it</summary>
+<summary><strong>📖 "I don't know what my EMU account is"</strong>: how to find it</summary>
 
 Easiest way: go to [github.com](https://github.com) in a browser, click your profile picture top right.
 
@@ -150,7 +150,7 @@ The setup guide includes a 25-line PowerShell script ([`express-setup.ps1`](../.
 5. **Continue with the manual login steps below.**
 
 <details>
-<summary><strong>📖 "Is winget safe? Is it Microsoft-approved?"</strong> — short answer: yes</summary>
+<summary><strong>📖 "Is winget safe? Is it Microsoft-approved?"</strong>: short answer: yes</summary>
 
 **Winget is the official Windows Package Manager from Microsoft.** It ships with Windows 11 by default. Microsoft signs and maintains it.
 
@@ -181,7 +181,7 @@ winget show OpenJS.NodeJS.LTS
 </details>
 
 <details>
-<summary><strong>⚠️ "PowerShell says script execution is disabled"</strong> — fix for IT-managed laptops</summary>
+<summary><strong>⚠️ "PowerShell says script execution is disabled"</strong>: fix for IT-managed laptops</summary>
 
 If you see something like "running scripts is disabled on this system", run this once:
 
@@ -198,7 +198,7 @@ If your IT has set the policy at machine scope and locked it, ask in the Teams t
 ---
 
 <details>
-<summary><strong>🔧 The Manual path</strong> — for people who want to run each install themselves</summary>
+<summary><strong>🔧 The Manual path</strong>: for people who want to run each install themselves</summary>
 
 If you prefer to know exactly what each step does, or your IT blocks running PowerShell scripts, follow [Step 1 Option B in the hosted setup guide](https://cli-intro-share.pages.dev/setup.html#step-1). Each install is one `winget install` line. ~10 minutes.
 
@@ -234,7 +234,7 @@ After install, in this order:
 8. **Run `.\v2\pre-work\verify.ps1`.** All 8 checks should pass.
 
 <details>
-<summary><strong>🔧 What is a "device-code flow"?</strong> — for the curious</summary>
+<summary><strong>🔧 What is a "device-code flow"?</strong>: for the curious</summary>
 
 When a CLI tool needs to authenticate without storing your password, it uses device-code flow:
 
@@ -252,7 +252,7 @@ This is the same pattern Netflix uses to log into your TV. Safe, standard, and m
 ---
 
 <details>
-<summary><strong>📖 "What if I just want to try it without installing anything?"</strong> — Codespaces shortcut</summary>
+<summary><strong>📖 "What if I just want to try it without installing anything?"</strong>: Codespaces shortcut</summary>
 
 **GitHub Codespaces** is the answer.
 
@@ -272,7 +272,7 @@ So: try it in Codespaces if you want a 5-min taste, but install locally for real
 ---
 
 <details>
-<summary><strong>⚠️ Troubleshooting cheat sheet</strong> — click if something broke</summary>
+<summary><strong>⚠️ Troubleshooting cheat sheet</strong>: click if something broke</summary>
 
 | Symptom | Likely cause | Fix |
 |---------|-------------|-----|

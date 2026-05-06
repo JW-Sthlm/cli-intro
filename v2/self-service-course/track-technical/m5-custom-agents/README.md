@@ -32,9 +32,10 @@ The agent already knows the rules. You just give it the question.
 
 ---
 
-## What an agent is, technically
+<details>
+<summary><strong>🔧 "What an agent is, technically"</strong>: anatomy of an agent file, click to expand</summary>
 
-An agent is a Markdown file with a name and a system prompt. That's the whole abstraction.
+🔧 An agent is a Markdown file with a name and a system prompt. That's the whole abstraction.
 
 Agents live at `~/.copilot/agents/<agent-name>.md` (Windows: `C:\Users\<you>\.copilot\agents\`). The CLI scans this folder on startup and registers anything it finds.
 
@@ -64,6 +65,8 @@ Format:
 
 Save that file as `~/.copilot/agents/partner-briefing.md`. Restart copilot. Now `partner-briefing` is a real agent.
 
+</details>
+
 ---
 
 ## 🚀 Hands-on: build the partner-briefing agent
@@ -92,17 +95,39 @@ copilot
 
 Inside copilot:
 
-```
-> /agents             # confirm partner-briefing is in the list
+```text
+> /agents
+
+Available agents:
+  default            (built-in)
+  partner-briefing   ~/.copilot/agents/partner-briefing.md
+
 > /agent partner-briefing
+✦ Switched to agent: partner-briefing
+
 > Brief me on Contoso for tomorrow's call. They're a 50-person Power Platform consultancy in Stockholm wanting to add an AI practice.
+
+  Background
+  • 50-person consultancy, Stockholm-based, strong Power Platform delivery
+  • Customer base skews mid-market enterprise in Nordic financial services
+
+  Their angle
+  • AI practice as a margin play, not a cost center
+  • Already building on Copilot Studio; want the next layer up
+
+  The conversation
+  • Surface Foundry agents + AI Discovery Cards as the on-ramp
+
+  The ask
+  • Who on their side owns the AI P&L next year?
 ```
 
 The agent will reply in your defined format. Every time. Until you change the agent.
 
 ---
 
-## When to build an agent
+<details>
+<summary><strong>🔧 "When to build an agent"</strong>: decision rules, click to expand</summary>
 
 🔧 Build an agent when:
 
@@ -116,9 +141,12 @@ The agent will reply in your defined format. Every time. Until you change the ag
 - The task is genuinely creative (let the model be free)
 - You're still figuring out what good output looks like (build the prompt first, agent-ify later)
 
+</details>
+
 ---
 
-## Common partner-work agents
+<details>
+<summary><strong>📖 "Common partner-work agents"</strong>: what's worth building, click to expand</summary>
 
 📖 / 🔧 Real candidates from our team:
 
@@ -133,15 +161,20 @@ The agent will reply in your defined format. Every time. Until you change the ag
 
 You'll see overlap with [`v2/extras/copilot-overview/`](../../../extras/copilot-overview/README.md) and other reusable assets the team is building.
 
+</details>
+
 ---
 
-## 🚀 Bonus: per-project agents
+<details>
+<summary><strong>🔧 "Bonus: per-project agents"</strong>: agents scoped to a folder, click to expand</summary>
 
 🔧 Agents can also live in a project folder, at `<project>/.copilot/agents/`. Useful when an agent only makes sense in the context of one project.
 
 Example: in your `partner-briefings/` folder, create `.copilot/agents/contoso-specialist.md` with Contoso-specific knowledge. It's only available when you're in that folder.
 
 User-level agents apply everywhere. Project-level agents apply only when you `cd` into the project. Both can coexist.
+
+</details>
 
 ---
 

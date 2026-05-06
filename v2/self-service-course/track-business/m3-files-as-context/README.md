@@ -19,9 +19,19 @@ When you run `copilot` from a folder, that folder becomes its working directory.
 
 Example:
 
-```
+```text
 PS C:\Users\you\downloads> copilot
+✦ Copilot CLI · gpt-5 · ready
 > Read partner-rfp.pdf and summarize the customer's top 3 asks for an exec audience.
+
+  Reading partner-rfp.pdf (28 pages)...
+
+  Top 3 asks:
+  • Migrate 200 SQL Server instances to Azure SQL by Q3
+  • Establish a 24/7 managed service tier for the production estate
+  • Co-fund a $50K POC against the Fabric platform
+
+> _
 ```
 
 The CLI sees `partner-rfp.pdf` is in its working dir, reads it, summarizes.
@@ -98,11 +108,12 @@ If in doubt, ask the CLI to read a redacted version.
 
 ---
 
-## Multi-file projects
+<details>
+<summary><strong>🔧 "Multi-file projects"</strong>: point at a whole folder, click to expand</summary>
 
 🔧 You can also point at a whole folder. Copilot will scan its file tree.
 
-```
+```text
 > What does this folder contain? Categorize the files and tell me what kind of project this is.
 ```
 
@@ -110,9 +121,14 @@ Useful for partner asset libraries, repo dumps, document archives.
 
 ⚠️ Big folders eat context budget fast. If your folder has 1000+ files, narrow it: `What's in the /docs subfolder?`
 
+</details>
+
 ---
 
-## 📖 Outputs you can ask for
+<details>
+<summary><strong>📖 "Outputs you can ask for"</strong>: quick reference, click to expand</summary>
+
+📖
 
 | You want... | Ask for... |
 |-------------|------------|
@@ -124,15 +140,20 @@ Useful for partner asset libraries, repo dumps, document archives.
 
 The CLI cares about the format you ask for. Be specific.
 
+</details>
+
 ---
 
-## What this is NOT good at
+<details>
+<summary><strong>⚠️ "What this is NOT good at"</strong>: guardrails, click to expand</summary>
 
 ⚠️ The CLI is great at extracting and structuring. It's mediocre at:
 
 - **Math.** It will quote numbers from the doc, but don't trust it to add things up. Verify.
 - **Specifics it can't see.** It won't know "what did this partner do last quarter" unless that info is in the doc you gave it.
 - **Knowing when it's wrong.** It will sound confident even when it's hallucinating. Spot-check.
+
+</details>
 
 ---
 

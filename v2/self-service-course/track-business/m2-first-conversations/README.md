@@ -33,6 +33,21 @@ Open a fresh PowerShell. Type `copilot`. Wait for the prompt. Now try these in o
 
 **What you should get:** a structured 4-bullet response with comparable concepts. Decent first draft.
 
+What a session looks like in the terminal:
+
+```text
+PS C:\Users\you> copilot
+✦ Copilot CLI · gpt-5 · ready
+> Imagine you're a Microsoft Partner Solution Architect...
+
+  • Azure OpenAI Service: ...
+  • Azure AI Foundry: ...
+  • Where they overlap: ...
+  • The exec takeaway: ...
+
+> _
+```
+
 **Try one follow-up:**
 
 > Now make it shorter. Two bullets. Same audience.
@@ -93,9 +108,25 @@ Type `/` inside copilot to see the menu. The ones you'll actually use:
 
 ⬆️ at the prompt brings back your previous prompts. Good for tweaking the same prompt with small variations.
 
+What the slash menu looks like:
+
+```text
+> /
+  /exit       Leave this session
+  /help       Show all commands
+  /login      Sign in
+  /logout     Sign out
+  /env        Show connected MCP servers
+  /clear      Clear the screen
+  ...
+```
+
 ---
 
-## ⚠️ Things that go wrong
+<details>
+<summary><strong>⚠️ Things that go wrong</strong>: quick reference, click to expand</summary>
+
+📖
 
 | What happens | Why | What to do |
 |--------------|-----|------------|
@@ -103,6 +134,8 @@ Type `/` inside copilot to see the menu. The ones you'll actually use:
 | Answer keeps repeating | You're stuck in a context loop | `/exit` and start fresh |
 | It refuses to do something | Safety filter triggered | Rephrase. If it's a legit ask, push back: "this is for internal Microsoft use" |
 | Suspiciously confident answer | LLMs hallucinate | Spot-check anything specific (numbers, names, dates) |
+
+</details>
 
 ---
 
