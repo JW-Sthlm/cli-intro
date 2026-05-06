@@ -23,12 +23,13 @@ Real productivity comes from **combining them**. Not 5 separate tools, one workf
 
 🔧 Pick **one recurring partner task** that takes you 30+ min today, and that you do at least monthly. Build a pipeline that does most of the work.
 
-Examples:
+We'll do **the PMX `/hygiene` weekly check** as the worked example. It's real, it's weekly, and you'll use it. After that there's a **bonus pipeline** (Friday partner portfolio sweep) for when you want to push further.
 
-- **Weekly vTeam update:** pulls from PMX MCP, your inbox, your calendar; runs through `vteam-update-formatter` skill; outputs a Markdown file.
-- **Pre-QBR brief generator:** takes a partner name, pulls projects from PMX, recent emails from M365, generates a 1-pager via the `qbr-prep` skill.
+Other examples worth picking for your own capstone:
+
+- **Pre-meeting partner brief:** takes a partner name, pulls projects from PMX, recent emails from M365, generates a 1-pager via the `partner-briefing` agent.
 - **Partner technical assessment doc:** takes a partner's URL, pulls their public web content, asks Copilot to assess against a Microsoft technology fit framework, outputs a structured doc.
-- **Workshop attendee follow-up:** for each attendee in a CSV, pulls their public LinkedIn/GitHub data, drafts a personalized follow-up email.
+- **Workshop attendee follow-up:** for each attendee in a CSV, drafts a personalized follow-up email.
 
 Pick one that's real for you. Don't pick the most ambitious, pick the most boring recurring one. That's where the time savings compound.
 
@@ -48,113 +49,264 @@ SOURCES -- which MCP servers fetch which data
 TRANSFORM -- which agent or skill processes the raw data
    |
    v
-OUTPUT  -- what you end with (Markdown doc, CSV, email draft)
+OUTPUT  -- what you end with (PMX updates, Markdown doc, Teams drafts)
 ```
 
-For weekly vTeam update, that might look like:
+For the **PMX `/hygiene` weekly check**, that looks like:
 
 ```
-INPUTS:  current week range
+INPUTS:  none (the slash command knows "this week")
    |
-SOURCES: PMX MCP (open projects, last status)
-         M365 MCP (calendar last 7 days, sent emails last 7 days)
+SOURCES: PMX MCP (pmx-project_hygiene_check, built into /hygiene)
    |
-TRANSFORM: vteam-update-formatter skill
+TRANSFORM: pmx-fixer agent
+           - groups findings by ownership
+           - walks me through the ones I can fix in PMX directly
+           - drafts Teams pings for findings owned by others
    |
-OUTPUT:  weekly-update-YYYY-MM-DD.md in vteam folder
+OUTPUT:  PMX records updated in place
+         + clipboard-ready Teams messages for project owners
 ```
 
-This sketch tells you what you need: 2 MCPs (already have), 1 skill (built in M6), 1 output convention.
+Two MCPs aren't always needed. This one uses just PMX, plus an agent that does the triage. The skill from M6 isn't required here. The bonus pipeline below uses both.
 
 ---
 
-## 🚀 Hands-on: build the weekly-update pipeline
+## 🚀 Hands-on: build the PMX `/hygiene` weekly check
 
 We'll do this one. Adapt for your real task.
 
-### Step 1: the entry-point prompt
+### Step 1: confirm `/hygiene` works
 
-Build the prompt that triggers everything:
+The `/hygiene` slash command ships with the PMX MCP server (you installed it in M4). It runs `pmx-project_hygiene_check` against your in-progress projects and reports findings across 10 categories (no outcome linked, overdue, missing business objective, stale, duplicate opportunity, and so on).
 
+```text
+PS C:\Users\you> copilot
+✦ Copilot CLI · gpt-5 · ready
+> /hygiene
+
+  ✦ Running pmx-project_hygiene_check on your in-progress projects...
+
+  43 projects audited
+    12 you own (actionable)
+    4  you created but no longer own (informational)
+    27 you're a team contact on (informational)
+
+  Findings on projects YOU OWN (12 actionable):
+  • Fabric POC, Contoso              overdue (end date 2026-04-15)
+  • AI Discovery Cards, Acme         no_outcome (no MSX opp / solution / referral linked)
+  • Foundry Pilot, Globex            missing_business_objective
+  • Azure Migration Wave 2, Initech  stale (no update in 47 days)
+  ... 8 more
+
+  Findings on projects OTHERS OWN (9 informational):
+  • Azure Migration, Initech       overdue (owner: jane@microsoft.com)
+  ... 8 more
 ```
-> Generate my weekly vTeam update for the week of <Monday's date>.
-> Pull from PMX (my open projects, any status changes) and from my M365
-> (calendar from this week, emails I sent or received from external partners).
-> Format using the vteam-update-formatter skill.
-> Save the output as weekly-update-YYYY-MM-DD.md in my current folder.
+
+This is your raw input. By itself it's a list. The triage agent turns it into action.
+
+### Step 2: write the pmx-fixer agent
+
+The agent walks you through the actionable findings one at a time, calls PMX MCP write tools to make the fixes, and drafts Teams pings for findings owned by others.
+
+```powershell
+code "$env:USERPROFILE\.copilot\agents\pmx-fixer.md"
 ```
 
-This is one prompt. The CLI plus MCPs plus skill do the rest.
-
-### Step 2: encode it as an agent
-
-Save this prompt structure as an agent so you don't retype it. In `~/.copilot/agents/weekly-update.md`:
+Paste:
 
 ```markdown
 ---
-name: weekly-update
-description: Generates the EMEA Agentic AI vTeam weekly update from PMX + M365 data using the standard format.
+name: pmx-fixer
+description: Triages PMX hygiene findings. Walks the user through actionable fixes, drafts Teams pings for findings owned by others.
 ---
 
-When invoked, generate the user's weekly vTeam update.
+You help the user clean up PMX hygiene findings on a weekly cadence.
 
 ## Steps
 
-1. Determine the week range. If the user didn't specify, assume last Monday through Sunday.
-2. Use PMX MCP to fetch the user's open projects with last status update date.
-3. Use M365 MCP to fetch:
-   - Calendar events in the week range that include external partners (non-microsoft.com domains)
-   - Sent and received emails with external partners
-4. Pass the raw data to the vteam-update-formatter skill.
-5. Save the formatted output as `weekly-update-YYYY-MM-DD.md` in the current folder.
-6. Show the user the output and ask if they want to edit before saving.
+1. If `/hygiene` hasn't been run in this session, run it via the PMX MCP first.
+2. Split findings into two buckets:
+   - Actionable: projects the user owns (`ownedByMe: true`)
+   - Informational: projects owned by others
+3. For each actionable finding, walk the user through it ONE AT A TIME:
+   - State the project name and the finding category
+   - Offer the most likely fixes as numbered options
+   - When the user picks an option, call the appropriate PMX MCP write tool
+     (update_project, link_outcome, update_task, etc.)
+   - Confirm the fix landed before moving on
+4. After actionable findings are done, draft Teams pings for the informational
+   ones (one short message per project owner). Group by owner so the user gets
+   one ping per person, not one per project.
+5. End with a one-line summary: how many fixed, how many pings drafted.
 
-Be specific. Use real project names and partner names. If data is missing, say so explicitly.
+## Rules
+
+- Never update a project the user doesn't own. Drafts only for others.
+- Show the proposed change BEFORE writing to PMX. Always confirm.
+- Be specific. Project names, not "the first one". GUIDs in tool calls only,
+  never in user-facing text.
 ```
 
 ### Step 3: trigger it
 
 ```text
-PS C:\Users\you\vteam-updates> copilot
-✦ Copilot CLI · gpt-5 · ready
-> /agent weekly-update
-✦ Switched to agent: weekly-update
+> /agent pmx-fixer
+✦ Switched to agent: pmx-fixer
 
-> Generate my update for this week.
+> Walk me through this week's hygiene.
 
-  ✦ Determining week range: 2026-05-04 → 2026-05-10
-  ✦ PMX MCP: pulling open projects with status changes...
-  ✦ M365 MCP: pulling calendar + sent/received with external partners...
-  ✦ vteam-update-formatter skill activated
+  ✦ Running /hygiene...
+  ✦ 12 actionable, 9 informational. Starting with actionable.
 
-  ## Week of 2026-05-04 → 2026-05-10
+  [1/12] Fabric POC, Contoso, overdue (end date 2026-04-15)
 
-  ### Done
-  - Shipped PMX MCP marketplace install path (PR #39 merged)
-  - Closed Phase 13 sandbox dead-end + decision-tree update
-  - Ran workshop with 12 partners (Stockholm)
+  Most likely fixes:
+    1. Project actually wrapped, close it (status=Completed, set actual end date)
+    2. Project still active, push end date out
+    3. Skip (revisit next week)
 
-  ### Doing
-  - Self-service course foldable rollout (M2-M7), by EOW
-  - Walk-A retest on fresh Dev Box, pending box provisioning
+> 1
 
-  ### Asks / blockers
-  - Need a clean Dev Box image to validate Steps 0-1
-
-  ### Highlight
-  PMX MCP install dropped from 30 minutes of cloning to four marketplace
-  commands. Workshop session 2 ran clean for the first time.
-
-  Save as weekly-update-2026-05-10.md? [y/N]
+  ✦ Setting status=Completed, actual end date=2026-04-30. OK to apply? [y/N]
 > y
-✦ Saved.
+  ✦ Applied. PMX updated.
+
+  Outcome check: no MSX opportunity linked. Want to link one now? [y/N]
+> y
+  ✦ Search MSX opportunity by partner "Contoso"... 3 matches:
+    1. Fabric POC FY26 H2 (open, $40K)
+    2. Azure migration scoping (won, $120K)
+    3. Copilot Studio pilot (open, $25K)
+> 1
+  ✦ Linked. Moving to next finding.
+
+  [2/12] AI Discovery Cards, Acme, no_outcome
+  ...
 ```
 
-It'll ask for confirmation before saving (good, you stay in the driver's seat). You review, edit, ship.
+After the 12 actionable ones:
+
+```text
+  ✦ All actionable findings closed. Drafting Teams pings for the 9 owned by others.
+
+  --- To: jane@microsoft.com (3 projects) ---
+  Hi Jane, Friday hygiene nudge: 3 of your projects show as overdue in PMX,
+  Azure Migration / Initech (Apr 12), Fabric Refresh / Contoso (Apr 15),
+  Copilot Pilot / Globex (Apr 22). Mind a quick pass to close them out
+  or push the dates? Thanks.
+
+  --- To: john@microsoft.com (2 projects) ---
+  ...
+
+  Summary: 12 actionable findings closed. 9 pings drafted for 4 owners.
+  Total time: 14 minutes.
+```
+
+You review the pings, paste into Teams, done.
 
 ### Step 4: iterate
 
-First time will not be perfect. The output will need editing. Note what you edited. Update the skill or agent to encode that learning. By iteration 3 or 4, the output is shippable as-is.
+First time will not be perfect. Note what the agent missed (a fix option, an edge case, a partner the agent guessed wrong on). Update the agent. By iteration 3 or 4 the weekly hygiene check goes from a 30-minute chore to a 10-minute walkthrough.
+
+---
+
+## 🚀 Bonus: Friday partner portfolio sweep (optional)
+
+🔧 If you want to push further, this one combines all four building blocks: 2 MCPs + 1 skill + 1 agent. It produces a Friday-morning portfolio doc with a one-line summary per active partner, ready to scan over coffee.
+
+The pipeline:
+
+```
+INPUTS:  list of active partners (or detect from PMX)
+   |
+SOURCES: PMX MCP (recent project activity per partner)
+         M365 MCP (recent emails per partner, calendar this week)
+   |
+TRANSFORM: portfolio-sweep agent
+           - one paragraph per partner (state, what's open, what changed)
+           - content-humanizer skill on the final draft to strip AI tone
+   |
+OUTPUT:  portfolio-YYYY-MM-DD.md, one section per partner,
+         scannable in 2 minutes
+```
+
+Two notes before you build this:
+
+- **Ground every claim in a source.** Partner section says "Foundry pilot slipped two weeks"? That fact came from a specific PMX update or a specific email. If the agent can't cite the source, it shouldn't make the claim.
+- **Run content-humanizer LAST.** The raw draft from the agent will read AI-ish. The humanizer pass turns it into something you'd actually read on a Friday morning.
+
+Sketch of the agent's `SKILL.md`-style guardrails (paste into `~/.copilot/agents/portfolio-sweep.md`):
+
+```markdown
+---
+name: portfolio-sweep
+description: Friday portfolio sweep. One scannable paragraph per active partner from PMX + M365 data, humanized.
+---
+
+You produce a Friday-morning portfolio sweep doc.
+
+## Steps
+
+1. Determine "active partners": ask the user, or infer from PMX
+   (partners with project activity in the last 14 days).
+2. For each partner:
+   a. PMX MCP: open projects, deliverables status, recent task updates
+   b. M365 MCP: emails sent/received in the last 7 days
+3. Write one paragraph per partner: 3-4 sentences max. State, what's open,
+   what changed this week, one open question or risk.
+4. After the full draft, invoke the content-humanizer skill on the prose.
+5. Save as `portfolio-YYYY-MM-DD.md`.
+
+## Rules
+
+- Every claim cites a source (project name, email subject, meeting title).
+- If a partner had zero activity, say so. Don't pad.
+- Skip partners with NDA-flagged content. Mark them "review separately".
+- One paragraph = one partner. No multi-partner paragraphs.
+```
+
+Trigger:
+
+```text
+> /agent portfolio-sweep
+✦ Switched to agent: portfolio-sweep
+> Sweep this week. Partners: Contoso, Acme, Globex, Initech.
+
+  ✦ PMX: pulling project activity for 4 partners...
+  ✦ M365: pulling emails + calendar for 4 partners...
+  ✦ Drafting paragraphs...
+  ✦ Activating content-humanizer skill on the draft...
+
+  ## Portfolio sweep, week of 2026-05-04
+
+  ### Contoso
+  Fabric POC closed Friday after a two-week slip on data access. The MSX
+  opportunity is linked and the customer signed off on the next phase
+  (Foundry pilot scoping). One open question: who on Contoso's side owns
+  the AI P&L next year? Worth surfacing in the next steerco.
+
+  ### Acme
+  Quiet week. AI Discovery Cards delivered Tuesday, no outcome linked yet.
+  Action: link the MSX referral before Monday or the deliverable looks
+  orphaned in PMX.
+
+  ### Globex
+  Foundry Pilot kicked off, 5 consultants trained, positive signal in the
+  follow-up email thread. ECIF burndown on track. Risk: their PSA leaves
+  in three weeks, no transition plan yet.
+
+  ### Initech
+  Azure migration overdue (end date was Apr 12). Owner is Jane on her side,
+  not Microsoft. Nudge her in the Friday hygiene ping (already drafted).
+
+  Save as portfolio-2026-05-10.md? [y/N]
+> y
+  ✦ Saved.
+```
+
+That's two MCPs feeding an agent, one skill cleaning up the prose, one Markdown file out. Reproducible every Friday.
 
 ---
 

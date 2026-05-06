@@ -19,7 +19,7 @@ It's confusing because they both customize Copilot. The simple distinction:
 📖 **Analogy:** an agent is a person you're talking to (with a personality and rules). A skill is a tool that person can pull out of their toolbox when needed.
 
 A **partner-briefing agent** sets the conversation tone.
-A **qbr-prep skill** is a procedure with templates, references, and scripts that the agent (or any session) can invoke.
+A **content-humanizer skill** is a procedure with steps and references the agent (or any session) can invoke when the output needs cleaning up.
 
 ---
 
@@ -36,7 +36,7 @@ my-skill/
 
 The `SKILL.md` has frontmatter that tells Copilot when to fire the skill, and prose telling the skill what to do.
 
-Minimal `SKILL.md`:
+Here's a tiny illustrative skill (`qbr-prep`) showing the minimum structure:
 
 ```markdown
 ---
@@ -62,58 +62,55 @@ You help prepare partner Quarterly Business Reviews.
 Always be specific. Reference real project names. If data is missing, say so.
 ```
 
-That's a working skill. Drop the folder in `~/.copilot/skills/`. The CLI auto-loads it.
+That's a working skill. Drop the folder in `~/.copilot/skills/`. The CLI auto-loads it. Real shipped skills are richer, often with `references/` (reference docs) and `scripts/` (helper scripts) folders alongside `SKILL.md`. Let's install a real one next.
 
 ---
 
-## 🚀 Hands-on: install an existing skill
+## 🚀 Hands-on: install a real skill (`content-humanizer`)
 
-🔧 The team is building reusable skills you can install. Check the [`v2/extras/copilot-overview/`](../../../extras/copilot-overview/README.md) plugin and the wider org's skill library.
+🔧 We'll install the `content-humanizer` skill. It's a real, shipped skill that strips AI tells out of drafts and rebuilds the rhythm. Useful for partner emails, LinkedIn posts, vTeam updates, and (yes) cleaning up Copilot's own output.
 
-Generic install pattern:
+Skills are Git repos. Clone the source bundle into your skills folder:
 
 ```powershell
-# Skills are git repos. Clone into your skills folder:
 cd "$env:USERPROFILE\.copilot\skills"
-git clone https://github.com/<org>/<skill-name>.git
+git clone https://github.com/olivomarco/vbd-copilot.git
 ```
 
-Then in Copilot CLI:
+The `vbd-copilot` repo bundles `content-humanizer` along with a few other skills. Once cloned, restart Copilot CLI so it picks up the new skill:
 
 ```text
 > /skills
 
 Loaded skills:
-  qbr-prep              ~/.copilot/skills/qbr-prep/SKILL.md
-  vteam-update-formatter ~/.copilot/skills/vteam-update-formatter/SKILL.md
+  content-humanizer       ~/.copilot/skills/vbd-copilot/skills/content-humanizer/SKILL.md
+  vteam-update-formatter  ~/.copilot/skills/vteam-update-formatter/SKILL.md
 ```
 
-To trigger it, just say what you want. The description tells Copilot when to fire:
+To trigger it, just say what you want. The skill's description tells Copilot when to fire:
 
 ```text
-> Prep my QBR for Contoso
+> This draft sounds like AI. Humanize it:
+> "It is crucial to leverage robust, comprehensive solutions to navigate the
+> competitive partner landscape and unlock synergistic value."
 
-  ✦ Activating skill: qbr-prep
-  ✦ Pulling Contoso projects from PMX...
-  ✦ Pulling last 90 days of email with @contoso.com...
+  ✦ Activating skill: content-humanizer
+  ✦ Auditing for AI tells...
 
-  Last 90 days
-  • 3 wins: Foundry pilot kicked off, AI Discovery Cards delivered, ECIF approved
-  • 1 challenge: Fabric POC slipped two weeks on data access
+  AI tells found:
+  • "crucial" / "robust" / "comprehensive": filler words, no signal
+  • "leverage": replace with "use"
+  • "navigate the landscape": AI metaphor
+  • "unlock synergistic value": empty buzzword stack
 
-  Open projects
-  • Foundry pilot, In Progress, due Q3
-  • Fabric POC  , In Progress, last update 12 days ago
+  Rewritten:
+  "Most partners know what good looks like. They just keep buying tools that
+  sound impressive instead of using the data they already have."
 
-  Next quarter
-  • Align on Foundry agent build-out scope
-  • Decide on managed-service tier vs self-serve
-
-  Open question to surface
-  • Who on Contoso's side will own the AI P&L next year?
+  Want a sharper pass with more personality?
 ```
 
-Copilot recognizes "QBR" + "prep" matches the skill description, and runs the skill.
+Copilot recognized "humanize" + "AI" matches the skill description, and ran it. No `/skill` command needed. The trigger phrasing is part of the skill itself.
 
 ---
 
@@ -248,8 +245,8 @@ Now anyone on the team can `git clone` it into their own `~/.copilot/skills/`.
 
 ## ✅ You're ready for M7 if
 
-- You've installed at least one skill from the vTeam library and used it
-- You've built one tiny skill of your own and triggered it successfully
+- You've installed `content-humanizer` (or another real skill) and triggered it successfully
+- You've built one tiny skill of your own (`vteam-update-formatter` or your own) and triggered it
 - You understand the agent/skill/nothing decision tree
 
 ---

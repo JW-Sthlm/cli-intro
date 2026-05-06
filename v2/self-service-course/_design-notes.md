@@ -43,9 +43,9 @@ The course is now placeholder-free for the in-CLI flow. Remaining open items are
 | ~~p10~~ | ~~M1 (Setup), M4 (MCP)~~ | ✅ Resolved 2026-05-05 (Walk A): pick option 2 "Copilot CLI" at the install-target prompt. M4 now spells this out. |
 | course-validate-source-current | All modules | Re-check source course chapters didn't change before each ship. |
 | ~~course-screenshot-pass~~ | ~~All modules~~ | ✅ Replaced with HTML-style terminal mockups in fenced code blocks (2026-05-06). |
-| ~~course-humanizer-pass~~ | ~~All modules~~ | ✅ Done 2026-05-06. Em dashes swept across all 8 module READMEs + course README + design notes. Other AI tells (leverage/robust/crucial/furthermore) absent except in deliberate teaching examples (M2 rewrite exercise, M5 banned-word list). |
-| m6-skill-example | M6 | Pick a real shipped skill for the worked example (candidates: `content-humanizer`, `microsoft-foundry`, or a `vteam-update-formatter` we actually ship). |
-| m7-pipeline-example | M7 | Pick a real recurring partner task for the capstone. Strongest candidate: PMX `/hygiene` weekly check (real MCP tool, real cadence). |
+| ~~course-humanizer-pass~~ | ~~All modules~~ | ✅ Done 2026-05-06. Em dashes swept across all 8 module READMEs + course README + design notes. Other AI tells (leverage/robust/crucial/furthermore) absent except in deliberate teaching examples (M2 rewrite exercise, M5 banned-word list, M6 humanizer example input). |
+| ~~m6-skill-example~~ | ~~M6~~ | ✅ Done 2026-05-06. Minimal `qbr-prep` SKILL.md kept as illustrative skeleton. Hands-on install swapped to real `content-humanizer` skill (sourced from olivomarco/vbd-copilot). Real install path + real audit/rewrite trigger example. |
+| ~~m7-pipeline-example~~ | ~~M7~~ | ✅ Done 2026-05-06. Primary capstone swapped to PMX `/hygiene` weekly check (real MCP tool, real cadence). Worked example: `/hygiene` → `pmx-fixer` agent walks through actionable findings + drafts Teams pings for others' projects. Friday partner portfolio sweep added as bonus optional pipeline (2 MCPs + content-humanizer skill + agent). |
 
 ## When to revise
 
