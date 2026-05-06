@@ -1,7 +1,7 @@
 # Setup Guide — Copilot CLI Intro Session
 
 > **The canonical setup guide is the hosted page:**
-> 👉 **https://cli-intro-share.pages.dev/setup.html**
+> 👉 **https://jw-sthlm.github.io/cli-intro-share/setup.html**
 >
 > This markdown file is now a thin pointer. The hosted version has foldouts, command blocks with shell labels, copy buttons, and an anchored ToC. It is the single source of truth and the only version that gets iterated against workshop walkthroughs.
 
@@ -11,12 +11,12 @@
 
 | Step | What | Link |
 |------|------|------|
-| 0 | Get your GitHub account ready (EMU vs personal) | [Step 0](https://cli-intro-share.pages.dev/setup.html#step-0) |
-| 1 | Install command-line tools (Express or Manual) | [Step 1](https://cli-intro-share.pages.dev/setup.html#step-1) |
-| 2 | Log in to all your accounts (gh personal, gh EMU, Copilot CLI, Azure CLI) | [Step 2](https://cli-intro-share.pages.dev/setup.html#step-2) |
-| 3 | Connect your tools (M365 + PMX MCP install) | [Step 3](https://cli-intro-share.pages.dev/setup.html#step-3) |
-| 4 | Verify everything | [Step 4](https://cli-intro-share.pages.dev/setup.html#verify) |
-| - | Troubleshooting | [Common issues](https://cli-intro-share.pages.dev/setup.html#troubleshooting) |
+| 0 | Get your GitHub account ready (EMU vs personal) | [Step 0](https://jw-sthlm.github.io/cli-intro-share/setup.html#step-0) |
+| 1 | Install command-line tools (Express or Manual) | [Step 1](https://jw-sthlm.github.io/cli-intro-share/setup.html#step-1) |
+| 2 | Log in to all your accounts (gh personal, gh EMU, Copilot CLI, Azure CLI) | [Step 2](https://jw-sthlm.github.io/cli-intro-share/setup.html#step-2) |
+| 3 | Connect your tools (M365 + PMX MCP install) | [Step 3](https://jw-sthlm.github.io/cli-intro-share/setup.html#step-3) |
+| 4 | Verify everything | [Step 4](https://jw-sthlm.github.io/cli-intro-share/setup.html#verify) |
+| - | Troubleshooting | [Common issues](https://jw-sthlm.github.io/cli-intro-share/setup.html#troubleshooting) |
 
 ---
 
@@ -42,3 +42,7 @@ Open the hosted page in your browser and use **Save as PDF** (Ctrl+P → "Save a
 ## For internal facilitators
 
 If you maintain a doc that links back here, you can keep the link to `setup-guide.md` (this file) for stability, or update it to point straight at the hosted page or a specific anchor. Both work.
+
+## Self-service course
+
+The full M0–M7 partner-flavored course is published at **https://jw-sthlm.github.io/cli-intro-share/course/README.md** (alongside the setup page). Two tracks (Business M0–M4, Technical M5–M7) for partners who want async learning instead of (or after) the live workshop.
