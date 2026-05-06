@@ -13,7 +13,7 @@ If the dev box is freshly redeployed, skip this page. You're already clean.
 ## TLDR
 
 ```powershell
-cd C:\projects\cli-intro\v2\_validation\clean-test
+cd ~\projects\cli-intro\v2\_validation\clean-test
 .\reset-devbox.ps1 -WhatIf      # preview, change nothing
 .\reset-devbox.ps1              # Soft reset (~30 sec)
 ```
@@ -30,12 +30,14 @@ If you've already cloned `cli-intro` on this box, skip ahead.
 # Sign in to GitHub if you haven't yet
 gh auth login
 
-# Clone the repo somewhere predictable
-git clone https://github.com/JW-Sthlm/cli-intro.git C:\projects\cli-intro
+# Clone somewhere outside $HOME root so the Soft reset can't touch it
+git clone https://github.com/JW-Sthlm/cli-intro.git ~\projects\cli-intro
 
 # Move into the clean-test folder
-cd C:\projects\cli-intro\v2\_validation\clean-test
+cd ~\projects\cli-intro\v2\_validation\clean-test
 ```
+
+> Why `~\projects\cli-intro` and not `~\cli-intro`? Soft mode removes `$HOME\cli-intro` directly so a fresh test walk doesn't see leftover course content. A subfolder like `~\projects\` is preserved on purpose so this script and runbook stay accessible across walks.
 
 You should now see `reset-devbox.ps1`, `test-runbook.md`, and this file.
 
@@ -111,7 +113,7 @@ The script ends with two sections worth reading:
 | `gh auth status: still authenticated` | Run `gh auth logout --hostname github.com` manually, then re-run the verifier section. |
 | `az account show: still authenticated` | Run `az logout` manually. |
 | Tools still on PATH after Hard reset | Expected. winget uninstall leaves leftovers. If you need true pristine, redeploy the Dev Box. |
-| `[WARN]` on `cli-intro repo still present` | Soft removes `$HOME\cli-intro` only. If you cloned to `C:\projects\cli-intro` (recommended), that location is preserved on purpose so this script and runbook stay accessible. |
+| `[WARN]` on `cli-intro repo still present` | Soft removes `$HOME\cli-intro` only. If you cloned to `~\projects\cli-intro` (recommended), that location is preserved on purpose so this script and runbook stay accessible. |
 
 ## Step 7: Now run the new instructions
 
