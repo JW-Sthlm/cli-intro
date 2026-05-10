@@ -1153,6 +1153,19 @@ if (mode === 'notes') {
     }, 150);
   };
   channel.postMessage({ type: 'request-current' });
+
+  // Reverse nav: notes window controls the deck via the same channel
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    const t = e.target;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+    let action = null;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') action = 'next';
+    else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') action = 'prev';
+    else if (e.key === 'Home') action = 'first';
+    else if (e.key === 'End') action = 'last';
+    if (action) { e.preventDefault(); channel.postMessage({ type: 'nav', action }); }
+  });
 }
 /* ── Deck mode (deck + thumb) ── */
 else {
@@ -1227,6 +1240,13 @@ function broadcastSlide(idx) {
 if (channel) {
   channel.onmessage = (e) => {
     if (e.data && e.data.type === 'request-current') broadcastSlide(current);
+    else if (e.data && e.data.type === 'nav') {
+      const a = e.data.action;
+      if (a === 'next') go(1);
+      else if (a === 'prev') go(-1);
+      else if (a === 'first') jump(0);
+      else if (a === 'last') jump(slides.length - 1);
+    }
   };
 }
 
